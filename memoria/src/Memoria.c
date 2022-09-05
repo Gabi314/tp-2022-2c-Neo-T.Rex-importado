@@ -1,6 +1,6 @@
 /*
  ============================================================================
- Name        : consola.c
+ Name        : Memoria.c
  Author      : 
  Version     :
  Copyright   : Your copyright notice

@@ -1,6 +1,6 @@
 /*
  ============================================================================
- Name        : memoria.c
+ Name        : Consola.c
  Author      : 
  Version     :
  Copyright   : Your copyright notice
@@ -10,6 +10,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <funcionesConsola.h>
 
 int main(void) {
 	puts("!!!Hello World!!!"); /* prints !!!Hello World!!! */

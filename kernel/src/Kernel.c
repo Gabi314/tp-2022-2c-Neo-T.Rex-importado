@@ -1,6 +1,6 @@
 /*
  ============================================================================
- Name        : shared.c
+ Name        : Kernel.c
  Author      : 
  Version     :
  Copyright   : Your copyright notice

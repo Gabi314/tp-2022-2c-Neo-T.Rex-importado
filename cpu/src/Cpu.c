@@ -1,6 +1,6 @@
 /*
  ============================================================================
- Name        : kernel.c
+ Name        : Cpu.c
  Author      : 
  Version     :
  Copyright   : Your copyright notice
