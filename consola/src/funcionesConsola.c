@@ -1,7 +1,7 @@
 #include "funcionesConsola.h"
 
 
-void* serializar_paquete(t_paquete* paquete, int bytes)
+void* serializar_paquete(t_paquete* paquete, int bytes) // sirve para cualquier estructura paquete
 {
 	void * magic = malloc(bytes);
 	int desplazamiento = 0;
@@ -41,11 +41,11 @@ int crear_conexion(char *ip, char* puerto)
 	return socket_cliente;
 }
 
-void enviar_mensaje(char* mensaje, int socket_cliente)
+void enviar_mensaje(char* mensaje, int socket_cliente, int cod_op) //podríamos usar esto polimorficamente con cualquier mensaje para no
 {
 	t_paquete* paquete = malloc(sizeof(t_paquete));
 
-	paquete->codigo_operacion = MENSAJE;
+	paquete->codigo_operacion = cod_op;
 	paquete->buffer = malloc(sizeof(t_buffer));
 	paquete->buffer->size = strlen(mensaje) + 1;
 	paquete->buffer->stream = malloc(paquete->buffer->size);
@@ -62,13 +62,14 @@ void enviar_mensaje(char* mensaje, int socket_cliente)
 }
 
 
-void crear_buffer(t_paquete* paquete)
+void crear_buffer(t_paquete* paquete) // inicializa el paquete sin codigo de operacion
 {
 	paquete->buffer = malloc(sizeof(t_buffer));
 	paquete->buffer->size = 0;
 	paquete->buffer->stream = NULL;
 }
 
+// por ahora dejamos esto acá, capaz nos sirva después
 t_paquete* crear_super_paquete(void)
 {
 	//me falta un malloc!
@@ -80,10 +81,10 @@ t_paquete* crear_super_paquete(void)
 	return paquete;
 }
 
-t_paquete* crear_paquete(void)
+t_paquete* crear_paquete(int cod_op) // inicializa el paquete con codigo de operacion
 {
 	t_paquete* paquete = malloc(sizeof(t_paquete));
-	paquete->codigo_operacion = PAQUETE;
+	paquete->codigo_operacion = cod_op;
 	crear_buffer(paquete);
 	return paquete;
 }
