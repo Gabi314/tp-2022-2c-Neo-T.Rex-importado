@@ -41,7 +41,7 @@ int crear_conexion(char *ip, char* puerto)
 	return socket_cliente;
 }
 
-void enviar_mensaje(char* mensaje, int socket_cliente, int cod_op) //podríamos usar esto polimorficamente con cualquier mensaje para no
+void enviar_mensaje(char* mensaje, int socket_cliente, int cod_op) //podríamos usar esto polimorficamente con cualquier mensaje
 {
 	t_paquete* paquete = malloc(sizeof(t_paquete));
 
