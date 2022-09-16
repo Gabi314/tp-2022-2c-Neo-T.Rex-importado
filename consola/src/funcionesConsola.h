@@ -9,11 +9,12 @@
 #include<netdb.h>
 #include<string.h>
 #include<commons/log.h>
+#include<commons/config.h>
 
 typedef enum
 {
 	MENSAJE,
-	PAQUETE
+	INSTRUCCIONES
 }op_code;
 
 typedef struct
@@ -28,12 +29,29 @@ typedef struct
 	t_buffer* buffer;
 } t_paquete;
 
+typedef struct
+{
+	char* identificador;
+	parametro* parametros;
+} instruccion;
 
+typedef struct
+{
+	int valor;
+	char* registro;
+	char* otroRegistro;
+}parametro;
+
+t_log* logger;
+t_config* config;
+int ipKernel;
+int puertoKernel;
+char** segmentos;
+int conexion;
 
 int crear_conexion(char* ip, char* puerto);
-void enviar_mensaje(char* mensaje, int socket_cliente);
-t_paquete* crear_paquete(void);
-t_paquete* crear_super_paquete(void);
+void enviar_mensaje(char*,int,int);
+t_paquete* crear_paquete(int);
 void agregar_a_paquete(t_paquete* paquete, void* valor, int tamanio);
 void enviar_paquete(t_paquete* paquete, int socket_cliente);
 void liberar_conexion(int socket_cliente);
