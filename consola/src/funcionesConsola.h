@@ -8,8 +8,14 @@
 #include<sys/socket.h>
 #include<netdb.h>
 #include<string.h>
+#include<commons/string.h>
 #include<commons/log.h>
 #include<commons/config.h>
+#include<commons/collections/list.h>
+#include<readline/readline.h>
+
+#include <sys/stat.h>
+#include <fcntl.h>
 
 typedef enum
 {
@@ -31,23 +37,28 @@ typedef struct
 
 typedef struct
 {
-	char* identificador;
-	parametro* parametros;
-} instruccion;
-
-typedef struct
-{
 	int valor;
 	char* registro;
 	char* otroRegistro;
 }parametro;
 
+
+typedef struct
+{
+	char* identificador;
+	parametro* parametros;
+} instruccion;
+
+
 t_log* logger;
 t_config* config;
-int ipKernel;
-int puertoKernel;
+char* ipKernel;
+char* puertoKernel;
 char** segmentos;
 int conexion;
+
+void inicializarConfiguraciones();
+void dividirInstruccionesAlPaquete(t_log*,t_paquete*,char**,instruccion*);
 
 int crear_conexion(char* ip, char* puerto);
 void enviar_mensaje(char*,int,int);
