@@ -1,5 +1,7 @@
 #ifndef UTILS_H_
 #define UTILS_H_
+#define IP_KERNEL "127.0.0.1"
+#define PUERTO_KERNEL "8000"
 
 #include<stdio.h>
 #include<stdlib.h>
@@ -17,7 +19,7 @@
 #include<pthread.h>
 #include<stdbool.h>
 #include<assert.h>
-t_log* logger;
+extern t_log* logger;
 
 
 typedef enum {
@@ -57,19 +59,26 @@ typedef struct
 
 typedef struct
 {
-	char* identificador;
-	int parametros[2]; // está por verse si queda así o cambiamos los tipos
-} instruccion;
+	int valor;
+	char* registro;
+	char* otroRegistro;
+}parametro;
 
+
+typedef struct
+{
+	char* identificador;
+	parametro* parametros;
+} instruccion;
 typedef enum estado { NEW, READY, BLOCKED, EXEC, TERMINATED } t_estado;
 
 typedef struct
 {
 	int idProceso;
-	int tamanioProceso; // VER SERIALIZACION / SI LO TENEMOS EN OTRO LADO NO HACE FALTA
+	int tamanioProceso; // se usa en memoria
 	t_list* instrucciones;
 	int program_counter;
-	int registros[4]; // por ahora serían enteros, depende de cuando se parsean, si en consola o en cpu
+	char* registros[4]; // quedan como strings, al menos hasta cpu
 	t_list * tabla_segmentos; // cada elemento de la lista tendria un vector de dos posiciones (una para el tamanio del
 							// segmento y otra para el número o identificador de tabla de páginas asociado a cada uno)
 
@@ -94,8 +103,25 @@ void liberar_conexion(int socket_cliente);
 void eliminar_paquete(t_paquete* paquete);
 void * recibir_buffer(int* size, int socket_cliente);
 int esperar_cliente(int socket_servidor);
-void enviar_entero(int valor, int socket_cliente, int cod_op);
+void enviSar_entero(int valor, int socket_cliente, int cod_op);
 void recibir_consola(int);
 void atender_consola(int);
-int a;
+void inicializarConfiguraciones(char* unaConfig);
+
+
+extern char * ipMemoria;
+extern char * puertoMemoria;
+extern char * ipCpu;
+extern char * puertoCpuDispatch;
+extern char * puertoCpuInterrupt;
+extern int puertoKernel;
+extern char * algoritmoPlanificacion;
+extern int gradoMultiprogramacionTotal;
+extern char* dispositivos_io;
+extern int tiempos_io[];
+extern int quantum_rr;
+
+
+extern sem_t kernelSinFinalizar;
+
 #endif /* UTILS_H_ */

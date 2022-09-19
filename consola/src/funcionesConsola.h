@@ -50,12 +50,12 @@ typedef struct
 } instruccion;
 
 
-t_log* logger;
-t_config* config;
-char* ipKernel;
-char* puertoKernel;
-char** segmentos;
-int conexion;
+extern t_log* logger;
+extern t_config* config;
+extern char* ipKernel;
+extern char* puertoKernel;
+extern char** segmentos;
+extern int conexion;
 
 void inicializarConfiguraciones();
 void dividirInstruccionesAlPaquete(t_log*,t_paquete*,char**,instruccion*);

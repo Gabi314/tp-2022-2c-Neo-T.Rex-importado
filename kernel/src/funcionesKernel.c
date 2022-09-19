@@ -15,6 +15,22 @@ La idea seria tener las siguientes funciones:
 // Hacemos uso de las siguientes funciones de servidor
 
 
+t_log* logger;
+
+char * ipMemoria;
+char * puertoMemoria;
+char * ipCpu;
+char * puertoCpuDispatch;
+char * puertoCpuInterrupt;
+int puertoKernel;
+char * algoritmoPlanificacion;
+int gradoMultiprogramacionTotal;
+char* dispositivos_io;
+int tiempos_io[];
+int quantum_rr;
+
+sem_t kernelSinFinalizar;
+
 void enviar_entero(int valor, int socket_cliente, int cod_op) {
 	send(socket_cliente, &cod_op, sizeof(int), 0);
 	send(socket_cliente, &valor, sizeof(int), 0);
@@ -131,6 +147,35 @@ void* serializar_paquete(t_paquete* paquete, int bytes) // sirve para cualquier 
 	return magic;
 }
 
+int iniciar_servidor(void)
+{
+	int socket_servidor;
+
+	struct addrinfo hints, *servinfo;
+
+	memset(&hints, 0, sizeof(hints));
+	hints.ai_family = AF_UNSPEC;
+	hints.ai_socktype = SOCK_STREAM;
+	hints.ai_flags = AI_PASSIVE;
+
+	getaddrinfo(IP_KERNEL, PUERTO_KERNEL, &hints, &servinfo);
+
+	// Creamos el socket de escucha del servidor
+	socket_servidor = socket(servinfo->ai_family,servinfo->ai_socktype, servinfo->ai_protocol);
+
+	// Asociamos el socket a un puerto
+	bind(socket_servidor, servinfo->ai_addr, servinfo->ai_addrlen);
+
+	// Escuchamos las conexiones entrantes
+	listen(socket_servidor, SOMAXCONN);
+
+	freeaddrinfo(servinfo);
+	log_trace(logger, "Listo para escuchar a consola");
+
+	return socket_servidor;
+}
+
+
 int crear_conexion(char *ip, char* puerto)
 {
 	struct addrinfo hints;
@@ -155,6 +200,7 @@ int crear_conexion(char *ip, char* puerto)
 
 	return socket_cliente;
 }
+
 
 void enviar_mensaje(char* mensaje, int socket_cliente, int cod_op) //podríamos usar esto polimorficamente con cualquier mensaje para no
 {

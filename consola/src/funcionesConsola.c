@@ -1,5 +1,11 @@
 #include "funcionesConsola.h"
 
+t_log* logger;
+t_config* config;
+char* ipKernel;
+char* puertoKernel;
+char** segmentos;
+int conexion;
 
 void* serializar_paquete(t_paquete* paquete, int bytes) // sirve para cualquier estructura paquete
 {
