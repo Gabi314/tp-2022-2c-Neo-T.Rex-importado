@@ -1,6 +1,6 @@
 #ifndef UTILS_H_
 #define UTILS_H_
-#define IP_KERNEL "127.0.0.1"
+#define IP_KERNEL "192.168.1.1"
 #define PUERTO_KERNEL "8000"
 
 #include<stdio.h>
@@ -19,16 +19,18 @@
 #include<pthread.h>
 #include<stdbool.h>
 #include<assert.h>
+
 extern t_log* logger;
 
 
 typedef enum {
+KERNEL_PAQUETE_INSTRUCCIONES,
+
 KERNEL_MENSAJE_DESBLOQUEAR_TECLADO,
 KERNEL_MENSAJE_CONFIRMACION_RECEPCION_INSTRUCCIONES_SEGMENTOS,
 KERNEL_MENSAJE_PEDIDO_IMPRESION_POR_PANTALLA,
 KERNEL_MENSAJE_PEDIDO_VALOR_POR_TECLADO,
 KERNEL_MENSAJE_DESBLOQUEO_TECLADO,
-KERNEL_PAQUETE_INSTRUCCIONES,
 KERNEL_PAQUETE_TAMANIOS_SEGMENTOS,
 KERNEL_PAQUETE_VALOR_A_IMPRIMIR,
 KERNEL_PAQUETE_VALOR_RECIBIDO_DE_TECLADO
@@ -88,6 +90,7 @@ typedef struct
 
 
 int recibir_entero(int socket_cliente);
+extern int socketServidor;
 t_list* recibir_lista_enteros(int socket_cliente);
 t_list* recibir_paquete(int);
 t_list* recibir_lista_instrucciones(int);
@@ -108,6 +111,8 @@ void recibir_consola(int);
 void atender_consola(int);
 void inicializarConfiguraciones(char* unaConfig);
 
+
+int recibir_operacion(int socket_cliente);
 
 extern char * ipMemoria;
 extern char * puertoMemoria;

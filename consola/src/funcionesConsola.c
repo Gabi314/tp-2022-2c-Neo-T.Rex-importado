@@ -1,5 +1,6 @@
 #include "funcionesConsola.h"
 
+//Parece que hay que declarar las variables en el .c y en el .h
 t_log* logger;
 t_config* config;
 char* ipKernel;
@@ -95,14 +96,26 @@ t_paquete* crear_paquete(int cod_op) // inicializa el paquete con codigo de oper
 	return paquete;
 }
 
-void agregar_a_paquete(t_paquete* paquete, void* valor, int tamanio)
+void agregar_a_paquete(t_paquete* paquete, instruccion* unaInstruccion, int identificador_length)
 {
-	paquete->buffer->stream = realloc(paquete->buffer->stream, paquete->buffer->size + tamanio + sizeof(int));
+	void* id = unaInstruccion->identificador;
+	paquete->buffer->stream = realloc(paquete->buffer->stream, paquete->buffer->size + identificador_length + sizeof(int) + sizeof(parametro));
 
-	memcpy(paquete->buffer->stream + paquete->buffer->size, &tamanio, sizeof(int));
+	memcpy(paquete->buffer->stream + paquete->buffer->size, &identificador_length, sizeof(int));
+	memcpy(paquete->buffer->stream + paquete->buffer->size + sizeof(int), id, identificador_length);
+	memcpy(paquete->buffer->stream + paquete->buffer->size + sizeof(int) + identificador_length, &unaInstruccion->parametros, sizeof(parametro));
+
+	paquete->buffer->size += identificador_length + sizeof(int) + sizeof(parametro);
+}
+
+void agregar_a_paquete_tamanioProceso(t_paquete* paquete, void* valor, int tamanio)
+{
+	paquete->buffer->stream = realloc(paquete->buffer->stream, paquete->buffer->size + tamanio + sizeof(valor[0]));
+
+	memcpy(paquete->buffer->stream + paquete->buffer->size, &tamanio, sizeof(valor[0]));
 	memcpy(paquete->buffer->stream + paquete->buffer->size + sizeof(int), valor, tamanio);
 
-	paquete->buffer->size += tamanio + sizeof(int);
+	paquete->buffer->size += tamanio + sizeof(valor[0]);
 }
 
 void enviar_paquete(t_paquete* paquete, int socket_cliente)

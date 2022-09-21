@@ -15,6 +15,8 @@ int main(int argc, char *argv[]) {
 	inicializarConfiguraciones(argv[1]);
 	log_info(logger,"la ip de cpu es %s", dispositivos_io);
 
+	socketServidor = iniciar_servidor();
+	conexionConConsola();
 /*
 	inicializar_colas();
 	inicializar_semaforos();
@@ -81,4 +83,40 @@ void inicializarConfiguraciones(char* unaConfig){
 //	tiempos_io = config_get_array_value(config,"TIEMPOS_IO");
 	quantum_rr = config_get_int_value(config,"QUANTUM_RR");
 
+}
+
+int conexionConConsola(int cliente_fd){
+	logger = log_create("./kernel.log", "Kernel", 1, LOG_LEVEL_DEBUG);
+
+	//int server_fd = iniciar_servidor();
+	log_info(logger, "Kernel listo para recibir a consola");
+	//int cliente_fd = esperar_cliente(socketServidor);
+
+	t_list* listaQueContieneTamSegmento;
+
+	while (1) {
+		int cod_op = recibir_operacion(cliente_fd);
+		switch (cod_op) {
+			/*case KERNEL_PAQUETE_INSTRUCCIONES:
+				listaInstrucciones = list_create();
+				listaInstrucciones = recibir_paquete(cliente_fd);
+				log_info(logger,"me llegaron las instrucciones");
+				//list_iterate(instrucciones, (void*) iterator);
+			break;
+			*/
+				case KERNEL_PAQUETE_TAMANIOS_SEGMENTOS:
+				listaQueContieneTamSegmento = list_create();
+				//listaQueContieneTamSegmento = recibir_paqueteInt(cliente_fd);//Hacer que reciba paquete vectorDeEnteros
+			//	tamanioDelSegmento = (int) list_get(listaQueContieneTamProceso,0);
+			//	log_info(logger,"Me llegaron los tamanios del segmento %d",tamanioDelSegmento);
+				break;
+			case -1:
+				log_error(logger, "La consola se desconecto. Finalizando Kernel");
+			return EXIT_FAILURE;
+			default:
+				log_warning(logger,"Operacion desconocida. No quieras meter la pata");
+			break;
+		}
+			}
+	  return EXIT_SUCCESS;
 }

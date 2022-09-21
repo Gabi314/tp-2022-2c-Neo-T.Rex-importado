@@ -2,14 +2,21 @@
 
 
 int main(int argc, char *argv[]) {
+
 	logger = log_create("./consola.log","CONSOLA",true,LOG_LEVEL_INFO);
+
 
 	if(argc < 2) {
 	    log_error(logger,"Falta un parametro");
 	    return EXIT_FAILURE;
 	}
 
+	config = config_create(argv[1]);
+
 	inicializarConfiguraciones();
+	int* arrayEnteros = traduccionDeArraySegmentos(segmentos);
+	log_info(logger,"Tamanio del primer segmento: %d",arrayEnteros[3]);
+
 
 	FILE* archivo = fopen(argv[2], "r");
 
@@ -26,6 +33,7 @@ int main(int argc, char *argv[]) {
 	char** lineasDeInstrucciones;
 
 	t_paquete* paquete = crear_paquete(INSTRUCCIONES);
+	log_info(logger,"Boca");
 
 	// Creamos una conexión hacia el servidor
 	conexion = crear_conexion(ipKernel, puertoKernel);
@@ -52,7 +60,13 @@ int main(int argc, char *argv[]) {
 		free(unaInstruccion->identificador);
 		free(unaInstruccion);
 	}
+	fclose(archivo);
+	if (contenido) //valida si contenido es NULL
+	free(contenido);
 
+	// Enviamos el paquete
+	enviar_paquete(paquete,conexion);
+	eliminar_paquete(paquete);
 }
 
 void dividirInstruccionesAlPaquete(t_log* logger,t_paquete* paquete,char** lineasDeInstrucciones,instruccion* unaInstruccion){
@@ -80,8 +94,15 @@ void dividirInstruccionesAlPaquete(t_log* logger,t_paquete* paquete,char** linea
 
 }
 
+int* traduccionDeArraySegmentos(char** segmentos){
+	int* segmentosEnInt;
+	for(int i=0;i<string_array_size(segmentos);i++){
+		segmentosEnInt[i] = atoi(segmentos[i]);
+	}
+	return segmentosEnInt;
+}
+
 void inicializarConfiguraciones(){
-	config = config_create("consola.config");
 
 	ipKernel = config_get_string_value(config,"IP_KERNEL");
 	puertoKernel = config_get_string_value(config,"PUERTO_KERNEL");

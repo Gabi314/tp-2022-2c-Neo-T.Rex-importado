@@ -17,6 +17,8 @@ La idea seria tener las siguientes funciones:
 
 t_log* logger;
 
+int socketServidor;
+
 char * ipMemoria;
 char * puertoMemoria;
 char * ipCpu;
@@ -56,12 +58,10 @@ int size;
 		unaInstruccion->identificador = malloc(tamanioIdentificador);
 		memcpy(unaInstruccion->identificador, buffer+desplazamiento, tamanioIdentificador);
 		desplazamiento+=tamanioIdentificador;
-		memcpy(unaInstruccion->parametros, buffer+desplazamiento, sizeof(int[2]));
-		desplazamiento+=sizeof(int[2]);
+		memcpy(unaInstruccion->parametros, buffer+desplazamiento, sizeof(parametro));
+		desplazamiento+=sizeof(parametro);
 		list_add(listaDeInstrucciones, unaInstruccion);// Despues de esto habria que agragarlas al pcb
 		//pcb->instrucciones = listaDeInstrucciones
-
-
 	}
 	free(buffer);
 	return listaDeInstrucciones;
@@ -174,6 +174,7 @@ int iniciar_servidor(void)
 
 	return socket_servidor;
 }
+
 
 
 int crear_conexion(char *ip, char* puerto)

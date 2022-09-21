@@ -49,7 +49,7 @@ typedef struct
 	parametro* parametros;
 } instruccion;
 
-
+//Parece que hay que declarar las variables en el .c y en el .h
 extern t_log* logger;
 extern t_config* config;
 extern char* ipKernel;
@@ -63,9 +63,14 @@ void dividirInstruccionesAlPaquete(t_log*,t_paquete*,char**,instruccion*);
 int crear_conexion(char* ip, char* puerto);
 void enviar_mensaje(char*,int,int);
 t_paquete* crear_paquete(int);
-void agregar_a_paquete(t_paquete* paquete, void* valor, int tamanio);
+void agregar_a_paquete(t_paquete*, instruccion*, int);
 void enviar_paquete(t_paquete* paquete, int socket_cliente);
 void liberar_conexion(int socket_cliente);
 void eliminar_paquete(t_paquete* paquete);
+
+
+int* traduccionDeArraySegmentos(char**);
+
+
 
 #endif /* UTILS_H_ */
