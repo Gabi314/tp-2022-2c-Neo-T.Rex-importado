@@ -36,12 +36,10 @@ int crear_conexion(char *ip, char* puerto)
 	getaddrinfo(ip, puerto, &hints, &server_info);
 
 	// Ahora vamos a crear el socket.
-	int socket_cliente = socket(server_info->ai_family,
-								server_info->ai_socktype,
-								server_info->ai_protocol);
+	int socket_cliente = socket(server_info->ai_family, server_info->ai_socktype, server_info->ai_protocol);
 
 	// Ahora que tenemos el socket, vamos a conectarlo
-	connect(socket_cliente,server_info->ai_addr,server_info->ai_addrlen);
+	connect(socket_cliente,server_info->ai_addr, server_info->ai_addrlen);
 
 	freeaddrinfo(server_info);
 
@@ -77,16 +75,7 @@ void crear_buffer(t_paquete* paquete) // inicializa el paquete sin codigo de ope
 }
 
 // por ahora dejamos esto acá, capaz nos sirva después
-t_paquete* crear_super_paquete(void)
-{
-	//me falta un malloc!
-	t_paquete* paquete;
 
-	//descomentar despues de arreglar
-	//paquete->codigo_operacion = PAQUETE;
-	//crear_buffer(paquete);
-	return paquete;
-}
 
 t_paquete* crear_paquete(int cod_op) // inicializa el paquete con codigo de operacion
 {
@@ -96,7 +85,7 @@ t_paquete* crear_paquete(int cod_op) // inicializa el paquete con codigo de oper
 	return paquete;
 }
 
-void agregar_a_paquete(t_paquete* paquete, instruccion* unaInstruccion, int identificador_length)
+void agregar_a_paquete_instrucciones(t_paquete* paquete, instruccion* unaInstruccion, int identificador_length)
 {
 	void* id = unaInstruccion->identificador;
 	paquete->buffer->stream = realloc(paquete->buffer->stream, paquete->buffer->size + identificador_length + sizeof(int) + sizeof(parametro));
@@ -108,14 +97,14 @@ void agregar_a_paquete(t_paquete* paquete, instruccion* unaInstruccion, int iden
 	paquete->buffer->size += identificador_length + sizeof(int) + sizeof(parametro);
 }
 
-void agregar_a_paquete_tamanioProceso(t_paquete* paquete, void* valor, int tamanio)
+void agregar_a_paquete_segmentos(t_paquete* paquete, void* valor, int tamanio)
 {
-	paquete->buffer->stream = realloc(paquete->buffer->stream, paquete->buffer->size + tamanio + sizeof(valor[0]));
+	paquete->buffer->stream = realloc(paquete->buffer->stream, paquete->buffer->size + tamanio + sizeof(int));
 
-	memcpy(paquete->buffer->stream + paquete->buffer->size, &tamanio, sizeof(valor[0]));
+	memcpy(paquete->buffer->stream + paquete->buffer->size, &tamanio, sizeof(int));
 	memcpy(paquete->buffer->stream + paquete->buffer->size + sizeof(int), valor, tamanio);
 
-	paquete->buffer->size += tamanio + sizeof(valor[0]);
+	paquete->buffer->size += tamanio + sizeof(int);
 }
 
 void enviar_paquete(t_paquete* paquete, int socket_cliente)

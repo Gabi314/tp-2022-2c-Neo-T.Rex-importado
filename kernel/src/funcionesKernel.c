@@ -24,7 +24,7 @@ char * puertoMemoria;
 char * ipCpu;
 char * puertoCpuDispatch;
 char * puertoCpuInterrupt;
-int puertoKernel;
+char* puertoKernel;
 char * algoritmoPlanificacion;
 int gradoMultiprogramacionTotal;
 char* dispositivos_io;
@@ -69,19 +69,22 @@ int size;
 
 t_list* recibir_lista_enteros(int socket_cliente) // me base en el recibir paquete del tp0
 {
+
 	int size;
 	int desplazamiento = 0;
 	void * buffer;
 	t_list* valores = list_create();
-
+	int tamanio;
 
 	buffer = recibir_buffer(&size, socket_cliente);
 	while(desplazamiento < size)
 	{
-		int* valor = malloc(sizeof(int));
-		memcpy(valor, buffer+desplazamiento, sizeof(int));
+		memcpy(&tamanio, buffer + desplazamiento, sizeof(int));
 		desplazamiento+=sizeof(int);
-		list_add(valores, valor);
+		int valor = 0;
+		memcpy(&valor, buffer+desplazamiento, sizeof(int));
+		desplazamiento+=sizeof(int);
+		list_add(valores, (void *)valor);
 	}
 	free(buffer);
 	return valores;
@@ -96,19 +99,18 @@ int recibir_entero(int socket_cliente) // basado en recibir_operacion
 
 }
 
+
+
 int recibir_operacion(int socket_cliente)
 {
 	int cod_op;
-	if(recv(socket_cliente, &cod_op, sizeof(int), MSG_WAITALL) > 0) {
-	log_info(logger,"[recibir_operacion]: se recibio la operacion %d",cod_op);
-	return cod_op;
-	}
-	else
-	{
-	log_info(logger,"[recibir_operacion]: se recibio la operacion %d",cod_op);
-	close(socket_cliente);
-	return -1;
-	}
+		if(recv(socket_cliente, &cod_op, sizeof(int), MSG_WAITALL) > 0)
+			return cod_op;
+		else
+		{
+			close(socket_cliente);
+			return -1;
+		}
 }
 
 void * recibir_buffer(int* size, int socket_cliente)
@@ -314,8 +316,11 @@ void inicializar_registros(int v[4]) {
 
 int esperar_cliente(int socket_servidor)
 {
+	struct sockaddr_in dir_cliente;
+
+	socklen_t tam_direccion = sizeof(struct sockaddr_in);
 	// Aceptamos un nuevo cliente
-	int socket_cliente = accept(socket_servidor, NULL, NULL);
+	int socket_cliente = accept(socket_servidor,(void*) &dir_cliente, &tam_direccion);
 	log_info(logger, "Se conecto la consola!");
 
 	return socket_cliente;

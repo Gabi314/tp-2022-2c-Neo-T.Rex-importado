@@ -1,7 +1,5 @@
 #ifndef UTILS_H_
 #define UTILS_H_
-#define IP_KERNEL "192.168.1.1"
-#define PUERTO_KERNEL "8000"
 
 #include<stdio.h>
 #include<stdlib.h>
@@ -21,19 +19,20 @@
 #include<assert.h>
 
 extern t_log* logger;
+#define IP_KERNEL "127.0.0.1"
+#define PUERTO_KERNEL "8000"
 
 
 typedef enum {
-KERNEL_PAQUETE_INSTRUCCIONES,
-
-KERNEL_MENSAJE_DESBLOQUEAR_TECLADO,
-KERNEL_MENSAJE_CONFIRMACION_RECEPCION_INSTRUCCIONES_SEGMENTOS,
-KERNEL_MENSAJE_PEDIDO_IMPRESION_POR_PANTALLA,
-KERNEL_MENSAJE_PEDIDO_VALOR_POR_TECLADO,
-KERNEL_MENSAJE_DESBLOQUEO_TECLADO,
-KERNEL_PAQUETE_TAMANIOS_SEGMENTOS,
-KERNEL_PAQUETE_VALOR_A_IMPRIMIR,
-KERNEL_PAQUETE_VALOR_RECIBIDO_DE_TECLADO
+	KERNEL_PAQUETE_TAMANIOS_SEGMENTOS,
+	KERNEL_PAQUETE_INSTRUCCIONES,
+	KERNEL_MENSAJE_DESBLOQUEAR_TECLADO,
+	KERNEL_MENSAJE_CONFIRMACION_RECEPCION_INSTRUCCIONES_SEGMENTOS,
+	KERNEL_MENSAJE_PEDIDO_IMPRESION_POR_PANTALLA,
+	KERNEL_MENSAJE_PEDIDO_VALOR_POR_TECLADO,
+	KERNEL_MENSAJE_DESBLOQUEO_TECLADO,
+	KERNEL_PAQUETE_VALOR_A_IMPRIMIR,
+	KERNEL_PAQUETE_VALOR_RECIBIDO_DE_TECLADO
 }op_code;
 
 /*
@@ -112,14 +111,16 @@ void atender_consola(int);
 void inicializarConfiguraciones(char* unaConfig);
 
 
-int recibir_operacion(int socket_cliente);
+int recibir_operacion(int);
+int iniciar_servidor(void);
+int conexionConConsola();
 
 extern char * ipMemoria;
 extern char * puertoMemoria;
 extern char * ipCpu;
 extern char * puertoCpuDispatch;
 extern char * puertoCpuInterrupt;
-extern int puertoKernel;
+extern char * puertoKernel;
 extern char * algoritmoPlanificacion;
 extern int gradoMultiprogramacionTotal;
 extern char* dispositivos_io;

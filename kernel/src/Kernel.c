@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "funcionesKernel.h"
 
+
 int main(int argc, char *argv[]) {
 	logger = log_create("kernel.log", "KERNEL", 1, LOG_LEVEL_INFO);
 
@@ -10,12 +11,14 @@ int main(int argc, char *argv[]) {
 	    return EXIT_FAILURE;
 	}
 
-	sem_init(&kernelSinFinalizar,0,0);
+	//sem_init(&kernelSinFinalizar,0,0);
 
 	inicializarConfiguraciones(argv[1]);
-	log_info(logger,"la ip de cpu es %s", dispositivos_io);
+	log_info(logger,"Iniciando conexion con consola");
 
-	socketServidor = iniciar_servidor();
+	//socketServidor = iniciar_servidor();
+
+
 	conexionConConsola();
 /*
 	inicializar_colas();
@@ -78,19 +81,18 @@ void inicializarConfiguraciones(char* unaConfig){
 	puertoCpuInterrupt = config_get_string_value(config, "PUERTO_CPU_INTERRUPT");
 	puertoKernel = config_get_string_value(config, "PUERTO_ESCUCHA"); //no lo usamos
 	algoritmoPlanificacion = config_get_string_value(config, "ALGORITMO_PLANIFICACION");
-	gradoMultiprogramacionTotal = config_get_int_value(config, "GRADO_MAX_MULTIPROGRAMACION");
-	dispositivos_io = config_get_array_value(config,"DISPOSITIVOS_IO")[1];
+	//gradoMultiprogramacionTotal = config_get_int_value(config, "GRADO_MAX_MULTIPROGRAMACION");
+	//dispositivos_io = config_get_array_value(config,"DISPOSITIVOS_IO")[1];
 //	tiempos_io = config_get_array_value(config,"TIEMPOS_IO");
-	quantum_rr = config_get_int_value(config,"QUANTUM_RR");
+	//quantum_rr = config_get_int_value(config,"QUANTUM_RR");
 
 }
 
-int conexionConConsola(int cliente_fd){
-	logger = log_create("./kernel.log", "Kernel", 1, LOG_LEVEL_DEBUG);
+int conexionConConsola(){
 
-	//int server_fd = iniciar_servidor();
+	int server_fd = iniciar_servidor();
 	log_info(logger, "Kernel listo para recibir a consola");
-	//int cliente_fd = esperar_cliente(socketServidor);
+	int cliente_fd = esperar_cliente(server_fd);
 
 	t_list* listaQueContieneTamSegmento;
 
@@ -106,9 +108,10 @@ int conexionConConsola(int cliente_fd){
 			*/
 				case KERNEL_PAQUETE_TAMANIOS_SEGMENTOS:
 				listaQueContieneTamSegmento = list_create();
-				//listaQueContieneTamSegmento = recibir_paqueteInt(cliente_fd);//Hacer que reciba paquete vectorDeEnteros
-			//	tamanioDelSegmento = (int) list_get(listaQueContieneTamProceso,0);
-			//	log_info(logger,"Me llegaron los tamanios del segmento %d",tamanioDelSegmento);
+				listaQueContieneTamSegmento = recibir_lista_enteros(cliente_fd);//Hacer que reciba paquete vectorDeEnteros
+
+				int tamanioDelSegmento = (int) list_get(listaQueContieneTamSegmento,3);
+				log_info(logger,"El tamanio del primer segmento es: %d",tamanioDelSegmento);
 				break;
 			case -1:
 				log_error(logger, "La consola se desconecto. Finalizando Kernel");

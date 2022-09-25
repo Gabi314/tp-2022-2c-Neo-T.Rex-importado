@@ -19,8 +19,8 @@
 
 typedef enum
 {
-	MENSAJE,
-	INSTRUCCIONES
+	KERNEL_PAQUETE_TAMANIOS_SEGMENTOS,
+	KERNEL_PAQUETE_INSTRUCCIONES
 }op_code;
 
 typedef struct
@@ -57,19 +57,25 @@ extern char* puertoKernel;
 extern char** segmentos;
 extern int conexion;
 
-void inicializarConfiguraciones();
-void dividirInstruccionesAlPaquete(t_log*,t_paquete*,char**,instruccion*);
-
 int crear_conexion(char* ip, char* puerto);
 void enviar_mensaje(char*,int,int);
 t_paquete* crear_paquete(int);
-void agregar_a_paquete(t_paquete*, instruccion*, int);
+
+void inicializarConfiguraciones(char*);
+
+void agregar_a_paquete_instrucciones(t_paquete*, instruccion*, int);
+void agregar_a_paquete_segmentos(t_paquete*,void*,int);
+void enviarPaqueteTamanioDeSegmentos();
+
 void enviar_paquete(t_paquete* paquete, int socket_cliente);
-void liberar_conexion(int socket_cliente);
 void eliminar_paquete(t_paquete* paquete);
+void liberar_conexion(int socket_cliente);
 
 
-int* traduccionDeArraySegmentos(char**);
+void agregarAPaqueteSegmentos(char**,t_paquete*);
+FILE* abrirArchivo(char*);
+FILE* recorrerArchivo(char*,FILE*);
+void dividirInstruccionesAlPaquete(t_log*,t_paquete*,char**,instruccion*);
 
 
 
