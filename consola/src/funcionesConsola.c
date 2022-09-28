@@ -6,9 +6,12 @@ t_config* config;
 char* ipKernel;
 char* puertoKernel;
 char** segmentos;
+int tiempoPantalla;
+
 int conexion;
 
-void* serializar_paquete(t_paquete* paquete, int bytes) // sirve para cualquier estructura paquete
+//---------------------------------FUNCIONES PARA ENVIAR PAQUETES--------------------------------
+void* serializar_paquete(t_paquete* paquete, int bytes)
 {
 	void * magic = malloc(bytes);
 	int desplazamiento = 0;
@@ -122,6 +125,61 @@ void eliminar_paquete(t_paquete* paquete)
 	free(paquete->buffer->stream);
 	free(paquete->buffer);
 	free(paquete);
+}
+
+//-------------------------------------FUNCIONES PARA RECIBIR PAQUETES-----------------------------------------
+
+int recibir_operacion(int socket_cliente)
+{
+	int cod_op;
+	if(recv(socket_cliente, &cod_op, sizeof(int), MSG_WAITALL) > 0)
+		return cod_op;
+	else
+	{
+		close(socket_cliente);
+		return -1;
+	}
+}
+
+void* recibir_buffer(int* size, int socket_cliente)
+{
+	void * buffer;
+
+	recv(socket_cliente, size, sizeof(int), MSG_WAITALL);
+	buffer = malloc(*size);
+	recv(socket_cliente, buffer, *size, MSG_WAITALL);
+
+	return buffer;
+}
+
+void recibir_mensaje(int socket_cliente)
+{
+	int size;
+	char* buffer = recibir_buffer(&size, socket_cliente);
+	log_info(logger, "Me llego el mensaje %s", buffer);
+	free(buffer);
+}
+
+t_list* recibir_paquete(int socket_cliente)
+{
+	int size;
+	int desplazamiento = 0;
+	void * buffer;
+	t_list* valores = list_create();
+	int tamanio;
+
+	buffer = recibir_buffer(&size, socket_cliente);
+	while(desplazamiento < size)
+	{
+		memcpy(&tamanio, buffer + desplazamiento, sizeof(int));
+		desplazamiento+=sizeof(int);
+		int valor = 0;
+		memcpy(&valor, buffer+desplazamiento, sizeof(int));
+		desplazamiento+=sizeof(int);
+		list_add(valores, (void *)valor);
+	}
+	free(buffer);
+	return valores;
 }
 
 void liberar_conexion(int socket_cliente)

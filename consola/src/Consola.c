@@ -24,6 +24,8 @@ int main(int argc, char *argv[]) {
 	stat(argv[2], &sb);
 	char* contenido = malloc(sb.st_size);
 
+	//solicitudIngresarValorPorTeclado();
+
 	archivo = recorrerArchivo(contenido,archivo);
 
 	fclose(archivo);
@@ -125,6 +127,41 @@ FILE* recorrerArchivo(char* contenido,FILE* archivo){
 	return archivo;
 }
 
+void imprimirValorPorPantalla(){//Puede estar en un hilo
+	t_list* valorAImprimir = list_create();
+
+	int cod_op = recibir_operacion(conexion);
+
+	if(cod_op == KERNEL_PAQUETE_VALOR_A_IMPRIMIR){
+		valorAImprimir = recibir_paquete(conexion);
+	}
+
+	usleep(tiempoPantalla);
+
+	log_info(logger,"Se imprime el valor %d por pantalla a pedido del kernel", list_get(valorAImprimir,0));
+	list_clean(valorAImprimir);
+
+	enviar_mensaje("Se imprimio el valor del registro", conexion, KERNEL_MENSAJE_VALOR_IMPRESO);
+
+}
+
+void solicitudIngresarValorPorTeclado(){//otro hilo
+	int cod_op = recibir_operacion(conexion);
+
+	if(cod_op == KERNEL_MENSAJE_PEDIDO_VALOR_POR_TECLADO){
+		recibir_mensaje(conexion);
+	}
+
+	int valorIngresadoPorTeclado = 0;
+
+	log_info(logger,"Ingrese un valor: ");
+	scanf("%d",&valorIngresadoPorTeclado);
+
+	log_info(logger,"Se ingreso el valor %d correctamente",valorIngresadoPorTeclado);
+
+	//Falta enviarlo
+}
+
 
 void inicializarConfiguraciones(char* pathConfig){
 
@@ -133,5 +170,7 @@ void inicializarConfiguraciones(char* pathConfig){
 	ipKernel = config_get_string_value(config,"IP_KERNEL");
 	puertoKernel = config_get_string_value(config,"PUERTO_KERNEL");
 	segmentos = config_get_array_value(config,"SEGMENTOS");
+	tiempoPantalla = config_get_int_value(config,"TIEMPO_PANTALLA");
+
 	log_info(logger,"Config creado");
 }

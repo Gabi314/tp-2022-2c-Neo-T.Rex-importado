@@ -20,7 +20,10 @@
 typedef enum
 {
 	KERNEL_PAQUETE_TAMANIOS_SEGMENTOS,
-	KERNEL_PAQUETE_INSTRUCCIONES
+	KERNEL_PAQUETE_INSTRUCCIONES,
+	KERNEL_PAQUETE_VALOR_A_IMPRIMIR,
+	KERNEL_MENSAJE_VALOR_IMPRESO,
+	KERNEL_MENSAJE_PEDIDO_VALOR_POR_TECLADO
 }op_code;
 
 typedef struct
@@ -55,6 +58,7 @@ extern t_config* config;
 extern char* ipKernel;
 extern char* puertoKernel;
 extern char** segmentos;
+extern int tiempoPantalla;
 extern int conexion;
 
 int crear_conexion(char* ip, char* puerto);
@@ -76,6 +80,13 @@ void agregarAPaqueteSegmentos(char**,t_paquete*);
 FILE* abrirArchivo(char*);
 FILE* recorrerArchivo(char*,FILE*);
 void dividirInstruccionesAlPaquete(t_log*,t_paquete*,char**,instruccion*);
+
+int recibir_operacion(int);
+void recibir_mensaje(int);
+t_list* recibir_paquete(int);
+
+void imprimirValorPorPantalla();
+void solicitudIngresarValorPorTeclado();
 
 
 
