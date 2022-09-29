@@ -10,179 +10,186 @@ int tiempoPantalla;
 
 int conexion;
 
-//---------------------------------FUNCIONES PARA ENVIAR PAQUETES--------------------------------
-void* serializar_paquete(t_paquete* paquete, int bytes)
-{
-	void * magic = malloc(bytes);
-	int desplazamiento = 0;
-
-	memcpy(magic + desplazamiento, &(paquete->codigo_operacion), sizeof(int));
-	desplazamiento+= sizeof(int);
-	memcpy(magic + desplazamiento, &(paquete->buffer->size), sizeof(int));
-	desplazamiento+= sizeof(int);
-	memcpy(magic + desplazamiento, paquete->buffer->stream, paquete->buffer->size);
-	desplazamiento+= paquete->buffer->size;
-
-	return magic;
+//--------------------------------FUNCIONES GENERALES DE CONSOLA---------------------------------
+int chequeoCantidadArchivos(int argc){
+	if(argc < 2) {
+		    log_error(logger,"Falta un parametro");
+		    return EXIT_FAILURE;
+		}
 }
 
-int crear_conexion(char *ip, char* puerto)
-{
-	struct addrinfo hints;
-	struct addrinfo *server_info;
+void inicializarConfiguraciones(char* pathConfig){
 
-	memset(&hints, 0, sizeof(hints));
-	hints.ai_family = AF_UNSPEC;
-	hints.ai_socktype = SOCK_STREAM;
-	hints.ai_flags = AI_PASSIVE;
+	config = config_create(pathConfig);
 
-	getaddrinfo(ip, puerto, &hints, &server_info);
+	ipKernel = config_get_string_value(config,"IP_KERNEL");
+	puertoKernel = config_get_string_value(config,"PUERTO_KERNEL");
+	segmentos = config_get_array_value(config,"SEGMENTOS");
+	tiempoPantalla = config_get_int_value(config,"TIEMPO_PANTALLA");
 
-	// Ahora vamos a crear el socket.
-	int socket_cliente = socket(server_info->ai_family, server_info->ai_socktype, server_info->ai_protocol);
-
-	// Ahora que tenemos el socket, vamos a conectarlo
-	connect(socket_cliente,server_info->ai_addr, server_info->ai_addrlen);
-
-	freeaddrinfo(server_info);
-
-	return socket_cliente;
+	log_info(logger,"Config creado");
 }
 
-void enviar_mensaje(char* mensaje, int socket_cliente, int cod_op) //podríamos usar esto polimorficamente con cualquier mensaje
-{
-	t_paquete* paquete = malloc(sizeof(t_paquete));
+void enviarPaqueteTamanioDeSegmentos(){
+	t_paquete* paquete = crear_paquete(KERNEL_PAQUETE_TAMANIOS_SEGMENTOS);
 
-	paquete->codigo_operacion = cod_op;
-	paquete->buffer = malloc(sizeof(t_buffer));
-	paquete->buffer->size = strlen(mensaje) + 1;
-	paquete->buffer->stream = malloc(paquete->buffer->size);
-	memcpy(paquete->buffer->stream, mensaje, paquete->buffer->size);
+	agregarAPaqueteSegmentos(segmentos,paquete);
+	// Enviamos el paquete
+	enviar_paquete(paquete,conexion);
+	eliminar_paquete(paquete);
+}
 
-	int bytes = paquete->buffer->size + 2*sizeof(int);
+FILE* abrirArchivo(char* pathArchivo){
+	FILE* archivo = fopen(pathArchivo, "r");
 
-	void* a_enviar = serializar_paquete(paquete, bytes);
+	if(archivo == NULL){
+		log_error(logger,"No se lee el archivo");
+	}else{
+		log_info(logger,"Se leyo el archivo correctamente");
+	}
 
-	send(socket_cliente, a_enviar, bytes, 0);
+	return archivo;
 
-	free(a_enviar);
+}
+
+FILE* recorrerArchivo(char* contenido,FILE* archivo){
+	char** lineasDeInstrucciones;
+	t_paquete* paquete = crear_paquete(KERNEL_PAQUETE_INSTRUCCIONES);
+
+	while (fscanf(archivo, "%[^\n] ", contenido) != EOF) {
+
+		instruccion* unaInstruccion = malloc(sizeof(instruccion));
+
+		lineasDeInstrucciones = string_split(contenido, " ");
+
+		unaInstruccion->identificador = malloc(strlen(lineasDeInstrucciones[0])+1);
+		strcpy(unaInstruccion->identificador, lineasDeInstrucciones[0]);
+
+		dividirInstruccionesAlPaquete(logger,paquete,lineasDeInstrucciones,unaInstruccion);
+
+		int contadorDeLineas = 0;
+
+		while (contadorDeLineas <= string_array_size(lineasDeInstrucciones)){
+			free(lineasDeInstrucciones[contadorDeLineas]);
+			contadorDeLineas++;
+		}
+
+		free(lineasDeInstrucciones);
+		free(unaInstruccion->identificador);
+		free(unaInstruccion);
+	}
+	enviarListaInstrucciones(paquete);
+	return archivo;
+}
+
+void dividirInstruccionesAlPaquete(t_log* logger,t_paquete* paquete,char** lineasDeInstrucciones,instruccion* unaInstruccion){
+
+ if (!strcmp(lineasDeInstrucciones[0],"SET") || !strcmp(lineasDeInstrucciones[0],"ADD") || !strcmp(lineasDeInstrucciones[0],"MOV_IN") || !strcmp(lineasDeInstrucciones[0],"MOV_OUT") || !strcmp(lineasDeInstrucciones[0],"I/O") || !strcmp(lineasDeInstrucciones[0],"EXIT")){ //Se usa solamente para que entre con el exit
+		//log_info(logger,"instruccion: %s\n",instruccion->identificador);
+	 	//unaInstruccion->parametros = malloc(sizeof(parametro));
+
+	 	if (!strcmp(lineasDeInstrucciones[0],"SET") || !strcmp(lineasDeInstrucciones[0],"MOV_IN")){
+	 		//LEI QUE I/O PUEDE NO TENER PARAMETROS
+			unaInstruccion->parametros[0] = chequeoDeRegistro(lineasDeInstrucciones[1]);
+			unaInstruccion->parametros[1]  = atoi(lineasDeInstrucciones[2]);
+			//log_info(logger,"Se guardo el registro %d",unaInstruccion->parametros[0]);
+		}
+	 	if(!strcmp(lineasDeInstrucciones[0],"I/O")){
+			unaInstruccion->parametros[0] = chequeoDeDispositivo(lineasDeInstrucciones[1]);
+			if(unaInstruccion->parametros[0] == DISCO){
+				unaInstruccion->parametros[1] = atoi(lineasDeInstrucciones[2]);
+			}else {
+				unaInstruccion->parametros[1] = chequeoDeRegistro(lineasDeInstrucciones[2]);
+			}
+	 	}
+
+		if (!strcmp(lineasDeInstrucciones[0],"ADD")){
+			unaInstruccion->parametros[0] = chequeoDeRegistro(lineasDeInstrucciones[1]);
+			unaInstruccion->parametros[1]  = chequeoDeRegistro(lineasDeInstrucciones[2]);
+		}
+
+		if(!strcmp(lineasDeInstrucciones[0],"MOV_OUT")){
+			unaInstruccion->parametros[0]  = atoi(lineasDeInstrucciones[1]);
+			unaInstruccion->parametros[1]  = chequeoDeRegistro(lineasDeInstrucciones[2]);
+		}
+		agregar_a_paquete_instrucciones(paquete, unaInstruccion, strlen(unaInstruccion->identificador)+1);//Usar enum para los registros(pienso mandar solo string para el dispositivo de IO)
+		//free(unaInstruccion->parametros);
+ }
+
+}
+
+int chequeoDeRegistro(char* registro){
+	if(!strcmp(registro,"AX"))
+	return AX;
+	if(!strcmp(registro,"BX"))
+	return BX;
+	if(!strcmp(registro,"CX"))
+	return CX;
+	if(!strcmp(registro,"DX"))
+	return DX;
+}
+
+int chequeoDeDispositivo(char* registro){
+	if(!strcmp(registro,"DISCO"))
+	return DISCO;
+	if(!strcmp(registro,"PANTALLA"))
+	return PANTALLA;
+	if(!strcmp(registro,"TECLADO"))
+	return TECLADO;
+}
+
+void agregarAPaqueteSegmentos(char** segmentos,t_paquete* paquete){
+	int segmentoActual = 0;
+	for(int i=0;i<string_array_size(segmentos);i++){
+		segmentoActual = atoi(segmentos[i]);
+		agregar_a_paquete_segmentos(paquete, &segmentoActual, sizeof(int));
+	}
+}
+
+void enviarListaInstrucciones(t_paquete* paquete){
+	// Enviamos el paquete
+	enviar_paquete(paquete,conexion);
 	eliminar_paquete(paquete);
 }
 
 
-void crear_buffer(t_paquete* paquete) // inicializa el paquete sin codigo de operacion
-{
-	paquete->buffer = malloc(sizeof(t_buffer));
-	paquete->buffer->size = 0;
-	paquete->buffer->stream = NULL;
-}
 
-// por ahora dejamos esto acá, capaz nos sirva después
+void imprimirValorPorPantalla(){//Puede estar en un hilo
+	t_list* valorAImprimir = list_create();
 
+	int cod_op = recibir_operacion(conexion);
 
-t_paquete* crear_paquete(int cod_op) // inicializa el paquete con codigo de operacion
-{
-	t_paquete* paquete = malloc(sizeof(t_paquete));
-	paquete->codigo_operacion = cod_op;
-	crear_buffer(paquete);
-	return paquete;
-}
-
-void agregar_a_paquete_instrucciones(t_paquete* paquete, instruccion* unaInstruccion, int identificador_length)
-{
-	void* id = unaInstruccion->identificador;
-	paquete->buffer->stream = realloc(paquete->buffer->stream, paquete->buffer->size + identificador_length + sizeof(int) + sizeof(parametro));
-
-	memcpy(paquete->buffer->stream + paquete->buffer->size, &identificador_length, sizeof(int));
-	memcpy(paquete->buffer->stream + paquete->buffer->size + sizeof(int), id, identificador_length);
-	memcpy(paquete->buffer->stream + paquete->buffer->size + sizeof(int) + identificador_length, &unaInstruccion->parametros, sizeof(parametro));
-
-	paquete->buffer->size += identificador_length + sizeof(int) + sizeof(parametro);
-}
-
-void agregar_a_paquete_segmentos(t_paquete* paquete, void* valor, int tamanio)
-{
-	paquete->buffer->stream = realloc(paquete->buffer->stream, paquete->buffer->size + tamanio + sizeof(int));
-
-	memcpy(paquete->buffer->stream + paquete->buffer->size, &tamanio, sizeof(int));
-	memcpy(paquete->buffer->stream + paquete->buffer->size + sizeof(int), valor, tamanio);
-
-	paquete->buffer->size += tamanio + sizeof(int);
-}
-
-void enviar_paquete(t_paquete* paquete, int socket_cliente)
-{
-	int bytes = paquete->buffer->size + 2*sizeof(int);
-	void* a_enviar = serializar_paquete(paquete, bytes);
-
-	send(socket_cliente, a_enviar, bytes, 0);
-
-	free(a_enviar);
-}
-
-void eliminar_paquete(t_paquete* paquete)
-{
-	free(paquete->buffer->stream);
-	free(paquete->buffer);
-	free(paquete);
-}
-
-//-------------------------------------FUNCIONES PARA RECIBIR PAQUETES-----------------------------------------
-
-int recibir_operacion(int socket_cliente)
-{
-	int cod_op;
-	if(recv(socket_cliente, &cod_op, sizeof(int), MSG_WAITALL) > 0)
-		return cod_op;
-	else
-	{
-		close(socket_cliente);
-		return -1;
+	if(cod_op == KERNEL_PAQUETE_VALOR_A_IMPRIMIR){
+		valorAImprimir = recibir_paquete(conexion);
 	}
+
+	usleep(tiempoPantalla);
+
+	log_info(logger,"Se imprime el valor %d por pantalla a pedido del kernel", list_get(valorAImprimir,0));
+	list_clean(valorAImprimir);
+
+	enviar_mensaje("Se imprimio el valor del registro", conexion, KERNEL_MENSAJE_VALOR_IMPRESO);
+
 }
 
-void* recibir_buffer(int* size, int socket_cliente)
-{
-	void * buffer;
+void solicitudIngresarValorPorTeclado(){//otro hilo
+	int cod_op = recibir_operacion(conexion);
 
-	recv(socket_cliente, size, sizeof(int), MSG_WAITALL);
-	buffer = malloc(*size);
-	recv(socket_cliente, buffer, *size, MSG_WAITALL);
-
-	return buffer;
-}
-
-void recibir_mensaje(int socket_cliente)
-{
-	int size;
-	char* buffer = recibir_buffer(&size, socket_cliente);
-	log_info(logger, "Me llego el mensaje %s", buffer);
-	free(buffer);
-}
-
-t_list* recibir_paquete(int socket_cliente)
-{
-	int size;
-	int desplazamiento = 0;
-	void * buffer;
-	t_list* valores = list_create();
-	int tamanio;
-
-	buffer = recibir_buffer(&size, socket_cliente);
-	while(desplazamiento < size)
-	{
-		memcpy(&tamanio, buffer + desplazamiento, sizeof(int));
-		desplazamiento+=sizeof(int);
-		int valor = 0;
-		memcpy(&valor, buffer+desplazamiento, sizeof(int));
-		desplazamiento+=sizeof(int);
-		list_add(valores, (void *)valor);
+	if(cod_op == KERNEL_MENSAJE_PEDIDO_VALOR_POR_TECLADO){
+		recibir_mensaje(conexion);
 	}
-	free(buffer);
-	return valores;
+
+	int valorIngresadoPorTeclado = 0;
+
+	log_info(logger,"Ingrese un valor: ");
+	scanf("%d",&valorIngresadoPorTeclado);
+
+	log_info(logger,"Se ingreso el valor %d correctamente",valorIngresadoPorTeclado);
+
+	//Falta enviarlo
 }
 
-void liberar_conexion(int socket_cliente)
-{
-	close(socket_cliente);
-}
+
+
+
+

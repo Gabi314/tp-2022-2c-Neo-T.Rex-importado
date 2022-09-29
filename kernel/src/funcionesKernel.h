@@ -19,6 +19,7 @@
 #include<assert.h>
 
 extern t_log* logger;
+extern t_list* listaInstrucciones;
 #define IP_KERNEL "127.0.0.1"
 #define PUERTO_KERNEL "8000"
 
@@ -34,6 +35,22 @@ typedef enum {
 	KERNEL_MENSAJE_DESBLOQUEO_TECLADO,
 	KERNEL_PAQUETE_VALOR_RECIBIDO_DE_TECLADO
 }op_code;
+
+typedef enum
+{
+	DISCO = 0,
+	PANTALLA = 1,
+	TECLADO = 2
+}dispositivos_IO;
+
+typedef enum
+{
+	AX,
+	BX,
+	CX,
+	DX
+}registros;
+
 
 /*
 La idea seria tener las siguientes funciones:
@@ -69,8 +86,10 @@ typedef struct
 typedef struct
 {
 	char* identificador;
-	parametro* parametros;
+	//parametro* parametros;
+	int parametros[2];
 } instruccion;
+
 typedef enum estado { NEW, READY, BLOCKED, EXEC, TERMINATED } t_estado;
 
 typedef struct
@@ -92,7 +111,8 @@ int recibir_entero(int socket_cliente);
 extern int socketServidor;
 t_list* recibir_lista_enteros(int socket_cliente);
 t_list* recibir_paquete(int);
-t_list* recibir_lista_instrucciones(int);
+t_list* recibir_paquete_instrucciones(int);
+//t_list* recibir_lista_instrucciones(int);
 t_list * inicializar_tabla_segmentos(int);
 void inicializar_registros(int v[4]);
 int crear_conexion(char* ip, char* puerto);
@@ -109,7 +129,7 @@ void enviSar_entero(int valor, int socket_cliente, int cod_op);
 void recibir_consola(int);
 void atender_consola(int);
 void inicializarConfiguraciones(char* unaConfig);
-
+void iterator(instruccion*);
 
 int recibir_operacion(int);
 int iniciar_servidor(void);

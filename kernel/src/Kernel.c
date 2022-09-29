@@ -95,21 +95,18 @@ int conexionConConsola(){
 	int cliente_fd = esperar_cliente(server_fd);
 
 	t_list* listaQueContieneTamSegmento;
-
 	while (1) {
 		int cod_op = recibir_operacion(cliente_fd);
 		switch (cod_op) {
-			/*case KERNEL_PAQUETE_INSTRUCCIONES:
+			case KERNEL_PAQUETE_INSTRUCCIONES:
 				listaInstrucciones = list_create();
-				listaInstrucciones = recibir_paquete(cliente_fd);
+				listaInstrucciones = recibir_paquete_instrucciones(cliente_fd);
 				log_info(logger,"me llegaron las instrucciones");
-				//list_iterate(instrucciones, (void*) iterator);
+				list_iterate(listaInstrucciones, (void*) iterator);
 			break;
-			*/
 				case KERNEL_PAQUETE_TAMANIOS_SEGMENTOS:
 				listaQueContieneTamSegmento = list_create();
 				listaQueContieneTamSegmento = recibir_lista_enteros(cliente_fd);//Hacer que reciba paquete vectorDeEnteros
-
 				int tamanioDelSegmento = (int) list_get(listaQueContieneTamSegmento,3);
 				log_info(logger,"El tamanio del primer segmento es: %d",tamanioDelSegmento);
 				break;

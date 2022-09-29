@@ -26,6 +26,21 @@ typedef enum
 	KERNEL_MENSAJE_PEDIDO_VALOR_POR_TECLADO
 }op_code;
 
+typedef enum
+{
+	DISCO = 0,
+	PANTALLA = 1,
+	TECLADO = 2
+}dispositivos_IO;
+
+typedef enum
+{
+	AX,
+	BX,
+	CX,
+	DX
+}registros;
+
 typedef struct
 {
 	int size;
@@ -38,6 +53,7 @@ typedef struct
 	t_buffer* buffer;
 } t_paquete;
 
+//Estructura auxiliar de parametros, por las dudas
 typedef struct
 {
 	int valor;
@@ -49,10 +65,11 @@ typedef struct
 typedef struct
 {
 	char* identificador;
-	parametro* parametros;
+	//parametro* parametros;
+	int parametros[2];
 } instruccion;
 
-//Parece que hay que declarar las variables en el .c y en el .h
+//------------------ DECLARACION
 extern t_log* logger;
 extern t_config* config;
 extern char* ipKernel;
@@ -61,33 +78,38 @@ extern char** segmentos;
 extern int tiempoPantalla;
 extern int conexion;
 
+//------------------ DECLARACION FUNCIONES DE CONEXIONES
 int crear_conexion(char* ip, char* puerto);
 void enviar_mensaje(char*,int,int);
 t_paquete* crear_paquete(int);
-
-void inicializarConfiguraciones(char*);
-
 void agregar_a_paquete_instrucciones(t_paquete*, instruccion*, int);
 void agregar_a_paquete_segmentos(t_paquete*,void*,int);
 void enviarPaqueteTamanioDeSegmentos();
+void enviarListaInstrucciones(t_paquete*);
 
 void enviar_paquete(t_paquete* paquete, int socket_cliente);
 void eliminar_paquete(t_paquete* paquete);
 void liberar_conexion(int socket_cliente);
 
-
 void agregarAPaqueteSegmentos(char**,t_paquete*);
-FILE* abrirArchivo(char*);
-FILE* recorrerArchivo(char*,FILE*);
 void dividirInstruccionesAlPaquete(t_log*,t_paquete*,char**,instruccion*);
+
+int chequeoCantidadArchivos(int);
+void inicializarConfiguraciones(char*);
 
 int recibir_operacion(int);
 void recibir_mensaje(int);
 t_list* recibir_paquete(int);
 
+//------------------ DECLARACION FUNCIONES
+FILE* abrirArchivo(char*);
+FILE* recorrerArchivo(char*,FILE*);
+
 void imprimirValorPorPantalla();
 void solicitudIngresarValorPorTeclado();
 
+int chequeoDeRegistro(char*);
+int chequeoDeDispositivo(char*);
 
 
 #endif /* UTILS_H_ */

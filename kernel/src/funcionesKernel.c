@@ -18,6 +18,7 @@ La idea seria tener las siguientes funciones:
 t_log* logger;
 
 int socketServidor;
+t_list* listaInstrucciones;
 
 char * ipMemoria;
 char * puertoMemoria;
@@ -38,6 +39,7 @@ void enviar_entero(int valor, int socket_cliente, int cod_op) {
 	send(socket_cliente, &valor, sizeof(int), 0);
 } //probemos esto
 
+/*
 t_list* recibir_lista_instrucciones(int socket_cliente) {
 
 int size;
@@ -66,6 +68,37 @@ int size;
 	free(buffer);
 	return listaDeInstrucciones;
 }
+*/
+
+t_list* recibir_paquete_instrucciones(int socket_cliente)
+{
+	int size;
+	int desplazamiento = 0;
+	void * buffer;
+
+	t_list* listaDeInstrucciones = list_create();
+
+	int tamanioIdentificador;
+
+	buffer = recibir_buffer(&size, socket_cliente);
+
+	while(desplazamiento < size)
+	{
+		instruccion* unaInstruccion = malloc(sizeof(instruccion));
+		memcpy(&tamanioIdentificador, buffer + desplazamiento, sizeof(int));
+		desplazamiento+=sizeof(int);
+		unaInstruccion->identificador = malloc(tamanioIdentificador);
+		memcpy(unaInstruccion->identificador, buffer+desplazamiento, tamanioIdentificador);
+		desplazamiento+=tamanioIdentificador;
+		memcpy(unaInstruccion->parametros, buffer+desplazamiento, sizeof(int[2]));
+		desplazamiento+=sizeof(int[2]);
+		list_add(listaDeInstrucciones, unaInstruccion);// Despues de esto habria que agragarlas al pcb
+		//pcb->instrucciones = listaDeInstrucciones
+	}
+	free(buffer);
+	return listaDeInstrucciones;
+}
+
 
 t_list* recibir_lista_enteros(int socket_cliente) // me base en el recibir paquete del tp0
 {
@@ -286,6 +319,10 @@ void liberar_conexion(int socket_cliente)
 	close(socket_cliente);
 }
 
+void iterator(instruccion* instruccion){
+	log_info(logger,"%s", instruccion->identificador);
+}
+
 t_list * inicializar_tabla_segmentos(int socket_cliente) {
 	t_list * listaSegmentos = list_create();
 	listaSegmentos = recibir_lista_enteros(socket_cliente);
@@ -312,6 +349,8 @@ void inicializar_registros(int v[4]) {
 
 }
 
+
+
 //-------------------------HILOS---------------------------------
 
 int esperar_cliente(int socket_servidor)
@@ -325,7 +364,7 @@ int esperar_cliente(int socket_servidor)
 
 	return socket_cliente;
 }
-
+/*
 void recibir_consola(int servidor) {
 
 	while (1) {
@@ -342,7 +381,8 @@ void recibir_consola(int servidor) {
 	}
 
 }
-
+*/
+/*
 void atender_consola(int nuevo_cliente) {
 	t_pcb* PCB = malloc(sizeof(t_pcb));
 
@@ -371,4 +411,5 @@ void atender_consola(int nuevo_cliente) {
 
 //	sem_post(&pcbEnNew);
 }
+*/
 
