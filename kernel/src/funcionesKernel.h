@@ -41,7 +41,7 @@ typedef enum
 	DISCO = 0,
 	PANTALLA = 1,
 	TECLADO = 2
-}dispositivos_IO;
+} dispositivos_IO;
 
 typedef enum
 {
@@ -49,7 +49,12 @@ typedef enum
 	BX,
 	CX,
 	DX
-}registros;
+} registros;
+
+typedef struct {
+	t_queue* cola;
+	struct t_list_disp* next;
+} t_list_disp;
 
 
 /*

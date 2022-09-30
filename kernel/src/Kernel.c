@@ -2,6 +2,9 @@
 #include <stdlib.h>
 #include "funcionesKernel.h"
 
+char** dispositivos_io;
+char** tiempos_io;
+t_list_disp* colas_dispositivos;
 
 int main(int argc, char *argv[]) {
 	logger = log_create("kernel.log", "KERNEL", 1, LOG_LEVEL_INFO);
@@ -85,7 +88,9 @@ void inicializarConfiguraciones(char* unaConfig){
 	//dispositivos_io = config_get_array_value(config,"DISPOSITIVOS_IO")[1];
 //	tiempos_io = config_get_array_value(config,"TIEMPOS_IO");
 	//quantum_rr = config_get_int_value(config,"QUANTUM_RR");
-
+	dispositivos_io = config_get_array_value(config, "DISPOSITIVOS_IO");
+	tiempos_io = config_get_array_value(config, "TIEMPOS_IO");
+	colas_dispositivos = list_create();
 }
 
 int conexionConConsola(){
@@ -119,4 +124,42 @@ int conexionConConsola(){
 		}
 			}
 	  return EXIT_SUCCESS;
+}
+
+int obtener_indice_dispositivo(char* dispositivo) {
+	int tamanio = sizeof(dispositivos_io) / sizeof(dispositivos_io[0]);
+	for (int i = 0; i < tamanio; i ++) {
+		char* dispositivo_aux = dispositivos_io[i];
+		if (string_equals_ignore_case(dispositivo_aux, dispositivo)) {
+			return i;
+		}
+	}
+	return -1;
+}
+
+int obtener_tiempo_dispositivo_io(char* dispositivo) {
+	int indice = obtener_indice_dispositivo(dispositivo);
+	if (indice == -1) {
+		return -1;
+	}
+	return atoi(tiempos_io[indice]);
+}
+
+// Retorna indice de lista en la que la cola de dispositivos fue agregada
+//	en caso de que no se haya encontrado el indice solicitado por parametro
+
+// IN PROGRESS - Esta mal inicialiazada
+int encolar_dispositivo(int indice, char* dispositivo) {
+	t_queue* cola = list_get(colas_dispositivos, indice);
+	if (queue_is_empty(cola) || cola == NULL) {
+		t_list_disp* elemento_cola_dispositivo;
+		t_queue* cola_nueva = queue_create();
+		queue_push(cola_nueva, dispositivo);
+		elemento_cola_dispositivo->cola = cola_nueva;
+		elemento_cola_dispositivo->next = NULL;
+		// Pasar esto a una funcion secundaria
+		return list_add(colas_dispositivos, elemento_cola_dispositivo);
+	}
+	queue_push(cola, dispositivo);
+	return 0;
 }
