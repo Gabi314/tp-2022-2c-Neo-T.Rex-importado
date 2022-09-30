@@ -38,24 +38,26 @@ typedef enum {
 
 typedef enum
 {
-	DISCO = 0,
-	PANTALLA = 1,
-	TECLADO = 2
+	DISCO,
+	PANTALLA,
+	TECLADO
 } dispositivos_IO;
 
-typedef enum
+typedef struct
 {
-	AX,
-	BX,
-	CX,
-	DX
-} registros;
+	int AX;
+	int BX;
+	int CX;
+	int DX;
+} t_registros;
 
+
+// En principio, no hace falta ------------------------------------
 typedef struct {
 	t_queue* cola;
 	struct t_list_disp* next;
 } t_list_disp;
-
+// En principio, no hace falta ------------------------------------
 
 /*
 La idea seria tener las siguientes funciones:
@@ -103,7 +105,7 @@ typedef struct
 	int tamanioProceso; // se usa en memoria
 	t_list* instrucciones;
 	int program_counter;
-	char* registros[4]; // quedan como strings, al menos hasta cpu
+	t_registros registros ; // quedan como strings, al menos hasta cpu
 	t_list * tabla_segmentos; // cada elemento de la lista tendria un vector de dos posiciones (una para el tamanio del
 							// segmento y otra para el número o identificador de tabla de páginas asociado a cada uno)
 
@@ -148,9 +150,11 @@ extern char * puertoCpuInterrupt;
 extern char * puertoKernel;
 extern char * algoritmoPlanificacion;
 extern int gradoMultiprogramacionTotal;
-extern char* dispositivos_io;
-extern int tiempos_io[];
+extern char** dispositivos_io;
+extern char** tiempos_io;
+extern t_list colas_dispositivos_io;
 extern int quantum_rr;
+
 
 
 extern sem_t kernelSinFinalizar;

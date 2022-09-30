@@ -28,8 +28,8 @@ char * puertoCpuInterrupt;
 char* puertoKernel;
 char * algoritmoPlanificacion;
 int gradoMultiprogramacionTotal;
-char* dispositivos_io;
-int tiempos_io[];
+char** dispositivos_io;
+char** tiempos_io;
 int quantum_rr;
 
 sem_t kernelSinFinalizar;

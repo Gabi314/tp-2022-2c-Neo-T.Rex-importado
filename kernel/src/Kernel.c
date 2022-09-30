@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include "funcionesKernel.h"
 
-char** dispositivos_io;
-char** tiempos_io;
+//char** dispositivos_io;
+//char** tiempos_io;
 t_list_disp* colas_dispositivos;
 
 int main(int argc, char *argv[]) {
@@ -16,6 +16,7 @@ int main(int argc, char *argv[]) {
 
 	//sem_init(&kernelSinFinalizar,0,0);
 
+
 	inicializarConfiguraciones(argv[1]);
 	log_info(logger,"Iniciando conexion con consola");
 
@@ -23,6 +24,7 @@ int main(int argc, char *argv[]) {
 
 
 	conexionConConsola();
+
 /*
 	inicializar_colas();
 	inicializar_semaforos();
@@ -84,13 +86,13 @@ void inicializarConfiguraciones(char* unaConfig){
 	puertoCpuInterrupt = config_get_string_value(config, "PUERTO_CPU_INTERRUPT");
 	puertoKernel = config_get_string_value(config, "PUERTO_ESCUCHA"); //no lo usamos
 	algoritmoPlanificacion = config_get_string_value(config, "ALGORITMO_PLANIFICACION");
-	//gradoMultiprogramacionTotal = config_get_int_value(config, "GRADO_MAX_MULTIPROGRAMACION");
+	gradoMultiprogramacionTotal = config_get_int_value(config, "GRADO_MAX_MULTIPROGRAMACION");
 	//dispositivos_io = config_get_array_value(config,"DISPOSITIVOS_IO")[1];
 //	tiempos_io = config_get_array_value(config,"TIEMPOS_IO");
-	//quantum_rr = config_get_int_value(config,"QUANTUM_RR");
+	quantum_rr = config_get_int_value(config,"QUANTUM_RR");
 	dispositivos_io = config_get_array_value(config, "DISPOSITIVOS_IO");
 	tiempos_io = config_get_array_value(config, "TIEMPOS_IO");
-	colas_dispositivos = list_create();
+
 }
 
 int conexionConConsola(){
@@ -100,7 +102,39 @@ int conexionConConsola(){
 	int cliente_fd = esperar_cliente(server_fd);
 
 	t_list* listaQueContieneTamSegmento;
-	while (1) {
+
+	if (recibir_operacion(cliente_fd) == KERNEL_PAQUETE_TAMANIOS_SEGMENTOS){
+		listaQueContieneTamSegmento = list_create();
+		listaQueContieneTamSegmento = recibir_lista_enteros(cliente_fd);//Hacer que reciba paquete vectorDeEnteros
+		int tamanioDelSegmento = (int) list_get(listaQueContieneTamSegmento,3);
+		log_info(logger,"El tamanio del primer segmento es: %d",tamanioDelSegmento);
+
+		if (recibir_operacion(cliente_fd) == KERNEL_PAQUETE_INSTRUCCIONES){
+				listaInstrucciones = list_create();
+				listaInstrucciones = recibir_paquete_instrucciones(cliente_fd);
+				log_info(logger,"me llegaron las instrucciones");
+				list_iterate(listaInstrucciones, (void*) iterator);
+
+				enviar_mensaje("segmentos e instrucciones recibidos pibe", cliente_fd,KERNEL_MENSAJE_CONFIRMACION_RECEPCION_INSTRUCCIONES_SEGMENTOS);
+
+				}
+				else {
+					log_info(logger,"codigo de operacion incorrecto");
+				}
+	}
+	else {
+		log_info(logger,"codigo de operacion incorrecto");
+	}
+
+
+	if(recibir_operacion(cliente_fd) == -1){
+		log_error(logger, "La consola se desconecto. Finalizando Kernel");
+		return EXIT_FAILURE;
+	}
+
+
+
+/*	while (1) {
 		int cod_op = recibir_operacion(cliente_fd);
 		switch (cod_op) {
 			case KERNEL_PAQUETE_INSTRUCCIONES:
@@ -123,14 +157,19 @@ int conexionConConsola(){
 			break;
 		}
 			}
+
+	  */
 	  return EXIT_SUCCESS;
 }
 
+// [disco,pantalla,teclado]
+// [30,15,10]
+
 int obtener_indice_dispositivo(char* dispositivo) {
-	int tamanio = sizeof(dispositivos_io) / sizeof(dispositivos_io[0]);
+	int tamanio = sizeof(dispositivos_io); // / sizeof(dispositivos_io[0]);
 	for (int i = 0; i < tamanio; i ++) {
-		char* dispositivo_aux = dispositivos_io[i];
-		if (string_equals_ignore_case(dispositivo_aux, dispositivo)) {
+//		char* dispositivo_aux = dispositivos_io[i];
+		if (string_equals_ignore_case(dispositivos_io[i], dispositivo)) {
 			return i;
 		}
 	}
@@ -144,6 +183,9 @@ int obtener_tiempo_dispositivo_io(char* dispositivo) {
 	}
 	return atoi(tiempos_io[indice]);
 }
+
+
+// En principio, no hace falta -------------------------------------------------------
 
 // Retorna indice de lista en la que la cola de dispositivos fue agregada
 //	en caso de que no se haya encontrado el indice solicitado por parametro
@@ -163,3 +205,11 @@ int encolar_dispositivo(int indice, char* dispositivo) {
 	queue_push(cola, dispositivo);
 	return 0;
 }
+// En principio, no hace falta -------------------------------------------------------
+
+
+
+
+
+
+
