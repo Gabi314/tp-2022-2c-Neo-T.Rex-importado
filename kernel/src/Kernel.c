@@ -2,9 +2,7 @@
 #include <stdlib.h>
 #include "funcionesKernel.h"
 
-//char** dispositivos_io;
-//char** tiempos_io;
-t_list_disp* colas_dispositivos;
+t_list* lista_dispositivos;
 
 int main(int argc, char *argv[]) {
 	logger = log_create("kernel.log", "KERNEL", 1, LOG_LEVEL_INFO);
@@ -16,8 +14,10 @@ int main(int argc, char *argv[]) {
 
 	//sem_init(&kernelSinFinalizar,0,0);
 
+	// Inicializaciones
+	inicializar_configuraciones(argv[1]);
+	inicializar_listas_y_colas();
 
-	inicializarConfiguraciones(argv[1]);
 	log_info(logger,"Iniciando conexion con consola");
 
 	//socketServidor = iniciar_servidor();
@@ -71,9 +71,7 @@ int main(int argc, char *argv[]) {
 
 }
 
-
-
-void inicializarConfiguraciones(char* unaConfig){
+void inicializar_configuraciones(char* unaConfig){
 	t_config* config = config_create(unaConfig);
 	if(config  == NULL){
 		printf("Error leyendo archivo de configuración. \n");
@@ -87,12 +85,13 @@ void inicializarConfiguraciones(char* unaConfig){
 	puertoKernel = config_get_string_value(config, "PUERTO_ESCUCHA"); //no lo usamos
 	algoritmoPlanificacion = config_get_string_value(config, "ALGORITMO_PLANIFICACION");
 	gradoMultiprogramacionTotal = config_get_int_value(config, "GRADO_MAX_MULTIPROGRAMACION");
-	//dispositivos_io = config_get_array_value(config,"DISPOSITIVOS_IO")[1];
-//	tiempos_io = config_get_array_value(config,"TIEMPOS_IO");
 	quantum_rr = config_get_int_value(config,"QUANTUM_RR");
 	dispositivos_io = config_get_array_value(config, "DISPOSITIVOS_IO");
 	tiempos_io = config_get_array_value(config, "TIEMPOS_IO");
+}
 
+void inicializar_listas_y_colas() {
+	inicializar_lista_dispositivos();
 }
 
 int conexionConConsola(){
@@ -106,6 +105,7 @@ int conexionConConsola(){
 	if (recibir_operacion(cliente_fd) == KERNEL_PAQUETE_TAMANIOS_SEGMENTOS){
 		listaQueContieneTamSegmento = list_create();
 		listaQueContieneTamSegmento = recibir_lista_enteros(cliente_fd);//Hacer que reciba paquete vectorDeEnteros
+		// Y si usamos la funcion "atoi()"?
 		int tamanioDelSegmento = (int) list_get(listaQueContieneTamSegmento,3);
 		log_info(logger,"El tamanio del primer segmento es: %d",tamanioDelSegmento);
 
@@ -162,9 +162,34 @@ int conexionConConsola(){
 	  return EXIT_SUCCESS;
 }
 
+/* Aca inicializamos una lista con elementos que contienen:
+ * - dispositivo: nombre del dispositivo
+ * - tiempo: tiempo del dispositivo
+ * - cola_procesos: cola de los procesos que desean ejecutar ese dispositivo
+ *
+ * En caso de querer ejecutar un dispositivo, buscamos en lista_dispositivos el elemento
+ * que matchee con el dispositivo deseado y desde ese elemento podemos obtener el tiempo
+ * de uso y la disponibilidad del mismo con respecto a posibles otros procesos
+ * que tambien desean usarlo.
+ */
+void inicializar_lista_dispositivos() {
+	if (sizeof(dispositivos_io) == sizeof(tiempos_io)) {
+		for (int i = 0; i < sizeof(dispositivos_io); i++) {
+			t_elem_disp* elemento_nuevo = malloc(sizeof(t_elem_disp*));
+			elemento_nuevo->dispositivo = dispositivos_io[i];
+			elemento_nuevo->tiempo = atoi(tiempos_io[i]);
+			elemento_nuevo->cola_procesos = queue_create();
+			list_add(lista_dispositivos, elemento_nuevo);
+		}
+	}
+}
+
+// En principio, no hace falta -------------------------------------------------------
+
 // [disco,pantalla,teclado]
 // [30,15,10]
 
+/*
 int obtener_indice_dispositivo(char* dispositivo) {
 	int tamanio = sizeof(dispositivos_io); // / sizeof(dispositivos_io[0]);
 	for (int i = 0; i < tamanio; i ++) {
@@ -183,14 +208,13 @@ int obtener_tiempo_dispositivo_io(char* dispositivo) {
 	}
 	return atoi(tiempos_io[indice]);
 }
-
-
-// En principio, no hace falta -------------------------------------------------------
+*/
 
 // Retorna indice de lista en la que la cola de dispositivos fue agregada
 //	en caso de que no se haya encontrado el indice solicitado por parametro
 
 // IN PROGRESS - Esta mal inicialiazada
+/*
 int encolar_dispositivo(int indice, char* dispositivo) {
 	t_queue* cola = list_get(colas_dispositivos, indice);
 	if (queue_is_empty(cola) || cola == NULL) {
@@ -205,6 +229,7 @@ int encolar_dispositivo(int indice, char* dispositivo) {
 	queue_push(cola, dispositivo);
 	return 0;
 }
+*/
 // En principio, no hace falta -------------------------------------------------------
 
 

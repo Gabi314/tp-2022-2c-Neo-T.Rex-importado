@@ -54,9 +54,11 @@ typedef struct
 
 // En principio, no hace falta ------------------------------------
 typedef struct {
-	t_queue* cola;
-	struct t_list_disp* next;
-} t_list_disp;
+	char* dispositivo;
+	long tiempo;
+	t_queue* cola_procesos;
+	struct t_elem_disp* next;
+} t_elem_disp;
 // En principio, no hace falta ------------------------------------
 
 /*
@@ -135,7 +137,9 @@ int esperar_cliente(int socket_servidor);
 void enviSar_entero(int valor, int socket_cliente, int cod_op);
 void recibir_consola(int);
 void atender_consola(int);
-void inicializarConfiguraciones(char* unaConfig);
+void inicializar_configuraciones(char* unaConfig);
+void inicializar_listas_y_colas();
+void inicializar_lista_dispositivos();
 void iterator(instruccion*);
 
 int recibir_operacion(int);
