@@ -31,15 +31,26 @@ int gradoMultiprogramacionTotal;
 char** dispositivos_io;
 char** tiempos_io;
 int quantum_rr;
+int identificadores_pcb;
+
+t_queue* colaNew;
+t_queue* colaReadyFIFO;
+t_queue* colaReadyRR;
+t_queue* colaBlockedPantalla;
+t_queue* colaBlockedTeclado;
+t_list* listaDeColasDispositivos;
+
 
 sem_t kernelSinFinalizar;
+sem_t gradoDeMultiprogramacion;
+pthread_mutex_t mutexNew;
 
 void enviar_entero(int valor, int socket_cliente, int cod_op) {
 	send(socket_cliente, &cod_op, sizeof(int), 0);
 	send(socket_cliente, &valor, sizeof(int), 0);
 } //probemos esto
 
-/*
+
 t_list* recibir_lista_instrucciones(int socket_cliente) {
 
 int size;
@@ -68,7 +79,7 @@ int size;
 	free(buffer);
 	return listaDeInstrucciones;
 }
-*/
+
 
 t_list* recibir_paquete_instrucciones(int socket_cliente)
 {
@@ -322,7 +333,7 @@ void liberar_conexion(int socket_cliente)
 void iterator(instruccion* instruccion){
 	log_info(logger,"%s", instruccion->identificador);
 }
-
+/*
 t_list * inicializar_tabla_segmentos(int socket_cliente) {
 	t_list * listaSegmentos = list_create();
 	listaSegmentos = recibir_lista_enteros(socket_cliente);
@@ -330,23 +341,25 @@ t_list * inicializar_tabla_segmentos(int socket_cliente) {
 	int i = 0;
 
 	while (i<list_size(listaSegmentos)) {
-		int elemento[2];
-		elemento[0] = 0; // identificador de TP asociado
-		elemento[1] = list_remove(listaSegmentos,0); // tamanio del segmento
+		t_tabla_segmentos elemento;
+
+		elemento.num_segmento = i;
+		elemento.num_tabla_paginas = 0; // identificador de TP asociado
+		elemento.tam_segmento = list_remove(listaSegmentos,0); // tamanio del segmento
 
 		list_add(tablaSegmentos,elemento);
+
 		i++;
 	}
 	return tablaSegmentos;
 }
+*/  //ver esto
 
-void inicializar_registros(int v[4]) {
-	int i=0;
-	while (i<4){
-		v[i] = 0;
-		i++;
-	}
-
+void inicializar_registros(t_registros registros) {
+	registros.AX = 0;
+	registros.BX = 0;
+	registros.CX = 0;
+	registros.DX = 0;
 }
 
 
@@ -364,7 +377,15 @@ int esperar_cliente(int socket_servidor)
 
 	return socket_cliente;
 }
-/*
+
+
+int get_identificador(){
+	identificadores_pcb++;
+	return identificadores_pcb;
+}
+
+
+
 void recibir_consola(int servidor) {
 
 	while (1) {
@@ -381,22 +402,22 @@ void recibir_consola(int servidor) {
 	}
 
 }
-*/
-/*
+
+
 void atender_consola(int nuevo_cliente) {
 	t_pcb* PCB = malloc(sizeof(t_pcb));
 
 	log_info(logger,"[atender_consola]recibimos las instrucciones del cliente %d!", nuevo_cliente);
 
 
-	PCB->idProceso = 0; //poner un contador
-	PCB->tamanioProceso = 1; // inicializar bien en caso de usarlo
+	PCB->idProceso = get_identificador();
+	PCB->tamanioProceso = sizeof(t_pcb) + 5 * sizeof(int) + sizeof(PCB->instrucciones) + sizeof(PCB->registros) + sizeof(PCB->tabla_segmentos) ;// consultar si lo hicimos bien
 	PCB->instrucciones = list_create();
 	PCB->instrucciones = recibir_lista_instrucciones(nuevo_cliente);
 	PCB->program_counter = 0;
 	inicializar_registros(PCB->registros);
 	PCB->tabla_segmentos = list_create();
-	PCB->tabla_segmentos = inicializar_tabla_segmentos(nuevo_cliente); // aca usariamos el recibir_lista_enteros
+	//PCB->tabla_segmentos = inicializar_tabla_segmentos(nuevo_cliente); // aca usariamos el recibir_lista_enteros
 	PCB->socket = nuevo_cliente;
 	PCB->estado = NEW;
 
@@ -404,12 +425,70 @@ void atender_consola(int nuevo_cliente) {
 
 
 	//pthread_mutex_lock(&encolandoPcb);
-//	agregarANew(PCB);
-//	pthread_mutex_unlock(&encolandoPcb);
+	//agregarANew(PCB);
+	//pthread_mutex_unlock(&encolandoPcb);
 
-//	log_info(logger,"[atender_consola] despertamos a asignar_memoria()");
+	//log_info(logger,"[atender_consola] despertamos a asignar_memoria()");
 
-//	sem_post(&pcbEnNew);
+	//sem_post(&pcbEnNew);
 }
-*/
 
+
+
+
+
+void agregarANew(t_pcb* proceso) {
+
+	pthread_mutex_lock(&mutexNew);
+	queue_push(colaNew, proceso);
+	log_info(logger, "[NEW] Entra el proceso de PID: %d a la cola.",
+			proceso->idProceso);
+	log_info(logger,"el tamanio de la cola de new es %d", queue_size(colaNew));
+	pthread_mutex_unlock(&mutexNew);
+}
+
+t_pcb* sacarDeNew() {
+
+	pthread_mutex_lock(&mutexNew);
+	t_pcb* proceso = queue_pop(colaNew);
+	log_info(logger, "[NEW] Se saca el proceso de PID: %d de la cola",
+			proceso->idProceso);
+	pthread_mutex_unlock(&mutexNew);
+
+	return proceso;
+}
+
+
+
+void asignar_memoria() {
+
+	while (1) {
+
+		//sem_wait(&pcbEnNew);
+		//sem_wait(&gradoDeMultiprogramacion);
+		t_pcb* proceso;
+		log_info(logger, "[asignar_memoria] :se desperto ");
+
+		//pthread_mutex_lock(&asignarMemoria);
+
+		proceso = sacarDeNew();
+
+		if (!strcmp(algoritmoPlanificacion, "FIFO")) {
+			queue_push(colaReadyFIFO,proceso);
+		} else {
+			if (!strcmp(algoritmoPlanificacion, "RR")) {
+				queue_push(colaReadyRR,proceso);
+			} else {
+				log_info(logger, "Algoritmo invalido");
+			}
+		}
+		//despues se agregaria el case para el multicolas que lo enviaria a la cola de RR
+		//para que sea un switch habria que tener un conversor del string que leemos al enum de algoritmos que tenemos
+
+
+		//pthread_mutex_unlock(&asignarMemoria);
+
+		log_info(logger,"[asignar_memoria]: desde asignar_memoria despertamos a readyAExe");
+	}
+
+}

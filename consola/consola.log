@@ -143,3 +143,16 @@
 [INFO] 23:12:57:026 CONSOLA/(10998:10998): Se leyo el archivo correctamente
 [INFO] 12:30:43:601 CONSOLA/(5331:5331): Config creado
 [INFO] 12:30:43:615 CONSOLA/(5331:5331): Se leyo el archivo correctamente
+[ERROR] 20:23:44:074 CONSOLA/(3525:3525): Falta un parametro
+[INFO] 20:24:42:524 CONSOLA/(3542:3542): Config creado
+[ERROR] 20:24:42:528 CONSOLA/(3542:3542): No se lee el archivo
+[INFO] 20:27:11:213 CONSOLA/(3582:3582): Config creado
+[INFO] 20:27:11:219 CONSOLA/(3582:3582): Se leyo el archivo correctamente
+[INFO] 20:28:28:380 CONSOLA/(3647:3647): Config creado
+[INFO] 20:28:28:382 CONSOLA/(3647:3647): Se leyo el archivo correctamente
+[INFO] 01:45:36:491 CONSOLA/(1729:1729): Config creado
+[INFO] 01:45:36:494 CONSOLA/(1729:1729): Se leyo el archivo correctamente
+[INFO] 01:46:48:945 CONSOLA/(1844:1844): Config creado
+[INFO] 01:46:48:946 CONSOLA/(1844:1844): Se leyo el archivo correctamente
+[INFO] 02:18:42:585 CONSOLA/(2663:2663): Config creado
+[INFO] 02:18:42:586 CONSOLA/(2663:2663): Se leyo el archivo correctamente

@@ -12,24 +12,25 @@ int main(int argc, char *argv[]) {
 	    return EXIT_FAILURE;
 	}
 
+
 	//sem_init(&kernelSinFinalizar,0,0);
 
 	// Inicializaciones
 	inicializar_configuraciones(argv[1]);
-	inicializar_listas_y_colas();
+	identificadores_pcb = 0;
+	//inicializar_listas_y_colas(); Esto termina kernel
 
 	log_info(logger,"Iniciando conexion con consola");
 
 	//socketServidor = iniciar_servidor();
 
-
-	conexionConConsola();
-
-/*
 	inicializar_colas();
 	inicializar_semaforos();
 
+	conexionConConsola();
 
+
+/*
 	pthread_t hilo0;
 	pthread_t hiloAdmin[6];
 	int hiloAdminCreado[6];
@@ -234,6 +235,49 @@ int encolar_dispositivo(int indice, char* dispositivo) {
 
 
 
+void inicializar_colas(){
+	colaNew = queue_create();
+	colaReadyFIFO = queue_create();
+	colaReadyRR = queue_create();
+	colaBlockedPantalla = queue_create();
+	colaBlockedTeclado = queue_create();
+	listaDeColasDispositivos = list_create();
+	//colaExit = list_create(); la necesitamos?
+
+}
+
+void inicializar_semaforos(){
+	/*
+	sem_init(&pcbEnNew,0,0);
+	sem_init(&pcbEnReady,0,0);
+	sem_init(&cpuDisponible,0,1);
+
+	sem_init(&desalojarProceso,0,0);
+	sem_init(&procesoEjecutandose,0,0);
+	sem_init(&procesoDesalojadoSem,0,1);
+	sem_init(&pcbInterrupt,0,0);
+	sem_init(&pcbBlocked,0,0);
+	sem_init(&pcbExit,0,0);
+	sem_init(&kernelSinFinalizar,0,0);
+
+	pthread_mutex_init(&asignarMemoria,NULL);
+	pthread_mutex_init(&obtenerProceso,NULL);
+	pthread_mutex_init(&ejecucion,NULL);
+	pthread_mutex_init(&procesoExit,NULL);
+	pthread_mutex_init(&consolasExit,NULL);
+	pthread_mutex_init(&desalojandoProceso,NULL);
+	pthread_mutex_init(&consolaNueva,NULL);
+	pthread_mutex_init(&encolandoPcb,NULL);
+	pthread_mutex_init(&mutexExit,NULL);
+	pthread_mutex_init(&mutexInterrupt,NULL);
+	pthread_mutex_init(&mutexIO,NULL);
+	pthread_mutex_init(&bloqueandoProceso,NULL);
+	*/
+	sem_init(&gradoDeMultiprogramacion,0,gradoMultiprogramacionTotal);
+
+	pthread_mutex_init(&mutexNew,NULL);
+
+}
 
 
 

@@ -51,11 +51,26 @@ typedef struct
 	int DX;
 } t_registros;
 
+extern t_queue* colaNew;
+extern t_queue* colaReadyFIFO;
+extern t_queue* colaReadyRR;
+extern t_queue* colaBlockedPantalla;
+extern t_queue* colaBlockedTeclado;
+extern t_list* listaDeColasDispositivos;
+
+
+typedef struct{
+	int num_segmento;
+	int tam_segmento;
+	int num_tabla_paginas;
+	struct t_tabla_segmentos* next;
+}t_tabla_segmentos;
+
 
 // En principio, no hace falta ------------------------------------
 typedef struct {
 	char* dispositivo;
-	long tiempo;
+	int tiempo;
 	t_queue* cola_procesos;
 	struct t_elem_disp* next;
 } t_elem_disp;
@@ -100,6 +115,7 @@ typedef struct
 } instruccion;
 
 typedef enum estado { NEW, READY, BLOCKED, EXEC, TERMINATED } t_estado;
+typedef enum algoritmo{FIFO,RR} t_algoritmo_pcb;
 
 typedef struct
 {
@@ -107,10 +123,9 @@ typedef struct
 	int tamanioProceso; // se usa en memoria
 	t_list* instrucciones;
 	int program_counter;
-	t_registros registros ; // quedan como strings, al menos hasta cpu
-	t_list * tabla_segmentos; // cada elemento de la lista tendria un vector de dos posiciones (una para el tamanio del
+	t_registros registros ;
+	t_list* tabla_segmentos; // cada elemento de la lista tendria un vector de dos posiciones (una para el tamanio del
 							// segmento y otra para el número o identificador de tabla de páginas asociado a cada uno)
-
 	int socket;
 	t_estado estado;
 } t_pcb;
@@ -123,7 +138,7 @@ t_list* recibir_paquete(int);
 t_list* recibir_paquete_instrucciones(int);
 //t_list* recibir_lista_instrucciones(int);
 t_list * inicializar_tabla_segmentos(int);
-void inicializar_registros(int v[4]);
+void inicializar_registros(t_registros registros);
 int crear_conexion(char* ip, char* puerto);
 void enviar_mensaje(char* mensaje, int socket_cliente, int cod_op);
 t_paquete* crear_paquete(int);
@@ -137,14 +152,22 @@ int esperar_cliente(int socket_servidor);
 void enviSar_entero(int valor, int socket_cliente, int cod_op);
 void recibir_consola(int);
 void atender_consola(int);
+int get_identificador();
+
 void inicializar_configuraciones(char* unaConfig);
 void inicializar_listas_y_colas();
 void inicializar_lista_dispositivos();
+void inicializar_colas();
+void inicializar_semaforos();
+
 void iterator(instruccion*);
 
 int recibir_operacion(int);
 int iniciar_servidor(void);
 int conexionConConsola();
+
+void agregarANew(t_pcb* proceso);
+t_pcb* sacarDeNew();
 
 extern char * ipMemoria;
 extern char * puertoMemoria;
@@ -159,8 +182,11 @@ extern char** tiempos_io;
 extern t_list colas_dispositivos_io;
 extern int quantum_rr;
 
-
+extern int identificadores_pcb;
 
 extern sem_t kernelSinFinalizar;
+extern sem_t gradoDeMultiprogramacion;
+extern pthread_mutex_t mutexNew;
+
 
 #endif /* UTILS_H_ */
