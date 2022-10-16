@@ -72,7 +72,6 @@ typedef struct {
 	char* dispositivo;
 	int tiempo;
 	t_queue* cola_procesos;
-	struct t_elem_disp* next;
 } t_elem_disp;
 // En principio, no hace falta ------------------------------------
 

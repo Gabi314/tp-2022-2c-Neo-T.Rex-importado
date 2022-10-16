@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "funcionesKernel.h"
 
-t_list* lista_dispositivos;
+
 
 int main(int argc, char *argv[]) {
 	logger = log_create("kernel.log", "KERNEL", 1, LOG_LEVEL_INFO);
@@ -18,7 +18,10 @@ int main(int argc, char *argv[]) {
 	// Inicializaciones
 	inicializar_configuraciones(argv[1]);
 	identificadores_pcb = 0;
-	//inicializar_listas_y_colas(); Esto termina kernel
+
+
+
+//	inicializar_listas_y_colas();
 
 	log_info(logger,"Iniciando conexion con consola");
 
@@ -93,6 +96,7 @@ void inicializar_configuraciones(char* unaConfig){
 
 void inicializar_listas_y_colas() {
 	inicializar_lista_dispositivos();
+	int i = 0;
 }
 
 int conexionConConsola(){
@@ -174,13 +178,14 @@ int conexionConConsola(){
  * que tambien desean usarlo.
  */
 void inicializar_lista_dispositivos() {
-	if (sizeof(dispositivos_io) == sizeof(tiempos_io)) {
-		for (int i = 0; i < sizeof(dispositivos_io); i++) {
-			t_elem_disp* elemento_nuevo = malloc(sizeof(t_elem_disp*));
+	listaDeColasDispositivos = list_create();
+	if (string_array_size(dispositivos_io) == string_array_size(tiempos_io)) {
+		for (int i = 0; i < string_array_size(dispositivos_io); i++) {
+			t_elem_disp* elemento_nuevo = malloc(sizeof(t_elem_disp));
 			elemento_nuevo->dispositivo = dispositivos_io[i];
 			elemento_nuevo->tiempo = atoi(tiempos_io[i]);
 			elemento_nuevo->cola_procesos = queue_create();
-			list_add(lista_dispositivos, elemento_nuevo);
+			list_add(listaDeColasDispositivos,elemento_nuevo);
 		}
 	}
 }
@@ -242,7 +247,6 @@ void inicializar_colas(){
 	colaBlockedPantalla = queue_create();
 	colaBlockedTeclado = queue_create();
 	listaDeColasDispositivos = list_create();
-	//colaExit = list_create(); la necesitamos?
 
 }
 
