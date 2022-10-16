@@ -16,6 +16,7 @@ int chequeoCantidadArchivos(int argc){
 		    log_error(logger,"Falta un parametro");
 		    return EXIT_FAILURE;
 		}
+	return 1;
 }
 
 void inicializarConfiguraciones(char* pathConfig){
@@ -127,6 +128,8 @@ int chequeoDeRegistro(char* registro){
 	return CX;
 	if(!strcmp(registro,"DX"))
 	return DX;
+
+	return -1;
 }
 
 int chequeoDeDispositivo(char* registro){
@@ -136,6 +139,8 @@ int chequeoDeDispositivo(char* registro){
 	return PANTALLA;
 	if(!strcmp(registro,"TECLADO"))
 	return TECLADO;
+
+	return -1;
 }
 
 void agregarAPaqueteSegmentos(char** segmentos,t_paquete* paquete){
@@ -154,30 +159,21 @@ void enviarListaInstrucciones(t_paquete* paquete){
 
 
 
-void imprimirValorPorPantalla(){//Puede estar en un hilo
+void imprimirValorPorPantalla(int cod_op){//Puede estar en un hilo
 	t_list* valorAImprimir = list_create();
 
-	int cod_op = recibir_operacion(conexion);
-
-	if(cod_op == KERNEL_PAQUETE_VALOR_A_IMPRIMIR){
-		valorAImprimir = recibir_paquete(conexion);
-	}
+	valorAImprimir = recibir_paquete(conexion);
 
 	usleep(tiempoPantalla);
 
-	log_info(logger,"Se imprime el valor %d por pantalla a pedido del kernel", list_get(valorAImprimir,0));
+	log_info(logger,"Se imprime el valor %d por pantalla a pedido del kernel",(int) list_get(valorAImprimir,0));
 	list_clean(valorAImprimir);
 
 	enviar_mensaje("Se imprimio el valor del registro", conexion, KERNEL_MENSAJE_VALOR_IMPRESO);
-
 }
 
-void solicitudIngresarValorPorTeclado(){//otro hilo
-	int cod_op = recibir_operacion(conexion);
-
-	if(cod_op == KERNEL_MENSAJE_PEDIDO_VALOR_POR_TECLADO){
-		recibir_mensaje(conexion);
-	}
+void solicitudIngresarValorPorTeclado(int cod_op){
+	recibir_mensaje(conexion);
 
 	int valorIngresadoPorTeclado = 0;
 
@@ -185,8 +181,24 @@ void solicitudIngresarValorPorTeclado(){//otro hilo
 	scanf("%d",&valorIngresadoPorTeclado);
 
 	log_info(logger,"Se ingreso el valor %d correctamente",valorIngresadoPorTeclado);
+	//Falta enviarlo!!!!
+}
 
-	//Falta enviarlo
+void atenderPeticionesKernel(){
+	int noFinalizar = 1;
+	while(noFinalizar){
+		int cod_op = recibir_operacion(conexion);
+
+		if(cod_op == KERNEL_PAQUETE_VALOR_A_IMPRIMIR){
+			imprimirValorPorPantalla(cod_op);
+		}else if(cod_op == KERNEL_MENSAJE_PEDIDO_VALOR_POR_TECLADO){
+			solicitudIngresarValorPorTeclado(cod_op);
+		}else if(cod_op == KERNEL_MENSAJE_FINALIZAR_CONSOLA){
+			recibir_mensaje(conexion);
+			noFinalizar = 0;
+		}
+
+	}
 }
 
 

@@ -1,6 +1,9 @@
 #include "funcionesConsola.h"
+#include <pthread.h>
 
 int main(int argc, char *argv[]) {
+	//pthread_t hiloConexionKernel;
+
 
 	logger = log_create("./consola.log","CONSOLA",true,LOG_LEVEL_INFO);
 	//Chequeo cantidad de archivos recibidos en el main
@@ -11,6 +14,7 @@ int main(int argc, char *argv[]) {
 
 	// Creamos una conexión hacia el servidor
 	conexion = crear_conexion(ipKernel, puertoKernel);
+	//pthread_create(&hiloConexionKernel, NULL,(void*) enviarPaqueteTamanioDeSegmentos, ipKernel);
 
 	//Envio los tamanios de segmentos recibidos por config
 	enviarPaqueteTamanioDeSegmentos();
@@ -29,7 +33,9 @@ int main(int argc, char *argv[]) {
 	fclose(archivo);
 	if (contenido != NULL) //valida si contenido es NULL
 	free(contenido);
-	//Hasta aca
+
+	atenderPeticionesKernel();
+
 }
 
 

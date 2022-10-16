@@ -30,10 +30,10 @@ typedef enum {
 	KERNEL_PAQUETE_VALOR_A_IMPRIMIR,
 	KERNEL_MENSAJE_VALOR_IMPRESO,
 	KERNEL_MENSAJE_DESBLOQUEAR_TECLADO,
-	KERNEL_MENSAJE_CONFIRMACION_RECEPCION_INSTRUCCIONES_SEGMENTOS,
+	KERNEL_MENSAJE_FINALIZAR_CONSOLA,
 	//KERNEL_MENSAJE_PEDIDO_IMPRESION_POR_PANTALLA, Me parece que no serviria mandar un mensaje, mandamos el valor a imprimir de una y listo
 	KERNEL_MENSAJE_DESBLOQUEO_TECLADO,
-	KERNEL_PAQUETE_VALOR_RECIBIDO_DE_TECLADO
+	KERNEL_PAQUETE_VALOR_RECIBIDO_DE_TECLADO,
 }op_code;
 
 typedef enum
@@ -121,6 +121,7 @@ extern int socketServidor;
 t_list* recibir_lista_enteros(int socket_cliente);
 t_list* recibir_paquete(int);
 t_list* recibir_paquete_instrucciones(int);
+void recibir_mensaje(int);
 //t_list* recibir_lista_instrucciones(int);
 t_list * inicializar_tabla_segmentos(int);
 void inicializar_registros(int v[4]);

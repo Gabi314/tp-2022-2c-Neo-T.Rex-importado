@@ -23,7 +23,8 @@ typedef enum
 	KERNEL_PAQUETE_INSTRUCCIONES,
 	KERNEL_PAQUETE_VALOR_A_IMPRIMIR,
 	KERNEL_MENSAJE_VALOR_IMPRESO,
-	KERNEL_MENSAJE_PEDIDO_VALOR_POR_TECLADO
+	KERNEL_MENSAJE_PEDIDO_VALOR_POR_TECLADO,
+	KERNEL_MENSAJE_FINALIZAR_CONSOLA
 }op_code;
 
 typedef enum
@@ -105,11 +106,12 @@ t_list* recibir_paquete(int);
 FILE* abrirArchivo(char*);
 FILE* recorrerArchivo(char*,FILE*);
 
-void imprimirValorPorPantalla();
-void solicitudIngresarValorPorTeclado();
+void imprimirValorPorPantalla(int);
+void solicitudIngresarValorPorTeclado(int);
 
 int chequeoDeRegistro(char*);
 int chequeoDeDispositivo(char*);
+void atenderPeticionesKernel();
 
 
 #endif /* UTILS_H_ */

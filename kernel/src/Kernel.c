@@ -4,6 +4,7 @@
 
 t_list* lista_dispositivos;
 
+
 int main(int argc, char *argv[]) {
 	logger = log_create("kernel.log", "KERNEL", 1, LOG_LEVEL_INFO);
 
@@ -16,7 +17,7 @@ int main(int argc, char *argv[]) {
 
 	// Inicializaciones
 	inicializar_configuraciones(argv[1]);
-	inicializar_listas_y_colas();
+	//inicializar_listas_y_colas();
 
 	log_info(logger,"Iniciando conexion con consola");
 
@@ -84,7 +85,7 @@ void inicializar_configuraciones(char* unaConfig){
 	puertoCpuInterrupt = config_get_string_value(config, "PUERTO_CPU_INTERRUPT");
 	puertoKernel = config_get_string_value(config, "PUERTO_ESCUCHA"); //no lo usamos
 	algoritmoPlanificacion = config_get_string_value(config, "ALGORITMO_PLANIFICACION");
-	gradoMultiprogramacionTotal = config_get_int_value(config, "GRADO_MAX_MULTIPROGRAMACION");
+	gradoMultiprogramacionTotal = config_get_int_value(config, "GRADO_MAX_MULTIPROGRAMACION"); //me parece que no funcionan los get int
 	quantum_rr = config_get_int_value(config,"QUANTUM_RR");
 	dispositivos_io = config_get_array_value(config, "DISPOSITIVOS_IO");
 	tiempos_io = config_get_array_value(config, "TIEMPOS_IO");
@@ -95,45 +96,60 @@ void inicializar_listas_y_colas() {
 }
 
 int conexionConConsola(){
+	static pthread_mutex_t mutexMensajes;
 
 	int server_fd = iniciar_servidor();
 	log_info(logger, "Kernel listo para recibir a consola");
 	int cliente_fd = esperar_cliente(server_fd);
 
-	t_list* listaQueContieneTamSegmento;
+	t_list *listaQueContieneTamSegmento;
 
-	if (recibir_operacion(cliente_fd) == KERNEL_PAQUETE_TAMANIOS_SEGMENTOS){
+	if (recibir_operacion(cliente_fd) == KERNEL_PAQUETE_TAMANIOS_SEGMENTOS) {
 		listaQueContieneTamSegmento = list_create();
-		listaQueContieneTamSegmento = recibir_lista_enteros(cliente_fd);//Hacer que reciba paquete vectorDeEnteros
-		// Y si usamos la funcion "atoi()"?
-		int tamanioDelSegmento = (int) list_get(listaQueContieneTamSegmento,3);
-		log_info(logger,"El tamanio del primer segmento es: %d",tamanioDelSegmento);
+		listaQueContieneTamSegmento = recibir_lista_enteros(cliente_fd); //Hacer que reciba paquete vectorDeEnteros// Muy dificil mandar un vector dinamico, la lista la pueden usar como quieran
+		// Y si usamos la funcion "atoi()"? //No entiendo para que, atoi te convierte string a entero
+		int tamanioDelSegmento = (int) list_get(listaQueContieneTamSegmento, 3);
+		log_info(logger, "El tamanio del primer segmento es: %d",
+				tamanioDelSegmento);
 
-		if (recibir_operacion(cliente_fd) == KERNEL_PAQUETE_INSTRUCCIONES){
-				listaInstrucciones = list_create();
-				listaInstrucciones = recibir_paquete_instrucciones(cliente_fd);
-				log_info(logger,"me llegaron las instrucciones");
-				list_iterate(listaInstrucciones, (void*) iterator);
+		if (recibir_operacion(cliente_fd) == KERNEL_PAQUETE_INSTRUCCIONES) {
+			listaInstrucciones = list_create();
+			listaInstrucciones = recibir_paquete_instrucciones(cliente_fd);
+			log_info(logger, "me llegaron las instrucciones");
+			list_iterate(listaInstrucciones, (void*) iterator);
 
-				enviar_mensaje("segmentos e instrucciones recibidos pibe", cliente_fd,KERNEL_MENSAJE_CONFIRMACION_RECEPCION_INSTRUCCIONES_SEGMENTOS);
+			//enviar_mensaje("segmentos e instrucciones recibidos pibe", cliente_fd,KERNEL_MENSAJE_CONFIRMACION_RECEPCION_INSTRUCCIONES_SEGMENTOS);
+			//me parece que no haria falta con loguear que se recibieron ya alcanza
+			pthread_mutex_lock(&mutexMensajes);
+			//Esto es una prueba
+			t_paquete* paquete = crear_paquete(KERNEL_PAQUETE_VALOR_A_IMPRIMIR);
+			int valorAImprimirPrueba = 3;
+			agregar_a_paquete(paquete, &valorAImprimirPrueba, sizeof(int));
+			enviar_paquete(paquete, cliente_fd);
+			eliminar_paquete(paquete);
 
-				}
-				else {
-					log_info(logger,"codigo de operacion incorrecto");
-				}
-	}
-	else {
-		log_info(logger,"codigo de operacion incorrecto");
+			if(recibir_operacion(cliente_fd) == KERNEL_MENSAJE_VALOR_IMPRESO){
+				recibir_mensaje(cliente_fd);
+			}
+
+			enviar_mensaje("Finalizar",cliente_fd,KERNEL_MENSAJE_FINALIZAR_CONSOLA);
+			pthread_mutex_unlock(&mutexMensajes);
+
+		} else {
+			log_info(logger, "codigo de operacion incorrecto");
+		}
+	} else {
+		log_info(logger, "codigo de operacion incorrecto");
 	}
 
 
 	if(recibir_operacion(cliente_fd) == -1){
-		log_error(logger, "La consola se desconecto. Finalizando Kernel");
-		return EXIT_FAILURE;
+		log_warning(logger, "La consola nro %d finalizo",cliente_fd); //kernel debe seguir a la espera de otras consolas
+		return EXIT_SUCCESS;
 	}
 
 
-
+	//que problema hay con hacerlo asi? en la funcion de arriba se repite la logica del else codigo incorrecto!
 /*	while (1) {
 		int cod_op = recibir_operacion(cliente_fd);
 		switch (cod_op) {

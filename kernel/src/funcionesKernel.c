@@ -148,21 +148,21 @@ int recibir_operacion(int socket_cliente)
 
 void * recibir_buffer(int* size, int socket_cliente)
 {
-void * buffer;
+	void * buffer;
 
-recv(socket_cliente, size, sizeof(int), MSG_WAITALL);
-buffer = malloc(*size);
-recv(socket_cliente, buffer, *size, MSG_WAITALL);
+	recv(socket_cliente, size, sizeof(int), MSG_WAITALL);
+	buffer = malloc(*size);
+	recv(socket_cliente, buffer, *size, MSG_WAITALL);
 
-return buffer;
+	return buffer;
 }
 
 void recibir_mensaje(int socket_cliente)
 {
-int size;
-char* buffer = recibir_buffer(&size, socket_cliente);
-log_info(logger, "Me llego el mensaje %s", buffer);
-free(buffer);
+	int size;
+	char* buffer = recibir_buffer(&size, socket_cliente);
+	log_info(logger, "Me llego el mensaje %s", buffer);
+	free(buffer);
 }
 
 
