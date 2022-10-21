@@ -10,8 +10,7 @@ int main(int argc, char *argv[]){
 	inicializarConfiguraciones(argv[1]);
 
 	unPcb = malloc(sizeof(t_pcb));
-
-	conexionConKernel();//Recibo pcb
-
+	//conexionConKernel();//Recibo pcb
+	log_info(logger,"Boca");
 
 }

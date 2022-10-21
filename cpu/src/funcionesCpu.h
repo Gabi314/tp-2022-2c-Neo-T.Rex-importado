@@ -17,6 +17,8 @@
 #include<math.h>
 #include <time.h>
 
+#include <sys/stat.h>
+#include <fcntl.h>
 //--------------PUERTOS
 //Revisar
 #define IP_CPU "127.0.0.1"
@@ -62,6 +64,8 @@ extern t_log* logger;
 extern t_config* config;
 extern t_paquete* paquete;
 
+extern t_list* tlb;
+
 //--------------  Cpu como servidor de Kernel ---------
 extern int clienteKernel;
 extern int server_fd;
@@ -73,6 +77,11 @@ extern int contadorInstrucciones;
 extern int desplazamiento;
 extern int conexionMemoria;
 
+extern uint32_t ax;
+extern uint32_t bx;
+extern uint32_t cx;
+extern uint32_t dx;
+
 typedef struct
 {
 	int AX;
@@ -80,6 +89,13 @@ typedef struct
 	int CX;
 	int DX;
 } t_registros;
+
+typedef struct
+{
+	int numeroSegmento;
+	int tamanioSegmento;
+	int numeroTablaPaginas;//Revisar nombre
+}entradaTablaSegmento;
 
 typedef enum estado { NEW, READY, BLOCKED, EXEC, TERMINATED } t_estado;
 
@@ -110,6 +126,24 @@ typedef struct
 	int parametros[2];
 } instruccion;
 
+typedef struct
+{
+	int nroDeProceso;
+	int nroDeSegmento;
+	int nroDePagina;
+	int nroDeMarco;
+	time_t instanteGuardada;
+	time_t ultimaReferencia;
+} entradaTLB;
+
+typedef enum
+{
+	AX,
+	BX,
+	CX,
+	DX
+}registros;
+
 typedef enum{
 	SET,
 	ADD,
@@ -118,6 +152,13 @@ typedef enum{
 	IO,
 	EXT
 }identificadorInstruccion;
+
+typedef enum
+{
+	DISCO = 0,
+	PANTALLA = 1,
+	TECLADO = 2
+}dispositivos_IO;
 
 
 //--------------------VARIABLES
@@ -134,9 +175,22 @@ t_pcb* recibir_pcb(int);
 void obtenerTamanioIdentificadores(instruccion*);
 void agregarInstruccionesAlPaquete(instruccion*);
 
+uint32_t registroAUtilizar(int);
+int chequeoDeDispositivo(char*);
+
 instruccion* buscarInstruccionAEjecutar(t_pcb*);
 void leerTamanioDePaginaYCantidadDeEntradas(t_list*);
+void ejecutar(instruccion*,t_list*);
+int decode(instruccion*);
+int buscarDireccionFisica(int,t_list*);
+int chequeoDeDispositivo(char*);
+int chequearMarcoEnTLB(int);
+void calculosDireccionLogica(int,t_list*);
 
+void chequeoDeSF(int, int,t_list *);
+
+t_list* inicializarTLB();
+void reiniciarTLB();
 //----------------------------FUNCIONES DE CONEXIONES
 int iniciar_servidor(int);
 void iterator(instruccion*);
@@ -146,9 +200,10 @@ void eliminar_paquete(t_paquete*);
 int esperar_cliente(int);
 int recibir_operacion(int);
 
+int crear_conexion(char *, int);
 int conexionConKernel(void);
 int conexionConMemoria(void);
 
-
+void enviar_mensaje(char*, int,int);
 
 #endif /*FUNCIONES_CPU_H_*/
