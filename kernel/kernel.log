@@ -367,3 +367,27 @@
 [INFO] 17:10:11:121 KERNEL/(17527:17527): Kernel listo para recibir a consola
 [INFO] 17:12:44:795 KERNEL/(17637:17637): Iniciando conexion con consola
 [INFO] 17:12:44:801 KERNEL/(17637:17637): Kernel listo para recibir a consola
+[INFO] 02:05:23:923 KERNEL/(2207:2207): Iniciando conexion con consola
+[INFO] 02:05:23:927 KERNEL/(2207:2207): Kernel listo para recibir a consola
+[INFO] 02:05:28:951 KERNEL/(2207:2207): Se conecto la consola!
+[INFO] 02:05:28:951 KERNEL/(2207:2207): El tamanio del primer segmento es: 32
+[INFO] 02:05:28:952 KERNEL/(2207:2207): me llegaron las instrucciones
+[INFO] 02:05:28:953 KERNEL/(2207:2207): SET
+[INFO] 02:05:28:954 KERNEL/(2207:2207): ADD
+[INFO] 02:05:28:954 KERNEL/(2207:2207): MOV_IN
+[INFO] 02:05:28:954 KERNEL/(2207:2207): MOV_OUT
+[INFO] 02:05:28:954 KERNEL/(2207:2207): I/O
+[INFO] 02:05:28:954 KERNEL/(2207:2207): EXIT
+[ERROR] 02:05:28:954 KERNEL/(2207:2207): La consola se desconecto. Finalizando Kernel
+[INFO] 03:04:05:148 KERNEL/(2803:2803): Iniciando conexion con consola
+[INFO] 03:04:05:160 KERNEL/(2803:2803): Kernel listo para recibir a consola
+[INFO] 03:04:10:820 KERNEL/(2803:2803): Se conecto la consola!
+[INFO] 03:04:10:821 KERNEL/(2803:2803): El tamanio del primer segmento es: 32
+[INFO] 03:04:10:822 KERNEL/(2803:2803): me llegaron las instrucciones
+[INFO] 03:04:10:822 KERNEL/(2803:2803): SET
+[INFO] 03:04:10:822 KERNEL/(2803:2803): ADD
+[INFO] 03:04:10:822 KERNEL/(2803:2803): MOV_IN
+[INFO] 03:04:10:822 KERNEL/(2803:2803): MOV_OUT
+[INFO] 03:04:10:822 KERNEL/(2803:2803): I/O
+[INFO] 03:04:10:822 KERNEL/(2803:2803): EXIT
+[ERROR] 03:04:10:822 KERNEL/(2803:2803): La consola se desconecto. Finalizando Kernel

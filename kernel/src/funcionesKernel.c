@@ -44,6 +44,9 @@ t_list* listaDeColasDispositivos;
 sem_t kernelSinFinalizar;
 sem_t gradoDeMultiprogramacion;
 pthread_mutex_t mutexNew;
+pthread_mutex_t obtenerProceso;
+
+
 
 void enviar_entero(int valor, int socket_cliente, int cod_op) {
 	send(socket_cliente, &cod_op, sizeof(int), 0);
@@ -479,10 +482,13 @@ void asignar_memoria() {
 			if (!strcmp(algoritmoPlanificacion, "RR")) {
 				queue_push(colaReadyRR,proceso);
 			} else {
-				log_info(logger, "Algoritmo invalido");
+				if(!strcmp(algoritmoPlanificacion, "MULTICOLAS")) {// ver si esta asi en los config
+					queue_push(colaReadyRR,proceso);
+				}else{
+					log_info(logger, "Algoritmo invalido");
+				}
 			}
 		}
-		//despues se agregaria el case para el multicolas que lo enviaria a la cola de RR
 		//para que sea un switch habria que tener un conversor del string que leemos al enum de algoritmos que tenemos
 
 
@@ -490,5 +496,84 @@ void asignar_memoria() {
 
 		log_info(logger,"[asignar_memoria]: desde asignar_memoria despertamos a readyAExe");
 	}
+
+}
+
+
+void readyAExe() {
+
+	while (1) {
+
+	//	sem_wait(&pcbEnReady);
+	//	sem_wait(&cpuDisponible);
+
+	//	log_info(logger, "[readyAExe]: .........se despierta readyAExe ");
+	//	log_info(logger, "[readyAExe]: a partir de ahora, CPU NO DISPONIBLE! ");
+
+		pthread_mutex_lock(&obtenerProceso);
+		t_pcb * procesoAEjecutar = obtenerSiguienteDeReady();
+		pthread_mutex_unlock(&obtenerProceso);
+
+		log_info(logger,
+			"[readyAExe]: Desde readyAExe mandamos al proceso de pid %d a ejecutar  ",
+			procesoAEjecutar->idProceso);
+
+		ejecutar(procesoAEjecutar);
+
+	//	log_info(logger,"[readyAExe]: finaliza");
+	}
+}
+
+
+t_pcb* obtenerSiguienteDeReady() {
+
+t_pcb * procesoPlanificado;
+
+if (!strcmp(algoritmoPlanificacion, "FIFO")) {
+	procesoPlanificado = obtenerSiguienteFIFO();
+} else {
+	if (!strcmp(algoritmoPlanificacion, "RR")) {
+		procesoPlanificado = obtenerSiguienteRR();
+	} else {
+		log_info(logger, "[obtenerSiguienteDeReady]: algoritmo invalido");
+		}
+	}
+	return procesoPlanificado;
+}
+
+
+t_pcb* obtenerSiguienteFIFO() {
+
+	t_pcb* procesoPlanificado = queue_pop(colaReadyFIFO);
+	log_info(logger, "[obtenerSiguienteFIFO]: PROCESOS EN READY FIFO: %d \n",
+		list_size(colaReadyFIFO));
+
+	return procesoPlanificado;
+}
+
+t_pcb* obtenerSiguienteRR() {
+
+	t_pcb* procesoPlanificado = queue_pop(colaReadyRR);
+	log_info(logger, "[obtenerSiguienteFIFO]: PROCESOS EN READY RR: %d \n",
+		list_size(colaReadyRR));
+
+	return procesoPlanificado;
+}
+
+
+
+void ejecutar(t_pcb* proceso) {
+
+	if (proceso != NULL) {
+
+		log_info(logger, "[EXEC] Ingresa el proceso de PID: %d",proceso->idProceso);
+
+	} else {
+		log_info(logger, "[EXEC] No se logró encontrar un proceso para ejecutar");
+	}
+
+ //	conexionConCpu(proceso); Aca mandamos el proceso a cpu
+
+	log_info(logger, "[ejecutar]: enviamos el proceso a cpu");
 
 }

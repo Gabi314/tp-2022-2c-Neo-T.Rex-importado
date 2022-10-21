@@ -265,7 +265,7 @@ void inicializar_semaforos(){
 	sem_init(&kernelSinFinalizar,0,0);
 
 	pthread_mutex_init(&asignarMemoria,NULL);
-	pthread_mutex_init(&obtenerProceso,NULL);
+
 	pthread_mutex_init(&ejecucion,NULL);
 	pthread_mutex_init(&procesoExit,NULL);
 	pthread_mutex_init(&consolasExit,NULL);
@@ -280,7 +280,7 @@ void inicializar_semaforos(){
 	sem_init(&gradoDeMultiprogramacion,0,gradoMultiprogramacionTotal);
 
 	pthread_mutex_init(&mutexNew,NULL);
-
+	pthread_mutex_init(&obtenerProceso,NULL);
 }
 
 

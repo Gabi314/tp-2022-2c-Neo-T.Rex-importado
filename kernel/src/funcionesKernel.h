@@ -168,6 +168,17 @@ int conexionConConsola();
 void agregarANew(t_pcb* proceso);
 t_pcb* sacarDeNew();
 
+t_pcb* obtenerSiguienteDeReady();
+t_pcb* obtenerSiguienteFIFO();
+t_pcb* obtenerSiguienteRR();
+void ejecutar(t_pcb* proceso);
+
+void recibir_consola(int servidor) ;
+void atender_consola(int cliente);
+void asignar_memoria();
+void readyAExe();
+
+
 extern char * ipMemoria;
 extern char * puertoMemoria;
 extern char * ipCpu;
@@ -186,6 +197,7 @@ extern int identificadores_pcb;
 extern sem_t kernelSinFinalizar;
 extern sem_t gradoDeMultiprogramacion;
 extern pthread_mutex_t mutexNew;
+extern pthread_mutex_t obtenerProceso;
 
 
 #endif /* UTILS_H_ */
