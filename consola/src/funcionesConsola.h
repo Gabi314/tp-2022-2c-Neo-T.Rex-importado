@@ -20,10 +20,14 @@
 typedef enum
 {
 	KERNEL_PAQUETE_TAMANIOS_SEGMENTOS,
-	KERNEL_PAQUETE_INSTRUCCIONES,
-	KERNEL_PAQUETE_VALOR_A_IMPRIMIR,
-	KERNEL_MENSAJE_VALOR_IMPRESO,
-	KERNEL_MENSAJE_PEDIDO_VALOR_POR_TECLADO
+		KERNEL_PAQUETE_INSTRUCCIONES,
+		KERNEL_PAQUETE_VALOR_A_IMPRIMIR,
+		KERNEL_MENSAJE_VALOR_IMPRESO,
+		KERNEL_MENSAJE_PEDIDO_VALOR_POR_TECLADO,
+		KERNEL_MENSAJE_CONFIRMACION_RECEPCION_INSTRUCCIONES_SEGMENTOS,
+		KERNEL_MENSAJE_DESBLOQUEO_TECLADO,
+		KERNEL_PAQUETE_VALOR_RECIBIDO_DE_TECLADO,
+		KERNEL_MENSAJE_FINALIZAR_CONSOLA
 }op_code;
 
 typedef enum
@@ -99,6 +103,7 @@ void inicializarConfiguraciones(char*);
 
 int recibir_operacion(int);
 void recibir_mensaje(int);
+int recibir_entero(int);
 t_list* recibir_paquete(int);
 
 //------------------ DECLARACION FUNCIONES
@@ -107,7 +112,7 @@ FILE* recorrerArchivo(char*,FILE*);
 
 void imprimirValorPorPantalla();
 void solicitudIngresarValorPorTeclado();
-
+void atenderPeticionesKernel();
 int chequeoDeRegistro(char*);
 int chequeoDeDispositivo(char*);
 

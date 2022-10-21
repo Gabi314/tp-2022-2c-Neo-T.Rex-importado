@@ -154,30 +154,24 @@ void enviarListaInstrucciones(t_paquete* paquete){
 
 
 
-void imprimirValorPorPantalla(){//Puede estar en un hilo
-	t_list* valorAImprimir = list_create();
 
-	int cod_op = recibir_operacion(conexion);
 
-	if(cod_op == KERNEL_PAQUETE_VALOR_A_IMPRIMIR){
-		valorAImprimir = recibir_paquete(conexion);
-	}
+void imprimirValorPorPantalla(){//Puede estar en un hilo // no hace falta, así está bien
+//	t_list* valorAImprimir = list_create();
+
+	int valorAImprimir = recibir_entero(conexion);
 
 	usleep(tiempoPantalla);
 
-	log_info(logger,"Se imprime el valor %d por pantalla a pedido del kernel", list_get(valorAImprimir,0));
-	list_clean(valorAImprimir);
+	log_info(logger, "termino el usleep()");
+//	log_info(logger,"Se imprime el valor %d por pantalla a pedido del kernel",(int) list_get(valorAImprimir,0));
+//	list_clean(valorAImprimir);
 
 	enviar_mensaje("Se imprimio el valor del registro", conexion, KERNEL_MENSAJE_VALOR_IMPRESO);
-
 }
 
-void solicitudIngresarValorPorTeclado(){//otro hilo
-	int cod_op = recibir_operacion(conexion);
-
-	if(cod_op == KERNEL_MENSAJE_PEDIDO_VALOR_POR_TECLADO){
-		recibir_mensaje(conexion);
-	}
+void solicitudIngresarValorPorTeclado(int cod_op){
+	recibir_mensaje(conexion);
 
 	int valorIngresadoPorTeclado = 0;
 
@@ -186,9 +180,29 @@ void solicitudIngresarValorPorTeclado(){//otro hilo
 
 	log_info(logger,"Se ingreso el valor %d correctamente",valorIngresadoPorTeclado);
 
-	//Falta enviarlo
+	enviar_mensaje("Desbloquear proceso. Ya se ingreso un valor por teclado",conexion,KERNEL_MENSAJE_DESBLOQUEO_TECLADO);
+
+	enviar_entero(valorIngresadoPorTeclado,conexion,KERNEL_PAQUETE_VALOR_RECIBIDO_DE_TECLADO);
+
+	//Falta enviarlo!!!! // listo!
 }
 
+void atenderPeticionesKernel(){
+	int noFinalizar = 1;
+	while(noFinalizar){
+		int cod_op = recibir_operacion(conexion);
+
+		if(cod_op == KERNEL_PAQUETE_VALOR_A_IMPRIMIR){
+			imprimirValorPorPantalla();
+		}else if(cod_op == KERNEL_MENSAJE_PEDIDO_VALOR_POR_TECLADO){
+			solicitudIngresarValorPorTeclado(cod_op);
+		}else if(cod_op == KERNEL_MENSAJE_FINALIZAR_CONSOLA){
+			recibir_mensaje(conexion);
+			noFinalizar = 0;
+		}
+
+	}
+}
 
 
 

@@ -25,11 +25,19 @@ int main(int argc, char *argv[]) {
 	//solicitudIngresarValorPorTeclado();
 
 	archivo = recorrerArchivo(contenido,archivo);
+	int codigo = recibir_operacion(conexion);
+
+	if(codigo != KERNEL_MENSAJE_CONFIRMACION_RECEPCION_INSTRUCCIONES_SEGMENTOS){
+		log_info(logger,"codigo de operacion incorrecto");
+	}
+	recibir_mensaje(conexion);
+	atenderPeticionesKernel();
 
 	fclose(archivo);
 	if (contenido != NULL) //valida si contenido es NULL
 	free(contenido);
 	//Hasta aca
+
 }
 
 

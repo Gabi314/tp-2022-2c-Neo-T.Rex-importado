@@ -21,13 +21,18 @@ int main(int argc, char *argv[]) {
 
 
 
-//	inicializar_listas_y_colas();
+	inicializar_listas_y_colas();
+	log_info(logger, "En la lista de dispositivos tenemos los siguientes:");
+	for (int i = 0; i < list_size(listaDeColasDispositivos); i++) {
+		t_elem_disp* aux = list_get(listaDeColasDispositivos,i);
+		log_info(logger,"el dispositivo de posicion %d se llama %s", i , aux->dispositivo);
+		log_info(logger,"el dispositivo de posicion %d tiene un tiempo de %d", i, aux->tiempo);
+			}
 
 	log_info(logger,"Iniciando conexion con consola");
 
 	//socketServidor = iniciar_servidor();
 
-	inicializar_colas();
 	inicializar_semaforos();
 
 	conexionConConsola();
@@ -96,7 +101,14 @@ void inicializar_configuraciones(char* unaConfig){
 
 void inicializar_listas_y_colas() {
 	inicializar_lista_dispositivos();
-	int i = 0;
+
+	colaNew = queue_create();
+	colaReadyFIFO = queue_create();
+	colaReadyRR = queue_create();
+	colaBlockedPantalla = queue_create();
+	colaBlockedTeclado = queue_create();
+	listaDeColasDispositivos = list_create();
+
 }
 
 int conexionConConsola(){
@@ -109,8 +121,7 @@ int conexionConConsola(){
 
 	if (recibir_operacion(cliente_fd) == KERNEL_PAQUETE_TAMANIOS_SEGMENTOS){
 		listaQueContieneTamSegmento = list_create();
-		listaQueContieneTamSegmento = recibir_lista_enteros(cliente_fd);//Hacer que reciba paquete vectorDeEnteros
-		// Y si usamos la funcion "atoi()"?
+		listaQueContieneTamSegmento = recibir_lista_enteros(cliente_fd);
 		int tamanioDelSegmento = (int) list_get(listaQueContieneTamSegmento,3);
 		log_info(logger,"El tamanio del primer segmento es: %d",tamanioDelSegmento);
 
@@ -131,6 +142,30 @@ int conexionConConsola(){
 		log_info(logger,"codigo de operacion incorrecto");
 	}
 
+	enviar_entero(10, cliente_fd, KERNEL_PAQUETE_VALOR_A_IMPRIMIR);
+
+	int codigo = recibir_operacion(cliente_fd);
+	if(codigo != KERNEL_MENSAJE_VALOR_IMPRESO){
+			log_info(logger,"codigo de operacion incorrecto");
+		}
+	recibir_mensaje(cliente_fd);
+
+	enviar_mensaje("kernel solicita que se ingrese un valor por teclado",cliente_fd,KERNEL_MENSAJE_SOLICITUD_VALOR_POR_TECLADO);
+
+	codigo = recibir_operacion(cliente_fd);
+		if(codigo != KERNEL_MENSAJE_DESBLOQUEO_TECLADO){
+				log_info(logger,"codigo de operacion incorrecto");
+			}
+	recibir_mensaje(cliente_fd);
+
+	codigo = recibir_operacion(cliente_fd);
+
+	if(codigo != KERNEL_PAQUETE_VALOR_RECIBIDO_DE_TECLADO){
+					log_info(logger,"codigo de operacion incorrecto");
+				}
+	recibir_entero(cliente_fd);
+
+	enviar_mensaje("Finalizar consola",cliente_fd,KERNEL_MENSAJE_FINALIZAR_CONSOLA);
 
 	if(recibir_operacion(cliente_fd) == -1){
 		log_error(logger, "La consola se desconecto. Finalizando Kernel");
@@ -240,15 +275,6 @@ int encolar_dispositivo(int indice, char* dispositivo) {
 
 
 
-void inicializar_colas(){
-	colaNew = queue_create();
-	colaReadyFIFO = queue_create();
-	colaReadyRR = queue_create();
-	colaBlockedPantalla = queue_create();
-	colaBlockedTeclado = queue_create();
-	listaDeColasDispositivos = list_create();
-
-}
 
 void inicializar_semaforos(){
 	/*

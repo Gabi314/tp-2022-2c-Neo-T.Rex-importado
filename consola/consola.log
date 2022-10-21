@@ -164,3 +164,63 @@
 [INFO] 02:05:28:951 CONSOLA/(2223:2223): Se leyo el archivo correctamente
 [INFO] 03:04:10:819 CONSOLA/(2818:2818): Config creado
 [INFO] 03:04:10:821 CONSOLA/(2818:2818): Se leyo el archivo correctamente
+[INFO] 11:05:20:428 CONSOLA/(44395:44395): Config creado
+[INFO] 11:05:20:430 CONSOLA/(44395:44395): Se leyo el archivo correctamente
+[INFO] 12:31:16:726 CONSOLA/(44720:44720): Config creado
+[INFO] 12:31:16:751 CONSOLA/(44720:44720): Se leyo el archivo correctamente
+[INFO] 18:14:21:874 CONSOLA/(46504:46504): Config creado
+[INFO] 18:14:21:874 CONSOLA/(46504:46504): Se leyo el archivo correctamente
+[INFO] 18:18:33:511 CONSOLA/(46590:46590): Config creado
+[INFO] 18:18:33:516 CONSOLA/(46590:46590): Se leyo el archivo correctamente
+[INFO] 18:18:33:517 CONSOLA/(46590:46590): termina consola
+[INFO] 18:20:35:775 CONSOLA/(46663:46663): Config creado
+[INFO] 18:20:35:782 CONSOLA/(46663:46663): Se leyo el archivo correctamente
+[INFO] 18:20:36:785 CONSOLA/(46663:46663): termina consola
+[INFO] 18:25:29:746 CONSOLA/(46827:46827): Config creado
+[INFO] 18:25:29:747 CONSOLA/(46827:46827): Se leyo el archivo correctamente
+[INFO] 18:25:29:747 CONSOLA/(46827:46827): Me llego el mensaje segmentos e instrucciones recibidos pibe
+[INFO] 18:31:06:715 CONSOLA/(46910:46910): Config creado
+[INFO] 18:31:06:716 CONSOLA/(46910:46910): Se leyo el archivo correctamente
+[INFO] 18:31:06:716 CONSOLA/(46910:46910): [recibir_entero]: se recibio el numero 10
+[INFO] 18:31:06:718 CONSOLA/(46910:46910): termino el usleep()
+[INFO] 22:28:01:853 CONSOLA/(47523:47523): Config creado
+[INFO] 22:28:01:899 CONSOLA/(47523:47523): Se leyo el archivo correctamente
+[INFO] 22:28:01:902 CONSOLA/(47523:47523): Me llego el mensaje )
+[INFO] 22:28:01:902 CONSOLA/(47523:47523): [recibir_entero]: se recibio el numero 10
+[INFO] 22:28:01:904 CONSOLA/(47523:47523): termino el usleep()
+[INFO] 22:30:09:115 CONSOLA/(47597:47597): Config creado
+[INFO] 22:30:09:127 CONSOLA/(47597:47597): Se leyo el archivo correctamente
+[INFO] 22:30:09:127 CONSOLA/(47597:47597): Me llego el mensaje segmentos e instrucciones recibidos pibe
+[INFO] 22:30:09:127 CONSOLA/(47597:47597): [recibir_entero]: se recibio el numero 10
+[INFO] 22:30:09:130 CONSOLA/(47597:47597): termino el usleep()
+[INFO] 22:37:28:712 CONSOLA/(47754:47754): Config creado
+[INFO] 22:37:28:715 CONSOLA/(47754:47754): Se leyo el archivo correctamente
+[INFO] 22:37:28:716 CONSOLA/(47754:47754): codigo de operacion incorrecto
+[INFO] 22:37:28:716 CONSOLA/(47754:47754): Me llego el mensaje $E×7V
+[INFO] 22:38:27:573 CONSOLA/(47820:47820): Config creado
+[INFO] 22:38:27:580 CONSOLA/(47820:47820): Se leyo el archivo correctamente
+[INFO] 22:38:27:583 CONSOLA/(47820:47820): Me llego el mensaje segmentos e instrucciones recibidos pibe
+[INFO] 22:38:27:584 CONSOLA/(47820:47820): [recibir_entero]: se recibio el numero 10
+[INFO] 22:38:27:586 CONSOLA/(47820:47820): termino el usleep()
+[INFO] 22:55:30:489 CONSOLA/(48098:48098): Config creado
+[INFO] 22:55:30:500 CONSOLA/(48098:48098): Se leyo el archivo correctamente
+[INFO] 22:55:30:501 CONSOLA/(48098:48098): Me llego el mensaje segmentos e instrucciones recibidos pibe
+[INFO] 22:55:30:501 CONSOLA/(48098:48098): [recibir_entero]: se recibio el numero 10
+[INFO] 22:55:30:504 CONSOLA/(48098:48098): termino el usleep()
+[INFO] 23:52:33:721 CONSOLA/(48767:48767): Config creado
+[INFO] 23:52:33:724 CONSOLA/(48767:48767): Se leyo el archivo correctamente
+[INFO] 23:52:33:728 CONSOLA/(48767:48767): Me llego el mensaje segmentos e instrucciones recibidos pibe
+[INFO] 23:52:33:729 CONSOLA/(48767:48767): [recibir_entero]: se recibio el numero 10
+[INFO] 23:52:33:731 CONSOLA/(48767:48767): termino el usleep()
+[INFO] 23:52:33:732 CONSOLA/(48767:48767): Me llego el mensaje kernel solicita que se ingrese un valor por teclado
+[INFO] 23:52:33:732 CONSOLA/(48767:48767): Ingrese un valor: 
+[INFO] 23:52:40:055 CONSOLA/(48767:48767): Se ingreso el valor 4 correctamente
+[INFO] 23:57:33:056 CONSOLA/(48926:48926): Config creado
+[INFO] 23:57:33:058 CONSOLA/(48926:48926): Se leyo el archivo correctamente
+[INFO] 23:57:33:059 CONSOLA/(48926:48926): Me llego el mensaje segmentos e instrucciones recibidos pibe
+[INFO] 23:57:33:064 CONSOLA/(48926:48926): [recibir_entero]: se recibio el numero 10
+[INFO] 23:57:33:067 CONSOLA/(48926:48926): termino el usleep()
+[INFO] 23:57:33:068 CONSOLA/(48926:48926): Me llego el mensaje kernel solicita que se ingrese un valor por teclado
+[INFO] 23:57:33:071 CONSOLA/(48926:48926): Ingrese un valor: 
+[INFO] 23:57:37:373 CONSOLA/(48926:48926): Se ingreso el valor 5 correctamente
+[INFO] 23:57:37:373 CONSOLA/(48926:48926): Me llego el mensaje Finalizar consola

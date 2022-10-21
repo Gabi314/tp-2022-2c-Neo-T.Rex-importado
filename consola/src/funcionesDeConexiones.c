@@ -189,3 +189,17 @@ void liberar_conexion(int socket_cliente)
 {
 	close(socket_cliente);
 }
+
+int recibir_entero(int socket_cliente) // basado en recibir_operacion
+{
+	int entero;
+	recv(socket_cliente, &entero, sizeof(int), MSG_WAITALL);
+	log_info(logger,"[recibir_entero]: se recibio el numero %d",entero);
+	return entero;
+
+}
+
+void enviar_entero(int valor, int socket_cliente, int cod_op) {
+	send(socket_cliente, &cod_op, sizeof(int), 0);
+	send(socket_cliente, &valor, sizeof(int), 0);
+}
