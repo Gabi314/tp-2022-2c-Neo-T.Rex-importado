@@ -404,3 +404,110 @@
 [INFO] 23:08:58:879 KERNEL/(4225:4225): EXIT
 [INFO] 23:08:58:882 KERNEL/(4225:4225): Me llego el mensaje Se imprimio el valor del registro
 [WARNING] 23:08:58:882 KERNEL/(4225:4225): La consola nro 5 finalizo
+[INFO] 22:38:45:493 KERNEL/(3915:3915): Iniciando conexion con consola
+[INFO] 22:38:45:499 KERNEL/(3915:3915): Kernel listo para recibir a consola
+[INFO] 22:38:51:802 KERNEL/(3915:3915): Se conecto la consola!
+[INFO] 22:38:51:802 KERNEL/(3915:3915): El tamanio del primer segmento es: 32
+[INFO] 22:38:51:814 KERNEL/(3915:3915): me llegaron las instrucciones
+[INFO] 22:38:51:814 KERNEL/(3915:3915): SET
+[INFO] 22:38:51:814 KERNEL/(3915:3915): ADD
+[INFO] 22:38:51:814 KERNEL/(3915:3915): MOV_IN
+[INFO] 22:38:51:814 KERNEL/(3915:3915): MOV_OUT
+[INFO] 22:38:51:814 KERNEL/(3915:3915): I/O
+[INFO] 22:38:51:814 KERNEL/(3915:3915): I/O
+[INFO] 22:38:51:814 KERNEL/(3915:3915): I/O
+[INFO] 22:38:51:814 KERNEL/(3915:3915): EXIT
+[INFO] 22:38:51:821 KERNEL/(3915:3915): Me llego el mensaje Se imprimio el valor del registro
+[WARNING] 22:38:51:826 KERNEL/(3915:3915): La consola nro 5 finalizo
+[INFO] 22:52:17:975 KERNEL/(4784:4784): Iniciando conexion con consola
+[INFO] 22:52:17:976 KERNEL/(4784:4784): Kernel listo para recibir a consola
+[INFO] 22:53:53:609 KERNEL/(4784:4784): Se conecto la consola!
+[INFO] 22:53:53:610 KERNEL/(4784:4784): El tamanio del primer segmento es: 32
+[INFO] 22:53:53:610 KERNEL/(4784:4784): me llegaron las instrucciones
+[INFO] 22:53:53:610 KERNEL/(4784:4784): SET
+[INFO] 22:53:53:610 KERNEL/(4784:4784): ADD
+[INFO] 22:53:53:610 KERNEL/(4784:4784): MOV_IN
+[INFO] 22:53:53:610 KERNEL/(4784:4784): MOV_OUT
+[INFO] 22:53:53:610 KERNEL/(4784:4784): I/O
+[INFO] 22:53:53:610 KERNEL/(4784:4784): I/O
+[INFO] 22:53:53:610 KERNEL/(4784:4784): I/O
+[INFO] 22:53:53:610 KERNEL/(4784:4784): EXIT
+[INFO] 22:54:39:796 KERNEL/(4897:4897): Iniciando conexion con consola
+[INFO] 22:54:46:246 KERNEL/(4897:4897): Kernel listo para recibir a consola
+[INFO] 22:54:54:298 KERNEL/(4897:4897): Se conecto la consola!
+[INFO] 22:54:58:505 KERNEL/(4897:4897): El tamanio del primer segmento es: 32
+[INFO] 22:55:02:309 KERNEL/(4897:4897): me llegaron las instrucciones
+[INFO] 22:55:03:476 KERNEL/(4897:4897): SET
+[INFO] 22:55:03:476 KERNEL/(4897:4897): ADD
+[INFO] 22:55:03:476 KERNEL/(4897:4897): MOV_IN
+[INFO] 22:55:03:476 KERNEL/(4897:4897): MOV_OUT
+[INFO] 22:55:03:476 KERNEL/(4897:4897): I/O
+[INFO] 22:55:03:476 KERNEL/(4897:4897): I/O
+[INFO] 22:55:03:476 KERNEL/(4897:4897): I/O
+[INFO] 22:55:03:476 KERNEL/(4897:4897): EXIT
+[INFO] 22:59:23:535 KERNEL/(5178:5178): Iniciando conexion con consola
+[INFO] 22:59:23:536 KERNEL/(5178:5178): Kernel listo para recibir a consola
+[INFO] 22:59:35:728 KERNEL/(5178:5178): Se conecto la consola!
+[INFO] 22:59:35:728 KERNEL/(5178:5178): El tamanio del primer segmento es: 32
+[INFO] 22:59:35:728 KERNEL/(5178:5178): me llegaron las instrucciones
+[INFO] 22:59:35:728 KERNEL/(5178:5178): SET
+[INFO] 22:59:35:728 KERNEL/(5178:5178): ADD
+[INFO] 22:59:35:728 KERNEL/(5178:5178): MOV_IN
+[INFO] 22:59:35:728 KERNEL/(5178:5178): MOV_OUT
+[INFO] 22:59:35:729 KERNEL/(5178:5178): I/O
+[INFO] 22:59:35:729 KERNEL/(5178:5178): I/O
+[INFO] 22:59:35:729 KERNEL/(5178:5178): I/O
+[INFO] 22:59:35:729 KERNEL/(5178:5178): EXIT
+[INFO] 22:59:35:729 KERNEL/(5178:5178): Se recibio el registro AX de valor 1
+[INFO] 23:00:24:622 KERNEL/(5216:5216): Iniciando conexion con consola
+[INFO] 23:00:24:623 KERNEL/(5216:5216): Kernel listo para recibir a consola
+[INFO] 23:00:36:739 KERNEL/(5259:5259): Iniciando conexion con consola
+[INFO] 23:00:36:740 KERNEL/(5259:5259): Kernel listo para recibir a consola
+[INFO] 23:00:47:405 KERNEL/(5259:5259): Se conecto la consola!
+[INFO] 23:00:47:406 KERNEL/(5259:5259): El tamanio del primer segmento es: 32
+[INFO] 23:00:47:406 KERNEL/(5259:5259): me llegaron las instrucciones
+[INFO] 23:00:47:406 KERNEL/(5259:5259): SET
+[INFO] 23:00:47:406 KERNEL/(5259:5259): ADD
+[INFO] 23:00:47:406 KERNEL/(5259:5259): MOV_IN
+[INFO] 23:00:47:406 KERNEL/(5259:5259): MOV_OUT
+[INFO] 23:00:47:406 KERNEL/(5259:5259): I/O
+[INFO] 23:00:47:406 KERNEL/(5259:5259): I/O
+[INFO] 23:00:47:406 KERNEL/(5259:5259): I/O
+[INFO] 23:00:47:406 KERNEL/(5259:5259): EXIT
+[INFO] 23:00:47:406 KERNEL/(5259:5259): Se recibio el registro AX de valor 5
+[INFO] 23:02:38:805 KERNEL/(5450:5450): Iniciando conexion con consola
+[INFO] 23:02:38:806 KERNEL/(5450:5450): Kernel listo para recibir a consola
+[INFO] 23:02:42:172 KERNEL/(5450:5450): Se conecto la consola!
+[INFO] 23:02:42:172 KERNEL/(5450:5450): El tamanio del primer segmento es: 32
+[INFO] 23:02:42:172 KERNEL/(5450:5450): me llegaron las instrucciones
+[INFO] 23:02:42:172 KERNEL/(5450:5450): SET
+[INFO] 23:02:42:172 KERNEL/(5450:5450): ADD
+[INFO] 23:02:42:172 KERNEL/(5450:5450): MOV_IN
+[INFO] 23:02:42:172 KERNEL/(5450:5450): MOV_OUT
+[INFO] 23:02:42:172 KERNEL/(5450:5450): I/O
+[INFO] 23:02:42:172 KERNEL/(5450:5450): I/O
+[INFO] 23:02:42:172 KERNEL/(5450:5450): I/O
+[INFO] 23:02:42:172 KERNEL/(5450:5450): EXIT
+[INFO] 23:02:42:173 KERNEL/(5450:5450): Se recibio el registro AX de valor 1
+[INFO] 23:02:42:173 KERNEL/(5450:5450): Se recibio el registro BX de valor 22070
+[INFO] 23:02:42:173 KERNEL/(5450:5450): Se recibio el registro CX de valor -215736144
+[INFO] 23:02:42:173 KERNEL/(5450:5450): Se recibio el registro DX de valor 5
+[INFO] 23:03:39:716 KERNEL/(5509:5509): Iniciando conexion con consola
+[INFO] 23:03:39:717 KERNEL/(5509:5509): Kernel listo para recibir a consola
+[INFO] 23:03:43:947 KERNEL/(5509:5509): Se conecto la consola!
+[INFO] 23:03:43:948 KERNEL/(5509:5509): El tamanio del primer segmento es: 32
+[INFO] 23:03:43:948 KERNEL/(5509:5509): me llegaron las instrucciones
+[INFO] 23:03:43:948 KERNEL/(5509:5509): SET
+[INFO] 23:03:43:948 KERNEL/(5509:5509): ADD
+[INFO] 23:03:43:948 KERNEL/(5509:5509): MOV_IN
+[INFO] 23:03:43:948 KERNEL/(5509:5509): MOV_OUT
+[INFO] 23:03:43:948 KERNEL/(5509:5509): I/O
+[INFO] 23:03:43:948 KERNEL/(5509:5509): I/O
+[INFO] 23:03:43:948 KERNEL/(5509:5509): I/O
+[INFO] 23:03:43:948 KERNEL/(5509:5509): EXIT
+[INFO] 23:03:43:948 KERNEL/(5509:5509): Se recibio el registro AX de valor 1
+[INFO] 23:03:43:948 KERNEL/(5509:5509): Se recibio el registro BX de valor 4
+[INFO] 23:03:43:948 KERNEL/(5509:5509): Se recibio el registro CX de valor 5
+[INFO] 23:03:43:948 KERNEL/(5509:5509): Se recibio el registro DX de valor 7
+[INFO] 23:03:43:951 KERNEL/(5509:5509): Me llego el mensaje Se imprimio el valor del registro
+[WARNING] 23:03:43:951 KERNEL/(5509:5509): La consola nro 5 finalizo

@@ -7,8 +7,7 @@ t_config* config;
 int cantidadEntradasTlb;
 char* algoritmoReemplazoTlb;
 int retardoDeInstruccion;
-int puertoDeEscuchaDispath;
-int puertoDeEscuchaInterrupt;
+
 
 t_pcb* unPcb;
 int tamanioDePagina;
@@ -33,6 +32,7 @@ int chequeoCantidadArchivos(int argc){
 		    log_error(logger,"Falta un parametro");
 		    return EXIT_FAILURE;
 		}
+	return EXIT_SUCCESS;
 }
 
 void inicializarConfiguraciones(char* unaConfig){
@@ -45,7 +45,7 @@ void inicializarConfiguraciones(char* unaConfig){
 	algoritmoReemplazoTlb = config_get_string_value(config,"REEMPLAZO_TLB");
 	retardoDeInstruccion = config_get_int_value(config,"RETARDO_INSTRUCCION");
 
-	puertoDeEscuchaDispath = config_get_int_value(config,"PUERTO_ESCUCHA_DISPATCH");
+	puertoDeEscuchaDispatch = config_get_int_value(config,"PUERTO_ESCUCHA_DISPATCH");
 	puertoDeEscuchaInterrupt = config_get_int_value(config,"PUERTO_ESCUCHA_INTERRUPT");
 }
 
@@ -98,6 +98,8 @@ uint32_t registroAUtilizar(int enteroDeRegistro){
 		return dx;
 	}
 
+	return -1;
+
 }
 
 int chequeoDeDispositivo(char* registro){
@@ -107,6 +109,8 @@ int chequeoDeDispositivo(char* registro){
 	return PANTALLA;
 	if(!strcmp(registro,"TECLADO"))
 	return TECLADO;
+
+	return -1;
 }
 
 /*
@@ -226,10 +230,10 @@ void calculosDireccionLogica(int direccionLogica,t_list* listaTablaSegmentos){
 
 	chequeoDeSF(numeroDeSegmento,desplazamientoDeSegmento,listaTablaSegmentos);
 }
-void chequeoDeSF(int numeroDeSegmento, int desplazamientoSegmento,t_list * listaDeSegmentos){
+void chequeoDeSF(int numeroDeSegmento, int desplazamientoSegmento,t_list * listaDeTablaSegmentos){
 	entradaTablaSegmento* unaEntradaDeTabla;
-	for(int i; i< list_size(listaDeSegmentos);i++){
-		unaEntradaDeTabla = list_get(listaDeSegmentos,i);
+	for(int i; i< list_size(listaDeTablaSegmentos);i++){
+		unaEntradaDeTabla = list_get(listaDeTablaSegmentos,i);
 		if(numeroDeSegmento == unaEntradaDeTabla->numeroSegmento){
 			if(desplazamientoSegmento>unaEntradaDeTabla->tamanioSegmento){
 				//hay SF->>>>> devolverse el proceso al Kernel para que este lo finalice con motivo de Error: Segmentation Fault
@@ -327,13 +331,6 @@ int accederAMemoria(int marco){
 
 	return marco;
 }
-
-
-
-
-
-
-
 
 
 	}else if(! strcmp(unaInstruccion->identificador,"READ")){

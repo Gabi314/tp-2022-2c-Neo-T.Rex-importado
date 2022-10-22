@@ -1,5 +1,18 @@
 #include "funcionesConsola.h"
-#include <pthread.h>
+typedef struct
+{
+	int AX;
+	int BX;
+	int CX;
+	int DX;
+} t_registros;
+
+void enviar_structEnteros(t_registros valor, int socket_cliente, int cod_op) {
+	send(socket_cliente, &cod_op, sizeof(int), 0);
+	send(socket_cliente, &valor, sizeof(t_registros), 0);
+} //probemos esto
+
+
 
 int main(int argc, char *argv[]) {
 	//pthread_t hiloConexionKernel;
@@ -26,13 +39,21 @@ int main(int argc, char *argv[]) {
 	stat(argv[2], &sb);
 	char* contenido = malloc(sb.st_size);
 
-	//solicitudIngresarValorPorTeclado();
 
 	archivo = recorrerArchivo(contenido,archivo);
 
 	fclose(archivo);
 	if (contenido != NULL) //valida si contenido es NULL
 	free(contenido);
+
+	t_registros registros;
+	registros.AX=1;
+	registros.BX=4;
+	registros.CX=5;
+	registros.DX=7;
+	log_info(logger,"%d",registros.DX);
+
+	enviar_structEnteros(registros,conexion,PRUEBA);
 
 	atenderPeticionesKernel();
 

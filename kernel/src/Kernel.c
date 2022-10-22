@@ -4,6 +4,17 @@
 
 t_list* lista_dispositivos;
 
+void recibir_registros(int socket_cliente) // basado en recibir_operacion
+{
+	t_registros registros;
+	recv(socket_cliente, &registros, sizeof(t_registros), MSG_WAITALL);
+	log_info(logger,"Se recibio el registro AX de valor %d",registros.AX);
+	log_info(logger,"Se recibio el registro BX de valor %d",registros.BX);
+	log_info(logger,"Se recibio el registro CX de valor %d",registros.CX);
+	log_info(logger,"Se recibio el registro DX de valor %d",registros.DX);
+
+}
+
 
 int main(int argc, char *argv[]) {
 	logger = log_create("kernel.log", "KERNEL", 1, LOG_LEVEL_INFO);
@@ -117,6 +128,12 @@ int conexionConConsola(){
 			listaInstrucciones = recibir_paquete_instrucciones(cliente_fd);
 			log_info(logger, "me llegaron las instrucciones");
 			list_iterate(listaInstrucciones, (void*) iterator);
+
+			if (recibir_operacion(cliente_fd) == PRUEBA){
+				pthread_mutex_lock(&mutexMensajes);
+				recibir_registros(cliente_fd);
+				pthread_mutex_unlock(&mutexMensajes);
+			}
 
 			//enviar_mensaje("segmentos e instrucciones recibidos pibe", cliente_fd,KERNEL_MENSAJE_CONFIRMACION_RECEPCION_INSTRUCCIONES_SEGMENTOS);
 			//me parece que no haria falta con loguear que se recibieron ya alcanza

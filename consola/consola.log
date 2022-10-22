@@ -182,3 +182,31 @@
 [INFO] 23:08:58:879 CONSOLA/(4255:4255): Se leyo el archivo correctamente
 [INFO] 23:08:58:881 CONSOLA/(4255:4255): Se imprime el valor 3 por pantalla a pedido del kernel
 [INFO] 23:08:58:882 CONSOLA/(4255:4255): Me llego el mensaje Finalizar
+[INFO] 22:38:51:791 CONSOLA/(3930:3930): Config creado
+[INFO] 22:38:51:802 CONSOLA/(3930:3930): Se leyo el archivo correctamente
+[INFO] 22:38:51:820 CONSOLA/(3930:3930): Se imprime el valor 3 por pantalla a pedido del kernel
+[INFO] 22:38:51:821 CONSOLA/(3930:3930): Me llego el mensaje Finalizar
+[INFO] 22:53:53:608 CONSOLA/(4867:4867): Config creado
+[INFO] 22:53:53:610 CONSOLA/(4867:4867): Se leyo el archivo correctamente
+[INFO] 22:54:50:828 CONSOLA/(4924:4924): Config creado
+[INFO] 22:54:50:828 CONSOLA/(4924:4924): Se leyo el archivo correctamente
+[INFO] 22:58:37:877 CONSOLA/(5127:5127): Config creado
+[INFO] 22:58:37:877 CONSOLA/(5127:5127): Se leyo el archivo correctamente
+[INFO] 22:58:37:877 CONSOLA/(5127:5127): 7
+[INFO] 22:59:35:727 CONSOLA/(5193:5193): Config creado
+[INFO] 22:59:35:728 CONSOLA/(5193:5193): Se leyo el archivo correctamente
+[INFO] 22:59:35:729 CONSOLA/(5193:5193): 7
+[INFO] 22:59:35:739 CONSOLA/(5193:5193): Se imprime el valor 3 por pantalla a pedido del kernel
+[INFO] 23:00:47:405 CONSOLA/(5274:5274): Config creado
+[INFO] 23:00:47:406 CONSOLA/(5274:5274): Se leyo el archivo correctamente
+[INFO] 23:00:47:406 CONSOLA/(5274:5274): 7
+[INFO] 23:00:47:429 CONSOLA/(5274:5274): Se imprime el valor 3 por pantalla a pedido del kernel
+[INFO] 23:02:42:170 CONSOLA/(5461:5461): Config creado
+[INFO] 23:02:42:172 CONSOLA/(5461:5461): Se leyo el archivo correctamente
+[INFO] 23:02:42:172 CONSOLA/(5461:5461): 7
+[INFO] 23:02:42:180 CONSOLA/(5461:5461): Se imprime el valor 3 por pantalla a pedido del kernel
+[INFO] 23:03:43:944 CONSOLA/(5520:5520): Config creado
+[INFO] 23:03:43:948 CONSOLA/(5520:5520): Se leyo el archivo correctamente
+[INFO] 23:03:43:948 CONSOLA/(5520:5520): 7
+[INFO] 23:03:43:951 CONSOLA/(5520:5520): Se imprime el valor 3 por pantalla a pedido del kernel
+[INFO] 23:03:43:951 CONSOLA/(5520:5520): Me llego el mensaje Finalizar

@@ -22,8 +22,6 @@
 //--------------PUERTOS
 //Revisar
 #define IP_CPU "127.0.0.1"
-#define PUERTO_CPU_DISPATCH 8001 // por ahora este faltan los otros puertos para conectar a kernel
-#define PUERTO_CPU_INTERRUPT 8005
 
 //-------------------STRUCS
 typedef enum//REVISAR LOS ENUM
@@ -72,6 +70,9 @@ extern int server_fd;
 extern char* ipMemoria;
 extern int puertoMemoria;
 
+extern int puertoDeEscuchaDispatch;
+extern int puertoDeEscuchaInterrupt;
+
 extern int tamanioTotalIdentificadores;
 extern int contadorInstrucciones;
 extern int desplazamiento;
@@ -104,20 +105,19 @@ typedef struct
 	int idProceso;
 	t_list* instrucciones;
 	int programCounter;
-	t_registros registros ; // quedan como strings, al menos hasta cpu
-	t_list * tabla_segmentos; // cada elemento de la lista tendria un vector de dos posiciones (una para el tamanio del
-							// segmento y otra para el número o identificador de tabla de páginas asociado a cada uno)
+	t_registros registros;
+	t_list* tabla_segmentos;
 	int socket;
 	t_estado estado;
 } t_pcb;
+//Saque el IO[2] porque justamente es una instruccion que ya sabemos los valores se deberia enviar aparte.
 
-
-typedef struct
-{
-	int valor;
-	char* registro;
-	char* otroRegistro;
-}parametro;
+//typedef struct
+//{
+//	int valor;
+//	char* registro;
+//	char* otroRegistro;
+//}parametro;
 
 typedef struct
 {
@@ -174,6 +174,9 @@ t_list* recibir_paquete(int);
 t_pcb* recibir_pcb(int);
 void obtenerTamanioIdentificadores(instruccion*);
 void agregarInstruccionesAlPaquete(instruccion*);
+
+void obtenerCantidadDeSegmentos(entradaTablaSegmento*);
+void agregarSegmentosAlPaquete(entradaTablaSegmento*);
 
 uint32_t registroAUtilizar(int);
 int chequeoDeDispositivo(char*);
