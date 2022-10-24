@@ -166,6 +166,7 @@ void iterator(instruccion*);
 int recibir_operacion(int);
 int iniciar_servidor(void);
 int conexionConConsola();
+int conexionConCpu();
 
 void agregarANew(t_pcb* proceso);
 t_pcb* sacarDeNew();

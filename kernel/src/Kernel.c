@@ -35,7 +35,8 @@ int main(int argc, char *argv[]) {
 
 	inicializar_semaforos();
 
-	conexionConConsola();
+//	conexionConConsola();
+	conexionConCpu();
 
 
 /*
@@ -200,6 +201,23 @@ int conexionConConsola(){
 
 	  */
 	  return EXIT_SUCCESS;
+}
+
+int conexionConCpu(){
+	log_info(logger,"creamos conexion con un puerto de cpu");
+	int puertoInterrupt = crear_conexion(IP_KERNEL, "8001");
+	log_info(logger,"creamos conexion con otro puerto de cpu");
+	int puertoDispatch = crear_conexion(IP_KERNEL, "8002");
+
+	enviar_entero(10,puertoInterrupt,0);
+	recibir_operacion(puertoInterrupt);
+	recibir_entero(puertoInterrupt);
+/*
+	enviar_entero(30,puertoDispatch,0);
+	recibir_operacion(puertoDispatch);
+	recibir_entero(puertoDispatch);
+*/
+	 return EXIT_SUCCESS;
 }
 
 /* Aca inicializamos una lista con elementos que contienen:

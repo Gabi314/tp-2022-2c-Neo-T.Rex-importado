@@ -1,5 +1,5 @@
-#include "funcionesKernel.h"
-
+#include "funcionesCpu.h"
+t_log* logger;
 
 
 void enviar_entero(int valor, int socket_cliente, int cod_op) {
@@ -8,34 +8,7 @@ void enviar_entero(int valor, int socket_cliente, int cod_op) {
 } //probemos esto
 
 
-t_list* recibir_lista_instrucciones(int socket_cliente) {
 
-int size;
-	int desplazamiento = 0;
-	void * buffer;
-
-	t_list* listaDeInstrucciones = list_create();
-
-	int tamanioIdentificador;
-
-	buffer = recibir_buffer(&size, socket_cliente);
-
-	while(desplazamiento < size)
-	{
-		instruccion* unaInstruccion = malloc(sizeof(instruccion));
-		memcpy(&tamanioIdentificador, buffer + desplazamiento, sizeof(int));
-		desplazamiento+=sizeof(int);
-		unaInstruccion->identificador = malloc(tamanioIdentificador);
-		memcpy(unaInstruccion->identificador, buffer+desplazamiento, tamanioIdentificador);
-		desplazamiento+=tamanioIdentificador;
-		memcpy(unaInstruccion->parametros, buffer+desplazamiento, sizeof(parametro));
-		desplazamiento+=sizeof(parametro);
-		list_add(listaDeInstrucciones, unaInstruccion);// Despues de esto habria que agragarlas al pcb
-		//pcb->instrucciones = listaDeInstrucciones
-	}
-	free(buffer);
-	return listaDeInstrucciones;
-}
 
 
 t_list* recibir_paquete_instrucciones(int socket_cliente)
@@ -85,7 +58,7 @@ t_list* recibir_lista_enteros(int socket_cliente) // me base en el recibir paque
 		int valor = 0;
 		memcpy(&valor, buffer+desplazamiento, sizeof(int));
 		desplazamiento+=sizeof(int);
-		list_add(valores, (void *) valor);
+		list_add(valores, (void *)valor);
 	}
 	free(buffer);
 	return valores;
@@ -150,8 +123,9 @@ void* serializar_paquete(t_paquete* paquete, int bytes) // sirve para cualquier 
 	return magic;
 }
 
-int iniciar_servidor(void)
+int iniciar_servidor(int tipoDePuerto) // puede ser interrupt o dispatch
 {
+
 	int socket_servidor;
 
 	struct addrinfo hints, *servinfo;
@@ -161,7 +135,10 @@ int iniciar_servidor(void)
 	hints.ai_socktype = SOCK_STREAM;
 	hints.ai_flags = AI_PASSIVE;
 
-	getaddrinfo(IP_KERNEL, PUERTO_KERNEL, &hints, &servinfo);
+
+	char* puerto= string_itoa(tipoDePuerto);// convierte el entero a string para el getaddrinfo
+
+	getaddrinfo(IP_CPU, puerto, &hints, &servinfo);
 
 	// Creamos el socket de escucha del servidor
 	socket_servidor = socket(servinfo->ai_family,servinfo->ai_socktype, servinfo->ai_protocol);
@@ -173,12 +150,22 @@ int iniciar_servidor(void)
 	listen(socket_servidor, SOMAXCONN);
 
 	freeaddrinfo(servinfo);
-	log_trace(logger, "Listo para escuchar a consola");
+	log_trace(logger, "Listo para escuchar al Kernel");
 
 	return socket_servidor;
 }
 
+int esperar_cliente(int socket_servidor)
+{
+	struct sockaddr_in dir_cliente;
 
+	socklen_t tam_direccion = sizeof(struct sockaddr_in);
+	// Aceptamos un nuevo cliente
+	int socket_cliente = accept(socket_servidor,(void*) &dir_cliente, &tam_direccion);
+	log_info(logger, "Se conecto kernel por un puerto!");
+
+	return socket_cliente;
+}
 
 int crear_conexion(char *ip, char* puerto)
 {
@@ -286,3 +273,4 @@ void liberar_conexion(int socket_cliente)
 {
 	close(socket_cliente);
 }
+

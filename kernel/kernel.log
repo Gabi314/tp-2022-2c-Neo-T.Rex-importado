@@ -571,3 +571,29 @@
 [INFO] 23:57:37:373 KERNEL/(48908:48908): Me llego el mensaje Desbloquear proceso. Ya se ingreso un valor por teclado
 [INFO] 23:57:37:373 KERNEL/(48908:48908): [recibir_entero]: se recibio el numero 5
 [ERROR] 23:57:37:374 KERNEL/(48908:48908): La consola se desconecto. Finalizando Kernel
+[INFO] 14:25:57:359 KERNEL/(51625:51625): En la lista de dispositivos tenemos los siguientes:
+[INFO] 14:25:57:368 KERNEL/(51625:51625): Iniciando conexion con consola
+[INFO] 14:25:57:368 KERNEL/(51625:51625): creamos conexion con un puerto de cpu
+[INFO] 14:25:57:368 KERNEL/(51625:51625): creamos conexion con otro puerto de cpu
+[INFO] 14:28:44:304 KERNEL/(51695:51695): En la lista de dispositivos tenemos los siguientes:
+[INFO] 14:28:44:304 KERNEL/(51695:51695): Iniciando conexion con consola
+[INFO] 14:28:44:316 KERNEL/(51695:51695): creamos conexion con un puerto de cpu
+[INFO] 14:29:36:046 KERNEL/(51713:51713): En la lista de dispositivos tenemos los siguientes:
+[INFO] 14:29:36:049 KERNEL/(51713:51713): Iniciando conexion con consola
+[INFO] 14:29:36:050 KERNEL/(51713:51713): creamos conexion con un puerto de cpu
+[INFO] 14:57:13:113 KERNEL/(52107:52107): En la lista de dispositivos tenemos los siguientes:
+[INFO] 14:57:13:116 KERNEL/(52107:52107): Iniciando conexion con consola
+[INFO] 14:57:13:116 KERNEL/(52107:52107): creamos conexion con un puerto de cpu
+[INFO] 14:57:13:117 KERNEL/(52107:52107): creamos conexion con otro puerto de cpu
+[INFO] 14:57:13:120 KERNEL/(52107:52107): [recibir_entero]: se recibio el numero 20
+[INFO] 15:01:19:504 KERNEL/(52294:52294): En la lista de dispositivos tenemos los siguientes:
+[INFO] 15:01:19:505 KERNEL/(52294:52294): Iniciando conexion con consola
+[INFO] 15:01:19:505 KERNEL/(52294:52294): creamos conexion con un puerto de cpu
+[INFO] 15:01:19:506 KERNEL/(52294:52294): creamos conexion con otro puerto de cpu
+[INFO] 15:01:19:506 KERNEL/(52294:52294): [recibir_entero]: se recibio el numero 20
+[INFO] 15:01:19:508 KERNEL/(52294:52294): [recibir_entero]: se recibio el numero 40
+[INFO] 15:02:54:034 KERNEL/(52388:52388): En la lista de dispositivos tenemos los siguientes:
+[INFO] 15:02:54:043 KERNEL/(52388:52388): Iniciando conexion con consola
+[INFO] 15:02:54:045 KERNEL/(52388:52388): creamos conexion con un puerto de cpu
+[INFO] 15:02:54:045 KERNEL/(52388:52388): creamos conexion con otro puerto de cpu
+[INFO] 15:03:18:941 KERNEL/(52388:52388): [recibir_entero]: se recibio el numero 0
