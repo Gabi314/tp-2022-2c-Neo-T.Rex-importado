@@ -82,6 +82,10 @@ void agregar_a_paquete_instrucciones(t_paquete* paquete, instruccion* instruccio
 {
 	void* id = instruccion->identificador;
 	paquete->buffer->stream = realloc(paquete->buffer->stream, paquete->buffer->size + identificador_length + sizeof(int) + sizeof(int[2]));;
+	if(!strcmp(instruccion->identificador,"EXIT")){
+		log_info(logger,"El primer parametro de EXIT es: %d",instruccion->parametros[0]);
+		log_info(logger,"El segundo parametro de EXIT es: %d",instruccion->parametros[1]);
+	}
 
 	memcpy(paquete->buffer->stream + paquete->buffer->size, &identificador_length, sizeof(int));
 	memcpy(paquete->buffer->stream + paquete->buffer->size + sizeof(int), id, identificador_length);

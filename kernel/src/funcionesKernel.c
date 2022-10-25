@@ -50,7 +50,7 @@ pthread_mutex_t obtenerProceso;
 
 
 void iterator(instruccion* instruccion){
-	log_info(logger,"%s", instruccion->identificador);
+	log_info(logger,"%s param1: %d param2: %d", instruccion->identificador, instruccion->parametros[0],instruccion->parametros[1]);
 }
 /*
 t_list * inicializar_tabla_segmentos(int socket_cliente) {
@@ -130,7 +130,7 @@ void atender_consola(int nuevo_cliente) {
 
 
 	PCB->idProceso = get_identificador();
-	PCB->tamanioProceso = sizeof(t_pcb) + 5 * sizeof(int) + sizeof(PCB->instrucciones) + sizeof(PCB->registros) + sizeof(PCB->tabla_segmentos) ;// consultar si lo hicimos bien
+
 	PCB->instrucciones = list_create();
 	PCB->instrucciones = recibir_lista_instrucciones(nuevo_cliente);
 	PCB->program_counter = 0;

@@ -35,8 +35,8 @@ int main(int argc, char *argv[]) {
 
 	inicializar_semaforos();
 
-//	conexionConConsola();
-	conexionConCpu();
+	conexionConConsola();
+//	conexionConCpu();
 
 
 /*
@@ -74,7 +74,7 @@ int main(int argc, char *argv[]) {
 	//sem_wait(&kernelSinFinalizar);
 
 	//int nroTabla1erNivel = conexionConMemoria();
-	//conexionConConsola();
+
 
 	//cargar_pcb(nroTabla1erNivel);
 	//conexionConCpu();

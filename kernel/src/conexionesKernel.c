@@ -234,6 +234,8 @@ void crear_buffer(t_paquete* paquete) // inicializa el paquete sin codigo de ope
 	paquete->buffer->stream = NULL;
 }
 
+
+
 // por ahora dejamos esto acá, capaz nos sirva después
 /*
 t_paquete* crear_super_paquete(void)
@@ -273,6 +275,12 @@ void enviar_paquete(t_paquete* paquete, int socket_cliente)
 	send(socket_cliente, a_enviar, bytes, 0);
 
 	free(a_enviar);
+}
+
+void enviar_Pcb(t_pcb * PCB,op_code codigo){
+	t_paquete * paqueteConPcb = crear_paquete(codigo);
+	agregar_a_paquete(paqueteConPcb,PCB->idProceso,sizeof(int));
+
 }
 
 void eliminar_paquete(t_paquete* paquete)

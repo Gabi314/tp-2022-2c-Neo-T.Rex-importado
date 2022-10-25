@@ -121,14 +121,15 @@ typedef enum algoritmo{FIFO,RR} t_algoritmo_pcb;
 typedef struct
 {
 	int idProceso;
-	int tamanioProceso; // se usa en memoria
 	t_list* instrucciones;
 	int program_counter;
 	t_registros registros ;
 	t_list* tabla_segmentos; // cada elemento de la lista tendria un vector de dos posiciones (una para el tamanio del
-							// segmento y otra para el número o identificador de tabla de páginas asociado a cada uno)
+	// segmento y otra para el número o identificador de tabla de páginas asociado a cada uno)
 	int socket;
 	t_estado estado;
+	t_algoritmo_pcb algoritmoActual;
+
 } t_pcb;
 
 

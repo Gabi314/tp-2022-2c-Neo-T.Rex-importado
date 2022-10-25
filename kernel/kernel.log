@@ -597,3 +597,74 @@
 [INFO] 15:02:54:045 KERNEL/(52388:52388): creamos conexion con un puerto de cpu
 [INFO] 15:02:54:045 KERNEL/(52388:52388): creamos conexion con otro puerto de cpu
 [INFO] 15:03:18:941 KERNEL/(52388:52388): [recibir_entero]: se recibio el numero 0
+[INFO] 20:51:53:843 KERNEL/(54452:54452): En la lista de dispositivos tenemos los siguientes:
+[INFO] 20:51:53:851 KERNEL/(54452:54452): Iniciando conexion con consola
+[INFO] 20:51:53:851 KERNEL/(54452:54452): creamos conexion con un puerto de cpu
+[INFO] 20:51:53:851 KERNEL/(54452:54452): creamos conexion con otro puerto de cpu
+[INFO] 20:51:53:852 KERNEL/(54452:54452): [recibir_entero]: se recibio el numero 0
+[INFO] 20:52:48:949 KERNEL/(54494:54494): En la lista de dispositivos tenemos los siguientes:
+[INFO] 20:52:48:956 KERNEL/(54494:54494): Iniciando conexion con consola
+[INFO] 20:54:08:900 KERNEL/(54552:54552): En la lista de dispositivos tenemos los siguientes:
+[INFO] 20:54:08:903 KERNEL/(54552:54552): Iniciando conexion con consola
+[INFO] 20:54:08:905 KERNEL/(54552:54552): Kernel listo para recibir a consola
+[INFO] 20:54:14:070 KERNEL/(54552:54552): Se conecto la consola!
+[INFO] 20:54:14:071 KERNEL/(54552:54552): El tamanio del primer segmento es: 32
+[INFO] 20:54:14:073 KERNEL/(54552:54552): me llegaron las instrucciones
+[INFO] 20:54:14:073 KERNEL/(54552:54552): SET
+[INFO] 20:54:14:073 KERNEL/(54552:54552): ADD
+[INFO] 20:54:14:073 KERNEL/(54552:54552): MOV_IN
+[INFO] 20:54:14:073 KERNEL/(54552:54552): MOV_OUT
+[INFO] 20:54:14:073 KERNEL/(54552:54552): I/O
+[INFO] 20:54:14:073 KERNEL/(54552:54552): EXIT
+[INFO] 20:54:14:076 KERNEL/(54552:54552): Me llego el mensaje Se imprimio el valor del registro
+[INFO] 20:54:19:654 KERNEL/(54552:54552): Me llego el mensaje Desbloquear proceso. Ya se ingreso un valor por teclado
+[INFO] 20:54:19:654 KERNEL/(54552:54552): [recibir_entero]: se recibio el numero 4
+[ERROR] 20:54:19:655 KERNEL/(54552:54552): La consola se desconecto. Finalizando Kernel
+[INFO] 20:57:29:933 KERNEL/(54655:54655): En la lista de dispositivos tenemos los siguientes:
+[INFO] 20:57:29:940 KERNEL/(54655:54655): Iniciando conexion con consola
+[INFO] 20:57:29:940 KERNEL/(54655:54655): Kernel listo para recibir a consola
+[INFO] 20:57:33:870 KERNEL/(54655:54655): Se conecto la consola!
+[INFO] 20:57:33:872 KERNEL/(54655:54655): El tamanio del primer segmento es: 32
+[INFO] 20:57:33:872 KERNEL/(54655:54655): me llegaron las instrucciones
+[INFO] 20:57:33:872 KERNEL/(54655:54655): SET param1: -427609120 param2: -426786352
+[INFO] 20:57:33:872 KERNEL/(54655:54655): ADD param1: -427609120 param2: -426786352
+[INFO] 20:57:33:872 KERNEL/(54655:54655): MOV_IN param1: -427609120 param2: -426786352
+[INFO] 20:57:33:872 KERNEL/(54655:54655): MOV_OUT param1: -427609120 param2: -426786352
+[INFO] 20:57:33:872 KERNEL/(54655:54655): I/O param1: -427609120 param2: -426785568
+[INFO] 20:57:33:872 KERNEL/(54655:54655): EXIT param1: -427609120 param2: -426786352
+[INFO] 20:57:33:876 KERNEL/(54655:54655): Me llego el mensaje Se imprimio el valor del registro
+[INFO] 20:57:37:151 KERNEL/(54655:54655): Me llego el mensaje Desbloquear proceso. Ya se ingreso un valor por teclado
+[INFO] 20:57:37:152 KERNEL/(54655:54655): [recibir_entero]: se recibio el numero 4
+[ERROR] 20:57:37:153 KERNEL/(54655:54655): La consola se desconecto. Finalizando Kernel
+[INFO] 20:58:26:719 KERNEL/(54737:54737): En la lista de dispositivos tenemos los siguientes:
+[INFO] 20:58:26:719 KERNEL/(54737:54737): Iniciando conexion con consola
+[INFO] 20:58:26:719 KERNEL/(54737:54737): Kernel listo para recibir a consola
+[INFO] 20:58:30:773 KERNEL/(54737:54737): Se conecto la consola!
+[INFO] 20:58:30:773 KERNEL/(54737:54737): El tamanio del primer segmento es: 32
+[INFO] 20:58:30:774 KERNEL/(54737:54737): me llegaron las instrucciones
+[INFO] 20:58:30:774 KERNEL/(54737:54737): SET param1: 0 param2: 1
+[INFO] 20:58:30:774 KERNEL/(54737:54737): ADD param1: 0 param2: 1
+[INFO] 20:58:30:774 KERNEL/(54737:54737): MOV_IN param1: 2 param2: 4
+[INFO] 20:58:30:774 KERNEL/(54737:54737): MOV_OUT param1: 8 param2: 3
+[INFO] 20:58:30:774 KERNEL/(54737:54737): I/O param1: 0 param2: 10
+[INFO] 20:58:30:774 KERNEL/(54737:54737): EXIT param1: 0 param2: 0
+[INFO] 20:58:30:776 KERNEL/(54737:54737): Me llego el mensaje Se imprimio el valor del registro
+[INFO] 20:58:35:154 KERNEL/(54737:54737): Me llego el mensaje Desbloquear proceso. Ya se ingreso un valor por teclado
+[INFO] 20:58:35:154 KERNEL/(54737:54737): [recibir_entero]: se recibio el numero 4
+[ERROR] 20:58:35:155 KERNEL/(54737:54737): La consola se desconecto. Finalizando Kernel
+[INFO] 21:10:11:595 KERNEL/(55096:55096): En la lista de dispositivos tenemos los siguientes:
+[INFO] 21:10:11:598 KERNEL/(55096:55096): Iniciando conexion con consola
+[INFO] 21:10:11:599 KERNEL/(55096:55096): Kernel listo para recibir a consola
+[INFO] 21:10:18:189 KERNEL/(55096:55096): Se conecto la consola!
+[INFO] 21:10:18:190 KERNEL/(55096:55096): El tamanio del primer segmento es: 32
+[INFO] 21:10:18:190 KERNEL/(55096:55096): me llegaron las instrucciones
+[INFO] 21:10:18:190 KERNEL/(55096:55096): SET param1: 0 param2: 1
+[INFO] 21:10:18:190 KERNEL/(55096:55096): ADD param1: 0 param2: 1
+[INFO] 21:10:18:190 KERNEL/(55096:55096): MOV_IN param1: 2 param2: 4
+[INFO] 21:10:18:190 KERNEL/(55096:55096): MOV_OUT param1: 8 param2: 3
+[INFO] 21:10:18:190 KERNEL/(55096:55096): I/O param1: 0 param2: 10
+[INFO] 21:10:18:190 KERNEL/(55096:55096): EXIT param1: 0 param2: 0
+[INFO] 21:10:18:193 KERNEL/(55096:55096): Me llego el mensaje Se imprimio el valor del registro
+[INFO] 21:11:37:330 KERNEL/(55096:55096): Me llego el mensaje Desbloquear proceso. Ya se ingreso un valor por teclado
+[INFO] 21:11:37:331 KERNEL/(55096:55096): [recibir_entero]: se recibio el numero 5
+[ERROR] 21:11:37:332 KERNEL/(55096:55096): La consola se desconecto. Finalizando Kernel
