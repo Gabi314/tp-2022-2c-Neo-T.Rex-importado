@@ -21,10 +21,17 @@ int main(void) {
 	recibir_operacion(puertoInterrupt);
 	recibir_entero(puertoInterrupt);
 	enviar_entero(20, puertoInterrupt, 0);
-*/
+
 	recibir_operacion(puertoDispatch);
 	recibir_entero(puertoDispatch);
 	enviar_entero(40, puertoDispatch, 0);
+*/
+/*
+	recibir_entero(puertoDispatch);
+	int size;
 
+	void * buffer = recibir_buffer_cpu(&size,puertoDispatch);
+
+*/
 	return EXIT_SUCCESS;
 }

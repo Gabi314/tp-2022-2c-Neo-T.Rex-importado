@@ -28,7 +28,7 @@ int main(int argc, char *argv[]) {
 	int codigo = recibir_operacion(conexion);
 
 	if(codigo != KERNEL_MENSAJE_CONFIRMACION_RECEPCION_INSTRUCCIONES_SEGMENTOS){
-		log_info(logger,"codigo de operacion incorrecto");
+		log_info(logger,"codigo de operacion incorrecto: %d", codigo);
 	}
 	recibir_mensaje(conexion);
 	atenderPeticionesKernel();

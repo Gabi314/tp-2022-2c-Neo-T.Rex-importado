@@ -143,6 +143,7 @@ int recibir_operacion(int socket_cliente)
 		return cod_op;
 	else
 	{
+
 		close(socket_cliente);
 		return -1;
 	}

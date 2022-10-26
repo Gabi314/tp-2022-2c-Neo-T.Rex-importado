@@ -34,3 +34,12 @@
 [INFO] 15:02:54:045 CPU/(52354:52354): iniciamos servidor con otro puerto, esperando a kernel
 [INFO] 15:02:54:045 CPU/(52354:52354): Se conecto kernel por un puerto!
 [INFO] 15:02:54:045 CPU/(52354:52354): se conecto kernel al segundo puerto
+[INFO] 21:40:03:427 CPU/(61110:61110): iniciamos servidor con un puerto, esperando a kernel
+[INFO] 22:21:32:226 CPU/(62112:62112): iniciamos servidor con un puerto, esperando a kernel
+[INFO] 22:21:44:862 CPU/(62112:62112): Se conecto kernel por un puerto!
+[INFO] 22:21:44:862 CPU/(62112:62112): se conecto kernel al primer puerto
+[INFO] 22:21:44:862 CPU/(62112:62112): iniciamos servidor con otro puerto, esperando a kernel
+[INFO] 22:21:44:862 CPU/(62112:62112): Se conecto kernel por un puerto!
+[INFO] 22:21:44:863 CPU/(62112:62112): se conecto kernel al segundo puerto
+[INFO] 22:21:44:992 CPU/(62112:62112): [recibir_entero]: se recibio el numero 21996
+[INFO] 22:21:44:992 CPU/(62112:62112): se esperaban 790806956 bytes pero se recibieron 0 bytes

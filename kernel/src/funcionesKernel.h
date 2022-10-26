@@ -62,10 +62,9 @@ extern t_list* listaDeColasDispositivos;
 
 
 typedef struct{
-	int num_segmento;
 	int tam_segmento;
 	int num_tabla_paginas;
-	struct t_tabla_segmentos* next;
+
 }t_tabla_segmentos;
 
 
@@ -151,7 +150,7 @@ void liberar_conexion(int socket_cliente);
 void eliminar_paquete(t_paquete* paquete);
 void * recibir_buffer(int* size, int socket_cliente);
 int esperar_cliente(int socket_servidor);
-void enviSar_entero(int valor, int socket_cliente, int cod_op);
+void enviar_entero(int valor, int socket_cliente, int cod_op);
 void recibir_consola(int);
 void atender_consola(int);
 int get_identificador();
@@ -166,8 +165,8 @@ void iterator(instruccion*);
 
 int recibir_operacion(int);
 int iniciar_servidor(void);
-int conexionConConsola();
-int conexionConCpu();
+t_pcb * conexionConConsola();
+int conexionConCpu(t_pcb * PCB);
 
 void agregarANew(t_pcb* proceso);
 t_pcb* sacarDeNew();

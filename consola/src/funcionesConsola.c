@@ -96,7 +96,7 @@ void dividirInstruccionesAlPaquete(t_log* logger,t_paquete* paquete,char** linea
 		}
 	 	if(!strcmp(lineasDeInstrucciones[0],"I/O")){
 			unaInstruccion->parametros[0] = chequeoDeDispositivo(lineasDeInstrucciones[1]);
-			if(unaInstruccion->parametros[0] == DISCO){
+			if((unaInstruccion->parametros[0] != TECLADO) && (unaInstruccion->parametros[0] != PANTALLA)){
 				unaInstruccion->parametros[1] = atoi(lineasDeInstrucciones[2]);
 			}else {
 				unaInstruccion->parametros[1] = chequeoDeRegistro(lineasDeInstrucciones[2]);

@@ -276,11 +276,64 @@ void enviar_paquete(t_paquete* paquete, int socket_cliente)
 
 	free(a_enviar);
 }
+void agregar_a_paquete_instrucciones(t_paquete* paquete, instruccion* instruccion, int identificador_length)
+{
+	void* id = instruccion->identificador;
+	paquete->buffer->stream = realloc(paquete->buffer->stream, paquete->buffer->size + identificador_length + sizeof(int) + sizeof(int[2]));;
+	if(!strcmp(instruccion->identificador,"EXIT")){
+		log_info(logger,"El primer parametro de EXIT es: %d",instruccion->parametros[0]);
+		log_info(logger,"El segundo parametro de EXIT es: %d",instruccion->parametros[1]);
+	}
 
-void enviar_Pcb(t_pcb * PCB,op_code codigo){
+	memcpy(paquete->buffer->stream + paquete->buffer->size, &identificador_length, sizeof(int));
+	memcpy(paquete->buffer->stream + paquete->buffer->size + sizeof(int), id, identificador_length);
+	memcpy(paquete->buffer->stream + paquete->buffer->size + sizeof(int) + identificador_length, &instruccion->parametros, sizeof(int[2]));
+
+	paquete->buffer->size += identificador_length + sizeof(int) + sizeof(int[2]);
+}
+
+void enviar_Pcb(t_pcb * PCB,op_code codigo, int socketCliente){
 	t_paquete * paqueteConPcb = crear_paquete(codigo);
 	agregar_a_paquete(paqueteConPcb,PCB->idProceso,sizeof(int));
 
+//	int tamanioInstrucciones = 0;
+//	for(int i = 0;i<list_size(PCB->instrucciones);i++){
+//			instruccion * instruccionAux = list_get(PCB->instrucciones,i);
+	//		tamanioInstrucciones = tamanioInstrucciones + sizeof(instruccionAux->identificador) + sizeof(int[2]);
+		//}
+
+	int cantidadInstrucciones = list_size(PCB->instrucciones);
+	agregar_a_paquete(paqueteConPcb, cantidadInstrucciones, sizeof(int));
+
+	for(int i=0;i<list_size(PCB->instrucciones);i++){
+		instruccion * instruccionAux = list_get(PCB->instrucciones,i);
+		agregar_a_paquete_instrucciones(paqueteConPcb, instruccionAux, sizeof(instruccionAux->identificador));
+	}
+
+	agregar_a_paquete(paqueteConPcb,PCB->program_counter,sizeof(int));
+	agregar_a_paquete(paqueteConPcb,PCB->registros.AX,sizeof(int));
+	agregar_a_paquete(paqueteConPcb,PCB->registros.BX,sizeof(int));
+	agregar_a_paquete(paqueteConPcb,PCB->registros.CX,sizeof(int));
+	agregar_a_paquete(paqueteConPcb,PCB->registros.DX,sizeof(int));
+
+	int cantidadSegmentos = list_size(PCB->tabla_segmentos);
+		agregar_a_paquete(paqueteConPcb, cantidadSegmentos, sizeof(int));
+
+	for(int i=0;i<list_size(PCB->tabla_segmentos);i++){
+			t_tabla_segmentos * elemento = list_get(PCB->tabla_segmentos,i);
+			agregar_a_paquete(paqueteConPcb, elemento->num_tabla_paginas, sizeof(int));
+			agregar_a_paquete(paqueteConPcb, elemento->tam_segmento, sizeof(int));
+		}
+
+	int socket = PCB->socket;
+	int estado = PCB->estado;
+	int algoritmo = PCB->algoritmoActual;
+
+	agregar_a_paquete(paqueteConPcb,socket,sizeof(int));
+	agregar_a_paquete(paqueteConPcb,estado,sizeof(int));
+	agregar_a_paquete(paqueteConPcb,algoritmo,sizeof(int));
+
+	enviar_paquete(paqueteConPcb, socketCliente);
 }
 
 void eliminar_paquete(t_paquete* paquete)

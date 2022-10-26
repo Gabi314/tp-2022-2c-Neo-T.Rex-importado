@@ -98,6 +98,24 @@ recv(socket_cliente, buffer, *size, MSG_WAITALL);
 return buffer;
 }
 
+void * recibir_buffer_cpu(int* size, int socket_cliente)
+{
+void * buffer;
+
+recv(socket_cliente, size, sizeof(int), MSG_WAITALL);
+buffer = malloc(*size);
+int bytes = recv(socket_cliente, buffer, *size, MSG_WAITALL);
+
+if (bytes == size){
+	log_info(logger,"se recibio la cantidad de bytes correcta!");
+}
+else {
+	log_info(logger,"se esperaban %d bytes pero se recibieron %d bytes", size,bytes);
+}
+
+return buffer;
+}
+
 void recibir_mensaje(int socket_cliente)
 {
 int size;

@@ -35,8 +35,8 @@ int main(int argc, char *argv[]) {
 
 	inicializar_semaforos();
 
-	conexionConConsola();
-//	conexionConCpu();
+	//t_pcb * PCB = conexionConConsola();
+	//conexionConCpu(PCB);
 
 
 /*
@@ -112,19 +112,28 @@ void inicializar_listas_y_colas() {
 
 }
 
-int conexionConConsola(){
+t_pcb * conexionConConsola(){
 
 	int server_fd = iniciar_servidor();
 	log_info(logger, "Kernel listo para recibir a consola");
 	int cliente_fd = esperar_cliente(server_fd);
 
 	t_list* listaQueContieneTamSegmento;
+	t_pcb * PCB = malloc(sizeof(t_pcb *));
 
-	if (recibir_operacion(cliente_fd) == KERNEL_PAQUETE_TAMANIOS_SEGMENTOS){
-		listaQueContieneTamSegmento = list_create();
-		listaQueContieneTamSegmento = recibir_lista_enteros(cliente_fd);
-		int tamanioDelSegmento = (int) list_get(listaQueContieneTamSegmento,3);
-		log_info(logger,"El tamanio del primer segmento es: %d",tamanioDelSegmento);
+	log_info(logger, "llego antes de recibir_operacion");
+
+	int operacion = recibir_operacion(cliente_fd);
+
+	log_info(logger,"se recibio la operacion %d", operacion);
+
+	if (operacion == KERNEL_PAQUETE_TAMANIOS_SEGMENTOS){
+	//	listaQueContieneTamSegmento = list_create();
+	//	listaQueContieneTamSegmento = recibir_lista_enteros(cliente_fd);
+		PCB->tabla_segmentos = list_create();
+		PCB->tabla_segmentos = inicializar_tabla_segmentos(cliente_fd); // aca usariamos el recibir_lista_enteros
+	//	int tamanioDelSegmento = (int) list_get(listaQueContieneTamSegmento,3);
+	//			log_info(logger,"El tamanio del primer segmento es: %d",tamanioDelSegmento);
 
 		if (recibir_operacion(cliente_fd) == KERNEL_PAQUETE_INSTRUCCIONES){
 				listaInstrucciones = list_create();
@@ -170,7 +179,7 @@ int conexionConConsola(){
 
 	if(recibir_operacion(cliente_fd) == -1){
 		log_error(logger, "La consola se desconecto. Finalizando Kernel");
-		return EXIT_FAILURE;
+
 	}
 
 
@@ -200,23 +209,36 @@ int conexionConConsola(){
 			}
 
 	  */
-	  return EXIT_SUCCESS;
+
+
+		PCB->idProceso = get_identificador();
+		PCB->instrucciones = list_create();
+		PCB->instrucciones = listaInstrucciones;
+		PCB->program_counter = 0;
+		inicializar_registros(PCB->registros);
+
+		PCB->socket = cliente_fd;
+		PCB->estado = NEW;
+		PCB->algoritmoActual = RR;
+
+		return PCB;
 }
 
-int conexionConCpu(){
+int conexionConCpu(t_pcb * PCB){
 	log_info(logger,"creamos conexion con un puerto de cpu");
 	int puertoInterrupt = crear_conexion(IP_KERNEL, "8001");
 	log_info(logger,"creamos conexion con otro puerto de cpu");
 	int puertoDispatch = crear_conexion(IP_KERNEL, "8002");
-
+/*
 	enviar_entero(10,puertoInterrupt,0);
 	recibir_operacion(puertoInterrupt);
 	recibir_entero(puertoInterrupt);
-/*
+
 	enviar_entero(30,puertoDispatch,0);
 	recibir_operacion(puertoDispatch);
 	recibir_entero(puertoDispatch);
 */
+	enviar_Pcb(PCB, 0, puertoDispatch);
 	 return EXIT_SUCCESS;
 }
 

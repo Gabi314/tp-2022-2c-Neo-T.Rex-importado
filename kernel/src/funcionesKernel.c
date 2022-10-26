@@ -52,19 +52,20 @@ pthread_mutex_t obtenerProceso;
 void iterator(instruccion* instruccion){
 	log_info(logger,"%s param1: %d param2: %d", instruccion->identificador, instruccion->parametros[0],instruccion->parametros[1]);
 }
-/*
+
 t_list * inicializar_tabla_segmentos(int socket_cliente) {
 	t_list * listaSegmentos = list_create();
 	listaSegmentos = recibir_lista_enteros(socket_cliente);
+	int tamanioDelSegmento = (int) list_get(listaSegmentos,3);
+			log_info(logger,"El tamanio del primer segmento es: %d",tamanioDelSegmento);
 	t_list * tablaSegmentos = list_create();
 	int i = 0;
 
 	while (i<list_size(listaSegmentos)) {
-		t_tabla_segmentos elemento;
+		t_tabla_segmentos * elemento;
 
-		elemento.num_segmento = i;
-		elemento.num_tabla_paginas = 0; // identificador de TP asociado
-		elemento.tam_segmento = list_remove(listaSegmentos,0); // tamanio del segmento
+		elemento->num_tabla_paginas = 0; // identificador de TP asociado
+		elemento->tam_segmento = list_remove(listaSegmentos,0); // tamanio del segmento
 
 		list_add(tablaSegmentos,elemento);
 
@@ -72,7 +73,7 @@ t_list * inicializar_tabla_segmentos(int socket_cliente) {
 	}
 	return tablaSegmentos;
 }
-*/  //ver esto
+
 
 void inicializar_registros(t_registros registros) {
 	registros.AX = 0;
@@ -136,7 +137,7 @@ void atender_consola(int nuevo_cliente) {
 	PCB->program_counter = 0;
 	inicializar_registros(PCB->registros);
 	PCB->tabla_segmentos = list_create();
-	//PCB->tabla_segmentos = inicializar_tabla_segmentos(nuevo_cliente); // aca usariamos el recibir_lista_enteros
+	PCB->tabla_segmentos = inicializar_tabla_segmentos(nuevo_cliente); // aca usariamos el recibir_lista_enteros
 	PCB->socket = nuevo_cliente;
 	PCB->estado = NEW;
 
