@@ -16,9 +16,22 @@ int main(int argc, char *argv[]) {
 	//sem_init(&kernelSinFinalizar,0,0);
 
 	// Inicializaciones
-	inicializar_configuraciones(argv[1]);
+	//inicializar_configuraciones(argv[1]);
 	identificadores_pcb = 0;
 
+	t_config* config = inicializar_configuracion(argv[1]);
+
+	ipMemoria = config_get_string_value(config, "IP_MEMORIA");
+	puertoMemoria = config_get_string_value(config, "PUERTO_MEMORIA");//son intss
+	ipCpu = config_get_string_value(config, "IP_CPU");
+	puertoCpuDispatch = config_get_string_value(config, "PUERTO_CPU_DISPATCH");//son intss
+	puertoCpuInterrupt = config_get_string_value(config, "PUERTO_CPU_INTERRUPT");
+	puertoKernel = config_get_string_value(config, "PUERTO_ESCUCHA"); //no lo usamos
+	algoritmoPlanificacion = config_get_string_value(config, "ALGORITMO_PLANIFICACION");
+	gradoMultiprogramacionTotal = config_get_int_value(config, "GRADO_MAX_MULTIPROGRAMACION");
+	quantum_rr = config_get_int_value(config,"QUANTUM_RR");
+	dispositivos_io = config_get_array_value(config, "DISPOSITIVOS_IO");
+	tiempos_io = config_get_array_value(config, "TIEMPOS_IO");
 
 
 	inicializar_listas_y_colas();
