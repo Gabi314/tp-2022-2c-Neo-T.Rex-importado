@@ -23476,3 +23476,18 @@
 [INFO] 01:47:31:806 CPU/(7122:7122): cont seg: 1
 [INFO] 01:47:31:806 CPU/(7122:7122): Nro: 2, numero tabla paginas 0, tamanio segmento 32
 [INFO] 01:47:31:806 CPU/(7122:7122): Estado: 1
+[INFO] 17:29:34:646 CPU/(2115:2115): Cpu listo para recibir a Kernel
+[INFO] 17:29:45:179 CPU/(2115:2115): Se conecto el Kernel!
+[INFO] 17:29:45:186 CPU/(2115:2115): PID: 1
+[INFO] 17:29:45:186 CPU/(2115:2115): Instruccion: SET
+[INFO] 17:29:45:186 CPU/(2115:2115): Instruccion: ADD
+[INFO] 17:29:45:186 CPU/(2115:2115): Instruccion: MOV_IN
+[INFO] 17:29:45:186 CPU/(2115:2115): Instruccion: MOV_OUT
+[INFO] 17:29:45:186 CPU/(2115:2115): Instruccion: I/O
+[INFO] 17:29:45:186 CPU/(2115:2115): Instruccion: I/O
+[INFO] 17:29:45:186 CPU/(2115:2115): Instruccion: I/O
+[INFO] 17:29:45:186 CPU/(2115:2115): Instruccion: EXIT
+[INFO] 17:29:45:186 CPU/(2115:2115): Registro AX: 11 y DX: 4
+[INFO] 17:29:45:186 CPU/(2115:2115): cont seg: 1
+[INFO] 17:29:45:186 CPU/(2115:2115): Nro: 2, numero tabla paginas 0, tamanio segmento 32
+[INFO] 17:29:45:186 CPU/(2115:2115): Estado: 1

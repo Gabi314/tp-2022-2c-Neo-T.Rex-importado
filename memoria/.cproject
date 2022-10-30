@@ -112,6 +112,7 @@
 		</scannerConfigBuildInfo>
 	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
+<<<<<<< HEAD
 	<storageModule moduleId="refreshScope" versionNumber="2">
 		<configuration configurationName="Debug">
 			<resource resourceType="PROJECT" workspacePath="/memoria"/>
@@ -120,5 +121,7 @@
 			<resource resourceType="PROJECT" workspacePath="/memoria"/>
 		</configuration>
 	</storageModule>
+=======
+>>>>>>> 70d5731 (Envio y recepccion de pcb correctamente)
 	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
 </cproject>

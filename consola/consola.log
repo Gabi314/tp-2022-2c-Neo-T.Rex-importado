@@ -456,3 +456,7 @@
 [INFO] 01:47:31:802 CONSOLA/(7170:7170): Se leyo el archivo correctamente
 [INFO] 01:47:31:804 CONSOLA/(7170:7170): Se imprime el valor 3 por pantalla a pedido del kernel
 [INFO] 01:47:31:805 CONSOLA/(7170:7170): Me llego el mensaje Finalizar
+[INFO] 17:29:45:160 CONSOLA/(2190:2190): Config creado
+[INFO] 17:29:45:162 CONSOLA/(2190:2190): Se leyo el archivo correctamente
+[INFO] 17:29:45:178 CONSOLA/(2190:2190): Se imprime el valor 3 por pantalla a pedido del kernel
+[INFO] 17:29:45:178 CONSOLA/(2190:2190): Me llego el mensaje Finalizar
