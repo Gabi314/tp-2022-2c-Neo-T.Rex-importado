@@ -32,9 +32,9 @@ typedef enum {
 	KERNEL_MENSAJE_DESBLOQUEAR_TECLADO,
 	KERNEL_MENSAJE_FINALIZAR_CONSOLA,
 	//KERNEL_MENSAJE_PEDIDO_IMPRESION_POR_PANTALLA, Me parece que no serviria mandar un mensaje, mandamos el valor a imprimir de una y listo
-	PRUEBA,
 	KERNEL_MENSAJE_DESBLOQUEO_TECLADO,
-	KERNEL_PAQUETE_VALOR_RECIBIDO_DE_TECLADO
+	KERNEL_PAQUETE_VALOR_RECIBIDO_DE_TECLADO,
+	KERNEL_PCB_A_CPU
 }op_code;
 
 typedef enum
@@ -85,12 +85,12 @@ typedef struct
 	t_buffer* buffer;
 } t_paquete;
 
-typedef struct
-{
-	int valor;
-	char* registro;
-	char* otroRegistro;
-}parametro;
+//typedef struct
+//{
+//	int valor;
+//	char* registro;
+//	char* otroRegistro;
+//}parametro;
 
 
 typedef struct
@@ -104,17 +104,34 @@ typedef enum estado { NEW, READY, BLOCKED, EXEC, TERMINATED } t_estado;
 
 typedef struct
 {
-	int idProceso;
-	int tamanioProceso; // se usa en memoria
-	t_list* instrucciones;
-	int program_counter;
-	t_registros registros ; // quedan como strings, al menos hasta cpu
-	t_list * tabla_segmentos; // cada elemento de la lista tendria un vector de dos posiciones (una para el tamanio del
-							// segmento y otra para el número o identificador de tabla de páginas asociado a cada uno)
+	int numeroSegmento;
+	int tamanioSegmento;
+	int numeroTablaPaginas;//Revisar nombre
+}entradaTablaSegmento;
 
-	int socket;
+typedef struct
+{
+	int idProceso;
+	t_list* instrucciones;
+	int programCounter;
+	t_registros registros;
+	t_list* tablaSegmentos;
+	//int socket;
 	t_estado estado;
 } t_pcb;
+
+//typedef struct
+//{
+//	int idProceso;
+//	int tamanioProceso;
+//	t_list* instrucciones;
+//	int program_counter;
+//	int tabla_paginas; // Esto se lo pasa memoria
+//	float estimacion_rafaga;
+//	clock_t rafagaMs; //pasar a int
+//	clock_t horaDeIngresoAExe;
+//	t_estado estado;
+//} t_pcb;
 
 
 int recibir_entero(int socket_cliente);
@@ -161,8 +178,20 @@ extern char** tiempos_io;
 extern t_list colas_dispositivos_io;
 extern int quantum_rr;
 
-
-
 extern sem_t kernelSinFinalizar;
+
+extern t_paquete* paquete;
+extern int conexionCpu;
+
+extern int tamanioTotalIdentificadores;
+extern int contadorInstrucciones;
+extern int contadorSegmentos;
+extern int desplazamiento;
+
+void obtenerTamanioIdentificadores(instruccion*);
+void obtenerCantidadDeSegmentos(entradaTablaSegmento*);
+void agregarInstruccionesAlPaquete(instruccion*);
+void agregarSegmentosAlPaquete(entradaTablaSegmento*);
+void agregar_a_paquete_kernel_cpu(t_pcb*,int,int);
 
 #endif /* UTILS_H_ */

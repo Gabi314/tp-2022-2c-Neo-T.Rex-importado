@@ -4,17 +4,17 @@
 
 t_list* lista_dispositivos;
 
-void recibir_registros(int socket_cliente) // basado en recibir_operacion
-{
-	t_registros registros;
-	recv(socket_cliente, &registros, sizeof(t_registros), MSG_WAITALL);
-	log_info(logger,"Se recibio el registro AX de valor %d",registros.AX);
-	log_info(logger,"Se recibio el registro BX de valor %d",registros.BX);
-	log_info(logger,"Se recibio el registro CX de valor %d",registros.CX);
-	log_info(logger,"Se recibio el registro DX de valor %d",registros.DX);
-
-}
-
+//void recibir_registros(int socket_cliente) // basado en recibir_operacion
+//{
+//	t_registros registros;
+//	recv(socket_cliente, &registros, sizeof(t_registros), MSG_WAITALL);
+//	log_info(logger,"Se recibio el registro AX de valor %d",registros.AX);
+//	log_info(logger,"Se recibio el registro BX de valor %d",registros.BX);
+//	log_info(logger,"Se recibio el registro CX de valor %d",registros.CX);
+//	log_info(logger,"Se recibio el registro DX de valor %d",registros.DX);
+//
+//}
+int conexionCpu = 0;
 
 int main(int argc, char *argv[]) {
 	logger = log_create("kernel.log", "KERNEL", 1, LOG_LEVEL_INFO);
@@ -32,54 +32,34 @@ int main(int argc, char *argv[]) {
 
 	log_info(logger,"Iniciando conexion con consola");
 
-	//socketServidor = iniciar_servidor();
-
-
 	conexionConConsola();
+	log_info(logger, "me llegaron las instrucciones");
+	list_iterate(listaInstrucciones, (void*) iterator);
 
-/*
-	inicializar_colas();
-	inicializar_semaforos();
+	t_pcb* pcb = malloc(sizeof(t_pcb));
+	pcb->estado = READY;
+	pcb->idProceso = 1;
+	pcb->instrucciones = list_create();
+	pcb->instrucciones = listaInstrucciones;
+	pcb->programCounter = 1;
+	pcb->registros.AX = 11;
+	pcb->registros.BX = 5;
+	pcb->registros.CX = 3;
+	pcb->registros.DX = 4;
+	pcb->tablaSegmentos = list_create();
+	entradaTablaSegmento* unaEntrada = malloc(sizeof(entradaTablaSegmento));
+	unaEntrada->numeroSegmento = 2;
+	unaEntrada->numeroTablaPaginas = 0;
+	unaEntrada->tamanioSegmento = 32;
+
+	list_add(pcb->tablaSegmentos,unaEntrada);
+	conexionCpu = crear_conexion(ipCpu, puertoCpuDispatch);
+
+	agregar_a_paquete_kernel_cpu(pcb, KERNEL_PCB_A_CPU,conexionCpu);
 
 
-	pthread_t hilo0;
-	pthread_t hiloAdmin[6];
-	int hiloAdminCreado[6];
-
-	ejecucionActiva = false;
-	procesoDesalojado = NULL;
-	//conexiones
-	socketMemoria = crear_conexion(ipMemoria, puertoMemoria);
-	socketCpuDispatch = crear_conexion(ipCpu, puertoCpuDispatch);
-	socketCpuInterrupt = crear_conexion(ipCpu, puertoCpuInterrupt);
-	socketServidor = iniciar_servidor();
-
-	int hiloCreado = pthread_create(&hilo0, NULL,&recibir_consola,socketServidor);
-	pthread_detach(hiloCreado);
-
-	hiloAdminCreado[0] = pthread_create(&hiloAdmin[0],NULL,&asignar_memoria,NULL);
-	hiloAdminCreado[1] = pthread_create(&hiloAdmin[1],NULL,&atender_interrupcion_de_ejecucion,NULL); // problemas con esto
-	hiloAdminCreado[2] = pthread_create(&hiloAdmin[2],NULL,&atenderDesalojo,NULL);
-	hiloAdminCreado[3] = pthread_create(&hiloAdmin[3],NULL,&readyAExe,NULL);
-	hiloAdminCreado[4] = pthread_create(&hiloAdmin[4],NULL,&atenderIO,NULL);
-	hiloAdminCreado[5] = pthread_create(&hiloAdmin[5],NULL,&desbloquear_suspendido,NULL);
-
-	pthread_detach(hiloAdmin[0]);
-	pthread_detach(hiloAdmin[1]);
-	pthread_detach(hiloAdmin[2]);
-	pthread_detach(hiloAdmin[3]);
-	pthread_detach(hiloAdmin[4]);
-	pthread_detach(hiloAdmin[5]);
-*/
-
+	//free(unaEntrada);
 	log_destroy(logger);
-	//sem_wait(&kernelSinFinalizar);
-
-	//int nroTabla1erNivel = conexionConMemoria();
-	//conexionConConsola();
-
-	//cargar_pcb(nroTabla1erNivel);
-	//conexionConCpu();
 
 }
 
@@ -126,14 +106,7 @@ int conexionConConsola(){
 		if (recibir_operacion(cliente_fd) == KERNEL_PAQUETE_INSTRUCCIONES) {
 			listaInstrucciones = list_create();
 			listaInstrucciones = recibir_paquete_instrucciones(cliente_fd);
-			log_info(logger, "me llegaron las instrucciones");
-			list_iterate(listaInstrucciones, (void*) iterator);
 
-			if (recibir_operacion(cliente_fd) == PRUEBA){
-				pthread_mutex_lock(&mutexMensajes);
-				recibir_registros(cliente_fd);
-				pthread_mutex_unlock(&mutexMensajes);
-			}
 
 			//enviar_mensaje("segmentos e instrucciones recibidos pibe", cliente_fd,KERNEL_MENSAJE_CONFIRMACION_RECEPCION_INSTRUCCIONES_SEGMENTOS);
 			//me parece que no haria falta con loguear que se recibieron ya alcanza
@@ -216,56 +189,6 @@ void inicializar_lista_dispositivos() {
 		}
 	}
 }
-
-// En principio, no hace falta -------------------------------------------------------
-
-// [disco,pantalla,teclado]
-// [30,15,10]
-
-/*
-int obtener_indice_dispositivo(char* dispositivo) {
-	int tamanio = sizeof(dispositivos_io); // / sizeof(dispositivos_io[0]);
-	for (int i = 0; i < tamanio; i ++) {
-//		char* dispositivo_aux = dispositivos_io[i];
-		if (string_equals_ignore_case(dispositivos_io[i], dispositivo)) {
-			return i;
-		}
-	}
-	return -1;
-}
-
-int obtener_tiempo_dispositivo_io(char* dispositivo) {
-	int indice = obtener_indice_dispositivo(dispositivo);
-	if (indice == -1) {
-		return -1;
-	}
-	return atoi(tiempos_io[indice]);
-}
-*/
-
-// Retorna indice de lista en la que la cola de dispositivos fue agregada
-//	en caso de que no se haya encontrado el indice solicitado por parametro
-
-// IN PROGRESS - Esta mal inicialiazada
-/*
-int encolar_dispositivo(int indice, char* dispositivo) {
-	t_queue* cola = list_get(colas_dispositivos, indice);
-	if (queue_is_empty(cola) || cola == NULL) {
-		t_list_disp* elemento_cola_dispositivo;
-		t_queue* cola_nueva = queue_create();
-		queue_push(cola_nueva, dispositivo);
-		elemento_cola_dispositivo->cola = cola_nueva;
-		elemento_cola_dispositivo->next = NULL;
-		// Pasar esto a una funcion secundaria
-		return list_add(colas_dispositivos, elemento_cola_dispositivo);
-	}
-	queue_push(cola, dispositivo);
-	return 0;
-}
-*/
-// En principio, no hace falta -------------------------------------------------------
-
-
 
 
 

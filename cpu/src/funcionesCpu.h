@@ -32,18 +32,20 @@ typedef enum//REVISAR LOS ENUM
 	SEGUNDO_ACCESO,
 	READ,
 	WRITE,
-	COPY
-}op_code_memoria;
-
-typedef enum//REVISAR LOS ENUM
-{
-	MENSAJE_A_KERNEL,
-	RECIBIR_PCB,
-	I_O,
-	EXIT,
-	INTERRUPT,
-	MENSAJE_INTERRUPT
-}op_code_kernel;
+	COPY,
+	RELLENO,
+	KERNEL_PCB_A_CPU
+}op_code;
+//
+//typedef enum//REVISAR LOS ENUM
+//{
+//	MENSAJE_A_KERNEL,
+//	RECIBIR_PCB,
+//	I_O,
+//	EXIT,
+//	INTERRUPT,
+//	MENSAJE_INTERRUPT
+//}op_code_kernel;
 
 typedef struct
 {
@@ -53,8 +55,7 @@ typedef struct
 
 typedef struct
 {
-	op_code_memoria codigo_operacion_memoria;
-	op_code_kernel codigo_operacion_kernel;
+	op_code codigo_operacion;
 	t_buffer* buffer;
 } t_paquete;
 
@@ -95,7 +96,7 @@ typedef struct
 {
 	int numeroSegmento;
 	int tamanioSegmento;
-	int numeroTablaPaginas;//Revisar nombre
+	int numeroTablaPaginas;
 }entradaTablaSegmento;
 
 typedef enum estado { NEW, READY, BLOCKED, EXEC, TERMINATED } t_estado;
@@ -106,11 +107,24 @@ typedef struct
 	t_list* instrucciones;
 	int programCounter;
 	t_registros registros;
-	t_list* tabla_segmentos;
-	int socket;
+	t_list* tablaSegmentos;
+	//int socket;
 	t_estado estado;
 } t_pcb;
 //Saque el IO[2] porque justamente es una instruccion que ya sabemos los valores se deberia enviar aparte.
+
+//typedef struct
+//{
+//	int idProceso;
+//	int tamanioProceso;
+//	t_list* instrucciones;
+//	int programCounter;
+//	int nroTabla1erNivel; // Esto se lo pasa memoria
+//	float estimacionRafaga;
+//	clock_t rafagaMs; //pasar a int
+//	clock_t horaDeIngresoAExe;
+//	t_estado estado;
+//} t_pcb;
 
 //typedef struct
 //{
@@ -204,7 +218,7 @@ int esperar_cliente(int);
 int recibir_operacion(int);
 
 int crear_conexion(char *, int);
-int conexionConKernel(void);
+int conexionConKernelDispatch(void);
 int conexionConMemoria(void);
 
 void enviar_mensaje(char*, int,int);
