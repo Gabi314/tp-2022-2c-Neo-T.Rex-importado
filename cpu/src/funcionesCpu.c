@@ -39,14 +39,14 @@ void inicializarConfiguraciones(char* unaConfig){
 	config = config_create(unaConfig);// ver bien como recibir los path de config por parametros
 
 	ipMemoria = config_get_string_value(config,"IP_MEMORIA");
-	puertoMemoria = config_get_int_value(config,"PUERTO_MEMORIA");
+	puertoMemoria = config_get_string_value(config,"PUERTO_MEMORIA");
 
 	cantidadEntradasTlb = config_get_int_value(config,"ENTRADAS_TLB");
 	algoritmoReemplazoTlb = config_get_string_value(config,"REEMPLAZO_TLB");
 	retardoDeInstruccion = config_get_int_value(config,"RETARDO_INSTRUCCION");
 
-	puertoDeEscuchaDispatch = config_get_int_value(config,"PUERTO_ESCUCHA_DISPATCH");
-	puertoDeEscuchaInterrupt = config_get_int_value(config,"PUERTO_ESCUCHA_INTERRUPT");
+	puertoDeEscuchaDispatch = config_get_string_value(config,"PUERTO_ESCUCHA_DISPATCH");
+	puertoDeEscuchaInterrupt = config_get_string_value(config,"PUERTO_ESCUCHA_INTERRUPT");
 }
 
 
@@ -84,27 +84,43 @@ int decode(instruccion* unaInstruccion){
 	return -1;
 }
 
-uint32_t registroAUtilizar(int enteroDeRegistro){
-	if(enteroDeRegistro == AX){
-		return ax;
+uint32_t registroAUtilizar(int registroInstruccion,t_registros registroPcb){
+	if(registroInstruccion == AX){
+		return registroPcb.AX;
 	}
-	if(enteroDeRegistro == BX){
-		return bx;
+	if(registroInstruccion == BX){
+		return registroPcb.BX;
 	}
-	if(enteroDeRegistro == CX){
-		return cx;
+	if(registroInstruccion == CX){
+		return registroPcb.CX;
 	}
-	if(enteroDeRegistro == DX){
-		return dx;
+	if(registroInstruccion == DX){
+		return registroPcb.DX;
 	}
 
 	return -1;
-
 }
 
-int chequeoDeDispositivo(char* registro){
+char* imprimirRegistro(registros unRegistro){//poner en shared si sirve para kernel
+	if(unRegistro == AX){
+		return "AX";
+	}
+	if(unRegistro == BX){
+		return "BX";
+	}
+	if(unRegistro == CX){
+		return "DX";
+	}
+	if(unRegistro == DX){
+		return "CX";
+	}
+
+	return "";
+}
+
+int chequeoDeDispositivo(char* registro){// No se para que esta
 	if(!strcmp(registro,"DISCO"))
-	return DISCO;
+	return DISPOSITIVO_E_S;
 	if(!strcmp(registro,"PANTALLA"))
 	return PANTALLA;
 	if(!strcmp(registro,"TECLADO"))
@@ -130,7 +146,7 @@ EXIT: Esta instrucción representa la syscall de finalización del proceso. Se d
 Cabe aclarar que todos los valores a leer/escribir en memoria serán numéricos enteros no signados de 4 bytes, considerar el uso de uint32_t.*/
 
 
-void ejecutar(instruccion* unaInstruccion,t_list* listaTablaSegmentos){ //
+void ejecutar(instruccion* unaInstruccion,t_pcb* pcb){ //
 	int primerParametro = unaInstruccion->parametros[0];
 	int segundoParametro = unaInstruccion->parametros[1];
 	int direccionLogica;
@@ -139,48 +155,63 @@ void ejecutar(instruccion* unaInstruccion,t_list* listaTablaSegmentos){ //
 	uint32_t segundoRegistro;
 	switch(decode(unaInstruccion)){
 	case SET:
-		log_info(logger,"----------------EXECUTE SET----------------");
-		registro = registroAUtilizar(primerParametro); //En set el primer parametro es el registro
+		log_info(logger,"“PID: <%d> - Ejecutando: <%s> - <%s> - <%d>",
+				pcb->idProceso,unaInstruccion->identificador,imprimirRegistro(primerParametro),
+					segundoParametro);
+		registro = registroAUtilizar(primerParametro,pcb->registros); //En set el primer parametro es el registro
 		registro = (uint32_t) segundoParametro; //En set el segundo registro es el valor a asignar
 		log_info(logger,"----------------FINALIZA SET----------------\n");
 		break;
 	case ADD:
-		log_info(logger,"----------------EXECUTE ADD----------------");
-		registro = registroAUtilizar(primerParametro);
-		segundoRegistro = registroAUtilizar(segundoParametro);
+		log_info(logger,"“PID: <%d> - Ejecutando: <%s> - <%s> - <%s>",
+						pcb->idProceso,unaInstruccion->identificador,imprimirRegistro(primerParametro),
+							imprimirRegistro(segundoParametro));
+		registro = registroAUtilizar(primerParametro,pcb->registros);
+		segundoRegistro = registroAUtilizar(segundoParametro,pcb->registros);
 		registro += segundoRegistro;
 		log_info(logger,"----------------FINALIZA ADD----------------\n");
 		break;
-	case MOV_IN:
-		log_info(logger,"----------------EXECUTE MOV_IN----------------");
-		registro = registroAUtilizar(primerParametro);
-		direccionLogica = segundoParametro;
-		marco = buscarDireccionFisica(direccionLogica,listaTablaSegmentos);
-		uint32_t valorAAlmacenar;// = funcion que devuelve de memoria el valor mandando el marco conseguido previamente
-		registro = valorAAlmacenar;
-		log_info(logger,"----------------FINALIZA MOV_IN----------------\n");
-		break;
-	case MOV_OUT:
-		log_info(logger,"----------------EXECUTE MOV_OUT----------------");
-		direccionLogica = primerParametro;
-		registro = registroAUtilizar(segundoParametro);
-		marco = buscarDireccionFisica(direccionLogica,listaTablaSegmentos);
-		//funcion que envie valor de registro y que lo guarde en memoria
-
-		log_info(logger,"----------------FINALIZA MOV_OUT----------------\n");
-		break;
+//	case MOV_IN:
+//		log_info(logger,"----------------EXECUTE MOV_IN----------------");
+//		registro = registroAUtilizar(primerParametro);
+//		direccionLogica = segundoParametro;
+//		marco = buscarDireccionFisica(direccionLogica,pcb->tablaSegmentos);
+//		uint32_t valorAAlmacenar;// = funcion que devuelve de memoria el valor mandando el marco conseguido previamente
+//		registro = valorAAlmacenar;
+//		log_info(logger,"----------------FINALIZA MOV_IN----------------\n");
+//		break;
+//	case MOV_OUT:
+//		log_info(logger,"----------------EXECUTE MOV_OUT----------------");
+//		direccionLogica = primerParametro;
+//		registro = registroAUtilizar(segundoParametro);
+//		marco = buscarDireccionFisica(direccionLogica,pcb->tablaSegmentos);
+//		//funcion que envie valor de registro y que lo guarde en memoria
+//
+//		log_info(logger,"----------------FINALIZA MOV_OUT----------------\n");
+//		break;
 	case IO:
-		log_info(logger,"----------------EXECUTE I/O----------------");
+		log_info(logger,"“PID: <%d> - Ejecutando: <%s> - <%d> - <%d>",
+						pcb->idProceso,unaInstruccion->identificador,primerParametro,
+							segundoParametro);//Por ahora dejo el primer parametro como int, tiene que ser un char
 		//Primer parametro es el dispositivo
 		//Segundo parametro es el registro si es teclado o pantalla o unidades de trabajo
 		//Se deberá devolver el Contexto de Ejecución actualizado al Kernel junto el dispositivo y
 		//la cantidad de unidades de trabajo del dispositivo que desea utilizar el proceso (o el Registro a completar o
 		//leer en caso de que el dispositivo sea Pantalla o Teclado).
 
+		if(primerParametro == TECLADO){
+
+		}else if(primerParametro == PANTALLA){
+
+		}else if(primerParametro == DISPOSITIVO_E_S){
+
+		}
+
 		log_info(logger,"----------------FINALIZA I/O----------------\n");
 		break;
 	case EXT:
-		log_info(logger,"----------------EXECUTE EXIT----------------");
+		log_info(logger,"“PID: <%d> - Ejecutando: <%s>",pcb->idProceso,unaInstruccion->identificador);
+		ejecutando = false;
 		//Se deberá devolver el PCB actualizado al Kernel para su finalización.
 		log_info(logger,"----------------FINALIZA EXIT----------------\n");
 		break;

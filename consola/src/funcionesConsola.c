@@ -119,6 +119,18 @@ void dividirInstruccionesAlPaquete(t_log* logger,t_paquete* paquete,char** linea
 
 }
 
+void agregar_a_paquete_instrucciones(t_paquete* paquete, instruccion* instruccion, int identificador_length)
+{
+	void* id = instruccion->identificador;
+	paquete->buffer->stream = realloc(paquete->buffer->stream, paquete->buffer->size + identificador_length + sizeof(int) + sizeof(int[2]));;
+
+	memcpy(paquete->buffer->stream + paquete->buffer->size, &identificador_length, sizeof(int));
+	memcpy(paquete->buffer->stream + paquete->buffer->size + sizeof(int), id, identificador_length);
+	memcpy(paquete->buffer->stream + paquete->buffer->size + sizeof(int) + identificador_length, &instruccion->parametros, sizeof(int[2]));
+
+	paquete->buffer->size += identificador_length + sizeof(int) + sizeof(int[2]);
+}
+
 int chequeoDeRegistro(char* registro){
 	if(!strcmp(registro,"AX"))
 	return AX;
@@ -147,9 +159,10 @@ void agregarAPaqueteSegmentos(char** segmentos,t_paquete* paquete){
 	int segmentoActual = 0;
 	for(int i=0;i<string_array_size(segmentos);i++){
 		segmentoActual = atoi(segmentos[i]);
-		agregar_a_paquete_segmentos(paquete, &segmentoActual, sizeof(int));
+		agregar_a_paquete_unInt(paquete, &segmentoActual, sizeof(int));
 	}
 }
+
 
 void enviarListaInstrucciones(t_paquete* paquete){
 	// Enviamos el paquete
@@ -160,14 +173,13 @@ void enviarListaInstrucciones(t_paquete* paquete){
 
 
 void imprimirValorPorPantalla(int cod_op){//Puede estar en un hilo
-	t_list* valorAImprimir = list_create();
+	int valorAImprimir = 0;
 
-	valorAImprimir = recibir_paquete(conexion);
+	valorAImprimir = recibir_entero(conexion);
 
 	usleep(tiempoPantalla);
 
-	log_info(logger,"Se imprime el valor %d por pantalla a pedido del kernel",(int) list_get(valorAImprimir,0));
-	list_clean(valorAImprimir);
+	log_info(logger,"Se imprime el valor %d por pantalla a pedido del kernel",valorAImprimir);
 
 	enviar_mensaje("Se imprimio el valor del registro", conexion, KERNEL_MENSAJE_VALOR_IMPRESO);
 }

@@ -38,14 +38,14 @@ int main(int argc, char *argv[]) {
 
 	t_pcb* pcb = malloc(sizeof(t_pcb));
 	pcb->estado = READY;
-	pcb->idProceso = 1;
+	pcb->idProceso = 0;
 	pcb->instrucciones = list_create();
 	pcb->instrucciones = listaInstrucciones;
-	pcb->programCounter = 1;
-	pcb->registros.AX = 11;
-	pcb->registros.BX = 5;
-	pcb->registros.CX = 3;
-	pcb->registros.DX = 4;
+	pcb->programCounter = 0;
+	pcb->registros.AX = 0;
+	pcb->registros.BX = 0;
+	pcb->registros.CX = 0;
+	pcb->registros.DX = 0;
 	pcb->tablaSegmentos = list_create();
 	entradaTablaSegmento* unaEntrada = malloc(sizeof(entradaTablaSegmento));
 	unaEntrada->numeroSegmento = 2;
@@ -89,9 +89,9 @@ void inicializar_listas_y_colas() {
 int conexionConConsola(){
 	static pthread_mutex_t mutexMensajes;
 
-	int server_fd = iniciar_servidor();
-	log_info(logger, "Kernel listo para recibir a consola");
-	int cliente_fd = esperar_cliente(server_fd);
+	int server_fd = iniciar_servidor(IP_KERNEL,PUERTO_KERNEL,"Consola");
+
+	int cliente_fd = esperar_cliente(server_fd,"Consola");
 
 	t_list *listaQueContieneTamSegmento;
 
@@ -114,7 +114,7 @@ int conexionConConsola(){
 			//Esto es una prueba
 			t_paquete* paquete = crear_paquete(KERNEL_PAQUETE_VALOR_A_IMPRIMIR);
 			int valorAImprimirPrueba = 3;
-			agregar_a_paquete(paquete, &valorAImprimirPrueba, sizeof(int));
+			agregar_a_paquete_unInt(paquete, &valorAImprimirPrueba, sizeof(int));
 			enviar_paquete(paquete, cliente_fd);
 			eliminar_paquete(paquete);
 
