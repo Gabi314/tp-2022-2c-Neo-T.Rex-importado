@@ -4,12 +4,11 @@ obj/
 *.log
 
 # Eclipse files
-RemoteSystemsTempFiles/
-Debug/
-Release/
-.settings/
-.cproject
-.project
+**/RemoteSystemsTempFiles/
+**/.settings/
+**/.cproject
+**/.project
+
 
 # CLion files
 .idea/
