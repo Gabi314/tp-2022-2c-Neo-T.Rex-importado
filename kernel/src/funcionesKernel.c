@@ -84,6 +84,73 @@ void inicializar_registros(t_registros registros) {
 
 
 
+t_pcb* recibir_pcb(int socket_cliente)
+{
+	int size;
+	int desplazamiento = 0;
+	void * buffer;
+
+	buffer = recibir_buffer(&size, socket_cliente);
+	t_pcb* pcb = malloc(sizeof(t_pcb));
+	pcb->instrucciones = list_create();
+	pcb->tabla_segmentos = list_create();
+	int contadorInstrucciones = 0;
+	int contadorSegmentos = 0;
+	int i = 0;
+	memcpy(&pcb->idProceso, buffer + desplazamiento, sizeof(int));
+	desplazamiento+=sizeof(int);
+
+	log_info(logger,"PID: %d",pcb->idProceso);
+	memcpy(&contadorInstrucciones, buffer + desplazamiento, sizeof(int));
+	desplazamiento+=sizeof(int);
+	while(i < contadorInstrucciones){
+		instruccion* unaInstruccion = malloc(sizeof(instruccion));
+		int identificador_length;
+		memcpy(&identificador_length, buffer + desplazamiento, sizeof(int));
+		desplazamiento+=sizeof(int);
+		unaInstruccion->identificador = malloc(identificador_length);
+		memcpy(unaInstruccion->identificador, buffer+desplazamiento, identificador_length);
+		desplazamiento+=identificador_length;
+		memcpy(unaInstruccion->parametros, buffer+desplazamiento, sizeof(int[2]));
+		desplazamiento+=sizeof(int[2]);
+		list_add(pcb -> instrucciones, unaInstruccion);
+		log_info(logger,"Instruccion: %s",unaInstruccion->identificador);
+		i++;
+	}
+	memcpy(&pcb->program_counter, buffer + desplazamiento, sizeof(int));
+	desplazamiento+=sizeof(int);
+	log_info(logger,"program counter: %d",pcb->program_counter);
+	memcpy(&pcb->registros, buffer + desplazamiento, sizeof(t_registros));
+	desplazamiento+=sizeof(t_registros);
+	log_info(logger,"Registro AX: %d y DX: %d",pcb->registros.AX,pcb->registros.DX);
+	memcpy(&contadorSegmentos, buffer + desplazamiento, sizeof(int));
+	desplazamiento+=sizeof(int);
+	i=0;
+	log_info(logger,"cont seg: %d",contadorSegmentos);
+	while(i < contadorSegmentos){
+		entradaTablaSegmento* unSegmento = malloc(sizeof(entradaTablaSegmento));
+		memcpy(&(unSegmento->numeroSegmento),buffer + desplazamiento, sizeof(int));
+		desplazamiento+=sizeof(int);
+		memcpy(&(unSegmento->numeroTablaPaginas),buffer + desplazamiento, sizeof(int));
+		desplazamiento+=sizeof(int);
+		memcpy(&(unSegmento->tamanioSegmento),buffer + desplazamiento, sizeof(int));
+		desplazamiento+=sizeof(int);
+		log_info(logger,"Nro: %d, numero tabla paginas %d, tamanio segmento %d",unSegmento->numeroSegmento,unSegmento->numeroTablaPaginas,unSegmento->tamanioSegmento);
+		list_add(pcb->tabla_segmentos,unSegmento);
+		i++;
+	}
+//	memcpy(&pcb->socket_cliente, buffer + desplazamiento, sizeof(int)); al pedo mepa
+	memcpy(&(pcb->estado), buffer + desplazamiento, sizeof(t_estado));
+	desplazamiento+=sizeof(t_estado);
+	log_info(logger,"Estado: %d",pcb->estado);
+	free(buffer);
+	return pcb;
+}
+
+
+
+
+
 //-------------------------HILOS---------------------------------
 
 int esperar_cliente(int socket_servidor)
@@ -143,14 +210,12 @@ void atender_consola(int nuevo_cliente) {
 
 	log_info(logger,"[atender_consola]inicializamos PCB de id_proceso %d", PCB->idProceso);
 
+	agregarANew(PCB);
 
-	//pthread_mutex_lock(&encolandoPcb);
-	//agregarANew(PCB);
-	//pthread_mutex_unlock(&encolandoPcb);
 
 	//log_info(logger,"[atender_consola] despertamos a asignar_memoria()");
 
-	//sem_post(&pcbEnNew);
+	sem_post(&pcbEnNew);
 }
 
 
@@ -184,12 +249,12 @@ void asignar_memoria() {
 
 	while (1) {
 
-		//sem_wait(&pcbEnNew);
-		//sem_wait(&gradoDeMultiprogramacion);
+		sem_wait(&pcbEnNew);
+		sem_wait(&gradoDeMultiprogramacion);
 		t_pcb* proceso;
 		log_info(logger, "[asignar_memoria] :se desperto ");
 
-		//pthread_mutex_lock(&asignarMemoria);
+		//pthread_mutex_lock(&asignarMemoria); VER SI ESTE MUTEX ES NECESARIO
 
 		proceso = sacarDeNew();
 
@@ -206,8 +271,10 @@ void asignar_memoria() {
 				}
 			}
 		}
-		//para que sea un switch habria que tener un conversor del string que leemos al enum de algoritmos que tenemos
 
+		sem_post(&pcbEnReady);
+
+		//para que sea un switch habria que tener un conversor del string que leemos al enum de algoritmos que tenemos
 
 		//pthread_mutex_unlock(&asignarMemoria);
 
@@ -221,8 +288,8 @@ void readyAExe() {
 
 	while (1) {
 
-	//	sem_wait(&pcbEnReady);
-	//	sem_wait(&cpuDisponible);
+		sem_wait(&pcbEnReady);
+		sem_wait(&cpuDisponible);
 
 	//	log_info(logger, "[readyAExe]: .........se despierta readyAExe ");
 	//	log_info(logger, "[readyAExe]: a partir de ahora, CPU NO DISPONIBLE! ");
@@ -262,8 +329,8 @@ if (!strcmp(algoritmoPlanificacion, "FIFO")) {
 t_pcb* obtenerSiguienteFIFO() {
 
 	t_pcb* procesoPlanificado = queue_pop(colaReadyFIFO);
-	log_info(logger, "[obtenerSiguienteFIFO]: PROCESOS EN READY FIFO: %d \n",
-		list_size(colaReadyFIFO));
+
+	log_info(logger, "[obtenerSiguienteFIFO]: PROCESOS EN READY FIFO: %d \n", queue_size(colaReadyFIFO));
 
 	return procesoPlanificado;
 }
@@ -271,8 +338,8 @@ t_pcb* obtenerSiguienteFIFO() {
 t_pcb* obtenerSiguienteRR() {
 
 	t_pcb* procesoPlanificado = queue_pop(colaReadyRR);
-	log_info(logger, "[obtenerSiguienteFIFO]: PROCESOS EN READY RR: %d \n",
-		list_size(colaReadyRR));
+
+	log_info(logger, "[obtenerSiguienteFIFO]: PROCESOS EN READY RR: %d \n", queue_size(colaReadyRR));
 
 	return procesoPlanificado;
 }
@@ -293,4 +360,57 @@ void ejecutar(t_pcb* proceso) {
 
 	log_info(logger, "[ejecutar]: enviamos el proceso a cpu");
 
+}
+
+void atender_interrupcion_de_ejecucion() {
+
+while (1) {
+	int cod_op = recibir_operacion(puertoCpuDispatch); //Puerto o socket
+
+	switch (cod_op) {
+
+	case IO_GENERAL:
+		break;
+	case IO_TECLADO:
+		break;
+	case IO_PANTALLA:
+		break;
+	case TERMINAR_PROCESO:
+		log_info(logger,"[atender_interrupcion_de_ejecucion]: recibimos operacion EXIT");
+		terminarEjecucion(recibir_pcb(puertoCpuDispatch));
+		break;
+	default:
+		log_info(logger, "operacion invalida");
+		break;
+	}
+
+	//ejecucionActiva = false;
+	sem_post(&cpuDisponible);
+
+	}
+}
+
+void terminarEjecucion(t_pcb * procesoAFinalizar) {
+
+
+	procesoAFinalizar->estado = TERMINATED; // es local no hace falta mutex
+
+	//enviar_mensaje("Liberar estructuras",socketMemoria,MENSAJE_LIBERAR_POR_TERMINADO);//Enviamos mensaje a memoria para que libere estructuras
+
+	log_info(logger, "[terminarEjecucion]: Se envia un mensaje a memoria para que libere estructuras");
+
+	//	enviar_mensaje("Finalizo la ejecucion",unaConsola->socket,MENSAJE_FINALIZAR_EXE); //Avisamos a consola que finalizo el proceso
+	//	liberar_conexion(unaConsola->socket);
+
+	log_info(logger, "[terminarEjecucion]: Aumenta grado de multiprogramacion actual y termina terminarEjecucion!!");
+
+	sem_post(&gradoDeMultiprogramacion);
+
+	destruirProceso(procesoAFinalizar);
+
+}
+
+void destruirProceso(t_pcb* proceso) {
+	// close(proceso->socket_cliente); VER SI ESTO VA ACA
+	free(proceso);
 }

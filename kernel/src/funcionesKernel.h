@@ -36,7 +36,11 @@ typedef enum {
 
 	KERNEL_MENSAJE_DESBLOQUEO_TECLADO,
 	KERNEL_PAQUETE_VALOR_RECIBIDO_DE_TECLADO,
-	KERNEL_MENSAJE_FINALIZAR_CONSOLA
+	KERNEL_MENSAJE_FINALIZAR_CONSOLA,
+	TERMINAR_PROCESO,	// cpu manda proceso para terminarlo
+	IO_GENERAL,		// cpu manda proceso por io generica
+	IO_TECLADO,		// cpu manda proceso por io teclado
+	IO_PANTALLA		// cpu manda proceso por io pantalla
 }op_code;
 
 typedef enum
@@ -57,15 +61,14 @@ typedef struct
 extern t_queue* colaNew;
 extern t_queue* colaReadyFIFO;
 extern t_queue* colaReadyRR;
-extern t_queue* colaBlockedPantalla;
-extern t_queue* colaBlockedTeclado;
+//extern t_queue* colaBlockedPantalla; No hacen falta, cada consola tiene su pantalla y teclado
+//extern t_queue* colaBlockedTeclado;
 extern t_list* listaDeColasDispositivos;
 
 
 typedef struct{
 	int tam_segmento;
 	int num_tabla_paginas;
-
 }t_tabla_segmentos;
 
 
@@ -120,6 +123,13 @@ typedef enum algoritmo{FIFO,RR} t_algoritmo_pcb;
 
 typedef struct
 {
+	int numeroSegmento;
+	int tamanioSegmento;
+	int numeroTablaPaginas;
+}entradaTablaSegmento;
+
+typedef struct
+{
 	int idProceso;
 	t_list* instrucciones;
 	int program_counter;
@@ -155,6 +165,7 @@ void enviar_entero(int valor, int socket_cliente, int cod_op);
 void recibir_consola(int);
 void atender_consola(int);
 int get_identificador();
+t_pcb* recibir_pcb(int socket_cliente);
 
 void inicializar_configuraciones(char* unaConfig);
 void inicializar_listas_y_colas();
@@ -181,7 +192,10 @@ void recibir_consola(int servidor) ;
 void atender_consola(int cliente);
 void asignar_memoria();
 void readyAExe();
+void atender_interrupcion_de_ejecucion();
 
+void terminarEjecucion(t_pcb*);
+void destruirProceso(t_pcb*);
 
 extern char * ipMemoria;
 extern char * puertoMemoria;
@@ -200,6 +214,9 @@ extern int identificadores_pcb;
 
 extern sem_t kernelSinFinalizar;
 extern sem_t gradoDeMultiprogramacion;
+extern sem_t cpuDisponible;
+extern sem_t pcbEnNew;
+extern sem_t pcbEnReady;
 extern pthread_mutex_t mutexNew;
 extern pthread_mutex_t obtenerProceso;
 
