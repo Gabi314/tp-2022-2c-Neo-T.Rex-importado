@@ -119,8 +119,6 @@ void inicializar_listas_y_colas() {
 	colaNew = queue_create();
 	colaReadyFIFO = queue_create();
 	colaReadyRR = queue_create();
-	//colaBlockedPantalla = queue_create();
-	//colaBlockedTeclado = queue_create();
 	listaDeColasDispositivos = list_create();
 
 }
