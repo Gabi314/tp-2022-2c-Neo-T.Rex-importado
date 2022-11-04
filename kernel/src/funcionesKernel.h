@@ -40,8 +40,12 @@ typedef enum {
 	TERMINAR_PROCESO,	// cpu manda proceso para terminarlo
 	IO_GENERAL,		// cpu manda proceso por io generica
 	IO_TECLADO,		// cpu manda proceso por io teclado
-	IO_PANTALLA		// cpu manda proceso por io pantalla
+	IO_PANTALLA,		// cpu manda proceso por io pantalla
+	RECIBIR_ENTERO,
+	QUANTUM
 }op_code;
+
+
 
 typedef enum
 {
@@ -133,14 +137,25 @@ typedef struct
 	int idProceso;
 	t_list* instrucciones;
 	int program_counter;
-	t_registros registros ;
+	t_registros registros;
 	t_list* tabla_segmentos; // cada elemento de la lista tendria un vector de dos posiciones (una para el tamanio del
-	// segmento y otra para el número o identificador de tabla de páginas asociado a cada uno)
-	int socket;
+	int socket;						// segmento y otra para el número o identificador de tabla de páginas asociado a cada uno)
 	t_estado estado;
 	t_algoritmo_pcb algoritmoActual;
 
 } t_pcb;
+
+
+typedef struct
+{
+	t_pcb* pcb;
+	int registro;
+} t_info_teclado;
+
+typedef struct {
+	t_pcb* pcb;
+	int registro;
+} t_info_pantalla;
 
 
 int recibir_entero(int socket_cliente);
@@ -193,6 +208,8 @@ void atender_consola(int cliente);
 void asignar_memoria();
 void readyAExe();
 void atender_interrupcion_de_ejecucion();
+void atender_IO_teclado();
+void atender_IO_pantalla();
 
 void terminarEjecucion(t_pcb*);
 void destruirProceso(t_pcb*);
@@ -210,6 +227,13 @@ extern char** tiempos_io;
 extern t_list colas_dispositivos_io;
 extern int quantum_rr;
 
+
+extern t_pcb* pcbTeclado;
+extern int registroTeclado;
+extern t_pcb* pcbPantalla;
+extern int registroPantalla;
+
+
 extern int identificadores_pcb;
 
 extern sem_t kernelSinFinalizar;
@@ -219,6 +243,9 @@ extern sem_t pcbEnNew;
 extern sem_t pcbEnReady;
 extern pthread_mutex_t mutexNew;
 extern pthread_mutex_t obtenerProceso;
+extern pthread_mutex_t mutexPantalla;
+extern pthread_mutex_t mutexTeclado;
+
 
 
 #endif /* UTILS_H_ */
