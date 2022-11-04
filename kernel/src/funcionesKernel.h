@@ -142,6 +142,11 @@ typedef struct
 
 } t_pcb;
 
+typedef struct {
+	int registro;
+	t_pcb pcb;
+} t_info_pantalla;
+
 
 int recibir_entero(int socket_cliente);
 extern int socketServidor;

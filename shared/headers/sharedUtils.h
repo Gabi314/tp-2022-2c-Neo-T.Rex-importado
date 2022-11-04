@@ -23,7 +23,48 @@
 #include <commons/collections/queue.h>
 #include <commons/string.h>
 
-t_config* inicializar_configuracion(char*);
+// Firmas
 
+t_config* inicializar_configuracion(char*);
+int esperar_cliente(int);
+
+// Enums
+
+typedef enum estado { NEW, READY, BLOCKED, EXEC, TERMINATED } t_estado;
+
+typedef enum algoritmo { FIFO, RR } t_algoritmo_pcb;
+
+// Estructuras
+
+typedef struct {
+	int AX;
+	int BX;
+	int CX;
+	int DX;
+} t_registros;
+
+typedef struct {
+	int idProceso;
+	t_list* instrucciones;
+	int program_counter;
+	t_registros registros ;
+	t_list* tabla_segmentos; // cada elemento de la lista tendria un vector de dos posiciones (una para el tamanio del
+	// segmento y otra para el número o identificador de tabla de páginas asociado a cada uno)
+	int socket;
+	t_estado estado;
+	t_algoritmo_pcb algoritmoActual;
+} t_pcb;
+
+typedef struct {
+	char* identificador;
+	//parametro* parametros;
+	int parametros[2];
+} instruccion;
+
+typedef struct {
+	int numeroSegmento;
+	int tamanioSegmento;
+	int numeroTablaPaginas;
+}entradaTablaSegmento;
 
 #endif /* HEADERS_SHAREDUTILS_H_ */

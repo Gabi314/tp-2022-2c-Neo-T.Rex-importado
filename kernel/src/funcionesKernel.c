@@ -40,14 +40,17 @@ t_queue* colaBlockedPantalla;
 t_queue* colaBlockedTeclado;
 t_list* listaDeColasDispositivos;
 
-
 sem_t kernelSinFinalizar;
 sem_t gradoDeMultiprogramacion;
 pthread_mutex_t mutexNew;
 pthread_mutex_t obtenerProceso;
-
-
-
+sem_t kernelSinFinalizar;
+sem_t gradoDeMultiprogramacion;
+sem_t cpuDisponible;
+sem_t pcbEnNew;
+sem_t pcbEnReady;
+pthread_mutex_t mutexNew;
+pthread_mutex_t obtenerProceso;
 
 void iterator(instruccion* instruccion){
 	log_info(logger,"%s param1: %d param2: %d", instruccion->identificador, instruccion->parametros[0],instruccion->parametros[1]);
@@ -374,6 +377,10 @@ while (1) {
 	case IO_TECLADO:
 		break;
 	case IO_PANTALLA:
+		t_info_pantalla info_pantalla;
+		pthread_t hiloPantalla;
+		int hiloPantallaCreado = pthread_create(&hiloPantalla, NULL, &atender_IO_pantalla, info_pantalla);
+		pthread_detach(hiloPantallaCreado);
 		break;
 	case TERMINAR_PROCESO:
 		log_info(logger,"[atender_interrupcion_de_ejecucion]: recibimos operacion EXIT");
@@ -387,6 +394,33 @@ while (1) {
 	//ejecucionActiva = false;
 	sem_post(&cpuDisponible);
 
+	}
+}
+
+void atender_IO_pantalla(t_info_pantalla info_pantalla) {
+	info_pantalla->pcb = recibir_pcb(puertoCpuDispatch);
+	recibir_operacion();
+	info_pantalla->registro = recibir_entero(puertoCpuDispatch);
+
+	int valor_registro = buscar_valor_registro(info_pantalla->pcb, info_pantalla->registro);
+
+	enviar_entero(valor_registro, info_pantalla->pcb->socket, KERNEL_PAQUETE_VALOR_A_IMPRIMIR);
+	recibir_operacion();
+	recibir_mensaje(info_pantalla->pcb->socket);
+}
+
+int buscar_valor_registro(t_pcb pcb, int registro) {
+	switch (registro) {
+	case 0:
+		return pcb->registros->AX;
+	case 1:
+		return pcb->registros->BX;
+	case 2:
+		return pcb->registros->CX;
+	case 3:
+		return pcb->registros->DX;
+	default:
+		return -1;
 	}
 }
 
