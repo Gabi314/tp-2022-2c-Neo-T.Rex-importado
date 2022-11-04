@@ -33,6 +33,12 @@ char** tiempos_io;
 int quantum_rr;
 int identificadores_pcb;
 
+t_pcb* pcbTeclado;
+int registroTeclado;
+t_pcb* pcbPantalla;
+int registroPantalla;
+
+
 t_queue* colaNew;
 t_queue* colaReadyFIFO;
 t_queue* colaReadyRR;
@@ -40,7 +46,9 @@ t_queue* colaBlockedPantalla;
 t_queue* colaBlockedTeclado;
 t_list* listaDeColasDispositivos;
 
-
+sem_t cpuDisponible;
+sem_t pcbEnNew;
+sem_t pcbEnReady;
 sem_t kernelSinFinalizar;
 sem_t gradoDeMultiprogramacion;
 sem_t pcbEnReady;
@@ -48,7 +56,8 @@ sem_t pcbEnNew;
 sem_t cpuDisponible;
 pthread_mutex_t mutexNew;
 pthread_mutex_t obtenerProceso;
-
+pthread_mutex_t mutexPantalla;
+pthread_mutex_t mutexTeclado;
 
 
 
@@ -314,8 +323,45 @@ while (1) {
 	case IO_GENERAL:
 		break;
 	case IO_TECLADO:
+		/*
+		t_info_teclado aMandar;
+		aMandar.pcb = recibir_pcb(puertoCpuDispatch);
+		recibir_operacion(puertoCpuDispatch);
+		aMandar.registro =recibir_entero(puertoCpuDispatch);
+		*/
+		pthread_mutex_lock(&mutexTeclado);
+		pcbTeclado = recibir_pcb(puertoCpuDispatch);
+		recibir_operacion(puertoCpuDispatch);
+		registroTeclado =recibir_entero(puertoCpuDispatch);
+		pthread_mutex_unlock(&mutexTeclado);
+		pthread_t hiloAtenderTeclado;
+		int hiloTeclado = pthread_create(&hiloAtenderTeclado, NULL,&atender_IO_teclado,NULL);
+		pthread_detach(hiloTeclado);
 		break;
 	case IO_PANTALLA:
+		pthread_mutex_lock(&mutexPantalla);
+		pcbPantalla = recibir_pcb(puertoCpuDispatch);
+		recibir_operacion(pcbPantalla->socket);
+		registroPantalla = recibir_entero(puertoCpuDispatch);
+		pthread_mutex_unlock(&mutexPantalla);
+		pthread_t hiloPantalla;
+		int hiloPantallaCreado = pthread_create(&hiloPantalla, NULL, &atender_IO_pantalla, NULL);
+		pthread_detach(hiloPantallaCreado);
+		break;
+	case QUANTUM:
+		t_pcb* pcb = recibir_pcb(puertoCpuDispatch);
+
+		if (!strcmp(algoritmoPlanificacion, "RR")) {
+			queue_push(colaReadyRR,pcb);
+		} else {
+			if (!strcmp(algoritmoPlanificacion, "Feedback")) {
+				queue_push(colaReadyFIFO,pcb);
+			} else {
+					log_info(logger, "Algoritmo invalido");
+			}
+		}
+		sem_post(&pcbEnReady);
+
 		break;
 	case TERMINAR_PROCESO:
 		log_info(logger,"[atender_interrupcion_de_ejecucion]: recibimos operacion EXIT");
@@ -353,6 +399,81 @@ void terminarEjecucion(t_pcb * procesoAFinalizar) {
 }
 
 void destruirProceso(t_pcb* proceso) {
-	// close(proceso->socket_cliente); VER SI ESTO VA ACA
+	close(proceso->socket);
 	free(proceso);
 }
+
+void atender_IO_teclado(){
+
+		//t_pcb* unPcb = info.pcb;
+
+		enviar_mensaje("kernel solicita que se ingrese un valor por teclado",pcbTeclado->socket,KERNEL_MENSAJE_SOLICITUD_VALOR_POR_TECLADO);
+
+		int codigo = recibir_operacion(pcbTeclado->socket);
+			if(codigo != KERNEL_MENSAJE_DESBLOQUEO_TECLADO){
+					log_info(logger,"codigo de operacion incorrecto");
+				}
+		recibir_mensaje(pcbTeclado->socket);
+
+		codigo = recibir_operacion(pcbTeclado->socket);
+
+		if(codigo != KERNEL_PAQUETE_VALOR_RECIBIDO_DE_TECLADO){
+						log_info(logger,"codigo de operacion incorrecto");
+					}
+		int enteroRecibido = recibir_entero(pcbTeclado->socket);
+
+		switch(registroTeclado){
+			case 0:
+				(&pcbTeclado->registros)->AX = enteroRecibido;
+				break;
+			case 1:
+				(&pcbTeclado->registros)->BX = enteroRecibido;
+				break;
+			case 2:
+				(&pcbTeclado->registros)->CX = enteroRecibido;
+				break;
+			case 3:
+				(&pcbTeclado->registros)->DX = enteroRecibido;
+				break;
+		}
+
+		if (!strcmp(algoritmoPlanificacion, "FIFO")) {
+			queue_push(colaReadyFIFO,pcbTeclado);
+		} else {
+			if (!strcmp(algoritmoPlanificacion, "RR")) {
+				queue_push(colaReadyRR,pcbTeclado);
+			} else {
+				if(!strcmp(algoritmoPlanificacion, "Feedback")) {// ver si esta asi en los config
+					queue_push(colaReadyRR,pcbTeclado);
+				}else{
+					log_info(logger, "Algoritmo invalido");
+				}
+			}
+		}
+
+		sem_post(&pcbEnReady);
+}
+
+void atender_IO_pantalla() {
+	int valor_registro = buscar_valor_registro(pcbPantalla,registroPantalla);
+
+	enviar_entero(valor_registro, pcbPantalla->socket, KERNEL_PAQUETE_VALOR_A_IMPRIMIR);
+	recibir_operacion(pcbPantalla->socket);
+	recibir_mensaje(pcbPantalla->socket);
+}
+
+int buscar_valor_registro(t_pcb* pcb, int registro) {
+	switch (registro) {
+	case 0:
+		return (&pcb->registros)->AX;
+	case 1:
+		return (&pcb->registros)->BX;
+	case 2:
+		return (&pcb->registros)->CX;
+	case 3:
+		return (&pcb->registros)->DX;
+	default:
+		return -1;
+	}
+}
+

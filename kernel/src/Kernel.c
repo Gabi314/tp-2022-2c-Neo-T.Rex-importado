@@ -358,6 +358,8 @@ void inicializar_semaforos(){
 
 	pthread_mutex_init(&mutexNew,NULL);
 	pthread_mutex_init(&obtenerProceso,NULL);
+	pthread_mutex_init(&mutexPantalla,NULL);
+	pthread_mutex_init(&mutexTeclado,NULL);
 }
 
 
