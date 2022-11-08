@@ -249,7 +249,7 @@ int conexionConCpu(t_pcb * PCB){
 	recibir_operacion(puertoDispatch);
 	recibir_entero(puertoDispatch);
 */
-	enviar_Pcb(PCB, 0, puertoDispatch);
+	enviar_pcb(PCB, 0, puertoDispatch);
 	 return EXIT_SUCCESS;
 }
 

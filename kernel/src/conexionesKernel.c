@@ -1,6 +1,10 @@
 #include "funcionesKernel.h"
 
-
+int tamanioTotalIdentificadores = 0;
+int contadorInstrucciones = 0;
+int contadorSegmentos = 0;
+int desplazamiento = 0;
+t_paquete* paquete;
 
 void enviar_entero(int valor, int socket_cliente, int cod_op) {
 	send(socket_cliente, &cod_op, sizeof(int), 0);
@@ -389,11 +393,11 @@ void agregarSegmentosAlPaquete(entradaTablaSegmento* unSegmento){
 }
 void enviar_pcb(t_pcb* pcb,int cod_op,int conexionCpu)
 {
-	int tamanioTotalIdentificadores = 0;
-	int contadorInstrucciones = 0;
-	int contadorSegmentos = 0;
-	int desplazamiento = 0;
-	t_paquete paquete = crear_paquete(cod_op);
+	tamanioTotalIdentificadores = 0;
+	contadorInstrucciones = 0;
+	contadorSegmentos = 0;
+	desplazamiento = 0;
+	paquete = crear_paquete(cod_op);
 	list_iterate(pcb->instrucciones, (void*) obtenerTamanioIdentificadores);
 	list_iterate(pcb->tabla_segmentos, (void*) obtenerCantidadDeSegmentos);
 	paquete->buffer->stream = realloc(paquete->buffer->stream, paquete->buffer->size + tamanioTotalIdentificadores +

@@ -226,6 +226,12 @@ extern char** dispositivos_io;
 extern char** tiempos_io;
 extern t_list colas_dispositivos_io;
 extern int quantum_rr;
+extern t_paquete* paquete;
+
+extern int tamanioTotalIdentificadores;
+extern int contadorInstrucciones;
+extern int contadorSegmentos;
+extern int desplazamiento;
 
 
 extern t_pcb* pcbTeclado;
