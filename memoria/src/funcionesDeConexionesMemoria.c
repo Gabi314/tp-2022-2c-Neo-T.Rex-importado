@@ -102,7 +102,7 @@ int conexionConCpu(void){
 				break;
 			case -1:
 				log_error(logger, "Se desconecto el cliente. Terminando conexion");
-				return EXIT_FAILURE;
+				return EXIT_SUCCESS;
 			default:
 				log_warning(logger,"Operacion desconocida. No quieras meter la pata");
 				break;

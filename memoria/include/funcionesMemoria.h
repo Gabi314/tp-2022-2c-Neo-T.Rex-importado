@@ -2,9 +2,10 @@
 #define FUNCIONES_MEMORIA_H_
 
 #include<shared/hello.h>
-#include<stdbool.h>
 
+#include<stdbool.h>
 #include <errno.h>
+#include <unistd.h> //Para el truncate
 
 #define IP_MEMORIA "127.0.0.1"
 #define PUERTO_MEMORIA "8002"
@@ -81,5 +82,65 @@ void enviarTamanioDePaginaYCantidadDeEntradas(int);
 
 //Variables de conexiones
 extern int clienteCpu;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+void escribirElPedido(uint32_t,int,int);
+entradaTablaPaginas* entradaCargadaConMarcoAsignado(int);
+uint32_t leerElPedido(int,int);
+
+void crearSwap();
+void escribirEnSwap(int);
+entradaTablaPaginas* entradaCargadaConMarcoAsignado(int);
+void leerDeSwap(int,int);
 
 #endif /* FUNCIONES_MEMORIA_H_*/

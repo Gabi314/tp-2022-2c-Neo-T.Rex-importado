@@ -1,5 +1,5 @@
 # Libraries
-LIBS=commons pthread shared
+LIBS=commons pthread shared 
 
 # Custom libraries' paths
 SHARED_LIBPATHS=../shared
@@ -10,7 +10,8 @@ CDEBUG=-g -Wall -DDEBUG
 CRELEASE=-O3 -Wall -DNDEBUG
 
 # Arguments when executing with start, memcheck or helgrind
-ARGS=/home/utnso/tp-2022-2c-Neo-T.Rex/kernel/configs/kernelconfig
+ARGS=/home/utnso/tp-2022-2c-Neo-T.Rex/kernel/configs/kernel.config
+
 
 # Valgrind flags
 MEMCHECK_FLAGS=--track-origins=yes --log-file="memcheck.log"

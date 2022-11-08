@@ -52,6 +52,7 @@
 [INFO] 23:17:04:984 CONSOLA/(9574:9574): [recibir_entero]: se recibio el numero 8
 [INFO] 23:17:04:986 CONSOLA/(9574:9574): Se imprime el valor 8 por pantalla a pedido del kernel
 [INFO] 23:17:04:987 CONSOLA/(9574:9574): Me llego el mensaje Finalizar
+<<<<<<< HEAD
 [INFO] 23:28:23:133 CONSOLA/(10253:10253): Config creado
 [INFO] 23:28:23:134 CONSOLA/(10253:10253): Se leyo el archivo correctamente
 [INFO] 23:28:23:135 CONSOLA/(10253:10253): [recibir_entero]: se recibio el numero 8
@@ -195,3 +196,36 @@
 [INFO] 21:25:59:055 CONSOLA/(3174:3174): [recibir_entero]: se recibio el numero 3
 [INFO] 21:25:59:062 CONSOLA/(3174:3174): Se imprime el valor 3 por pantalla a pedido del kernel
 [INFO] 21:25:59:065 CONSOLA/(3174:3174): Me llego el mensaje Finalizar
+=======
+[INFO] 20:05:06:938 CONSOLA/(2580:2580): Config creado
+[INFO] 20:05:06:940 CONSOLA/(2580:2580): Se leyo el archivo correctamente
+[INFO] 20:05:06:940 CONSOLA/(2580:2580): [recibir_entero]: se recibio el numero 8
+[INFO] 20:05:06:942 CONSOLA/(2580:2580): Se imprime el valor 8 por pantalla a pedido del kernel
+[INFO] 20:05:06:942 CONSOLA/(2580:2580): Me llego el mensaje Finalizar
+[INFO] 14:46:17:843 CONSOLA/(2043:2043): Config creado
+[INFO] 14:46:17:844 CONSOLA/(2043:2043): Se leyo el archivo correctamente
+[INFO] 14:46:17:844 CONSOLA/(2043:2043): [recibir_entero]: se recibio el numero 8
+[INFO] 14:46:17:846 CONSOLA/(2043:2043): Se imprime el valor 8 por pantalla a pedido del kernel
+[INFO] 14:46:17:846 CONSOLA/(2043:2043): Me llego el mensaje Finalizar
+>>>>>>> branchCpu
+[INFO] 21:32:29:000 CONSOLA/(3504:3504): Config creado
+[INFO] 21:32:29:003 CONSOLA/(3504:3504): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 21:32:29:003 CONSOLA/(3504:3504): Primer dispositivo DISCO
+[INFO] 21:32:29:003 CONSOLA/(3504:3504): Se leyo el archivo correctamente
+[INFO] 21:32:29:046 CONSOLA/(3504:3504): [recibir_entero]: se recibio el numero 3
+[INFO] 21:32:29:056 CONSOLA/(3504:3504): Se imprime el valor 3 por pantalla a pedido del kernel
+[INFO] 21:32:29:061 CONSOLA/(3504:3504): Me llego el mensaje Finalizar
+[INFO] 21:35:59:872 CONSOLA/(3763:3763): Config creado
+[INFO] 21:35:59:897 CONSOLA/(3763:3763): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 21:35:59:898 CONSOLA/(3763:3763): Primer dispositivo DISCO
+[INFO] 21:35:59:898 CONSOLA/(3763:3763): Se leyo el archivo correctamente
+[INFO] 21:35:59:940 CONSOLA/(3763:3763): [recibir_entero]: se recibio el numero 3
+[INFO] 21:35:59:947 CONSOLA/(3763:3763): Se imprime el valor 3 por pantalla a pedido del kernel
+[INFO] 21:35:59:952 CONSOLA/(3763:3763): Me llego el mensaje Finalizar
+[INFO] 21:39:52:729 CONSOLA/(4049:4049): Config creado
+[INFO] 21:39:52:736 CONSOLA/(4049:4049): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 21:39:52:736 CONSOLA/(4049:4049): Primer dispositivo DISCO
+[INFO] 21:39:52:736 CONSOLA/(4049:4049): Se leyo el archivo correctamente
+[INFO] 21:39:52:776 CONSOLA/(4049:4049): [recibir_entero]: se recibio el numero 3
+[INFO] 21:39:52:779 CONSOLA/(4049:4049): Se imprime el valor 3 por pantalla a pedido del kernel
+[INFO] 21:39:52:779 CONSOLA/(4049:4049): Me llego el mensaje Finalizar
