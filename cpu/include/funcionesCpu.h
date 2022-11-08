@@ -1,6 +1,6 @@
 #ifndef FUNCIONES_CPU_H_
 #define FUNCIONES_CPU_H_
-
+#include <stdbool.h>
 //--------------------INCLUDES
 //Copie todas las librerias del tp pasado
 #include <shared/hello.h>

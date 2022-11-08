@@ -18,7 +18,7 @@
  *
  * Ante pedido de lectura, devolver el valor de posicion
  * Ante pedido de escritura, escribir en posicion y devolver "OK"
- * CADA ACCESO A ESPACIO DE USUARIO, USAR RETARDO, NO USADO EN OP DE KERNEL
+ * Clog_createADA ACCESO A ESPACIO DE USUARIO, USAR RETARDO, NO USADO EN OP DE KERNEL
  *
  * INICIO DE MEMORIA-> SE GENERA SWAP, si existe se elimina y se crea
  * TODOS LOS ACCESOS A SWAP DEBEN POSEER RETARDO (todas las op de lectura y escritura)
@@ -33,16 +33,88 @@ int main(int argc, char *argv[]) {
 	listaDeMarcos = list_create();
 	listaDeEntradasEnMemoria = list_create();
 	listaTablaDePaginas = list_create();
-	listaDePaginasEnMemoria = list_create();
+	//listaDePaginasEnMemoria = list_create();
 	chequeoCantidadArchivos(argc);
 	crearConfiguraciones(argv[1]);
 	inicializarMemoria();
 	inicializarMarcos();
+	crearSwap();
 	//Obligatorios
 
 
-	//log_info(logger,"Cantidad de marcos %d",list_size(listaDeMarcos));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	entradaTablaPaginas* unaEntrada = malloc(sizeof(entradaTablaPaginas));
+	unaEntrada->modificado = 0;
+	unaEntrada->numeroDeEntrada = 0;
+	unaEntrada->posicionEnSwap = 0;
+	unaEntrada->presencia = 0;
+	unaEntrada->uso = 0;
+	cargarPagina(unaEntrada);
+	log_info(logger,"numero de marco asignado es: %d", unaEntrada->numeroMarco);
+
+	escribirElPedido(1234,unaEntrada->numeroMarco,8);
+	uint32_t* datoLeido = leerElPedido(unaEntrada->numeroMarco,8);
+	log_info(logger,"numero leido primero: %d", datoLeido);
+
+	escribirEnSwap(unaEntrada->numeroMarco);
+
+	leerDeSwap(unaEntrada->numeroDeEntrada,unaEntrada->numeroMarco);
+
+	datoLeido = leerElPedido(unaEntrada->numeroMarco,8);
+	log_info(logger,"numero leido tercero: %d", datoLeido);
+
 	log_info(logger,"Fin de memoria");
+	log_info(logger,"Boca");
 }
 
 

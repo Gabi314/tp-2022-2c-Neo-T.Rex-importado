@@ -97,3 +97,73 @@
 [INFO] 23:17:04:992 CPU/(9412:9412): “PID: <0> - Ejecutando: <EXIT>
 [INFO] 23:17:04:992 CPU/(9412:9412): ----------------FINALIZA EXIT----------------
 
+[ERROR] 19:57:41:006 CPU/(2296:2296): Falta un parametro
+[ERROR] 20:02:28:008 CPU/(2397:2397): Falta un parametro
+[INFO] 20:04:56:806 CPU/(2483:2483): Cpu lista para recibir a kernel
+[INFO] 20:05:06:943 CPU/(2483:2483): Se conecto el Kernel
+[INFO] 20:05:06:944 CPU/(2483:2483): PID: 0
+[INFO] 20:05:06:944 CPU/(2483:2483): Instruccion: SET
+[INFO] 20:05:06:944 CPU/(2483:2483): Instruccion: ADD
+[INFO] 20:05:06:944 CPU/(2483:2483): Instruccion: MOV_IN
+[INFO] 20:05:06:944 CPU/(2483:2483): Instruccion: MOV_OUT
+[INFO] 20:05:06:944 CPU/(2483:2483): Instruccion: I/O
+[INFO] 20:05:06:944 CPU/(2483:2483): Instruccion: I/O
+[INFO] 20:05:06:944 CPU/(2483:2483): Instruccion: I/O
+[INFO] 20:05:06:944 CPU/(2483:2483): Instruccion: EXIT
+[INFO] 20:05:06:944 CPU/(2483:2483): program counter: 0
+[INFO] 20:05:06:944 CPU/(2483:2483): Registro AX: 0 y DX: 0
+[INFO] 20:05:06:944 CPU/(2483:2483): cont seg: 1
+[INFO] 20:05:06:944 CPU/(2483:2483): Nro: 2, numero tabla paginas 0, tamanio segmento 32
+[INFO] 20:05:06:944 CPU/(2483:2483): Estado: 1
+[INFO] 20:05:06:944 CPU/(2483:2483): “PID: <0> - Ejecutando: <SET> - <AX> - <1>
+[INFO] 20:05:06:944 CPU/(2483:2483): ----------------FINALIZA SET----------------
+
+[INFO] 20:05:06:944 CPU/(2483:2483): “PID: <0> - Ejecutando: <ADD> - <AX> - <BX>
+[INFO] 20:05:06:944 CPU/(2483:2483): ----------------FINALIZA ADD----------------
+
+[INFO] 20:05:06:944 CPU/(2483:2483): “PID: <0> - Ejecutando: <I/O> - <0> - <10>
+[INFO] 20:05:06:944 CPU/(2483:2483): ----------------FINALIZA I/O----------------
+
+[INFO] 20:05:06:944 CPU/(2483:2483): “PID: <0> - Ejecutando: <I/O> - <2> - <0>
+[INFO] 20:05:06:944 CPU/(2483:2483): ----------------FINALIZA I/O----------------
+
+[INFO] 20:05:06:944 CPU/(2483:2483): “PID: <0> - Ejecutando: <I/O> - <1> - <1>
+[INFO] 20:05:06:944 CPU/(2483:2483): ----------------FINALIZA I/O----------------
+
+[INFO] 20:05:06:944 CPU/(2483:2483): “PID: <0> - Ejecutando: <EXIT>
+[INFO] 20:05:06:944 CPU/(2483:2483): ----------------FINALIZA EXIT----------------
+
+[INFO] 14:46:10:874 CPU/(1920:1920): Cpu lista para recibir a kernel
+[INFO] 14:46:17:847 CPU/(1920:1920): Se conecto el Kernel
+[INFO] 14:46:17:851 CPU/(1920:1920): PID: 0
+[INFO] 14:46:17:851 CPU/(1920:1920): Instruccion: SET
+[INFO] 14:46:17:851 CPU/(1920:1920): Instruccion: ADD
+[INFO] 14:46:17:851 CPU/(1920:1920): Instruccion: MOV_IN
+[INFO] 14:46:17:851 CPU/(1920:1920): Instruccion: MOV_OUT
+[INFO] 14:46:17:851 CPU/(1920:1920): Instruccion: I/O
+[INFO] 14:46:17:851 CPU/(1920:1920): Instruccion: I/O
+[INFO] 14:46:17:851 CPU/(1920:1920): Instruccion: I/O
+[INFO] 14:46:17:851 CPU/(1920:1920): Instruccion: EXIT
+[INFO] 14:46:17:851 CPU/(1920:1920): program counter: 0
+[INFO] 14:46:17:851 CPU/(1920:1920): Registro AX: 0 y DX: 0
+[INFO] 14:46:17:851 CPU/(1920:1920): cont seg: 1
+[INFO] 14:46:17:852 CPU/(1920:1920): Nro: 2, numero tabla paginas 0, tamanio segmento 32
+[INFO] 14:46:17:852 CPU/(1920:1920): Estado: 1
+[INFO] 14:46:17:852 CPU/(1920:1920): “PID: <0> - Ejecutando: <SET> - <AX> - <1>
+[INFO] 14:46:17:852 CPU/(1920:1920): ----------------FINALIZA SET----------------
+
+[INFO] 14:46:17:852 CPU/(1920:1920): “PID: <0> - Ejecutando: <ADD> - <AX> - <BX>
+[INFO] 14:46:17:852 CPU/(1920:1920): ----------------FINALIZA ADD----------------
+
+[INFO] 14:46:17:852 CPU/(1920:1920): “PID: <0> - Ejecutando: <I/O> - <0> - <10>
+[INFO] 14:46:17:852 CPU/(1920:1920): ----------------FINALIZA I/O----------------
+
+[INFO] 14:46:17:852 CPU/(1920:1920): “PID: <0> - Ejecutando: <I/O> - <2> - <0>
+[INFO] 14:46:17:852 CPU/(1920:1920): ----------------FINALIZA I/O----------------
+
+[INFO] 14:46:17:852 CPU/(1920:1920): “PID: <0> - Ejecutando: <I/O> - <1> - <1>
+[INFO] 14:46:17:852 CPU/(1920:1920): ----------------FINALIZA I/O----------------
+
+[INFO] 14:46:17:852 CPU/(1920:1920): “PID: <0> - Ejecutando: <EXIT>
+[INFO] 14:46:17:852 CPU/(1920:1920): ----------------FINALIZA EXIT----------------
+

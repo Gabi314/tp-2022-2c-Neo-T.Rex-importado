@@ -1,8 +1,8 @@
 # Libraries
-LIBS=
+LIBS=commons shared
 
 # Custom libraries' paths
-SHARED_LIBPATHS=
+SHARED_LIBPATHS=../shared
 STATIC_LIBPATHS=
 
 # Compiler flags
@@ -10,7 +10,7 @@ CDEBUG=-g -Wall -DDEBUG
 CRELEASE=-O3 -Wall -DNDEBUG
 
 # Arguments when executing with start, memcheck or helgrind
-ARGS=
+ARGS=/home/utnso/tp-2022-2c-Neo-T.Rex/memoria/configs/memoria.config
 
 # Valgrind flags
 MEMCHECK_FLAGS=--track-origins=yes --log-file="memcheck.log"

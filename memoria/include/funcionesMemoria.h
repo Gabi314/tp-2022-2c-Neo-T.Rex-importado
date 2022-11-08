@@ -1,24 +1,10 @@
 #ifndef FUNCIONES_MEMORIA_H_
 #define FUNCIONES_MEMORIA_H_
 
-#include<stdio.h>
-#include<stdlib.h>
-#include <sys/mman.h>
-#include <sys/stat.h>
-#include<sys/socket.h>
-#include<unistd.h>
-#include<netdb.h>
-#include<commons/log.h>
-#include<commons/config.h>
-#include<commons/collections/list.h>
-#include<string.h>
-#include<commons/string.h>
-#include<assert.h>
-#include<stdbool.h>
-
-#include<pthread.h>
-
+#include<shared/hello.h>
+#include <stdbool.h>
 #include <errno.h>
+#include <unistd.h> //Para el truncate
 
 #define IP_MEMORIA "127.0.0.1"
 #define PUERTO_MEMORIA 8002
@@ -94,5 +80,65 @@ void liberarEspacioEnMemoria(tablaDePaginas*);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+void escribirElPedido(uint32_t,int,int);
+entradaTablaPaginas* entradaCargadaConMarcoAsignado(int);
+uint32_t leerElPedido(int,int);
+
+void crearSwap();
+void escribirEnSwap(int);
+entradaTablaPaginas* entradaCargadaConMarcoAsignado(int);
+void leerDeSwap(int,int);
 
 #endif /* FUNCIONES_MEMORIA_H_*/
