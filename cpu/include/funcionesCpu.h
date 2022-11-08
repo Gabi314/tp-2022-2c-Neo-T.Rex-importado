@@ -2,7 +2,7 @@
 #define FUNCIONES_CPU_H_
 
 //--------------------INCLUDES
-//Copie todas las librerias del tp pasado
+
 #include <shared/hello.h>
 //--------------PUERTOS
 //Revisar
@@ -119,9 +119,8 @@ typedef enum{
 
 typedef enum
 {
-	DISPOSITIVO_E_S = 0,
-	PANTALLA = 1,
-	TECLADO = 2
+	PANTALLA = 0,
+	TECLADO = 1
 }dispositivos_IO;
 
 
@@ -130,6 +129,7 @@ extern t_log* logger;
 extern t_config* config;
 
 extern t_pcb* unPcb;
+extern char** listaDispositivos;
 
 //----------------------------DECLARO FUNCIONES
 int chequeoCantidadArchivos(int);
@@ -149,7 +149,7 @@ void leerTamanioDePaginaYCantidadDeEntradas(t_list*);
 void ejecutar(instruccion*,t_pcb*);
 int decode(instruccion*);
 int buscarDireccionFisica(int,t_list*);
-int chequeoDeDispositivo(char*);
+char* dispositivoIOSegunParametro(int);
 int chequearMarcoEnTLB(int);
 void calculosDireccionLogica(int,t_list*);
 

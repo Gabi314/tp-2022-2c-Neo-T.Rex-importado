@@ -66,11 +66,12 @@ void * recibir_buffer(int* size, int socket_cliente)
 	return buffer;
 }
 
-void recibir_mensaje(int socket_cliente)
+char* recibir_mensaje(int socket_cliente)
 {
 	int size;
 	char* buffer = recibir_buffer(&size, socket_cliente);
 	log_info(logger, "Me llego el mensaje %s", buffer);
+	return buffer;
 	free(buffer);
 }
 
@@ -226,3 +227,19 @@ void liberar_conexion(int socket_cliente)
 {
 	close(socket_cliente);
 }
+
+char** recibirListaDispositivos(int conexion){
+	int cod_op = recibir_operacion(conexion);
+	char** listaDispositivos;
+
+	if(cod_op == KERNEL_MENSAJE_DISPOSITIVOS_IO){
+		char* dispositivos_IO = recibir_mensaje(conexion);
+		listaDispositivos = string_split(dispositivos_IO,"-");
+		log_info(logger,"Primer dispositivo %s",listaDispositivos[0]);
+
+	}
+
+	return listaDispositivos;
+}
+
+

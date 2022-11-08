@@ -96,11 +96,11 @@ void dividirInstruccionesAlPaquete(t_log* logger,t_paquete* paquete,char** linea
 			//log_info(logger,"Se guardo el registro %d",unaInstruccion->parametros[0]);
 		}
 	 	if(!strcmp(lineasDeInstrucciones[0],"I/O")){
-			unaInstruccion->parametros[0] = chequeoDeDispositivo(lineasDeInstrucciones[1]);
-			if(unaInstruccion->parametros[0] == DISCO){
-				unaInstruccion->parametros[1] = atoi(lineasDeInstrucciones[2]);
-			}else {
+			unaInstruccion->parametros[0] = parametroIOSegunDispositivo(lineasDeInstrucciones[1]);
+			if(unaInstruccion->parametros[0] == 0 || unaInstruccion->parametros[0] == 1){//si es pantalla o teclado guardo el registro
 				unaInstruccion->parametros[1] = chequeoDeRegistro(lineasDeInstrucciones[2]);
+			} else {//sino guardo el tiempo del dispositivo
+				unaInstruccion->parametros[1] = atoi(lineasDeInstrucciones[2]);
 			}
 	 	}
 
@@ -144,13 +144,17 @@ int chequeoDeRegistro(char* registro){
 	return -1;
 }
 
-int chequeoDeDispositivo(char* registro){
-	if(!strcmp(registro,"DISCO"))
-	return DISCO;
-	if(!strcmp(registro,"PANTALLA"))
+int parametroIOSegunDispositivo(char* dispositivo){
+	if(!strcmp(dispositivo,"PANTALLA"))
 	return PANTALLA;
-	if(!strcmp(registro,"TECLADO"))
+	if(!strcmp(dispositivo,"TECLADO"))
 	return TECLADO;
+
+	for(int i=0; i < string_array_size(listaDispositivos); i++){
+		if(! strcmp(listaDispositivos[i],dispositivo)){
+			return i+2;//sumo 2 porque la posicion 0 y 1 pertence a pantalla y teclado
+		}
+	}
 
 	return -1;
 }

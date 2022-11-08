@@ -1,9 +1,10 @@
 #include "funcionesConsola.h"
 
+char** listaDispositivos;
+
 int main(int argc, char *argv[]) {
 	//pthread_t hiloConexionKernel;
 
-	say_hello("hola");
 	logger = log_create("./consola.log","CONSOLA",true,LOG_LEVEL_INFO);
 	//Chequeo cantidad de archivos recibidos en el main
 	chequeoCantidadArchivos(argc);
@@ -18,7 +19,8 @@ int main(int argc, char *argv[]) {
 	//Envio los tamanios de segmentos recibidos por config
 	enviarPaqueteTamanioDeSegmentos();
 
-	//Ver como meter esto en una funcion?
+	listaDispositivos = recibirListaDispositivos(conexion);
+
 	FILE* archivo = abrirArchivo(argv[2]);
 
 	struct stat sb;

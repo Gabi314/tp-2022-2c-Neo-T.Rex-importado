@@ -24,6 +24,7 @@
 
 typedef enum {
 	KERNEL_PAQUETE_TAMANIOS_SEGMENTOS,
+	KERNEL_MENSAJE_DISPOSITIVOS_IO,
 	KERNEL_PAQUETE_INSTRUCCIONES,
 	KERNEL_PAQUETE_VALOR_A_IMPRIMIR,
 	KERNEL_MENSAJE_VALOR_IMPRESO,
@@ -38,9 +39,8 @@ typedef enum {
 	TAM_PAGINAS_Y_CANT_ENTRADAS,
 	PRIMER_ACCESO,
 	SEGUNDO_ACCESO,
-	READ,
-	WRITE,
-	COPY,
+	CPU_PCB_A_KERNEL,
+	CPU_DISPOSITIVO_A_KERNEL
 } op_code;
 
 typedef struct {
@@ -52,6 +52,7 @@ typedef struct {
 	op_code codigo_operacion;
 	t_buffer *buffer;
 } t_paquete;
+
 
 int say_hello(char *who);
 
@@ -65,7 +66,7 @@ int recibir_operacion(int socket_cliente);
 
 void* recibir_buffer(int *size, int socket_cliente);
 
-void recibir_mensaje(int socket_cliente);
+char* recibir_mensaje(int socket_cliente);
 
 void* serializar_paquete(t_paquete *paquete, int bytes);
 
@@ -88,5 +89,7 @@ void enviar_paquete(t_paquete *paquete, int socket_cliente);
 void eliminar_paquete(t_paquete*);
 
 void liberar_conexion(int);
+
+char** recibirListaDispositivos(int);
 
 #endif

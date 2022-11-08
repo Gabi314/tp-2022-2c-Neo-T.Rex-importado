@@ -3,6 +3,7 @@
 #include "funcionesKernel.h"
 
 t_list* lista_dispositivos;
+char* dispositivosIOAplanado;
 
 //void recibir_registros(int socket_cliente) // basado en recibir_operacion
 //{
@@ -28,6 +29,11 @@ int main(int argc, char *argv[]) {
 
 	// Inicializaciones
 	inicializar_configuraciones(argv[1]);
+
+	dispositivosIOAplanado = string_new();
+	aplanarDispositivosIO(dispositivos_io);
+
+	log_info(logger,"DISPOSITIVOS: %s",dispositivosIOAplanado);
 	//inicializar_listas_y_colas();
 
 	log_info(logger,"Iniciando conexion con consola");
@@ -56,6 +62,7 @@ int main(int argc, char *argv[]) {
 	conexionCpu = crear_conexion(ipCpu, puertoCpuDispatch);
 
 	agregar_a_paquete_kernel_cpu(pcb, KERNEL_PCB_A_CPU,conexionCpu);
+	enviar_mensaje(dispositivosIOAplanado, conexionCpu, KERNEL_MENSAJE_DISPOSITIVOS_IO);
 
 
 	//free(unaEntrada);
@@ -103,6 +110,8 @@ int conexionConConsola(){
 		log_info(logger, "El tamanio del primer segmento es: %d",
 				tamanioDelSegmento);
 
+		enviar_mensaje(dispositivosIOAplanado, cliente_fd, KERNEL_MENSAJE_DISPOSITIVOS_IO);
+
 		if (recibir_operacion(cliente_fd) == KERNEL_PAQUETE_INSTRUCCIONES) {
 			listaInstrucciones = list_create();
 			listaInstrucciones = recibir_paquete_instrucciones(cliente_fd);
@@ -112,11 +121,7 @@ int conexionConConsola(){
 			//me parece que no haria falta con loguear que se recibieron ya alcanza
 			pthread_mutex_lock(&mutexMensajes);
 			//Esto es una prueba
-			t_paquete* paquete = crear_paquete(KERNEL_PAQUETE_VALOR_A_IMPRIMIR);
-			int valorAImprimirPrueba = 3;
-			agregar_a_paquete_unInt(paquete, &valorAImprimirPrueba, sizeof(int));
-			enviar_paquete(paquete, cliente_fd);
-			eliminar_paquete(paquete);
+			enviar_entero(3, cliente_fd, KERNEL_PAQUETE_VALOR_A_IMPRIMIR);
 
 			if(recibir_operacion(cliente_fd) == KERNEL_MENSAJE_VALOR_IMPRESO){
 				recibir_mensaje(cliente_fd);
@@ -188,6 +193,19 @@ void inicializar_lista_dispositivos() {
 			list_add(lista_dispositivos, elemento_nuevo);
 		}
 	}
+}
+
+void aplanarDispositivosIO(char** dispositivos_io){
+
+	for(int i = 0; i < string_array_size(dispositivos_io); i++){
+		string_append(&dispositivosIOAplanado,dispositivos_io[i]);
+
+		if(i < string_array_size(dispositivos_io)-1){
+			string_append(&dispositivosIOAplanado,"-");
+		}
+
+	}
+
 }
 
 

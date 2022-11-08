@@ -2,6 +2,7 @@
 #define UTILS_H_
 
 #include <shared/hello.h>
+#include<stdbool.h>
 
 extern t_log* logger;
 extern t_list* listaInstrucciones;
@@ -123,5 +124,6 @@ void obtenerCantidadDeSegmentos(entradaTablaSegmento*);
 void agregarInstruccionesAlPaquete(instruccion*);
 void agregarSegmentosAlPaquete(entradaTablaSegmento*);
 void agregar_a_paquete_kernel_cpu(t_pcb*,int,int);
+void aplanarDispositivosIO(char**);
 
 #endif /* UTILS_H_ */

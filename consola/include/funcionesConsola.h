@@ -5,9 +5,8 @@
 
 typedef enum
 {
-	DISCO = 0,
-	PANTALLA = 1,
-	TECLADO = 2
+	PANTALLA = 0,
+	TECLADO = 1
 }dispositivos_IO;
 
 typedef enum
@@ -44,6 +43,8 @@ extern char** segmentos;
 extern int tiempoPantalla;
 extern int conexion;
 
+extern char** listaDispositivos;
+
 
 //------------------ DECLARACION FUNCIONES DE CONEXIONES
 
@@ -65,7 +66,7 @@ void imprimirValorPorPantalla(int);
 void solicitudIngresarValorPorTeclado(int);
 
 int chequeoDeRegistro(char*);
-int chequeoDeDispositivo(char*);
+int parametroIOSegunDispositivo(char*);
 void atenderPeticionesKernel();
 
 

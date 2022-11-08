@@ -1,6 +1,5 @@
 #include "funcionesCpu.h"
 
-
 //--------------DECLARO VARIABLES
 int clienteKernel;
 int conexionMemoria;
@@ -20,7 +19,7 @@ int conexionConKernelDispatch(void){//hilo
 	static pthread_mutex_t mutexMensajes;
 	int server_fd = iniciar_servidor(IP_CPU,puertoDeEscuchaDispatch,"Kernel");
 	log_info(logger,"Cpu lista para recibir a kernel");
-	int clienteKernel = esperar_cliente(server_fd,"Kernel");
+	clienteKernel = esperar_cliente(server_fd,"Kernel");
 
 	//int salirDelWhile = 0;
 	while (1) {
@@ -29,11 +28,6 @@ int conexionConKernelDispatch(void){//hilo
 		if(cod_op == KERNEL_PCB_A_CPU){
 
 			unPcb = recibir_pcb(clienteKernel);
-
-
-//			log_info(logger, "Me llegaron las siguientes instrucciones:\n");
-//			list_iterate(unPcb -> instrucciones, (void*) iterator);
-
 
 			return EXIT_SUCCESS;
 		}else if(cod_op == -1){
@@ -66,7 +60,7 @@ int conexionConMemoria(void){//FALTA LA CONEXION EN EL MODULO MEMORIA!!!!
 }
 
 
-t_pcb* recibir_pcb(int socket_cliente)
+t_pcb* recibir_pcb(int socket_cliente)//ponerla en shared
 {
 	int size;
 	int desplazamiento = 0;
@@ -97,6 +91,7 @@ t_pcb* recibir_pcb(int socket_cliente)
 		desplazamiento+=sizeof(int[2]);
 		list_add(pcb -> instrucciones, unaInstruccion);
 		log_info(logger,"Instruccion: %s",unaInstruccion->identificador);
+		log_info(logger,"Primer parametro: %d",unaInstruccion->parametros[0]);
 		i++;
 	}
 	memcpy(&pcb->programCounter, buffer + desplazamiento, sizeof(int));

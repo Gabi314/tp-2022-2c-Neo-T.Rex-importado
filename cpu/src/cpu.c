@@ -1,6 +1,7 @@
 #include "funcionesCpu.h"
 
 bool ejecutando;
+char** listaDispositivos;
 
 int main(int argc, char *argv[]) {
 
@@ -13,6 +14,10 @@ int main(int argc, char *argv[]) {
 
 	unPcb = malloc(sizeof(t_pcb));
 	conexionConKernelDispatch(); //Recibo pcb
+
+	listaDispositivos = recibirListaDispositivos(clienteKernel);
+
+	conexionConMemoria();
 
 	instruccion *unaInstruccion = malloc(sizeof(instruccion));
 	unaInstruccion = buscarInstruccionAEjecutar(unPcb);

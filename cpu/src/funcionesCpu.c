@@ -19,6 +19,7 @@ int tamanioMaximoDeSegmento;
 int numeroDePagina;
 int desplazamientoDePagina;
 
+
 t_list* tlb;
 
 uint32_t ax;
@@ -114,19 +115,22 @@ char* imprimirRegistro(registros unRegistro){//poner en shared si sirve para ker
 	if(unRegistro == DX){
 		return "CX";
 	}
-
-	return "";
+	return NULL;
 }
 
-int chequeoDeDispositivo(char* registro){// No se para que esta
-	if(!strcmp(registro,"DISCO"))
-	return DISPOSITIVO_E_S;
-	if(!strcmp(registro,"PANTALLA"))
-	return PANTALLA;
-	if(!strcmp(registro,"TECLADO"))
-	return TECLADO;
+char* dispositivoIOSegunParametro(int parametro){
+	if(parametro == PANTALLA)
+	return "PANTALLA";
+	if(parametro == TECLADO)
+	return "TECLADO";
 
-	return -1;
+	for(int i=0; i < string_array_size(listaDispositivos); i++){
+		if(i+2 == parametro){//sumo 2 porque la posicion 0 y 1 pertence a pantalla y teclado
+			return listaDispositivos[i];
+		}
+	}
+
+	return NULL;
 }
 
 /*
@@ -190,21 +194,15 @@ void ejecutar(instruccion* unaInstruccion,t_pcb* pcb){ //
 //		log_info(logger,"----------------FINALIZA MOV_OUT----------------\n");
 //		break;
 	case IO:
-		log_info(logger,"“PID: <%d> - Ejecutando: <%s> - <%d> - <%d>",
-						pcb->idProceso,unaInstruccion->identificador,primerParametro,
-							segundoParametro);//Por ahora dejo el primer parametro como int, tiene que ser un char
-		//Primer parametro es el dispositivo
-		//Segundo parametro es el registro si es teclado o pantalla o unidades de trabajo
-		//Se deberá devolver el Contexto de Ejecución actualizado al Kernel junto el dispositivo y
-		//la cantidad de unidades de trabajo del dispositivo que desea utilizar el proceso (o el Registro a completar o
-		//leer en caso de que el dispositivo sea Pantalla o Teclado).
-
-		if(primerParametro == TECLADO){
-
-		}else if(primerParametro == PANTALLA){
-
-		}else if(primerParametro == DISPOSITIVO_E_S){
-
+		log_info(logger,"“PID: <%d> - Ejecutando: <%s> - <%s> - <%d>",
+						pcb->idProceso,unaInstruccion->identificador,dispositivoIOSegunParametro(primerParametro),
+							segundoParametro);
+		agregar_a_paquete_kernel_cpu(pcb, CPU_PCB_A_KERNEL, paquete);
+		//aca afuera se puede enviar el dispositivo como entero
+		if(primerParametro == TECLADO || primerParametro == PANTALLA){
+			//agregar_a_paquete_registro
+		} else {
+			//agregar_a_paquete_unidadesDeTrabajo
 		}
 
 		log_info(logger,"----------------FINALIZA I/O----------------\n");

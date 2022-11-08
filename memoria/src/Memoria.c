@@ -26,6 +26,7 @@
  *
  *
  * */
+int clienteCpu;
 
 int main(int argc, char *argv[]) {
 	//Obligatorios
@@ -38,6 +39,8 @@ int main(int argc, char *argv[]) {
 	crearConfiguraciones(argv[1]);
 	inicializarMemoria();
 	inicializarMarcos();
+
+	conexionConCpu();
 	//Obligatorios
 
 

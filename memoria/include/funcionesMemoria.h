@@ -1,27 +1,13 @@
 #ifndef FUNCIONES_MEMORIA_H_
 #define FUNCIONES_MEMORIA_H_
 
-#include<stdio.h>
-#include<stdlib.h>
-#include <sys/mman.h>
-#include <sys/stat.h>
-#include<sys/socket.h>
-#include<unistd.h>
-#include<netdb.h>
-#include<commons/log.h>
-#include<commons/config.h>
-#include<commons/collections/list.h>
-#include<string.h>
-#include<commons/string.h>
-#include<assert.h>
+#include<shared/hello.h>
 #include<stdbool.h>
-
-#include<pthread.h>
 
 #include <errno.h>
 
 #define IP_MEMORIA "127.0.0.1"
-#define PUERTO_MEMORIA 8002
+#define PUERTO_MEMORIA "8002"
 
 //--------------------------DECLARO STRUCTS
 typedef struct{
@@ -91,8 +77,9 @@ void modificarPaginaACargar(entradaTablaPaginas*, int);
 void cargarPagina(entradaTablaPaginas*);
 void liberarEspacioEnMemoria(tablaDePaginas*);
 
+void enviarTamanioDePaginaYCantidadDeEntradas(int);
 
-
-
+//Variables de conexiones
+extern int clienteCpu;
 
 #endif /* FUNCIONES_MEMORIA_H_*/

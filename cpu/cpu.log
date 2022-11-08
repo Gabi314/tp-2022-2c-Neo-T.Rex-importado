@@ -97,3 +97,467 @@
 [INFO] 23:17:04:992 CPU/(9412:9412): “PID: <0> - Ejecutando: <EXIT>
 [INFO] 23:17:04:992 CPU/(9412:9412): ----------------FINALIZA EXIT----------------
 
+[INFO] 23:28:07:966 CPU/(10080:10080): Cpu lista para recibir a kernel
+[INFO] 23:28:23:149 CPU/(10080:10080): Se conecto el Kernel
+[INFO] 23:28:23:151 CPU/(10080:10080): PID: 0
+[INFO] 23:28:23:151 CPU/(10080:10080): Instruccion: SET
+[INFO] 23:28:23:151 CPU/(10080:10080): Instruccion: ADD
+[INFO] 23:28:23:151 CPU/(10080:10080): Instruccion: MOV_IN
+[INFO] 23:28:23:151 CPU/(10080:10080): Instruccion: MOV_OUT
+[INFO] 23:28:23:151 CPU/(10080:10080): Instruccion: I/O
+[INFO] 23:28:23:151 CPU/(10080:10080): Instruccion: I/O
+[INFO] 23:28:23:151 CPU/(10080:10080): Instruccion: I/O
+[INFO] 23:28:23:151 CPU/(10080:10080): Instruccion: EXIT
+[INFO] 23:28:23:151 CPU/(10080:10080): program counter: 0
+[INFO] 23:28:23:151 CPU/(10080:10080): Registro AX: 0 y DX: 0
+[INFO] 23:28:23:151 CPU/(10080:10080): cont seg: 1
+[INFO] 23:28:23:151 CPU/(10080:10080): Nro: 2, numero tabla paginas 0, tamanio segmento 32
+[INFO] 23:28:23:151 CPU/(10080:10080): Estado: 1
+[INFO] 23:28:23:151 CPU/(10080:10080): “PID: <0> - Ejecutando: <SET> - <AX> - <1>
+[INFO] 23:28:23:151 CPU/(10080:10080): ----------------FINALIZA SET----------------
+
+[INFO] 23:28:23:151 CPU/(10080:10080): “PID: <0> - Ejecutando: <ADD> - <AX> - <BX>
+[INFO] 23:28:23:151 CPU/(10080:10080): ----------------FINALIZA ADD----------------
+
+[INFO] 23:28:23:152 CPU/(10080:10080): “PID: <0> - Ejecutando: <I/O> - <0> - <10>
+[INFO] 23:28:23:152 CPU/(10080:10080): ----------------FINALIZA I/O----------------
+
+[INFO] 23:28:23:152 CPU/(10080:10080): “PID: <0> - Ejecutando: <I/O> - <2> - <0>
+[INFO] 23:28:23:152 CPU/(10080:10080): ----------------FINALIZA I/O----------------
+
+[INFO] 23:28:23:152 CPU/(10080:10080): “PID: <0> - Ejecutando: <I/O> - <1> - <1>
+[INFO] 23:28:23:152 CPU/(10080:10080): ----------------FINALIZA I/O----------------
+
+[INFO] 23:28:23:152 CPU/(10080:10080): “PID: <0> - Ejecutando: <EXIT>
+[INFO] 23:28:23:152 CPU/(10080:10080): ----------------FINALIZA EXIT----------------
+
+[INFO] 23:12:09:365 CPU/(1799:1799): Cpu lista para recibir a kernel
+[INFO] 23:13:55:955 CPU/(1965:1965): Cpu lista para recibir a kernel
+[INFO] 23:32:49:821 CPU/(16995:16995): Cpu lista para recibir a kernel
+[INFO] 23:33:01:249 CPU/(16995:16995): Se conecto el Kernel
+[INFO] 23:33:01:251 CPU/(16995:16995): PID: 0
+[INFO] 23:33:01:251 CPU/(16995:16995): Instruccion: SET
+[INFO] 23:33:01:251 CPU/(16995:16995): Instruccion: ADD
+[INFO] 23:33:01:251 CPU/(16995:16995): Instruccion: MOV_IN
+[INFO] 23:33:01:251 CPU/(16995:16995): Instruccion: MOV_OUT
+[INFO] 23:33:01:251 CPU/(16995:16995): Instruccion: I/O
+[INFO] 23:33:01:251 CPU/(16995:16995): Instruccion: I/O
+[INFO] 23:33:01:251 CPU/(16995:16995): Instruccion: I/O
+[INFO] 23:33:01:251 CPU/(16995:16995): Instruccion: EXIT
+[INFO] 23:33:01:251 CPU/(16995:16995): program counter: 0
+[INFO] 23:33:01:251 CPU/(16995:16995): Registro AX: 0 y DX: 0
+[INFO] 23:33:01:251 CPU/(16995:16995): cont seg: 1
+[INFO] 23:33:01:251 CPU/(16995:16995): Nro: 2, numero tabla paginas 0, tamanio segmento 32
+[INFO] 23:33:01:251 CPU/(16995:16995): Estado: 1
+[INFO] 23:33:01:251 CPU/(16995:16995): “PID: <0> - Ejecutando: <SET> - <AX> - <1>
+[INFO] 23:33:01:251 CPU/(16995:16995): ----------------FINALIZA SET----------------
+
+[INFO] 23:33:01:251 CPU/(16995:16995): “PID: <0> - Ejecutando: <ADD> - <AX> - <BX>
+[INFO] 23:33:01:251 CPU/(16995:16995): ----------------FINALIZA ADD----------------
+
+[INFO] 23:33:01:251 CPU/(16995:16995): “PID: <0> - Ejecutando: <I/O> - <0> - <10>
+[INFO] 23:33:01:251 CPU/(16995:16995): ----------------FINALIZA I/O----------------
+
+[INFO] 23:33:01:251 CPU/(16995:16995): “PID: <0> - Ejecutando: <I/O> - <2> - <0>
+[INFO] 23:33:01:251 CPU/(16995:16995): ----------------FINALIZA I/O----------------
+
+[INFO] 23:33:01:251 CPU/(16995:16995): “PID: <0> - Ejecutando: <I/O> - <1> - <1>
+[INFO] 23:33:01:251 CPU/(16995:16995): ----------------FINALIZA I/O----------------
+
+[INFO] 23:33:01:251 CPU/(16995:16995): “PID: <0> - Ejecutando: <EXIT>
+[INFO] 23:33:01:251 CPU/(16995:16995): ----------------FINALIZA EXIT----------------
+
+[INFO] 01:04:00:423 CPU/(18147:18147): Cpu lista para recibir a kernel
+[INFO] 01:04:11:088 CPU/(18147:18147): Se conecto el Kernel
+[INFO] 01:04:11:090 CPU/(18147:18147): PID: 0
+[INFO] 01:04:11:091 CPU/(18147:18147): Instruccion: SET
+[INFO] 01:04:11:091 CPU/(18147:18147): Instruccion: ADD
+[INFO] 01:04:11:091 CPU/(18147:18147): Instruccion: MOV_IN
+[INFO] 01:04:11:091 CPU/(18147:18147): Instruccion: MOV_OUT
+[INFO] 01:04:11:091 CPU/(18147:18147): Instruccion: I/O
+[INFO] 01:04:11:091 CPU/(18147:18147): Instruccion: I/O
+[INFO] 01:04:11:091 CPU/(18147:18147): Instruccion: I/O
+[INFO] 01:04:11:091 CPU/(18147:18147): Instruccion: EXIT
+[INFO] 01:04:11:091 CPU/(18147:18147): program counter: 0
+[INFO] 01:04:11:091 CPU/(18147:18147): Registro AX: 0 y DX: 0
+[INFO] 01:04:11:091 CPU/(18147:18147): cont seg: 1
+[INFO] 01:04:11:091 CPU/(18147:18147): Nro: 2, numero tabla paginas 0, tamanio segmento 32
+[INFO] 01:04:11:091 CPU/(18147:18147): Estado: 1
+[INFO] 01:04:11:091 CPU/(18147:18147): “PID: <0> - Ejecutando: <SET> - <AX> - <1>
+[INFO] 01:04:11:091 CPU/(18147:18147): ----------------FINALIZA SET----------------
+
+[INFO] 01:04:11:091 CPU/(18147:18147): “PID: <0> - Ejecutando: <ADD> - <AX> - <BX>
+[INFO] 01:04:11:091 CPU/(18147:18147): ----------------FINALIZA ADD----------------
+
+[INFO] 01:04:11:093 CPU/(18147:18147): “PID: <0> - Ejecutando: <I/O> - <0> - <10>
+[INFO] 01:04:11:093 CPU/(18147:18147): ----------------FINALIZA I/O----------------
+
+[INFO] 01:04:11:093 CPU/(18147:18147): “PID: <0> - Ejecutando: <I/O> - <2> - <0>
+[INFO] 01:04:11:094 CPU/(18147:18147): ----------------FINALIZA I/O----------------
+
+[INFO] 01:04:11:094 CPU/(18147:18147): “PID: <0> - Ejecutando: <I/O> - <1> - <1>
+[INFO] 01:04:11:094 CPU/(18147:18147): ----------------FINALIZA I/O----------------
+
+[INFO] 01:04:11:094 CPU/(18147:18147): “PID: <0> - Ejecutando: <EXIT>
+[INFO] 01:04:11:094 CPU/(18147:18147): ----------------FINALIZA EXIT----------------
+
+[INFO] 21:55:36:531 CPU/(4689:4689): Cpu lista para recibir a kernel
+[INFO] 21:56:57:891 CPU/(4951:4951): Cpu lista para recibir a kernel
+[INFO] 21:58:54:217 CPU/(5212:5212): Cpu lista para recibir a kernel
+[INFO] 22:02:02:367 CPU/(5626:5626): Cpu lista para recibir a kernel
+[INFO] 22:02:13:778 CPU/(5626:5626): Se conecto el Kernel
+[INFO] 22:02:13:780 CPU/(5626:5626): PID: 0
+[INFO] 22:02:13:780 CPU/(5626:5626): Instruccion: SET
+[INFO] 22:02:13:780 CPU/(5626:5626): Instruccion: ADD
+[INFO] 22:02:13:780 CPU/(5626:5626): Instruccion: MOV_IN
+[INFO] 22:02:13:780 CPU/(5626:5626): Instruccion: MOV_OUT
+[INFO] 22:02:13:780 CPU/(5626:5626): Instruccion: I/O
+[INFO] 22:02:13:780 CPU/(5626:5626): Instruccion: I/O
+[INFO] 22:02:13:780 CPU/(5626:5626): Instruccion: I/O
+[INFO] 22:02:13:780 CPU/(5626:5626): Instruccion: EXIT
+[INFO] 22:02:13:780 CPU/(5626:5626): program counter: 0
+[INFO] 22:02:13:780 CPU/(5626:5626): Registro AX: 0 y DX: 0
+[INFO] 22:02:13:780 CPU/(5626:5626): cont seg: 1
+[INFO] 22:02:13:780 CPU/(5626:5626): Nro: 2, numero tabla paginas 0, tamanio segmento 32
+[INFO] 22:02:13:780 CPU/(5626:5626): Estado: 1
+[INFO] 22:02:13:780 CPU/(5626:5626): “PID: <0> - Ejecutando: <SET> - <AX> - <1>
+[INFO] 22:02:13:780 CPU/(5626:5626): ----------------FINALIZA SET----------------
+
+[INFO] 22:02:13:780 CPU/(5626:5626): “PID: <0> - Ejecutando: <ADD> - <AX> - <BX>
+[INFO] 22:02:13:780 CPU/(5626:5626): ----------------FINALIZA ADD----------------
+
+[INFO] 22:02:13:780 CPU/(5626:5626): “PID: <0> - Ejecutando: <I/O> - <TECLADO> - <10>
+[INFO] 22:02:13:780 CPU/(5626:5626): ----------------FINALIZA I/O----------------
+
+[INFO] 22:02:13:780 CPU/(5626:5626): “PID: <0> - Ejecutando: <I/O> - <PANTALLA> - <0>
+[INFO] 22:02:13:780 CPU/(5626:5626): ----------------FINALIZA I/O----------------
+
+[INFO] 22:06:40:683 CPU/(5961:5961): Cpu lista para recibir a kernel
+[INFO] 22:06:52:189 CPU/(5961:5961): Se conecto el Kernel
+[INFO] 22:06:52:191 CPU/(5961:5961): PID: 0
+[INFO] 22:06:52:191 CPU/(5961:5961): Instruccion: SET
+[INFO] 22:06:52:191 CPU/(5961:5961): Primer parametro: 0
+[INFO] 22:06:52:191 CPU/(5961:5961): Instruccion: ADD
+[INFO] 22:06:52:191 CPU/(5961:5961): Primer parametro: 0
+[INFO] 22:06:52:191 CPU/(5961:5961): Instruccion: MOV_IN
+[INFO] 22:06:52:191 CPU/(5961:5961): Primer parametro: 2
+[INFO] 22:06:52:191 CPU/(5961:5961): Instruccion: MOV_OUT
+[INFO] 22:06:52:191 CPU/(5961:5961): Primer parametro: 8
+[INFO] 22:06:52:191 CPU/(5961:5961): Instruccion: I/O
+[INFO] 22:06:52:191 CPU/(5961:5961): Primer parametro: 2
+[INFO] 22:06:52:191 CPU/(5961:5961): Instruccion: I/O
+[INFO] 22:06:52:191 CPU/(5961:5961): Primer parametro: 1
+[INFO] 22:06:52:191 CPU/(5961:5961): Instruccion: I/O
+[INFO] 22:06:52:191 CPU/(5961:5961): Primer parametro: 0
+[INFO] 22:06:52:191 CPU/(5961:5961): Instruccion: EXIT
+[INFO] 22:06:52:191 CPU/(5961:5961): Primer parametro: 0
+[INFO] 22:06:52:191 CPU/(5961:5961): program counter: 0
+[INFO] 22:06:52:191 CPU/(5961:5961): Registro AX: 0 y DX: 0
+[INFO] 22:06:52:191 CPU/(5961:5961): cont seg: 1
+[INFO] 22:06:52:191 CPU/(5961:5961): Nro: 2, numero tabla paginas 0, tamanio segmento 32
+[INFO] 22:06:52:191 CPU/(5961:5961): Estado: 1
+[INFO] 22:06:52:191 CPU/(5961:5961): “PID: <0> - Ejecutando: <SET> - <AX> - <1>
+[INFO] 22:06:52:191 CPU/(5961:5961): ----------------FINALIZA SET----------------
+
+[INFO] 22:06:52:191 CPU/(5961:5961): “PID: <0> - Ejecutando: <ADD> - <AX> - <BX>
+[INFO] 22:06:52:191 CPU/(5961:5961): ----------------FINALIZA ADD----------------
+
+[INFO] 22:06:52:191 CPU/(5961:5961): “PID: <0> - Ejecutando: <I/O> - <TECLADO> - <10>
+[INFO] 22:06:52:191 CPU/(5961:5961): ----------------FINALIZA I/O----------------
+
+[INFO] 22:06:52:191 CPU/(5961:5961): “PID: <0> - Ejecutando: <I/O> - <PANTALLA> - <0>
+[INFO] 22:06:52:191 CPU/(5961:5961): ----------------FINALIZA I/O----------------
+
+[INFO] 22:08:54:450 CPU/(6236:6236): Cpu lista para recibir a kernel
+[INFO] 22:09:04:996 CPU/(6236:6236): Se conecto el Kernel
+[INFO] 22:09:04:997 CPU/(6236:6236): PID: 0
+[INFO] 22:09:04:997 CPU/(6236:6236): Instruccion: SET
+[INFO] 22:09:04:997 CPU/(6236:6236): Primer parametro: 0
+[INFO] 22:09:04:997 CPU/(6236:6236): Instruccion: ADD
+[INFO] 22:09:04:997 CPU/(6236:6236): Primer parametro: 0
+[INFO] 22:09:04:997 CPU/(6236:6236): Instruccion: MOV_IN
+[INFO] 22:09:04:997 CPU/(6236:6236): Primer parametro: 2
+[INFO] 22:09:04:997 CPU/(6236:6236): Instruccion: MOV_OUT
+[INFO] 22:09:04:997 CPU/(6236:6236): Primer parametro: 8
+[INFO] 22:09:04:997 CPU/(6236:6236): Instruccion: I/O
+[INFO] 22:09:04:997 CPU/(6236:6236): Primer parametro: 2
+[INFO] 22:09:04:997 CPU/(6236:6236): Instruccion: I/O
+[INFO] 22:09:04:997 CPU/(6236:6236): Primer parametro: 1
+[INFO] 22:09:04:997 CPU/(6236:6236): Instruccion: I/O
+[INFO] 22:09:04:997 CPU/(6236:6236): Primer parametro: 0
+[INFO] 22:09:04:997 CPU/(6236:6236): Instruccion: EXIT
+[INFO] 22:09:04:997 CPU/(6236:6236): Primer parametro: 0
+[INFO] 22:09:04:997 CPU/(6236:6236): program counter: 0
+[INFO] 22:09:04:997 CPU/(6236:6236): Registro AX: 0 y DX: 0
+[INFO] 22:09:04:997 CPU/(6236:6236): cont seg: 1
+[INFO] 22:09:04:997 CPU/(6236:6236): Nro: 2, numero tabla paginas 0, tamanio segmento 32
+[INFO] 22:09:04:997 CPU/(6236:6236): Estado: 1
+[INFO] 22:09:04:997 CPU/(6236:6236): “PID: <0> - Ejecutando: <SET> - <AX> - <1>
+[INFO] 22:09:04:997 CPU/(6236:6236): ----------------FINALIZA SET----------------
+
+[INFO] 22:09:04:997 CPU/(6236:6236): “PID: <0> - Ejecutando: <ADD> - <AX> - <BX>
+[INFO] 22:09:04:997 CPU/(6236:6236): ----------------FINALIZA ADD----------------
+
+[INFO] 22:11:32:394 CPU/(6236:6236): “PID: <0> - Ejecutando: <I/O> - <TECLADO> - <10>
+[INFO] 22:12:31:810 CPU/(6517:6517): Cpu lista para recibir a kernel
+[INFO] 22:12:41:341 CPU/(6517:6517): Se conecto el Kernel
+[INFO] 22:12:41:341 CPU/(6517:6517): PID: 0
+[INFO] 22:12:41:341 CPU/(6517:6517): Instruccion: SET
+[INFO] 22:12:41:341 CPU/(6517:6517): Primer parametro: 0
+[INFO] 22:12:41:341 CPU/(6517:6517): Instruccion: ADD
+[INFO] 22:12:41:341 CPU/(6517:6517): Primer parametro: 0
+[INFO] 22:12:41:341 CPU/(6517:6517): Instruccion: MOV_IN
+[INFO] 22:12:41:341 CPU/(6517:6517): Primer parametro: 2
+[INFO] 22:12:41:341 CPU/(6517:6517): Instruccion: MOV_OUT
+[INFO] 22:12:41:341 CPU/(6517:6517): Primer parametro: 8
+[INFO] 22:12:41:341 CPU/(6517:6517): Instruccion: I/O
+[INFO] 22:12:41:341 CPU/(6517:6517): Primer parametro: 2
+[INFO] 22:12:41:341 CPU/(6517:6517): Instruccion: I/O
+[INFO] 22:12:41:341 CPU/(6517:6517): Primer parametro: 1
+[INFO] 22:12:41:341 CPU/(6517:6517): Instruccion: I/O
+[INFO] 22:12:41:341 CPU/(6517:6517): Primer parametro: 0
+[INFO] 22:12:41:341 CPU/(6517:6517): Instruccion: EXIT
+[INFO] 22:12:41:341 CPU/(6517:6517): Primer parametro: 0
+[INFO] 22:12:41:341 CPU/(6517:6517): program counter: 0
+[INFO] 22:12:41:341 CPU/(6517:6517): Registro AX: 0 y DX: 0
+[INFO] 22:12:41:341 CPU/(6517:6517): cont seg: 1
+[INFO] 22:12:41:341 CPU/(6517:6517): Nro: 2, numero tabla paginas 0, tamanio segmento 32
+[INFO] 22:12:41:342 CPU/(6517:6517): Estado: 1
+[INFO] 22:12:41:342 CPU/(6517:6517): “PID: <0> - Ejecutando: <SET> - <AX> - <1>
+[INFO] 22:12:41:342 CPU/(6517:6517): ----------------FINALIZA SET----------------
+
+[INFO] 22:12:41:342 CPU/(6517:6517): “PID: <0> - Ejecutando: <ADD> - <AX> - <BX>
+[INFO] 22:12:41:342 CPU/(6517:6517): ----------------FINALIZA ADD----------------
+
+[INFO] 22:14:17:059 CPU/(6903:6903): Cpu lista para recibir a kernel
+[INFO] 22:14:30:326 CPU/(6903:6903): Se conecto el Kernel
+[INFO] 22:14:30:327 CPU/(6903:6903): PID: 0
+[INFO] 22:14:30:327 CPU/(6903:6903): Instruccion: SET
+[INFO] 22:14:30:327 CPU/(6903:6903): Primer parametro: 0
+[INFO] 22:14:30:327 CPU/(6903:6903): Instruccion: ADD
+[INFO] 22:14:30:327 CPU/(6903:6903): Primer parametro: 0
+[INFO] 22:14:30:327 CPU/(6903:6903): Instruccion: MOV_IN
+[INFO] 22:14:30:327 CPU/(6903:6903): Primer parametro: 2
+[INFO] 22:14:30:327 CPU/(6903:6903): Instruccion: MOV_OUT
+[INFO] 22:14:30:329 CPU/(6903:6903): Primer parametro: 8
+[INFO] 22:14:30:329 CPU/(6903:6903): Instruccion: I/O
+[INFO] 22:14:30:329 CPU/(6903:6903): Primer parametro: 2
+[INFO] 22:14:30:329 CPU/(6903:6903): Instruccion: I/O
+[INFO] 22:14:30:329 CPU/(6903:6903): Primer parametro: 1
+[INFO] 22:14:30:329 CPU/(6903:6903): Instruccion: I/O
+[INFO] 22:14:30:329 CPU/(6903:6903): Primer parametro: 0
+[INFO] 22:14:30:329 CPU/(6903:6903): Instruccion: EXIT
+[INFO] 22:14:30:329 CPU/(6903:6903): Primer parametro: 0
+[INFO] 22:14:30:329 CPU/(6903:6903): program counter: 0
+[INFO] 22:14:30:329 CPU/(6903:6903): Registro AX: 0 y DX: 0
+[INFO] 22:14:30:329 CPU/(6903:6903): cont seg: 1
+[INFO] 22:14:30:329 CPU/(6903:6903): Nro: 2, numero tabla paginas 0, tamanio segmento 32
+[INFO] 22:14:30:329 CPU/(6903:6903): Estado: 1
+[INFO] 22:14:30:329 CPU/(6903:6903): “PID: <0> - Ejecutando: <SET> - <AX> - <1>
+[INFO] 22:14:30:329 CPU/(6903:6903): ----------------FINALIZA SET----------------
+
+[INFO] 22:14:30:330 CPU/(6903:6903): “PID: <0> - Ejecutando: <ADD> - <AX> - <BX>
+[INFO] 22:14:30:332 CPU/(6903:6903): ----------------FINALIZA ADD----------------
+
+[INFO] 22:15:07:318 CPU/(7165:7165): Cpu lista para recibir a kernel
+[INFO] 22:15:19:194 CPU/(7165:7165): Se conecto el Kernel
+[INFO] 22:15:19:196 CPU/(7165:7165): PID: 0
+[INFO] 22:15:19:196 CPU/(7165:7165): Instruccion: SET
+[INFO] 22:15:19:196 CPU/(7165:7165): Primer parametro: 0
+[INFO] 22:15:19:196 CPU/(7165:7165): Instruccion: ADD
+[INFO] 22:15:19:196 CPU/(7165:7165): Primer parametro: 0
+[INFO] 22:15:19:196 CPU/(7165:7165): Instruccion: MOV_IN
+[INFO] 22:15:19:196 CPU/(7165:7165): Primer parametro: 2
+[INFO] 22:15:19:196 CPU/(7165:7165): Instruccion: MOV_OUT
+[INFO] 22:15:19:196 CPU/(7165:7165): Primer parametro: 8
+[INFO] 22:15:19:196 CPU/(7165:7165): Instruccion: I/O
+[INFO] 22:15:19:196 CPU/(7165:7165): Primer parametro: 2
+[INFO] 22:15:19:196 CPU/(7165:7165): Instruccion: I/O
+[INFO] 22:15:19:196 CPU/(7165:7165): Primer parametro: 1
+[INFO] 22:15:19:196 CPU/(7165:7165): Instruccion: I/O
+[INFO] 22:15:19:196 CPU/(7165:7165): Primer parametro: 0
+[INFO] 22:15:19:196 CPU/(7165:7165): Instruccion: EXIT
+[INFO] 22:15:19:196 CPU/(7165:7165): Primer parametro: 0
+[INFO] 22:15:19:196 CPU/(7165:7165): program counter: 0
+[INFO] 22:15:19:196 CPU/(7165:7165): Registro AX: 0 y DX: 0
+[INFO] 22:15:19:196 CPU/(7165:7165): cont seg: 1
+[INFO] 22:15:19:196 CPU/(7165:7165): Nro: 2, numero tabla paginas 0, tamanio segmento 32
+[INFO] 22:15:19:196 CPU/(7165:7165): Estado: 1
+[INFO] 22:15:19:196 CPU/(7165:7165): “PID: <0> - Ejecutando: <SET> - <AX> - <1>
+[INFO] 22:15:19:196 CPU/(7165:7165): ----------------FINALIZA SET----------------
+
+[INFO] 22:15:19:196 CPU/(7165:7165): “PID: <0> - Ejecutando: <ADD> - <AX> - <BX>
+[INFO] 22:15:19:196 CPU/(7165:7165): ----------------FINALIZA ADD----------------
+
+[INFO] 22:16:51:248 CPU/(7450:7450): Cpu lista para recibir a kernel
+[INFO] 22:17:01:386 CPU/(7450:7450): Se conecto el Kernel
+[INFO] 22:17:01:387 CPU/(7450:7450): PID: 0
+[INFO] 22:17:01:387 CPU/(7450:7450): Instruccion: SET
+[INFO] 22:17:01:387 CPU/(7450:7450): Primer parametro: 0
+[INFO] 22:17:01:387 CPU/(7450:7450): Instruccion: ADD
+[INFO] 22:17:01:387 CPU/(7450:7450): Primer parametro: 0
+[INFO] 22:17:01:387 CPU/(7450:7450): Instruccion: MOV_IN
+[INFO] 22:17:01:387 CPU/(7450:7450): Primer parametro: 2
+[INFO] 22:17:01:387 CPU/(7450:7450): Instruccion: MOV_OUT
+[INFO] 22:17:01:387 CPU/(7450:7450): Primer parametro: 8
+[INFO] 22:17:01:387 CPU/(7450:7450): Instruccion: I/O
+[INFO] 22:17:01:387 CPU/(7450:7450): Primer parametro: 2
+[INFO] 22:17:01:387 CPU/(7450:7450): Instruccion: I/O
+[INFO] 22:17:01:387 CPU/(7450:7450): Primer parametro: 1
+[INFO] 22:17:01:387 CPU/(7450:7450): Instruccion: I/O
+[INFO] 22:17:01:387 CPU/(7450:7450): Primer parametro: 0
+[INFO] 22:17:01:387 CPU/(7450:7450): Instruccion: EXIT
+[INFO] 22:17:01:387 CPU/(7450:7450): Primer parametro: 0
+[INFO] 22:17:01:387 CPU/(7450:7450): program counter: 0
+[INFO] 22:17:01:387 CPU/(7450:7450): Registro AX: 0 y DX: 0
+[INFO] 22:17:01:387 CPU/(7450:7450): cont seg: 1
+[INFO] 22:17:01:387 CPU/(7450:7450): Nro: 2, numero tabla paginas 0, tamanio segmento 32
+[INFO] 22:17:01:387 CPU/(7450:7450): Estado: 1
+[INFO] 22:17:01:387 CPU/(7450:7450): “PID: <0> - Ejecutando: <SET> - <AX> - <1>
+[INFO] 22:17:01:387 CPU/(7450:7450): ----------------FINALIZA SET----------------
+
+[INFO] 22:17:01:387 CPU/(7450:7450): “PID: <0> - Ejecutando: <ADD> - <AX> - <BX>
+[INFO] 22:17:01:387 CPU/(7450:7450): ----------------FINALIZA ADD----------------
+
+[INFO] 22:18:05:364 CPU/(7726:7726): Cpu lista para recibir a kernel
+[INFO] 22:18:18:924 CPU/(7726:7726): Se conecto el Kernel
+[INFO] 22:18:18:926 CPU/(7726:7726): PID: 0
+[INFO] 22:18:18:926 CPU/(7726:7726): Instruccion: SET
+[INFO] 22:18:18:926 CPU/(7726:7726): Primer parametro: 0
+[INFO] 22:18:18:926 CPU/(7726:7726): Instruccion: ADD
+[INFO] 22:18:18:926 CPU/(7726:7726): Primer parametro: 0
+[INFO] 22:18:18:926 CPU/(7726:7726): Instruccion: MOV_IN
+[INFO] 22:18:18:926 CPU/(7726:7726): Primer parametro: 2
+[INFO] 22:18:18:926 CPU/(7726:7726): Instruccion: MOV_OUT
+[INFO] 22:18:18:926 CPU/(7726:7726): Primer parametro: 8
+[INFO] 22:18:18:926 CPU/(7726:7726): Instruccion: I/O
+[INFO] 22:18:18:926 CPU/(7726:7726): Primer parametro: 2
+[INFO] 22:18:18:926 CPU/(7726:7726): Instruccion: I/O
+[INFO] 22:18:18:926 CPU/(7726:7726): Primer parametro: 1
+[INFO] 22:18:18:926 CPU/(7726:7726): Instruccion: I/O
+[INFO] 22:18:18:926 CPU/(7726:7726): Primer parametro: 0
+[INFO] 22:18:18:926 CPU/(7726:7726): Instruccion: EXIT
+[INFO] 22:18:18:926 CPU/(7726:7726): Primer parametro: 0
+[INFO] 22:18:18:926 CPU/(7726:7726): program counter: 0
+[INFO] 22:18:18:926 CPU/(7726:7726): Registro AX: 0 y DX: 0
+[INFO] 22:18:18:926 CPU/(7726:7726): cont seg: 1
+[INFO] 22:18:18:926 CPU/(7726:7726): Nro: 2, numero tabla paginas 0, tamanio segmento 32
+[INFO] 22:18:18:926 CPU/(7726:7726): Estado: 1
+[INFO] 22:19:32:450 CPU/(8017:8017): Cpu lista para recibir a kernel
+[INFO] 22:19:42:461 CPU/(8017:8017): Se conecto el Kernel
+[INFO] 22:19:42:462 CPU/(8017:8017): PID: 0
+[INFO] 22:19:42:462 CPU/(8017:8017): Instruccion: SET
+[INFO] 22:19:42:462 CPU/(8017:8017): Primer parametro: 0
+[INFO] 22:19:42:462 CPU/(8017:8017): Instruccion: ADD
+[INFO] 22:19:42:462 CPU/(8017:8017): Primer parametro: 0
+[INFO] 22:19:42:462 CPU/(8017:8017): Instruccion: MOV_IN
+[INFO] 22:19:42:462 CPU/(8017:8017): Primer parametro: 2
+[INFO] 22:19:42:462 CPU/(8017:8017): Instruccion: MOV_OUT
+[INFO] 22:19:42:462 CPU/(8017:8017): Primer parametro: 8
+[INFO] 22:19:42:462 CPU/(8017:8017): Instruccion: I/O
+[INFO] 22:19:42:462 CPU/(8017:8017): Primer parametro: 2
+[INFO] 22:19:42:462 CPU/(8017:8017): Instruccion: I/O
+[INFO] 22:19:42:462 CPU/(8017:8017): Primer parametro: 1
+[INFO] 22:19:42:462 CPU/(8017:8017): Instruccion: I/O
+[INFO] 22:19:42:462 CPU/(8017:8017): Primer parametro: 0
+[INFO] 22:19:42:462 CPU/(8017:8017): Instruccion: EXIT
+[INFO] 22:19:42:462 CPU/(8017:8017): Primer parametro: 0
+[INFO] 22:19:42:462 CPU/(8017:8017): program counter: 0
+[INFO] 22:19:42:462 CPU/(8017:8017): Registro AX: 0 y DX: 0
+[INFO] 22:19:42:462 CPU/(8017:8017): cont seg: 1
+[INFO] 22:19:42:462 CPU/(8017:8017): Nro: 2, numero tabla paginas 0, tamanio segmento 32
+[INFO] 22:19:42:462 CPU/(8017:8017): Estado: 1
+[INFO] 22:19:42:462 CPU/(8017:8017): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 22:19:42:462 CPU/(8017:8017): Primer dispositivo DISCO
+[INFO] 22:19:42:463 CPU/(8017:8017): “PID: <0> - Ejecutando: <SET> - <AX> - <1>
+[INFO] 22:19:42:463 CPU/(8017:8017): ----------------FINALIZA SET----------------
+
+[INFO] 22:19:42:463 CPU/(8017:8017): “PID: <0> - Ejecutando: <ADD> - <AX> - <BX>
+[INFO] 22:19:42:463 CPU/(8017:8017): ----------------FINALIZA ADD----------------
+
+[INFO] 22:19:42:463 CPU/(8017:8017): “PID: <0> - Ejecutando: <I/O> - <DISCO> - <10>
+[INFO] 22:19:42:463 CPU/(8017:8017): ----------------FINALIZA I/O----------------
+
+[INFO] 22:19:42:463 CPU/(8017:8017): “PID: <0> - Ejecutando: <I/O> - <TECLADO> - <0>
+[INFO] 22:19:42:463 CPU/(8017:8017): ----------------FINALIZA I/O----------------
+
+[INFO] 22:19:42:463 CPU/(8017:8017): “PID: <0> - Ejecutando: <I/O> - <PANTALLA> - <1>
+[INFO] 22:19:42:463 CPU/(8017:8017): ----------------FINALIZA I/O----------------
+
+[INFO] 22:19:42:463 CPU/(8017:8017): “PID: <0> - Ejecutando: <EXIT>
+[INFO] 22:19:42:463 CPU/(8017:8017): ----------------FINALIZA EXIT----------------
+
+[INFO] 00:07:01:472 CPU/(3536:3536): Cpu lista para recibir a kernel
+[INFO] 21:36:49:062 CPU/(3979:3979): Cpu lista para recibir a kernel
+[INFO] 21:38:31:680 CPU/(4200:4200): Cpu lista para recibir a kernel
+[INFO] 21:38:51:378 CPU/(4200:4200): Se conecto el Kernel
+[INFO] 21:38:51:382 CPU/(4200:4200): PID: 0
+[INFO] 21:38:51:382 CPU/(4200:4200): Instruccion: SET
+[INFO] 21:38:51:382 CPU/(4200:4200): Primer parametro: 0
+[INFO] 21:38:51:382 CPU/(4200:4200): Instruccion: ADD
+[INFO] 21:38:51:382 CPU/(4200:4200): Primer parametro: 0
+[INFO] 21:38:51:382 CPU/(4200:4200): Instruccion: MOV_IN
+[INFO] 21:38:51:382 CPU/(4200:4200): Primer parametro: 2
+[INFO] 21:38:51:382 CPU/(4200:4200): Instruccion: MOV_OUT
+[INFO] 21:38:51:382 CPU/(4200:4200): Primer parametro: 8
+[INFO] 21:38:51:382 CPU/(4200:4200): Instruccion: I/O
+[INFO] 21:38:51:382 CPU/(4200:4200): Primer parametro: 2
+[INFO] 21:38:51:382 CPU/(4200:4200): Instruccion: I/O
+[INFO] 21:38:51:382 CPU/(4200:4200): Primer parametro: 1
+[INFO] 21:38:51:382 CPU/(4200:4200): Instruccion: I/O
+[INFO] 21:38:51:382 CPU/(4200:4200): Primer parametro: 0
+[INFO] 21:38:51:382 CPU/(4200:4200): Instruccion: EXIT
+[INFO] 21:38:51:382 CPU/(4200:4200): Primer parametro: 0
+[INFO] 21:38:51:382 CPU/(4200:4200): program counter: 0
+[INFO] 21:38:51:382 CPU/(4200:4200): Registro AX: 0 y DX: 0
+[INFO] 21:38:51:382 CPU/(4200:4200): cont seg: 1
+[INFO] 21:38:51:382 CPU/(4200:4200): Nro: 2, numero tabla paginas 0, tamanio segmento 32
+[INFO] 21:38:51:382 CPU/(4200:4200): Estado: 1
+[INFO] 21:38:51:382 CPU/(4200:4200): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 21:38:51:382 CPU/(4200:4200): Primer dispositivo DISCO
+[INFO] 21:38:51:382 CPU/(4200:4200): “PID: <0> - Ejecutando: <SET> - <AX> - <1>
+[INFO] 21:38:51:382 CPU/(4200:4200): ----------------FINALIZA SET----------------
+
+[INFO] 21:38:51:382 CPU/(4200:4200): “PID: <0> - Ejecutando: <ADD> - <AX> - <BX>
+[INFO] 21:38:51:382 CPU/(4200:4200): ----------------FINALIZA ADD----------------
+
+[INFO] 21:38:51:382 CPU/(4200:4200): “PID: <0> - Ejecutando: <I/O> - <DISCO> - <10>
+[INFO] 21:53:14:652 CPU/(4658:4658): Cpu lista para recibir a kernel
+[INFO] 21:53:35:790 CPU/(4784:4784): Cpu lista para recibir a kernel
+[INFO] 21:53:47:912 CPU/(4784:4784): Se conecto el Kernel
+[INFO] 21:53:47:914 CPU/(4784:4784): PID: 0
+[INFO] 21:53:47:914 CPU/(4784:4784): Instruccion: SET
+[INFO] 21:53:47:914 CPU/(4784:4784): Primer parametro: 0
+[INFO] 21:53:47:914 CPU/(4784:4784): Instruccion: ADD
+[INFO] 21:53:47:914 CPU/(4784:4784): Primer parametro: 0
+[INFO] 21:53:47:914 CPU/(4784:4784): Instruccion: MOV_IN
+[INFO] 21:53:47:914 CPU/(4784:4784): Primer parametro: 2
+[INFO] 21:53:47:914 CPU/(4784:4784): Instruccion: MOV_OUT
+[INFO] 21:53:47:914 CPU/(4784:4784): Primer parametro: 8
+[INFO] 21:53:47:914 CPU/(4784:4784): Instruccion: I/O
+[INFO] 21:53:47:914 CPU/(4784:4784): Primer parametro: 2
+[INFO] 21:53:47:914 CPU/(4784:4784): Instruccion: I/O
+[INFO] 21:53:47:914 CPU/(4784:4784): Primer parametro: 1
+[INFO] 21:53:47:914 CPU/(4784:4784): Instruccion: I/O
+[INFO] 21:53:47:914 CPU/(4784:4784): Primer parametro: 0
+[INFO] 21:53:47:914 CPU/(4784:4784): Instruccion: EXIT
+[INFO] 21:53:47:915 CPU/(4784:4784): Primer parametro: 0
+[INFO] 21:53:47:915 CPU/(4784:4784): program counter: 0
+[INFO] 21:53:47:915 CPU/(4784:4784): Registro AX: 0 y DX: 0
+[INFO] 21:53:47:915 CPU/(4784:4784): cont seg: 1
+[INFO] 21:53:47:916 CPU/(4784:4784): Nro: 2, numero tabla paginas 0, tamanio segmento 32
+[INFO] 21:53:47:916 CPU/(4784:4784): Estado: 1
+[INFO] 21:53:47:916 CPU/(4784:4784): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 21:53:47:916 CPU/(4784:4784): Primer dispositivo DISCO
+[INFO] 21:53:47:916 CPU/(4784:4784): Hola memoria, soy cpu
+[INFO] 21:53:48:918 CPU/(4784:4784): Me llegaron los siguientes valores:
+[INFO] 21:53:48:918 CPU/(4784:4784): tamanio de pagina: 64 
+[INFO] 21:53:48:918 CPU/(4784:4784): entradas por tabla: 4 
+
+[INFO] 21:53:48:918 CPU/(4784:4784): “PID: <0> - Ejecutando: <SET> - <AX> - <1>
+[INFO] 21:53:48:918 CPU/(4784:4784): ----------------FINALIZA SET----------------
+
+[INFO] 21:53:48:918 CPU/(4784:4784): “PID: <0> - Ejecutando: <ADD> - <AX> - <BX>
+[INFO] 21:53:48:918 CPU/(4784:4784): ----------------FINALIZA ADD----------------
+
+[INFO] 21:53:48:918 CPU/(4784:4784): “PID: <0> - Ejecutando: <I/O> - <DISCO> - <10>
