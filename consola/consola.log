@@ -188,3 +188,10 @@
 [INFO] 21:53:47:897 CONSOLA/(4944:4944): [recibir_entero]: se recibio el numero 3
 [INFO] 21:53:47:905 CONSOLA/(4944:4944): Se imprime el valor 3 por pantalla a pedido del kernel
 [INFO] 21:53:47:911 CONSOLA/(4944:4944): Me llego el mensaje Finalizar
+[INFO] 21:25:59:005 CONSOLA/(3174:3174): Config creado
+[INFO] 21:25:59:007 CONSOLA/(3174:3174): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 21:25:59:007 CONSOLA/(3174:3174): Primer dispositivo DISCO
+[INFO] 21:25:59:007 CONSOLA/(3174:3174): Se leyo el archivo correctamente
+[INFO] 21:25:59:055 CONSOLA/(3174:3174): [recibir_entero]: se recibio el numero 3
+[INFO] 21:25:59:062 CONSOLA/(3174:3174): Se imprime el valor 3 por pantalla a pedido del kernel
+[INFO] 21:25:59:065 CONSOLA/(3174:3174): Me llego el mensaje Finalizar

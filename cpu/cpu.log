@@ -561,3 +561,41 @@
 [INFO] 21:53:48:918 CPU/(4784:4784): ----------------FINALIZA ADD----------------
 
 [INFO] 21:53:48:918 CPU/(4784:4784): “PID: <0> - Ejecutando: <I/O> - <DISCO> - <10>
+[INFO] 21:24:41:675 CPU/(2908:2908): Cpu lista para recibir a kernel
+[INFO] 21:25:59:068 CPU/(2908:2908): Se conecto el Kernel
+[INFO] 21:25:59:070 CPU/(2908:2908): PID: 0
+[INFO] 21:25:59:070 CPU/(2908:2908): Instruccion: SET
+[INFO] 21:25:59:070 CPU/(2908:2908): Primer parametro: 0
+[INFO] 21:25:59:070 CPU/(2908:2908): Instruccion: ADD
+[INFO] 21:25:59:070 CPU/(2908:2908): Primer parametro: 0
+[INFO] 21:25:59:070 CPU/(2908:2908): Instruccion: MOV_IN
+[INFO] 21:25:59:070 CPU/(2908:2908): Primer parametro: 2
+[INFO] 21:25:59:070 CPU/(2908:2908): Instruccion: MOV_OUT
+[INFO] 21:25:59:070 CPU/(2908:2908): Primer parametro: 8
+[INFO] 21:25:59:070 CPU/(2908:2908): Instruccion: I/O
+[INFO] 21:25:59:070 CPU/(2908:2908): Primer parametro: 2
+[INFO] 21:25:59:070 CPU/(2908:2908): Instruccion: I/O
+[INFO] 21:25:59:070 CPU/(2908:2908): Primer parametro: 1
+[INFO] 21:25:59:070 CPU/(2908:2908): Instruccion: I/O
+[INFO] 21:25:59:070 CPU/(2908:2908): Primer parametro: 0
+[INFO] 21:25:59:070 CPU/(2908:2908): Instruccion: EXIT
+[INFO] 21:25:59:070 CPU/(2908:2908): Primer parametro: 0
+[INFO] 21:25:59:070 CPU/(2908:2908): program counter: 0
+[INFO] 21:25:59:070 CPU/(2908:2908): Registro AX: 0 y DX: 0
+[INFO] 21:25:59:070 CPU/(2908:2908): cont seg: 1
+[INFO] 21:25:59:070 CPU/(2908:2908): Nro: 2, numero tabla paginas 0, tamanio segmento 32
+[INFO] 21:25:59:070 CPU/(2908:2908): Estado: 1
+[INFO] 21:25:59:070 CPU/(2908:2908): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 21:25:59:070 CPU/(2908:2908): Primer dispositivo DISCO
+[INFO] 21:25:59:070 CPU/(2908:2908): Hola memoria, soy cpu
+[INFO] 21:26:00:073 CPU/(2908:2908): Me llegaron los siguientes valores:
+[INFO] 21:26:00:073 CPU/(2908:2908): tamanio de pagina: 64 
+[INFO] 21:26:00:073 CPU/(2908:2908): entradas por tabla: 4 
+
+[INFO] 21:26:00:073 CPU/(2908:2908): “PID: <0> - Ejecutando: <SET> - <AX> - <1>
+[INFO] 21:26:00:073 CPU/(2908:2908): ----------------FINALIZA SET----------------
+
+[INFO] 21:26:00:073 CPU/(2908:2908): “PID: <0> - Ejecutando: <ADD> - <AX> - <BX>
+[INFO] 21:26:00:073 CPU/(2908:2908): ----------------FINALIZA ADD----------------
+
+[INFO] 21:26:00:073 CPU/(2908:2908): “PID: <0> - Ejecutando: <I/O> - <DISCO> - <10>
