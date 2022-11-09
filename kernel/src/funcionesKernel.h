@@ -42,7 +42,8 @@ typedef enum {
 	IO_TECLADO,		// cpu manda proceso por io teclado
 	IO_PANTALLA,		// cpu manda proceso por io pantalla
 	RECIBIR_ENTERO,
-	QUANTUM
+	QUANTUM,
+	DESALOJAR_PROCESO_POR_FIN_DE_QUANTUM
 }op_code;
 
 
@@ -210,6 +211,7 @@ void readyAExe();
 void atender_interrupcion_de_ejecucion();
 void atender_IO_teclado();
 void atender_IO_pantalla();
+void controlar_quantum();
 
 void terminarEjecucion(t_pcb*);
 void destruirProceso(t_pcb*);
@@ -239,8 +241,9 @@ extern int registroTeclado;
 extern t_pcb* pcbPantalla;
 extern int registroPantalla;
 
-
 extern int identificadores_pcb;
+
+extern pthread_t hiloQuantumRR;
 
 extern sem_t kernelSinFinalizar;
 extern sem_t gradoDeMultiprogramacion;

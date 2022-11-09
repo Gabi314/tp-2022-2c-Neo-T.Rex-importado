@@ -46,9 +46,9 @@ t_queue* colaBlockedPantalla;
 t_queue* colaBlockedTeclado;
 t_list* listaDeColasDispositivos;
 
-sem_t cpuDisponible;
-sem_t pcbEnNew;
-sem_t pcbEnReady;
+pthread_t hiloQuantumRR;
+
+
 sem_t kernelSinFinalizar;
 sem_t gradoDeMultiprogramacion;
 sem_t pcbEnReady;
@@ -215,7 +215,7 @@ void asignar_memoria() {
 			if (!strcmp(algoritmoPlanificacion, "RR")) {
 				queue_push(colaReadyRR,proceso);
 			} else {
-				if(!strcmp(algoritmoPlanificacion, "MULTICOLAS")) {// ver si esta asi en los config
+				if(!strcmp(algoritmoPlanificacion, "Feedback")) {// ver si esta asi en los config
 					queue_push(colaReadyRR,proceso);
 				}else{
 					log_info(logger, "Algoritmo invalido");
@@ -255,6 +255,11 @@ void readyAExe() {
 
 		ejecutar(procesoAEjecutar);
 
+		if(algoritmoPlanificacion == "RR" || (algoritmoPlanificacion == "Feedback" && procesoAEjecutar->algoritmoActual == RR)){
+			int hiloQuantum = pthread_create(&hiloQuantumRR, NULL,&controlar_quantum,NULL);
+			pthread_detach(hiloQuantum);
+		}
+
 	//	log_info(logger,"[readyAExe]: finaliza");
 	}
 }
@@ -264,13 +269,24 @@ t_pcb* obtenerSiguienteDeReady() {
 
 t_pcb * procesoPlanificado;
 
-if (!strcmp(algoritmoPlanificacion, "FIFO")) {
-	procesoPlanificado = obtenerSiguienteFIFO();
-} else {
-	if (!strcmp(algoritmoPlanificacion, "RR")) {
-		procesoPlanificado = obtenerSiguienteRR();
+	if (!strcmp(algoritmoPlanificacion, "FIFO")) {
+		procesoPlanificado = obtenerSiguienteFIFO();
 	} else {
-		log_info(logger, "[obtenerSiguienteDeReady]: algoritmo invalido");
+		if (!strcmp(algoritmoPlanificacion, "RR")) {
+			procesoPlanificado = obtenerSiguienteRR();
+		} else {
+			if(!strcmp(algoritmoPlanificacion, "Feedback")){
+				if(queue_size(colaReadyRR)>0){
+					procesoPlanificado = obtenerSiguienteRR();
+					procesoPlanificado->algoritmoActual = RR;
+				}else{
+					procesoPlanificado = obtenerSiguienteFIFO();
+					procesoPlanificado->algoritmoActual = FIFO;
+				}
+			}else{
+
+				log_info(logger, "[obtenerSiguienteDeReady]: algoritmo invalido");
+			}
 		}
 	}
 	return procesoPlanificado;
@@ -308,6 +324,8 @@ void ejecutar(t_pcb* proceso) {
 	}
 
  //	conexionConCpu(proceso); Aca mandamos el proceso a cpu
+ //	agregarAPaqueteKernelCpu(proceso); ?
+
 
 	log_info(logger, "[ejecutar]: enviamos el proceso a cpu");
 
@@ -316,11 +334,16 @@ void ejecutar(t_pcb* proceso) {
 void atender_interrupcion_de_ejecucion() {
 
 while (1) {
-	int cod_op = recibir_operacion(puertoCpuDispatch); //Puerto o socket
+	int cod_op = recibir_operacion(puertoCpuDispatch); //Puerto o socket (Cuando iniciemos el servidor en el main esto cambia)
 
 	switch (cod_op) {
 
 	case IO_GENERAL:
+		/*
+		if(algoritmoPlanificacion == "RR" || (algoritmoPlanificacion == "Feedback" && procesoAEjecutar->algoritmoActual == RR)){
+				pthread_cancel(hiloQuantumRR);
+		}
+		*/
 		break;
 	case IO_TECLADO:
 		/*
@@ -329,11 +352,17 @@ while (1) {
 		recibir_operacion(puertoCpuDispatch);
 		aMandar.registro =recibir_entero(puertoCpuDispatch);
 		*/
+
 		pthread_mutex_lock(&mutexTeclado);
 		pcbTeclado = recibir_pcb(puertoCpuDispatch);
 		recibir_operacion(puertoCpuDispatch);
 		registroTeclado =recibir_entero(puertoCpuDispatch);
 		pthread_mutex_unlock(&mutexTeclado);
+
+		if(algoritmoPlanificacion == "RR" || (algoritmoPlanificacion == "Feedback" && pcbTeclado->algoritmoActual == RR)){
+			pthread_cancel(hiloQuantumRR);
+		}
+
 		pthread_t hiloAtenderTeclado;
 		int hiloTeclado = pthread_create(&hiloAtenderTeclado, NULL,&atender_IO_teclado,NULL);
 		pthread_detach(hiloTeclado);
@@ -344,6 +373,11 @@ while (1) {
 		recibir_operacion(pcbPantalla->socket);
 		registroPantalla = recibir_entero(puertoCpuDispatch);
 		pthread_mutex_unlock(&mutexPantalla);
+
+		if(algoritmoPlanificacion == "RR" || (algoritmoPlanificacion == "Feedback" && pcbPantalla->algoritmoActual == RR)){
+			pthread_cancel(hiloQuantumRR);
+		}
+
 		pthread_t hiloPantalla;
 		int hiloPantallaCreado = pthread_create(&hiloPantalla, NULL, &atender_IO_pantalla, NULL);
 		pthread_detach(hiloPantallaCreado);
@@ -365,7 +399,14 @@ while (1) {
 		break;
 	case TERMINAR_PROCESO:
 		log_info(logger,"[atender_interrupcion_de_ejecucion]: recibimos operacion EXIT");
-		terminarEjecucion(recibir_pcb(puertoCpuDispatch));
+
+		t_pcb* pcbATerminar = recibir_pcb(puertoCpuDispatch);
+
+		if(algoritmoPlanificacion == "RR" || (algoritmoPlanificacion == "Feedback" && pcbATerminar->algoritmoActual == RR)){
+			pthread_cancel(hiloQuantumRR);
+		}
+
+		terminarEjecucion(pcbATerminar);
 		break;
 	default:
 		log_info(logger, "operacion invalida");
@@ -458,8 +499,26 @@ void atender_IO_pantalla() {
 	int valor_registro = buscar_valor_registro(pcbPantalla,registroPantalla);
 
 	enviar_entero(valor_registro, pcbPantalla->socket, KERNEL_PAQUETE_VALOR_A_IMPRIMIR);
+
 	recibir_operacion(pcbPantalla->socket);
+
 	recibir_mensaje(pcbPantalla->socket);
+
+	if (!strcmp(algoritmoPlanificacion, "FIFO")) {
+				queue_push(colaReadyFIFO,pcbTeclado);
+			} else {
+				if (!strcmp(algoritmoPlanificacion, "RR")) {
+					queue_push(colaReadyRR,pcbTeclado);
+				} else {
+					if(!strcmp(algoritmoPlanificacion, "Feedback")) {// ver si esta asi en los config
+						queue_push(colaReadyRR,pcbTeclado);
+					}else{
+						log_info(logger, "Algoritmo invalido");
+					}
+				}
+			}
+
+	sem_post(&pcbEnReady);
 }
 
 int buscar_valor_registro(t_pcb* pcb, int registro) {
@@ -475,5 +534,12 @@ int buscar_valor_registro(t_pcb* pcb, int registro) {
 	default:
 		return -1;
 	}
+}
+
+void controlar_quantum(){
+
+	usleep(quantum_rr * 1000);
+
+	enviar_mensaje("Cpu desalojá tu proceso por fin de quantum", puertoCpuInterrupt ,DESALOJAR_PROCESO_POR_FIN_DE_QUANTUM); // VER SI ES EL PUERTO O EL SOCKET
 }
 
