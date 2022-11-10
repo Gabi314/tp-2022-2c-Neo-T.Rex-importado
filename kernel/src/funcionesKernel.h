@@ -81,6 +81,7 @@ typedef struct {
 	char* dispositivo;
 	int tiempo;
 	t_queue* cola_procesos;
+	sem_t semaforo;
 } t_elem_disp;
 // En principio, no hace falta ------------------------------------
 
