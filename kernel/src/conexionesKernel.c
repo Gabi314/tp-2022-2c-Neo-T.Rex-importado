@@ -352,10 +352,14 @@ t_pcb* recibir_pcb(int socket_cliente)
 		list_add(pcb->tabla_segmentos,unSegmento);
 		i++;
 	}
-//	memcpy(&pcb->socket_cliente, buffer + desplazamiento, sizeof(int)); al pedo mepa
+	memcpy(&pcb->socket, buffer + desplazamiento, sizeof(int));
+	desplazamiento+=sizeof(int);
 	memcpy(&(pcb->estado), buffer + desplazamiento, sizeof(t_estado));
 	desplazamiento+=sizeof(t_estado);
+	memcpy(&(pcb->algoritmoActual), buffer + desplazamiento, sizeof(t_algoritmo_pcb));
+	desplazamiento+=sizeof(t_algoritmo_pcb);
 	log_info(logger,"Estado: %d",pcb->estado);
+	log_info(logger,"Algoritmo: %d",pcb->algoritmoActual);
 	free(buffer);
 	return pcb;
 }
@@ -402,7 +406,7 @@ void enviar_pcb(t_pcb* pcb,int cod_op,int conexionCpu)
 	list_iterate(pcb->tabla_segmentos, (void*) obtenerCantidadDeSegmentos);
 	paquete->buffer->stream = realloc(paquete->buffer->stream, paquete->buffer->size + tamanioTotalIdentificadores +
 										contadorInstrucciones*sizeof(int[2]) + contadorInstrucciones*sizeof(int) +
-											3*sizeof(int)+ sizeof(t_registros) + contadorSegmentos*sizeof(entradaTablaSegmento) + sizeof(int));
+											3*sizeof(int)+ sizeof(t_registros) + contadorSegmentos*sizeof(entradaTablaSegmento) + sizeof(int)); // puede que falte un int
 	memcpy(paquete->buffer->stream + desplazamiento, &(pcb->idProceso), sizeof(int));
 	desplazamiento+=sizeof(int);
 	memcpy(paquete->buffer->stream + desplazamiento, &contadorInstrucciones, sizeof(int));
@@ -416,14 +420,15 @@ void enviar_pcb(t_pcb* pcb,int cod_op,int conexionCpu)
 	desplazamiento+=sizeof(int);
 	list_iterate(pcb->tabla_segmentos, (void*) agregarSegmentosAlPaquete);
 	log_info(logger,"cont seg: %d",contadorSegmentos);
-//	memcpy(paquete->buffer->stream + desplazamiento, &(pcb->socket_cliente), sizeof(int));
-//	desplazamiento+=sizeof(int);
+	memcpy(paquete->buffer->stream + desplazamiento, &(pcb->socket), sizeof(int));
+	desplazamiento+=sizeof(int);
 	memcpy(paquete->buffer->stream + desplazamiento, &(pcb->estado), sizeof(int));
 	desplazamiento+=sizeof(int);
 	paquete->buffer->size = desplazamiento;
 
 	enviar_paquete(paquete, conexionCpu);
 	free(pcb);
+	eliminar_paquete(paquete);
 }
 
 
