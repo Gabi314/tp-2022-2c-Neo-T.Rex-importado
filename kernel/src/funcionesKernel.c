@@ -397,6 +397,19 @@ while (1) {
 		sem_post(&pcbEnReady);
 
 		break;
+
+	case PAGE_FAULT:
+
+		t_pcb* pcbPF = recibir_pcb(puertoCpuDispatch);
+
+		//recibir pagina a cargar desde cpu
+
+		pthread_t hiloPF;
+		int hiloPageFault = pthread_create(&hiloPF, NULL, &atender_page_fault, pcbPF);
+		pthread_detach(hiloPageFault);
+
+		break;
+
 	case TERMINAR_PROCESO:
 		log_info(logger,"[atender_interrupcion_de_ejecucion]: recibimos operacion EXIT");
 
@@ -541,5 +554,39 @@ void controlar_quantum(){
 	usleep(quantum_rr * 1000);
 
 	enviar_mensaje("Cpu desalojá tu proceso por fin de quantum", puertoCpuInterrupt ,DESALOJAR_PROCESO_POR_FIN_DE_QUANTUM); // VER SI ES EL PUERTO O EL SOCKET
+}
+
+
+void atender_page_fault(t_pcb* pcb){
+	pcb->estado = BLOCKED; // hace falta un nuevo estado BLOCKED_PF?
+
+//	enviar_mensaje("kernel solicita que se cargue en memoria la pagina correspondiente",socket que corresponda, KERNEL_MENSAJE_SOLICITUD_CARGAR_PAGINA);
+
+	//hay que mandar la pagina recibida de cpu
+
+//	int codigo = recibir_operacion(socket que corresponda);
+
+//	if(codigo != KERNEL_MENSAJE_CONFIRMACION_PF){
+//		log_info(logger,"codigo de operacion incorrecto");
+//	}
+//
+//	recibir_mensaje(socket que corresponda);
+
+	if (!strcmp(algoritmoPlanificacion, "FIFO")) {
+				queue_push(colaReadyFIFO,pcbTeclado);
+			} else {
+				if (!strcmp(algoritmoPlanificacion, "RR")) {
+					queue_push(colaReadyRR,pcbTeclado);
+				} else {
+					if(!strcmp(algoritmoPlanificacion, "Feedback")) {// ver si esta asi en los config
+						queue_push(colaReadyRR,pcbTeclado);
+					}else{
+						log_info(logger, "Algoritmo invalido");
+					}
+				}
+			}
+
+	sem_post(&pcbEnReady);
+
 }
 

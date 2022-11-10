@@ -43,7 +43,8 @@ typedef enum {
 	IO_PANTALLA,		// cpu manda proceso por io pantalla
 	RECIBIR_ENTERO,
 	QUANTUM,
-	DESALOJAR_PROCESO_POR_FIN_DE_QUANTUM
+	DESALOJAR_PROCESO_POR_FIN_DE_QUANTUM,
+	PAGE_FAULT
 }op_code;
 
 
@@ -212,6 +213,7 @@ void atender_interrupcion_de_ejecucion();
 void atender_IO_teclado();
 void atender_IO_pantalla();
 void controlar_quantum();
+void atender_page_fault(t_pcb* pcb);
 
 void terminarEjecucion(t_pcb*);
 void destruirProceso(t_pcb*);
