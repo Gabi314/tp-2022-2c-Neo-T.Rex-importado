@@ -180,8 +180,8 @@ void eliminar_paquete(t_paquete* paquete);
 void * recibir_buffer(int* size, int socket_cliente);
 int esperar_cliente(int socket_servidor);
 void enviar_entero(int valor, int socket_cliente, int cod_op);
-void recibir_consola(int);
-void atender_consola(int);
+
+
 int get_identificador();
 t_pcb* recibir_pcb(int socket_cliente);
 
@@ -206,19 +206,19 @@ t_pcb* obtenerSiguienteFIFO();
 t_pcb* obtenerSiguienteRR();
 void ejecutar(t_pcb* proceso);
 
-void recibir_consola(int servidor) ;
-void atender_consola(int cliente);
+void recibir_consola(int * servidor) ;
+void atender_consola(int * nuevo_cliente);
 void asignar_memoria();
 void readyAExe();
 void atender_interrupcion_de_ejecucion();
-void atender_IO_teclado();
-void atender_IO_pantalla();
+void atender_IO_teclado(t_info_teclado * info);
+void atender_IO_pantalla(t_info_pantalla * info);
 void controlar_quantum();
 void atender_page_fault(t_pcb* pcb);
 
 void terminarEjecucion(t_pcb*);
 void destruirProceso(t_pcb*);
-
+int buscar_valor_registro(t_pcb*,int);
 extern char * ipMemoria;
 extern char * puertoMemoria;
 extern char * ipCpu;

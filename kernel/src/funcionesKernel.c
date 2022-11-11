@@ -124,16 +124,19 @@ int get_identificador(){
 
 
 
-void recibir_consola(int servidor) {
+void recibir_consola(int * servidor) {
+
+	int servidor_int = *servidor;
+
 
 	while (1) {
 		pthread_t hilo1;
 		log_info(logger,"esperamos una nueva consola");
-		int nuevo_cliente = esperar_cliente(servidor);
+		int nuevo_cliente = esperar_cliente(servidor_int);
 
 		log_info(logger,"recibimos al cliente de socket %d", nuevo_cliente);
 
-		int hiloCreado = pthread_create(&hilo1, NULL, &atender_consola,nuevo_cliente);
+		int hiloCreado = pthread_create(&hilo1, NULL,  (void *)atender_consola, &nuevo_cliente);
 		pthread_detach(hilo1);
 
 		log_info(logger,"levantamos y detacheamos el hilo de la consola %d", nuevo_cliente);
@@ -142,21 +145,22 @@ void recibir_consola(int servidor) {
 }
 
 
-void atender_consola(int nuevo_cliente) {
+void  atender_consola(int * nuevo_cliente) {
 	t_pcb* PCB = malloc(sizeof(t_pcb));
+	int  nuevo_cliente_int = *nuevo_cliente;
 
-	log_info(logger,"[atender_consola]recibimos las instrucciones del cliente %d!", nuevo_cliente);
+	log_info(logger,"[atender_consola]recibimos las instrucciones del cliente %d!", nuevo_cliente_int);
 
 
 	PCB->idProceso = get_identificador();
 
 	PCB->instrucciones = list_create();
-	PCB->instrucciones = recibir_lista_instrucciones(nuevo_cliente);
+	PCB->instrucciones = recibir_lista_instrucciones(nuevo_cliente_int);
 	PCB->program_counter = 0;
 	inicializar_registros(PCB->registros);
 	PCB->tabla_segmentos = list_create();
-	PCB->tabla_segmentos = inicializar_tabla_segmentos(nuevo_cliente); // aca usariamos el recibir_lista_enteros
-	PCB->socket = nuevo_cliente;
+	PCB->tabla_segmentos = inicializar_tabla_segmentos(nuevo_cliente_int); // aca usariamos el recibir_lista_enteros
+	PCB->socket = nuevo_cliente_int;
 	PCB->estado = NEW;
 
 	log_info(logger,"[atender_consola]inicializamos PCB de id_proceso %d", PCB->idProceso);
@@ -256,7 +260,7 @@ void readyAExe() {
 		ejecutar(procesoAEjecutar);
 
 		if(algoritmoPlanificacion == "RR" || (algoritmoPlanificacion == "Feedback" && procesoAEjecutar->algoritmoActual == RR)){
-			int hiloQuantum = pthread_create(&hiloQuantumRR, NULL,&controlar_quantum,NULL);
+			int hiloQuantum = pthread_create(&hiloQuantumRR, NULL,(void*) controlar_quantum,NULL);
 			pthread_detach(hiloQuantum);
 		}
 
@@ -346,42 +350,55 @@ while (1) {
 		*/
 		break;
 	case IO_TECLADO:
-		/*
-		t_info_teclado aMandar;
-		aMandar.pcb = recibir_pcb(puertoCpuDispatch);
-		recibir_operacion(puertoCpuDispatch);
-		aMandar.registro =recibir_entero(puertoCpuDispatch);
-		*/
-
-		pthread_mutex_lock(&mutexTeclado);
-		pcbTeclado = recibir_pcb(puertoCpuDispatch);
-		recibir_operacion(puertoCpuDispatch);
-		registroTeclado =recibir_entero(puertoCpuDispatch);
-		pthread_mutex_unlock(&mutexTeclado);
 
 		if(algoritmoPlanificacion == "RR" || (algoritmoPlanificacion == "Feedback" && pcbTeclado->algoritmoActual == RR)){
-			pthread_cancel(hiloQuantumRR);
-		}
+					pthread_cancel(hiloQuantumRR);
+				}
+
+		t_info_teclado * aMandarTeclado = malloc(sizeof(*aMandarTeclado));
+		aMandarTeclado->pcb = recibir_pcb(puertoCpuDispatch);
+		recibir_operacion(puertoCpuDispatch);
+		aMandarTeclado->registro =recibir_entero(puertoCpuDispatch);
+
+/*
+		//pthread_mutex_lock(&mutexTeclado);
+		t_pcb * pcbTeclado = recibir_pcb(puertoCpuDispatch); // la idea es que sea una varible loca
+		recibir_operacion(puertoCpuDispatch);
+		registroTeclado =recibir_entero(puertoCpuDispatch);
+		//pthread_mutex_unlock(&mutexTeclado);
+*/
 
 		pthread_t hiloAtenderTeclado;
-		int hiloTeclado = pthread_create(&hiloAtenderTeclado, NULL,&atender_IO_teclado,NULL);
-		pthread_detach(hiloTeclado);
+		int hiloTeclado = pthread_create(&hiloAtenderTeclado, NULL,(void*) atender_IO_teclado,aMandarTeclado);
+		pthread_detach(hiloAtenderTeclado);
+
+		//free(aMandar.pcb);
+		//free(aMandar.registro);
+		//free(aMandar);
+
 		break;
+
 	case IO_PANTALLA:
-		pthread_mutex_lock(&mutexPantalla);
-		pcbPantalla = recibir_pcb(puertoCpuDispatch);
-		recibir_operacion(pcbPantalla->socket);
-		registroPantalla = recibir_entero(puertoCpuDispatch);
-		pthread_mutex_unlock(&mutexPantalla);
 
 		if(algoritmoPlanificacion == "RR" || (algoritmoPlanificacion == "Feedback" && pcbPantalla->algoritmoActual == RR)){
-			pthread_cancel(hiloQuantumRR);
-		}
+					pthread_cancel(hiloQuantumRR);
+				}
+
+		t_info_pantalla * aMandarPantalla = malloc(sizeof(*aMandarPantalla));
+
+	//	pthread_mutex_lock(&mutexPantalla);
+		aMandarPantalla->pcb = recibir_pcb(puertoCpuDispatch);
+		recibir_operacion(puertoCpuDispatch);
+		registroPantalla = recibir_entero(puertoCpuDispatch);
+	//	pthread_mutex_unlock(&mutexPantalla);
+
 
 		pthread_t hiloPantalla;
-		int hiloPantallaCreado = pthread_create(&hiloPantalla, NULL, &atender_IO_pantalla, NULL);
-		pthread_detach(hiloPantallaCreado);
+		int hiloPantallaCreado = pthread_create(&hiloPantalla, NULL, &atender_IO_pantalla, aMandarPantalla);
+		pthread_detach(hiloPantalla);
+
 		break;
+
 	case QUANTUM:
 		t_pcb* pcb = recibir_pcb(puertoCpuDispatch);
 
@@ -457,48 +474,48 @@ void destruirProceso(t_pcb* proceso) {
 	free(proceso);
 }
 
-void atender_IO_teclado(){
+void atender_IO_teclado(t_info_teclado * info){
 
-		//t_pcb* unPcb = info.pcb;
+		t_pcb* unPcb = info->pcb;
 
-		enviar_mensaje("kernel solicita que se ingrese un valor por teclado",pcbTeclado->socket,KERNEL_MENSAJE_SOLICITUD_VALOR_POR_TECLADO);
+		enviar_mensaje("kernel solicita que se ingrese un valor por teclado",unPcb->socket,KERNEL_MENSAJE_SOLICITUD_VALOR_POR_TECLADO);
 
-		int codigo = recibir_operacion(pcbTeclado->socket);
+		int codigo = recibir_operacion(unPcb->socket);
 			if(codigo != KERNEL_MENSAJE_DESBLOQUEO_TECLADO){
 					log_info(logger,"codigo de operacion incorrecto");
 				}
-		recibir_mensaje(pcbTeclado->socket);
+		recibir_mensaje(unPcb->socket);
 
-		codigo = recibir_operacion(pcbTeclado->socket);
+		codigo = recibir_operacion(unPcb->socket);
 
 		if(codigo != KERNEL_PAQUETE_VALOR_RECIBIDO_DE_TECLADO){
 						log_info(logger,"codigo de operacion incorrecto");
 					}
-		int enteroRecibido = recibir_entero(pcbTeclado->socket);
+		int enteroRecibido = recibir_entero(unPcb->socket);
 
-		switch(registroTeclado){
+		switch(info->registro){
 			case 0:
-				(&pcbTeclado->registros)->AX = enteroRecibido;
+				(&unPcb->registros)->AX = enteroRecibido;
 				break;
 			case 1:
-				(&pcbTeclado->registros)->BX = enteroRecibido;
+				(&unPcb->registros)->BX = enteroRecibido;
 				break;
 			case 2:
-				(&pcbTeclado->registros)->CX = enteroRecibido;
+				(&unPcb->registros)->CX = enteroRecibido;
 				break;
 			case 3:
-				(&pcbTeclado->registros)->DX = enteroRecibido;
+				(&unPcb->registros)->DX = enteroRecibido;
 				break;
 		}
 
 		if (!strcmp(algoritmoPlanificacion, "FIFO")) {
-			queue_push(colaReadyFIFO,pcbTeclado);
+			queue_push(colaReadyFIFO,unPcb);
 		} else {
 			if (!strcmp(algoritmoPlanificacion, "RR")) {
-				queue_push(colaReadyRR,pcbTeclado);
+				queue_push(colaReadyRR,unPcb);
 			} else {
 				if(!strcmp(algoritmoPlanificacion, "Feedback")) {// ver si esta asi en los config
-					queue_push(colaReadyRR,pcbTeclado);
+					queue_push(colaReadyRR,unPcb);
 				}else{
 					log_info(logger, "Algoritmo invalido");
 				}
@@ -508,23 +525,25 @@ void atender_IO_teclado(){
 		sem_post(&pcbEnReady);
 }
 
-void atender_IO_pantalla() {
-	int valor_registro = buscar_valor_registro(pcbPantalla,registroPantalla);
+void atender_IO_pantalla(t_info_pantalla * info) {
+	t_pcb * unPcb = info->pcb;
 
-	enviar_entero(valor_registro, pcbPantalla->socket, KERNEL_PAQUETE_VALOR_A_IMPRIMIR);
+	int valor_registro = buscar_valor_registro(unPcb ,info->registro);
 
-	recibir_operacion(pcbPantalla->socket);
+	enviar_entero(valor_registro, unPcb->socket, KERNEL_PAQUETE_VALOR_A_IMPRIMIR);
 
-	recibir_mensaje(pcbPantalla->socket);
+	recibir_operacion(unPcb->socket);
+
+	recibir_mensaje(unPcb->socket);
 
 	if (!strcmp(algoritmoPlanificacion, "FIFO")) {
-				queue_push(colaReadyFIFO,pcbTeclado);
+				queue_push(colaReadyFIFO,unPcb);
 			} else {
 				if (!strcmp(algoritmoPlanificacion, "RR")) {
-					queue_push(colaReadyRR,pcbTeclado);
+					queue_push(colaReadyRR,unPcb);
 				} else {
 					if(!strcmp(algoritmoPlanificacion, "Feedback")) {// ver si esta asi en los config
-						queue_push(colaReadyRR,pcbTeclado);
+						queue_push(colaReadyRR,unPcb);
 					}else{
 						log_info(logger, "Algoritmo invalido");
 					}
@@ -555,6 +574,9 @@ void controlar_quantum(){
 
 	enviar_mensaje("Cpu desalojá tu proceso por fin de quantum", puertoCpuInterrupt ,DESALOJAR_PROCESO_POR_FIN_DE_QUANTUM); // VER SI ES EL PUERTO O EL SOCKET
 }
+
+
+
 
 
 void atender_page_fault(t_pcb* pcb){
