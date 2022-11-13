@@ -20,7 +20,7 @@ int main(int argc, char *argv[]) {
 	identificadores_pcb = 0;
 
 	t_config* config = inicializar_configuracion(argv[1]);
-
+/*
 	ipMemoria = config_get_string_value(config, "IP_MEMORIA");
 	puertoMemoria = config_get_string_value(config, "PUERTO_MEMORIA");//son intss
 	ipCpu = config_get_string_value(config, "IP_CPU");
@@ -32,7 +32,7 @@ int main(int argc, char *argv[]) {
 	quantum_rr = config_get_int_value(config,"QUANTUM_RR");
 	dispositivos_io = config_get_array_value(config, "DISPOSITIVOS_IO");
 	tiempos_io = config_get_array_value(config, "TIEMPOS_IO");
-
+*/
 
 	inicializar_listas_y_colas();
 	log_info(logger, "En la lista de dispositivos tenemos los siguientes:");
@@ -54,11 +54,10 @@ int main(int argc, char *argv[]) {
 
 /*
 	pthread_t hilo0;
-	pthread_t hiloAdmin[6];
-	int hiloAdminCreado[6];
+	pthread_t hiloAdmin[3];
+	int hiloAdminCreado[3];
 
-	ejecucionActiva = false;
-	procesoDesalojado = NULL;
+
 	//conexiones
 	socketMemoria = crear_conexion(ipMemoria, puertoMemoria);
 	socketCpuDispatch = crear_conexion(ipCpu, puertoCpuDispatch);
@@ -70,19 +69,17 @@ int main(int argc, char *argv[]) {
 
 	hiloAdminCreado[0] = pthread_create(&hiloAdmin[0],NULL,&asignar_memoria,NULL);
 	hiloAdminCreado[1] = pthread_create(&hiloAdmin[1],NULL,&atender_interrupcion_de_ejecucion,NULL); // problemas con esto
-	hiloAdminCreado[2] = pthread_create(&hiloAdmin[2],NULL,&atenderDesalojo,NULL);
-	hiloAdminCreado[3] = pthread_create(&hiloAdmin[3],NULL,&readyAExe,NULL);
-	hiloAdminCreado[4] = pthread_create(&hiloAdmin[4],NULL,&atenderIO,NULL);
-	hiloAdminCreado[5] = pthread_create(&hiloAdmin[5],NULL,&desbloquear_suspendido,NULL);
+	hiloAdminCreado[2] = pthread_create(&hiloAdmin[2],NULL,&readyAExe,NULL);
+
 
 	pthread_detach(hiloAdmin[0]);
 	pthread_detach(hiloAdmin[1]);
 	pthread_detach(hiloAdmin[2]);
-	pthread_detach(hiloAdmin[3]);
-	pthread_detach(hiloAdmin[4]);
-	pthread_detach(hiloAdmin[5]);
-*/
+
 	list_iterate(listaDeColasDispositivos,(void *)levantar_hilo_dispositivo);
+
+*/
+
 
 	log_destroy(logger);
 	//sem_wait(&kernelSinFinalizar);
@@ -91,7 +88,7 @@ int main(int argc, char *argv[]) {
 
 
 	//cargar_pcb(nroTabla1erNivel);
-	//conexionConCpu();
+
 
 }
 

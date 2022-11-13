@@ -1,22 +1,26 @@
 #ifndef UTILS_H_
 #define UTILS_H_
 
-#include<stdio.h>
-#include<stdlib.h>
 #include<signal.h>
-#include<unistd.h>
-#include<sys/socket.h>
-#include<netdb.h>
-#include<string.h>
-#include<commons/log.h>
-#include<commons/string.h>
-#include<commons/collections/list.h>
-#include<commons/collections/queue.h>
-#include<commons/config.h>
 #include<semaphore.h>
 #include<pthread.h>
 #include<stdbool.h>
 #include<assert.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include <netdb.h>
+#include <arpa/inet.h>
+#include <stdint.h>
+#include <unistd.h>
+#include <sys/socket.h>
+#include <errno.h>
+#include <commons/config.h>
+#include <commons/log.h>
+#include <commons/collections/list.h>
+#include <commons/collections/queue.h>
+#include <commons/string.h>
+
 
 extern t_log* logger;
 extern t_list* listaInstrucciones;
@@ -47,7 +51,9 @@ typedef enum {
 	PAGE_FAULT
 }op_code;
 
+typedef enum estado { NEW, READY, BLOCKED, EXEC, TERMINATED } t_estado;
 
+typedef enum algoritmo { FIFO, RR } t_algoritmo_pcb;
 
 typedef enum
 {
@@ -56,13 +62,36 @@ typedef enum
 	TECLADO
 } dispositivos_IO;
 
-typedef struct
-{
+typedef struct {
 	int AX;
 	int BX;
 	int CX;
 	int DX;
 } t_registros;
+
+typedef struct {
+	int idProceso;
+	t_list* instrucciones;
+	int program_counter;
+	t_registros registros ;
+	t_list* tabla_segmentos; // cada elemento de la lista tendria un vector de dos posiciones (una para el tamanio del
+	// segmento y otra para el número o identificador de tabla de páginas asociado a cada uno)
+	int socket;
+	t_estado estado;
+	t_algoritmo_pcb algoritmoActual;
+} t_pcb;
+
+typedef struct {
+	char* identificador;
+	//parametro* parametros;
+	int parametros[2];
+} instruccion;
+
+typedef struct {
+	int numeroSegmento;
+	int tamanioSegmento;
+	int numeroTablaPaginas;
+}entradaTablaSegmento;
 
 extern t_queue* colaNew;
 extern t_queue* colaReadyFIFO;
@@ -120,35 +149,7 @@ typedef struct
 }parametro;
 
 
-typedef struct
-{
-	char* identificador;
-	//parametro* parametros;
-	int parametros[2];
-} instruccion;
 
-typedef enum estado { NEW, READY, BLOCKED, EXEC, TERMINATED } t_estado;
-typedef enum algoritmo{FIFO,RR} t_algoritmo_pcb;
-
-typedef struct
-{
-	int numeroSegmento;
-	int tamanioSegmento;
-	int numeroTablaPaginas;
-}entradaTablaSegmento;
-
-typedef struct
-{
-	int idProceso;
-	t_list* instrucciones;
-	int program_counter;
-	t_registros registros;
-	t_list* tabla_segmentos; // cada elemento de la lista tendria un vector de dos posiciones (una para el tamanio del
-	int socket;						// segmento y otra para el número o identificador de tabla de páginas asociado a cada uno)
-	t_estado estado;
-	t_algoritmo_pcb algoritmoActual;
-
-} t_pcb;
 
 
 typedef struct
