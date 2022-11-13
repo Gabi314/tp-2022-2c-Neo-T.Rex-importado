@@ -96,7 +96,12 @@ void inicializar_registros(t_registros registros) {
 
 
 
+void levantar_hilo_dispositivo(t_elem_disp * elemento) {
+	pthread_t hiloDispositivo;
+	int hiloDispositivoCreado = pthread_create(&hiloDispositivo,NULL,(void*) atender_IO_generico,elemento);
+	pthread_detach(hiloDispositivo);
 
+}
 
 
 
@@ -335,6 +340,8 @@ void ejecutar(t_pcb* proceso) {
 
 }
 
+
+
 void atender_interrupcion_de_ejecucion() {
 
 while (1) {
@@ -343,22 +350,48 @@ while (1) {
 	switch (cod_op) {
 
 	case IO_GENERAL:
-		/*
-		if(algoritmoPlanificacion == "RR" || (algoritmoPlanificacion == "Feedback" && procesoAEjecutar->algoritmoActual == RR)){
-				pthread_cancel(hiloQuantumRR);
+		t_pcb * proceso = recibir_pcb(puertoCpuDispatch);
+
+		if(!strcmp(algoritmoPlanificacion, "RR") || (!strcmp(algoritmoPlanificacion, "Feedback") && proceso->algoritmoActual == RR)){
+			pthread_cancel(hiloQuantumRR);
+			}
+
+		char * dispositivo;
+
+		recibir_operacion(puertoCpuDispatch);
+		dispositivo = recibir_cadena(puertoCpuDispatch);
+
+		bool comparar_nombre_dispositivo( t_elem_disp * elemento){
+			return !strcmp(elemento->dispositivo,dispositivo);
 		}
-		*/
+
+		t_elem_disp * elementoLista = list_find(listaDeColasDispositivos, comparar_nombre_dispositivo);
+
+		queue_push(elementoLista->cola_procesos,proceso);
+
+		recibir_operacion(puertoCpuDispatch);
+		int unidadesTrabajo = recibir_entero(puertoCpuDispatch);
+		queue_push(elementoLista->cola_UTs,&unidadesTrabajo);
+
+		sem_post(&elementoLista->semaforo);
+
+
 		break;
 	case IO_TECLADO:
 
-		if(algoritmoPlanificacion == "RR" || (algoritmoPlanificacion == "Feedback" && pcbTeclado->algoritmoActual == RR)){
-					pthread_cancel(hiloQuantumRR);
-				}
 
 		t_info_teclado * aMandarTeclado = malloc(sizeof(*aMandarTeclado));
 		aMandarTeclado->pcb = recibir_pcb(puertoCpuDispatch);
+
+
+		if(!strcmp(algoritmoPlanificacion, "RR") || (!strcmp(algoritmoPlanificacion, "Feedback") && aMandarTeclado->pcb->algoritmoActual == RR)){
+									pthread_cancel(hiloQuantumRR);
+								}
+
 		recibir_operacion(puertoCpuDispatch);
 		aMandarTeclado->registro =recibir_entero(puertoCpuDispatch);
+
+
 
 /*
 		//pthread_mutex_lock(&mutexTeclado);
@@ -380,14 +413,17 @@ while (1) {
 
 	case IO_PANTALLA:
 
-		if(algoritmoPlanificacion == "RR" || (algoritmoPlanificacion == "Feedback" && pcbPantalla->algoritmoActual == RR)){
-					pthread_cancel(hiloQuantumRR);
-				}
+
 
 		t_info_pantalla * aMandarPantalla = malloc(sizeof(*aMandarPantalla));
 
 	//	pthread_mutex_lock(&mutexPantalla);
 		aMandarPantalla->pcb = recibir_pcb(puertoCpuDispatch);
+
+		if(!strcmp(algoritmoPlanificacion, "RR") || (!strcmp(algoritmoPlanificacion,"Feedback") && aMandarPantalla->pcb->algoritmoActual == RR)){
+						pthread_cancel(hiloQuantumRR);
+					}
+
 		recibir_operacion(puertoCpuDispatch);
 		registroPantalla = recibir_entero(puertoCpuDispatch);
 	//	pthread_mutex_unlock(&mutexPantalla);
@@ -573,9 +609,38 @@ void controlar_quantum(){
 	usleep(quantum_rr * 1000);
 
 	enviar_mensaje("Cpu desalojá tu proceso por fin de quantum", puertoCpuInterrupt ,DESALOJAR_PROCESO_POR_FIN_DE_QUANTUM); // VER SI ES EL PUERTO O EL SOCKET
+
 }
 
+void atender_IO_generico(t_elem_disp* elemento){
+	while(1) {
+		sem_wait(&elemento->semaforo);
 
+		int * unidades_trabajo = queue_pop(elemento->cola_UTs);
+		int tiempo_dispositivo = elemento->tiempo;
+
+		usleep(tiempo_dispositivo * 1000 * (*unidades_trabajo));
+
+		t_pcb * proceso = queue_pop(elemento->cola_procesos);
+
+		if (!strcmp(algoritmoPlanificacion, "FIFO")) {
+						queue_push(colaReadyFIFO,proceso);
+					} else {
+						if (!strcmp(algoritmoPlanificacion, "RR")) {
+							queue_push(colaReadyRR,proceso);
+						} else {
+							if(!strcmp(algoritmoPlanificacion, "Feedback")) {// ver si esta asi en los config
+								queue_push(colaReadyRR,proceso);
+							}else{
+								log_info(logger, "Algoritmo invalido");
+							}
+						}
+					}
+		sem_post(&pcbEnReady);
+	}
+
+
+}
 
 
 

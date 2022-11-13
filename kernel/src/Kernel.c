@@ -82,6 +82,7 @@ int main(int argc, char *argv[]) {
 	pthread_detach(hiloAdmin[4]);
 	pthread_detach(hiloAdmin[5]);
 */
+	list_iterate(listaDeColasDispositivos,(void *)levantar_hilo_dispositivo);
 
 	log_destroy(logger);
 	//sem_wait(&kernelSinFinalizar);
@@ -119,7 +120,7 @@ void inicializar_listas_y_colas() {
 	colaNew = queue_create();
 	colaReadyFIFO = queue_create();
 	colaReadyRR = queue_create();
-	listaDeColasDispositivos = list_create();
+
 
 }
 
@@ -271,6 +272,13 @@ void inicializar_lista_dispositivos() {
 			elemento_nuevo->dispositivo = dispositivos_io[i];
 			elemento_nuevo->tiempo = atoi(tiempos_io[i]);
 			elemento_nuevo->cola_procesos = queue_create();
+			elemento_nuevo->cola_UTs = queue_create();
+
+			sem_t semaforo;
+			sem_init(&semaforo,0,0);
+			elemento_nuevo->semaforo = semaforo;
+
+
 			list_add(listaDeColasDispositivos,elemento_nuevo);
 		}
 	}

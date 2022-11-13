@@ -137,6 +137,13 @@ log_info(logger, "Me llego el mensaje %s", buffer);
 free(buffer);
 }
 
+char * recibir_cadena(int socket_cliente)
+{
+int size;
+char* buffer = recibir_buffer(&size, socket_cliente);
+log_info(logger, "Me llego la cadena %s", buffer);
+return buffer;
+}
 
 
 void* serializar_paquete(t_paquete* paquete, int bytes) // sirve para cualquier estructura paquete

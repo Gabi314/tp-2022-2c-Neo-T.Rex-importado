@@ -83,7 +83,9 @@ typedef struct {
 	char* dispositivo;
 	int tiempo;
 	t_queue* cola_procesos;
+	t_queue* cola_UTs;
 	sem_t semaforo;
+
 } t_elem_disp;
 // En principio, no hace falta ------------------------------------
 
@@ -180,6 +182,7 @@ void eliminar_paquete(t_paquete* paquete);
 void * recibir_buffer(int* size, int socket_cliente);
 int esperar_cliente(int socket_servidor);
 void enviar_entero(int valor, int socket_cliente, int cod_op);
+char * recibir_cadena(int socket_cliente);
 
 
 int get_identificador();
@@ -190,6 +193,7 @@ void inicializar_listas_y_colas();
 void inicializar_lista_dispositivos();
 void inicializar_colas();
 void inicializar_semaforos();
+void levantar_hilo_dispositivo(t_elem_disp*);
 
 void iterator(instruccion*);
 
@@ -213,6 +217,7 @@ void readyAExe();
 void atender_interrupcion_de_ejecucion();
 void atender_IO_teclado(t_info_teclado * info);
 void atender_IO_pantalla(t_info_pantalla * info);
+void atender_IO_generico(t_elem_disp*);
 void controlar_quantum();
 void atender_page_fault(t_pcb* pcb);
 
