@@ -84,56 +84,6 @@ void enviarTamanioDePaginaYCantidadDeEntradas(int);
 extern int clienteCpu;
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 void escribirElPedido(uint32_t,int,int);
 entradaTablaPaginas* entradaCargadaConMarcoAsignado(int);
 uint32_t leerElPedido(int,int);

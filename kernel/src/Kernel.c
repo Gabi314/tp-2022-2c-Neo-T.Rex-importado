@@ -4,18 +4,10 @@
 
 t_list* lista_dispositivos;
 char* dispositivosIOAplanado;
+t_list *listaTamanioSegmentos;
 
-//void recibir_registros(int socket_cliente) // basado en recibir_operacion
-//{
-//	t_registros registros;
-//	recv(socket_cliente, &registros, sizeof(t_registros), MSG_WAITALL);
-//	log_info(logger,"Se recibio el registro AX de valor %d",registros.AX);
-//	log_info(logger,"Se recibio el registro BX de valor %d",registros.BX);
-//	log_info(logger,"Se recibio el registro CX de valor %d",registros.CX);
-//	log_info(logger,"Se recibio el registro DX de valor %d",registros.DX);
-//
-//}
 int conexionCpu = 0;
+int conexionCpuInterrupt = 0;
 
 int main(int argc, char *argv[]) {
 	logger = log_create("kernel.log", "KERNEL", 1, LOG_LEVEL_INFO);
@@ -56,16 +48,30 @@ int main(int argc, char *argv[]) {
 	entradaTablaSegmento* unaEntrada = malloc(sizeof(entradaTablaSegmento));
 	unaEntrada->numeroSegmento = 2;
 	unaEntrada->numeroTablaPaginas = 0;
-	unaEntrada->tamanioSegmento = 32;
-
+	unaEntrada->tamanioSegmento = 32;//para probar, esto hay que inicializarlo con: nroTabla -> viene de memoria
+																				// nroSegmento -> viene de memoria(o incremental)
+																				// tamanio -> viene del config de consola(lista)
 	list_add(pcb->tablaSegmentos,unaEntrada);
 	conexionCpu = crear_conexion(ipCpu, puertoCpuDispatch);
+	sleep(1);
+	conexionCpuInterrupt = crear_conexion(ipCpu, puertoCpuInterrupt);
+	log_info(logger,"Conexion con interrupt establecida");
 
 	agregar_a_paquete_kernel_cpu(pcb, KERNEL_PCB_A_CPU,conexionCpu);
+	//free(unaEntrada);
+
 	enviar_mensaje(dispositivosIOAplanado, conexionCpu, KERNEL_MENSAJE_DISPOSITIVOS_IO);
 
 
-	//free(unaEntrada);
+	enviar_mensaje("DESALOJO",conexionCpuInterrupt,KERNEL_MENSAJE_INTERRUPT); //Para probar
+
+	log_info(logger,"Interrupcion enviada");
+
+	while(1){
+
+	}
+
+
 	log_destroy(logger);
 
 }
@@ -100,13 +106,11 @@ int conexionConConsola(){
 
 	int cliente_fd = esperar_cliente(server_fd,"Consola");
 
-	t_list *listaQueContieneTamSegmento;
-
 	if (recibir_operacion(cliente_fd) == KERNEL_PAQUETE_TAMANIOS_SEGMENTOS) {
-		listaQueContieneTamSegmento = list_create();
-		listaQueContieneTamSegmento = recibir_lista_enteros(cliente_fd); //Hacer que reciba paquete vectorDeEnteros// Muy dificil mandar un vector dinamico, la lista la pueden usar como quieran
+		listaTamanioSegmentos = list_create();
+		listaTamanioSegmentos = recibir_lista_enteros(cliente_fd); //Hacer que reciba paquete vectorDeEnteros// Muy dificil mandar un vector dinamico, la lista la pueden usar como quieran
 		// Y si usamos la funcion "atoi()"? //No entiendo para que, atoi te convierte string a entero
-		int tamanioDelSegmento = (int) list_get(listaQueContieneTamSegmento, 3);
+		int tamanioDelSegmento = (int) list_get(listaTamanioSegmentos, 0);
 		log_info(logger, "El tamanio del primer segmento es: %d",
 				tamanioDelSegmento);
 

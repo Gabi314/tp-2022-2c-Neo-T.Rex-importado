@@ -17,18 +17,38 @@ int main(int argc, char *argv[]) {
 
 	listaDispositivos = recibirListaDispositivos(clienteKernel);
 
-	conexionConMemoria();
+	//conexionConMemoria();
 
+
+
+	checkInterrupt();
+
+	pthread_t hiloEjecutar;
+	ejecutando = true;// ver donde poner mejor esto
+	pthread_create(&hiloEjecutar, NULL, (void*) ejecucion,
+				NULL);
+	//pthread_detach(hiloEjecutar);
+
+
+	log_info(logger,"boca");
+	//pthread_join(hiloInterrupciones,NULL);
+	pthread_join(hiloEjecutar,NULL);
+
+	free(unPcb);
+
+	return EXIT_SUCCESS;
+
+}
+
+void ejecucion(){
 	instruccion *unaInstruccion = malloc(sizeof(instruccion));
 	unaInstruccion = buscarInstruccionAEjecutar(unPcb);
 
-	ejecutando = true;
 	while (ejecutando) {
 		ejecutar(unaInstruccion, unPcb);
 		unaInstruccion = buscarInstruccionAEjecutar(unPcb);
-	}
-	free(unPcb);
-	free(unaInstruccion);
-	return EXIT_SUCCESS;
 
+	}
+
+	free(unaInstruccion);
 }

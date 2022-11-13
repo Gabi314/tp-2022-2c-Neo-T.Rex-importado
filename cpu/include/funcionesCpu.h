@@ -28,6 +28,7 @@ extern t_list* tlb;
 
 //--------------  Cpu como servidor de Kernel ---------
 extern int clienteKernel;
+extern int clienteKernelInterrupt;
 extern int server_fd;
 extern char* ipMemoria;
 extern char* puertoMemoria;
@@ -45,6 +46,7 @@ extern int conexionMemoria;
 //extern uint32_t cx;
 //extern uint32_t dx;
 extern bool ejecutando;
+extern bool hayInterrupcion;
 
 typedef struct
 {
@@ -148,12 +150,14 @@ instruccion* buscarInstruccionAEjecutar(t_pcb*);
 void leerTamanioDePaginaYCantidadDeEntradas(t_list*);
 void ejecutar(instruccion*,t_pcb*);
 int decode(instruccion*);
-int buscarDireccionFisica(int,t_list*);
+int buscarDireccionFisica(int);
 char* dispositivoIOSegunParametro(int);
-int chequearMarcoEnTLB(int);
-void calculosDireccionLogica(int,t_list*);
+int chequearMarcoEnTLB(int,int,int);
+bool calculoDireccionLogicaExitoso(int,t_list*);
 
-void chequeoDeSF(int, int,t_list *);
+bool haySegFault(int, int,t_list *);
+void checkInterrupt();
+int escucharInterrupciones();
 
 t_list* inicializarTLB();
 void reiniciarTLB();
@@ -162,7 +166,10 @@ void iterator(instruccion*);
 //----------------------------FUNCIONES DE CONEXIONES
 int conexionConKernelDispatch(void);
 int conexionConMemoria(void);
+t_paquete* agregar_a_paquete_kernel_cpu(t_pcb*,int,t_paquete*);
+void ejecucion();
 
+extern pthread_t hiloInterrupciones;
 
 
 #endif /*FUNCIONES_CPU_H_*/

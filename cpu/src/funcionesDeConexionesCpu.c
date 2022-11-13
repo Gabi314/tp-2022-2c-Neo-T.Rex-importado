@@ -2,6 +2,7 @@
 
 //--------------DECLARO VARIABLES
 int clienteKernel;
+int clienteKernelInterrupt;
 int conexionMemoria;
 char* ipMemoria;
 char* puertoMemoria;
@@ -17,9 +18,12 @@ t_paquete* paquete;
 //-----------------------FUNCIONES
 int conexionConKernelDispatch(void){//hilo
 	static pthread_mutex_t mutexMensajes;
-	int server_fd = iniciar_servidor(IP_CPU,puertoDeEscuchaDispatch,"Kernel");
+	int server_dispatch = iniciar_servidor(IP_CPU,puertoDeEscuchaDispatch,"Kernel");
 	log_info(logger,"Cpu lista para recibir a kernel");
-	clienteKernel = esperar_cliente(server_fd,"Kernel");
+	clienteKernel = esperar_cliente(server_dispatch,"Kernel");
+
+	int server_interrupt = iniciar_servidor(IP_CPU, puertoDeEscuchaInterrupt,"Kernel");
+	clienteKernelInterrupt = esperar_cliente(server_interrupt, "Kernel por interrupt");
 
 	//int salirDelWhile = 0;
 	while (1) {
@@ -38,7 +42,7 @@ int conexionConKernelDispatch(void){//hilo
 	return EXIT_SUCCESS;
 }
 
-int conexionConMemoria(void){//FALTA LA CONEXION EN EL MODULO MEMORIA!!!!
+int conexionConMemoria(void){
 
 	// Creamos una conexión hacia el servidor
     conexionMemoria = crear_conexion(ipMemoria, puertoMemoria);
@@ -128,7 +132,7 @@ t_pcb* recibir_pcb(int socket_cliente)//ponerla en shared
 //----------------------------- Para ser cliente de Memoria -------------------------------------------------
 
 //ESTO ES PARA MANDAR UN PCB A KERNEL-------------------------------------------------------------------------------------
-t_paquete* agregar_a_paquete_kernel_cpu(t_pcb* pcb,int cod_op,t_paquete* paquete)//HACERELO EN KERNELLLLL!!!!!!!!!!
+t_paquete* agregar_a_paquete_kernel_cpu(t_pcb* pcb,int cod_op,t_paquete* paquete)
 {
 	tamanioTotalIdentificadores = 0;
 	contadorInstrucciones = 0;

@@ -35,30 +35,9 @@ typedef struct {
 } t_elem_disp;
 // En principio, no hace falta ------------------------------------
 
-/*
-La idea seria tener las siguientes funciones:
-- recibir instrucciones
-- recibir tamanios de segmentos
-- enviar confirmacion de recepcion
-- enviar pedido de impresion
-- enviar valor a imprimir
-- enviar pedido de valor por teclado
-- recibir mensaje de desbloqueo teclado
-- recibir valor de teclado
-*/
-
-//typedef struct
-//{
-//	int valor;
-//	char* registro;
-//	char* otroRegistro;
-//}parametro;
-
-
 typedef struct
 {
 	char* identificador;
-	//parametro* parametros;
 	int parametros[2];
 } instruccion;
 
@@ -66,9 +45,9 @@ typedef enum estado { NEW, READY, BLOCKED, EXEC, TERMINATED } t_estado;
 
 typedef struct
 {
-	int numeroSegmento;
+	int numeroSegmento;//revisar
 	int tamanioSegmento;
-	int numeroTablaPaginas;//Revisar nombre
+	int numeroTablaPaginas;
 }entradaTablaSegmento;
 
 typedef struct

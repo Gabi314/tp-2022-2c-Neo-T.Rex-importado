@@ -8,7 +8,6 @@ int cantidadEntradasTlb;
 char* algoritmoReemplazoTlb;
 int retardoDeInstruccion;
 
-
 t_pcb* unPcb;
 int tamanioDePagina;
 int entradasPorTabla;
@@ -19,7 +18,6 @@ int tamanioMaximoDeSegmento;
 int numeroDePagina;
 int desplazamientoDePagina;
 
-
 t_list* tlb;
 
 uint32_t ax;
@@ -27,6 +25,9 @@ uint32_t bx;
 uint32_t cx;
 uint32_t dx;
 
+bool hayInterrupcion = false;
+static pthread_mutex_t mutexInterrupcion;
+pthread_t hiloInterrupciones;
 //--------------------FUNCIONES ELEMENTALES------------------------------
 int chequeoCantidadArchivos(int argc){
 	if(argc < 2) {
@@ -133,100 +134,148 @@ char* dispositivoIOSegunParametro(int parametro){
 	return NULL;
 }
 
-/*
- Execute
-En este paso se deberá ejecutar lo correspondiente a cada instrucción:
-SET (Registro, Valor): Asigna al registro el valor pasado como parámetro.
-ADD (Registro Destino, Registro Origen): Suma ambos registros y deja el resultado en el Registro Destino.
-MOV_IN (Registro, Dirección Lógica): Lee el valor de memoria del segmento de Datos correspondiente a la Dirección Lógica y lo almacena en el Registro.
-MOV_OUT (Dirección Lógica, Registro): Lee el valor del Registro y lo escribe en la dirección física de memoria del segmento de Datos obtenida
-a partir de la Dirección Lógica.
-I/O (Dispositivo, Registro / Unidades de trabajo): Esta instrucción representa una syscall de I/O bloqueante. Se deberá devolver el
-Contexto de Ejecución actualizado al Kernel junto el dispositivo y la cantidad de unidades de trabajo del dispositivo que desea utilizar el
-proceso (o el Registro a completar o leer en caso de que el dispositivo sea Pantalla o Teclado).
-EXIT: Esta instrucción representa la syscall de finalización del proceso. Se deberá devolver el PCB actualizado al Kernel para su finalización.
-
-
-Cabe aclarar que todos los valores a leer/escribir en memoria serán numéricos enteros no signados de 4 bytes, considerar el uso de uint32_t.*/
-
-
-void ejecutar(instruccion* unaInstruccion,t_pcb* pcb){ //
+void ejecutar(instruccion* unaInstruccion,t_pcb* pcb){
 	int primerParametro = unaInstruccion->parametros[0];
 	int segundoParametro = unaInstruccion->parametros[1];
 	int direccionLogica;
 	int marco; //Warning porque no se usa en todos los case
 	uint32_t registro;
 	uint32_t segundoRegistro;
-	switch(decode(unaInstruccion)){
-	case SET:
-		log_info(logger,"“PID: <%d> - Ejecutando: <%s> - <%s> - <%d>",
-				pcb->idProceso,unaInstruccion->identificador,imprimirRegistro(primerParametro),
-					segundoParametro);
-		registro = registroAUtilizar(primerParametro,pcb->registros); //En set el primer parametro es el registro
-		registro = (uint32_t) segundoParametro; //En set el segundo registro es el valor a asignar
-		log_info(logger,"----------------FINALIZA SET----------------\n");
-		break;
-	case ADD:
-		log_info(logger,"“PID: <%d> - Ejecutando: <%s> - <%s> - <%s>",
-						pcb->idProceso,unaInstruccion->identificador,imprimirRegistro(primerParametro),
-							imprimirRegistro(segundoParametro));
-		registro = registroAUtilizar(primerParametro,pcb->registros);
-		segundoRegistro = registroAUtilizar(segundoParametro,pcb->registros);
-		registro += segundoRegistro;
-		log_info(logger,"----------------FINALIZA ADD----------------\n");
-		break;
-//	case MOV_IN:
-//		log_info(logger,"----------------EXECUTE MOV_IN----------------");
-//		registro = registroAUtilizar(primerParametro);
-//		direccionLogica = segundoParametro;
-//		marco = buscarDireccionFisica(direccionLogica,pcb->tablaSegmentos);
-//		uint32_t valorAAlmacenar;// = funcion que devuelve de memoria el valor mandando el marco conseguido previamente
-//		registro = valorAAlmacenar;
-//		log_info(logger,"----------------FINALIZA MOV_IN----------------\n");
-//		break;
-//	case MOV_OUT:
-//		log_info(logger,"----------------EXECUTE MOV_OUT----------------");
-//		direccionLogica = primerParametro;
-//		registro = registroAUtilizar(segundoParametro);
-//		marco = buscarDireccionFisica(direccionLogica,pcb->tablaSegmentos);
-//		//funcion que envie valor de registro y que lo guarde en memoria
-//
-//		log_info(logger,"----------------FINALIZA MOV_OUT----------------\n");
-//		break;
-	case IO:
-		log_info(logger,"“PID: <%d> - Ejecutando: <%s> - <%s> - <%d>",
-						pcb->idProceso,unaInstruccion->identificador,dispositivoIOSegunParametro(primerParametro),
-							segundoParametro);
-		agregar_a_paquete_kernel_cpu(pcb, CPU_PCB_A_KERNEL, paquete);
-		//aca afuera se puede enviar el dispositivo como entero
-		if(primerParametro == TECLADO || primerParametro == PANTALLA){
-			//agregar_a_paquete_registro
-		} else {
-			//agregar_a_paquete_unidadesDeTrabajo
-		}
 
-		log_info(logger,"----------------FINALIZA I/O----------------\n");
-		break;
-	case EXT:
-		log_info(logger,"“PID: <%d> - Ejecutando: <%s>",pcb->idProceso,unaInstruccion->identificador);
+	if(!hayInterrupcion){
+		switch(decode(unaInstruccion)){
+			case SET:
+				log_info(logger,"“PID: <%d> - Ejecutando: <%s> - <%s> - <%d>",
+						pcb->idProceso,unaInstruccion->identificador,imprimirRegistro(primerParametro),
+							segundoParametro);
+				registro = registroAUtilizar(primerParametro,pcb->registros); //En set el primer parametro es el registro
+				registro = (uint32_t) segundoParametro; //En set el segundo registro es el valor a asignar
+				log_info(logger,"----------------FINALIZA SET----------------\n");
+				sleep(2);//para probar que interrumpa sino ejecuta todo rapido
+				break;
+			case ADD:
+				log_info(logger,"“PID: <%d> - Ejecutando: <%s> - <%s> - <%s>",
+								pcb->idProceso,unaInstruccion->identificador,imprimirRegistro(primerParametro),
+									imprimirRegistro(segundoParametro));
+				registro = registroAUtilizar(primerParametro,pcb->registros);
+				segundoRegistro = registroAUtilizar(segundoParametro,pcb->registros);
+				registro += segundoRegistro;
+				log_info(logger,"----------------FINALIZA ADD----------------\n");
+				break;
+//			case MOV_IN:
+//				log_info(logger,"“PID: <%d> - Ejecutando: <%s> - <%s> - <%d>",
+//								pcb->idProceso,unaInstruccion->identificador,imprimirRegistro(primerParametro),
+//									segundoParametro);
+//
+//				registro = registroAUtilizar(primerParametro,pcb->registros);
+//				direccionLogica = segundoParametro;
+//
+//				if(calculoDireccionLogicaExitoso(direccionLogica,pcb->tablaSegmentos)){
+//					marco = buscarDireccionFisica(pcb->idProceso);
+//					uint32_t valorAAlmacenar;// = funcion que devuelve de memoria el valor mandando el marco conseguido previamente
+//					registro = valorAAlmacenar;
+//				}else{
+//					log_info(logger,"Error: Segmentation Fault (segmento nro: %d)",numeroDeSegmento);//Enviar este mensaje a kernel y devolver pcb
+//				//PROBAAAR!!!!
+//				}
+//
+//				log_info(logger,"----------------FINALIZA MOV_IN----------------\n");
+//				break;
+		//	case MOV_OUT:
+		//		log_info(logger,"----------------EXECUTE MOV_OUT----------------");
+		//		direccionLogica = primerParametro;
+		//		registro = registroAUtilizar(segundoParametro);
+		//		marco = buscarDireccionFisica(direccionLogica,pcb->tablaSegmentos);
+		//		//funcion que envie valor de registro y que lo guarde en memoria
+		//
+		//		log_info(logger,"----------------FINALIZA MOV_OUT----------------\n");
+		//		break;
+			case IO:
+				agregar_a_paquete_kernel_cpu(pcb, CPU_PCB_A_KERNEL_POR_IO, paquete); //ver que lo reciba kernel
+				enviar_entero(primerParametro,clienteKernel,CPU_DISPOSITIVO_A_KERNEL);//Mandar asi por separado o todo junto?
+
+				if(primerParametro != TECLADO || primerParametro != PANTALLA){
+
+					log_info(logger,"“PID: <%d> - Ejecutando: <%s> - <%s> - <%d>",
+							pcb->idProceso, unaInstruccion->identificador,
+							dispositivoIOSegunParametro(primerParametro),
+							segundoParametro);
+
+					enviar_entero(segundoParametro, clienteKernel, CPU_A_KERNEL_UNIDADES_DE_TRABAJO_IO);
+				} else {
+
+					log_info(logger,"“PID: <%d> - Ejecutando: <%s> - <%s> - <%s>",
+							pcb->idProceso, unaInstruccion->identificador,
+							dispositivoIOSegunParametro(primerParametro),
+							imprimirRegistro(segundoParametro));
+
+					if(primerParametro == TECLADO){
+						enviar_entero(segundoParametro, clienteKernel, CPU_A_KERNEL_INGRESAR_VALOR_POR_TECLADO);
+					}else if(primerParametro == PANTALLA){
+						enviar_entero(segundoParametro, clienteKernel, CPU_A_KERNEL_MOSTRAR_REGISTRO_POR_PANTALLA);
+					}
+				}
+
+				log_info(logger,"----------------FINALIZA I/O----------------\n");
+				break;
+			case EXT:
+				log_info(logger,"“PID: <%d> - Ejecutando: <%s>",pcb->idProceso,unaInstruccion->identificador);
+				ejecutando = false;
+				//Se deberá devolver el PCB actualizado al Kernel para su finalización.
+				log_info(logger,"----------------FINALIZA EXIT----------------\n");
+				break;
+		}
+	}else{
+		log_info(logger,"Interrupcion!!!");
 		ejecutando = false;
-		//Se deberá devolver el PCB actualizado al Kernel para su finalización.
-		log_info(logger,"----------------FINALIZA EXIT----------------\n");
-		break;
+		//devolver pcb
+		//hayInterrupcion = false ?
 	}
 }
 
 void checkInterrupt(){
-//En este momento, se deberá chequear si el Kernel nos envió una interrupción. De ser el caso,
-//se devuelve el Contexto de Ejecución actualizado al Kernel. De lo contrario se reinicia el ciclo de instrucción.
+
+
+	pthread_mutex_init(&mutexInterrupcion, NULL);
+	pthread_create(&hiloInterrupciones, NULL, (void*) escucharInterrupciones,
+			NULL);
+	//pthread_detach(hiloInterrupciones);
+
 
 }
 
-int buscarDireccionFisica(int direccionLogica,t_list* listaTablaSegmentos){
-	calculosDireccionLogica(direccionLogica,listaTablaSegmentos);
-	int marco = chequearMarcoEnTLB(numeroDePagina);
-	marco = -1;
-//-------------------REVISAR CON LEO
+int escucharInterrupciones(){
+	log_info(logger, "Cpu escuchando interrupciones");
+		while (1) {
+			int cod_op = recibir_operacion(clienteKernelInterrupt);
+			log_info(logger, "Entro");
+			if (cod_op == KERNEL_MENSAJE_INTERRUPT) {
+				pthread_mutex_lock(&mutexInterrupcion);
+				recibir_mensaje(clienteKernelInterrupt);
+				hayInterrupcion = true;
+				pthread_mutex_unlock(&mutexInterrupcion);
+				return EXIT_SUCCESS;
+			} else if (cod_op == -1) {
+				log_info(logger, "Se desconecto el kernel. Terminando conexion");
+				return EXIT_SUCCESS;
+			}
+		}
+		return EXIT_SUCCESS;
+}
+
+bool calculoDireccionLogicaExitoso(int direccionLogica,t_list* listaTablaSegmentos){
+	tamanioMaximoDeSegmento = entradasPorTabla * tamanioDePagina;
+	numeroDeSegmento = floor(direccionLogica / tamanioMaximoDeSegmento);
+	desplazamientoDeSegmento = direccionLogica % tamanioMaximoDeSegmento;
+	numeroDePagina = floor(desplazamientoDeSegmento  / tamanioDePagina);
+	desplazamientoDePagina = desplazamientoDeSegmento % tamanioDePagina;
+
+	return !haySegFault(numeroDeSegmento,desplazamientoDeSegmento,listaTablaSegmentos);
+}
+
+int buscarDireccionFisica(int pid){
+	int marco = chequearMarcoEnTLB(numeroDePagina,numeroDeSegmento,pid);
+
 	if (marco == -1){
 		return marco; /*= accederAMemoria(marco)*/
 	}
@@ -235,41 +284,38 @@ int buscarDireccionFisica(int direccionLogica,t_list* listaTablaSegmentos){
 	return marco;
 }
 
-int chequearMarcoEnTLB(int numeroDePagina){
+int chequearMarcoEnTLB(int nroDePagina, int nroDeSegmento,int pid){
 	entradaTLB* unaEntradaTLB = malloc(sizeof(entradaTLB));
 
 	for(int i=0;i < list_size(tlb);i++){
 		unaEntradaTLB = list_get(tlb,i);
 
-			if(unaEntradaTLB->nroDePagina == numeroDePagina){
-				unaEntradaTLB->ultimaReferencia = time(NULL);// se referencio a esa pagina
-				return unaEntradaTLB->nroDeMarco; // se puede almacenar este valor en una variable y retornarlo fuera del for
-			}
+		if(unaEntradaTLB->nroDePagina == nroDePagina
+				&& unaEntradaTLB->nroDeSegmento == nroDeSegmento
+				&& unaEntradaTLB->nroDeProceso == pid){
+
+			unaEntradaTLB->ultimaReferencia = time(NULL);// se referencio a esa pagina
+			return unaEntradaTLB->nroDeMarco; // se puede almacenar este valor en una variable y retornarlo fuera del for
+		}
 	}
 	//free(unaEntradaTLB);
 	return -1;
 }
 
-void calculosDireccionLogica(int direccionLogica,t_list* listaTablaSegmentos){
-	tamanioMaximoDeSegmento = entradasPorTabla * tamanioDePagina;
-	numeroDeSegmento = floor(direccionLogica / tamanioMaximoDeSegmento);
-	desplazamientoDeSegmento = direccionLogica % tamanioMaximoDeSegmento;
-	numeroDePagina = floor(desplazamientoDeSegmento  / tamanioDePagina);
-	desplazamientoDePagina = desplazamientoDeSegmento % tamanioDePagina;
-
-	chequeoDeSF(numeroDeSegmento,desplazamientoDeSegmento,listaTablaSegmentos);
-}
-void chequeoDeSF(int numeroDeSegmento, int desplazamientoSegmento,t_list * listaDeTablaSegmentos){
+bool haySegFault(int numeroDeSegmento, int desplazamientoSegmento,t_list * listaDeTablaSegmentos){
 	entradaTablaSegmento* unaEntradaDeTabla;
 	for(int i; i< list_size(listaDeTablaSegmentos);i++){
 		unaEntradaDeTabla = list_get(listaDeTablaSegmentos,i);
 		if(numeroDeSegmento == unaEntradaDeTabla->numeroSegmento){
-			if(desplazamientoSegmento>unaEntradaDeTabla->tamanioSegmento){
-				//hay SF->>>>> devolverse el proceso al Kernel para que este lo finalice con motivo de Error: Segmentation Fault
+			if(desplazamientoSegmento > unaEntradaDeTabla->tamanioSegmento){
+				return true;//hay SF->>>>> devolverse el proceso al Kernel para que este lo finalice con motivo de Error: Segmentation Fault
 			}
 		}
 	}
+
+	return false;
 }
+
 
 
 	/*
@@ -286,33 +332,6 @@ void chequeoDeSF(int numeroDeSegmento, int desplazamientoSegmento,t_list * lista
 			recibir_mensaje(conexionMemoria);
 			log_info(logger,"----------------FINALIZA WRITE----------------\n");
 		}
-
-int buscarDireccionFisica(int direccionLogica){
-	calculosDireccionLogica(direccionLogica);
-	int marco = chequearMarcoEnTLB(numeroDePagina);
-
-	if (marco == -1){
-		marco = accederAMemoria(marco);
-	}
-
-	return marco;
-
-}
-
-int chequearMarcoEnTLB(int numeroDePagina){
-	entradaTLB* unaEntradaTLB = malloc(sizeof(entradaTLB));
-
-	for(int i=0;i < list_size(tlb);i++){
-		unaEntradaTLB = list_get(tlb,i);
-
-			if(unaEntradaTLB->nroDePagina == numeroDePagina){
-				unaEntradaTLB->ultimaReferencia = time(NULL);// se referencio a esa pagina
-				return unaEntradaTLB->nroDeMarco; // se puede almacenar este valor en una variable y retornarlo fuera del for
-			}
-	}
-	//free(unaEntradaTLB);
-	return -1;
-}
 
 
 int accederAMemoria(int marco){
@@ -405,6 +424,10 @@ int accederAMemoria(int marco){
 }
 */
 
+//void agregarEntradaATLB(marco,numeroDePagina){//TO-DO
+//
+//}
+
 
 void leerTamanioDePaginaYCantidadDeEntradas(t_list* listaQueContieneTamanioDePagYEntradas){
 	log_info(logger, "Me llegaron los siguientes valores:");
@@ -419,7 +442,6 @@ void leerTamanioDePaginaYCantidadDeEntradas(t_list* listaQueContieneTamanioDePag
 //-------------------------FUNCIONES TLB
 //Lista de entradas de TLB
 t_list* inicializarTLB(){
-
 	tlb = list_create();
 	return tlb;
 }

@@ -1,7 +1,7 @@
 #include "funcionesMemoria.h"
 
 int conexionConCpu(void){
-
+	static pthread_mutex_t mutexMemoriaData;
 	int server_fd = iniciar_servidor(IP_MEMORIA,PUERTO_MEMORIA,"Cpu"); // tendria que estar comentado porque viene despues de coenxion con kernel
 
 	log_info(logger, "Memoria lista para recibir a Cpu");
@@ -15,8 +15,9 @@ int conexionConCpu(void){
 
 	//int a = 1;
 	while(1) {
+		pthread_mutex_lock(&mutexMemoriaData);
 		int cod_op = recibir_operacion(clienteCpu);
-		//pthread_mutex_lock(&mutexMemoriaData);
+
 
 		sleep(retardoMemoria/1000); //lo que se tarda en acceder a memoria
 		//log_info(logger,"Accediendo a memoria espere %d segundos\n",retardoMemoria/1000);
@@ -108,7 +109,7 @@ int conexionConCpu(void){
 				break;
 		}
 
-		// pthread_mutex_unlock(&mutexMemoriaData);
+		 pthread_mutex_unlock(&mutexMemoriaData);
 	}
 	return EXIT_SUCCESS;
 }
