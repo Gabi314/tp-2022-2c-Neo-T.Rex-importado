@@ -1,7 +1,7 @@
 #ifndef UTILS_H_
 #define UTILS_H_
 
-#include <stdbool.h>
+
 #include <shared/hello.h>
 #include<stdbool.h>
 
@@ -25,30 +25,8 @@ typedef struct
 	int DX;
 } t_registros;
 
-
-// En principio, no hace falta ------------------------------------
-typedef struct {
-	char* dispositivo;
-	long tiempo;
-	t_queue* cola_procesos;
-	struct t_elem_disp* next;
-} t_elem_disp;
-// En principio, no hace falta ------------------------------------
-
-typedef struct
-{
-	char* identificador;
-	int parametros[2];
-} instruccion;
-
 typedef enum estado { NEW, READY, BLOCKED, EXEC, TERMINATED } t_estado;
-
-typedef struct
-{
-	int numeroSegmento;//revisar
-	int tamanioSegmento;
-	int numeroTablaPaginas;
-}entradaTablaSegmento;
+typedef enum algoritmo { FIFO, RR } t_algoritmo_pcb;
 
 typedef struct
 {
@@ -59,16 +37,58 @@ typedef struct
 	t_list* tablaSegmentos;
 	//int socket;
 	t_estado estado;
+	t_algoritmo_pcb algoritmoActual;
 } t_pcb;
+
+typedef struct
+{
+	t_pcb* pcb;
+	int registro;
+} t_info_teclado;
+
+typedef struct {
+	t_pcb* pcb;
+	int registro;
+} t_info_pantalla;
+
+
+
+// En principio, no hace falta ------------------------------------
+typedef struct {
+	char* dispositivo;
+	int tiempo;
+	t_queue* cola_procesos;
+	t_queue* cola_UTs;
+	sem_t semaforo;
+
+} t_elem_disp;
+// En principio, no hace falta ------------------------------------
+
+typedef struct
+{
+	char* identificador;
+	int parametros[2];
+} instruccion;
+
+
+
+typedef struct
+{
+	int numeroSegmento;//revisar
+	int tamanioSegmento;
+	int numeroTablaPaginas;
+}entradaTablaSegmento;
+
+
 
 extern int socketServidor;
 
 t_list* recibir_paquete_instrucciones(int);
 
 t_list * inicializar_tabla_segmentos(int);
-void inicializar_registros(int v[4]);
+void inicializar_registros(t_registros registros);
 
-void enviSar_entero(int valor, int socket_cliente, int cod_op);
+void enviar_entero(int valor, int socket_cliente, int cod_op);
 void recibir_consola(int);
 void atender_consola(int);
 void inicializar_configuraciones(char* unaConfig);
@@ -76,6 +96,44 @@ void inicializar_listas_y_colas();
 void inicializar_lista_dispositivos();
 void iterator(instruccion*);
 int conexionConConsola();
+
+
+int get_identificador();
+t_pcb* recibir_pcb(int socket_cliente);
+
+void inicializar_configuraciones(char* unaConfig);
+void inicializar_listas_y_colas();
+void inicializar_lista_dispositivos();
+void inicializar_colas();
+void inicializar_semaforos();
+void levantar_hilo_dispositivo(t_elem_disp*);
+
+void iterator(instruccion*);
+
+int recibir_operacion(int);
+int iniciar_servidor(void);
+t_pcb * conexionConConsola();
+int conexionConCpu(t_pcb * PCB);
+
+void agregarANew(t_pcb* proceso);
+t_pcb* sacarDeNew();
+
+t_pcb* obtenerSiguienteDeReady();
+t_pcb* obtenerSiguienteFIFO();
+t_pcb* obtenerSiguienteRR();
+void ejecutar(t_pcb* proceso);
+
+void recibir_consola(int * servidor) ;
+void atender_consola(int * nuevo_cliente);
+void asignar_memoria();
+void readyAExe();
+void atender_interrupcion_de_ejecucion();
+void atender_IO_teclado(t_info_teclado * info);
+void atender_IO_pantalla(t_info_pantalla * info);
+void atender_IO_generico(t_elem_disp*);
+void controlar_quantum();
+void atender_page_fault(t_pcb* pcb);
+
 
 extern char * ipMemoria;
 extern char * puertoMemoria;
@@ -98,6 +156,33 @@ extern int tamanioTotalIdentificadores;
 extern int contadorInstrucciones;
 extern int contadorSegmentos;
 extern int desplazamiento;
+
+
+extern t_queue* colaNew;
+extern t_queue* colaReadyFIFO;
+extern t_queue* colaReadyRR;
+//extern t_queue* colaBlockedPantalla; No hacen falta, cada consola tiene su pantalla y teclado
+//extern t_queue* colaBlockedTeclado;
+extern t_list* listaDeColasDispositivos;
+
+extern t_pcb* pcbTeclado;
+extern int registroTeclado;
+extern t_pcb* pcbPantalla;
+extern int registroPantalla;
+
+extern int identificadores_pcb;
+
+extern pthread_t hiloQuantumRR;
+
+extern sem_t kernelSinFinalizar;
+extern sem_t gradoDeMultiprogramacion;
+extern sem_t cpuDisponible;
+extern sem_t pcbEnNew;
+extern sem_t pcbEnReady;
+extern pthread_mutex_t mutexNew;
+extern pthread_mutex_t obtenerProceso;
+extern pthread_mutex_t mutexPantalla;
+extern pthread_mutex_t mutexTeclado;
 
 void obtenerTamanioIdentificadores(instruccion*);
 void obtenerCantidadDeSegmentos(entradaTablaSegmento*);

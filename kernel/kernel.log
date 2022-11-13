@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 [INFO] 22:31:13:492 KERNEL/(5102:5102): Iniciando conexion con consola
 [INFO] 22:31:13:493 KERNEL/(5102:5102): Kernel listo para recibir a consola
 [INFO] 22:31:17:338 KERNEL/(5102:5102): Se conecto la consola!
@@ -2710,3 +2711,758 @@
 [INFO] 22:19:29:596 KERNEL/(14214:14214): Conexion con interrupt establecida
 [INFO] 22:19:29:597 KERNEL/(14214:14214): cont seg: 1
 [INFO] 22:19:29:597 KERNEL/(14214:14214): Interrupcion enviada
+=======
+[ERROR] 20:00:49:302 KERNEL/(1855:1855): Falta un parametro
+[INFO] 20:01:45:262 KERNEL/(1881:1881): Iniciando conexion con consola
+[INFO] 20:01:45:262 KERNEL/(1881:1881): Kernel listo para recibir a consola
+[INFO] 20:02:31:971 KERNEL/(1917:1917): Iniciando conexion con consola
+[INFO] 20:02:31:971 KERNEL/(1917:1917): Kernel listo para recibir a consola
+[INFO] 20:04:49:693 KERNEL/(2322:2322): Iniciando conexion con consola
+[INFO] 20:04:49:693 KERNEL/(2322:2322): Kernel listo para recibir a consola
+[INFO] 20:04:52:741 KERNEL/(2338:2338): Iniciando conexion con consola
+[INFO] 20:04:52:755 KERNEL/(2338:2338): Kernel listo para recibir a consola
+[INFO] 20:05:03:731 KERNEL/(2479:2479): Iniciando conexion con consola
+[INFO] 20:05:03:732 KERNEL/(2479:2479): Kernel listo para recibir a consola
+[INFO] 20:05:30:388 KERNEL/(2732:2732): Iniciando conexion con consola
+[INFO] 20:05:30:389 KERNEL/(2732:2732): Kernel listo para recibir a consola
+[INFO] 20:06:40:606 KERNEL/(2800:2800): Iniciando conexion con consola
+[INFO] 20:06:40:607 KERNEL/(2800:2800): Kernel listo para recibir a consola
+[INFO] 20:06:47:608 KERNEL/(2732:2732): Se conecto la consola!
+[INFO] 20:06:47:608 KERNEL/(2732:2732): El tamanio del primer segmento es: 32
+[ERROR] 20:06:47:609 KERNEL/(2732:2732): La consola se desconecto. Finalizando Kernel
+[INFO] 20:38:33:158 KERNEL/(3868:3868): Iniciando conexion con consola
+[INFO] 20:38:33:162 KERNEL/(3868:3868): Kernel listo para recibir a consola
+[INFO] 20:38:36:741 KERNEL/(3887:3887): Iniciando conexion con consola
+[INFO] 20:38:36:748 KERNEL/(3887:3887): Kernel listo para recibir a consola
+[INFO] 20:38:43:718 KERNEL/(3868:3868): Se conecto la consola!
+[INFO] 20:38:43:718 KERNEL/(3868:3868): El tamanio del primer segmento es: 32
+[ERROR] 20:38:43:978 KERNEL/(3868:3868): La consola se desconecto. Finalizando Kernel
+[INFO] 20:39:03:650 KERNEL/(3953:3953): Iniciando conexion con consola
+[INFO] 20:39:03:650 KERNEL/(3953:3953): Kernel listo para recibir a consola
+[INFO] 20:39:08:737 KERNEL/(3953:3953): Se conecto la consola!
+[INFO] 20:39:08:737 KERNEL/(3953:3953): El tamanio del primer segmento es: 32
+[ERROR] 20:39:08:979 KERNEL/(3953:3953): La consola se desconecto. Finalizando Kernel
+[INFO] 20:39:50:571 KERNEL/(3990:3990): Iniciando conexion con consola
+[INFO] 20:39:50:573 KERNEL/(3990:3990): Kernel listo para recibir a consola
+[INFO] 20:39:54:965 KERNEL/(3990:3990): Se conecto la consola!
+[INFO] 20:39:54:966 KERNEL/(3990:3990): El tamanio del primer segmento es: 32
+[ERROR] 20:39:54:967 KERNEL/(3990:3990): La consola se desconecto. Finalizando Kernel
+[INFO] 20:43:45:907 KERNEL/(4069:4069): Iniciando conexion con consola
+[INFO] 20:43:45:908 KERNEL/(4069:4069): Kernel listo para recibir a consola
+[INFO] 20:43:49:234 KERNEL/(4086:4086): Iniciando conexion con consola
+[INFO] 20:43:49:234 KERNEL/(4086:4086): Kernel listo para recibir a consola
+[INFO] 20:43:56:357 KERNEL/(4108:4108): Iniciando conexion con consola
+[INFO] 20:43:56:365 KERNEL/(4108:4108): Kernel listo para recibir a consola
+[INFO] 20:43:58:634 KERNEL/(4108:4108): Se conecto la consola!
+[INFO] 20:43:58:635 KERNEL/(4108:4108): El tamanio del primer segmento es: 32
+[ERROR] 20:43:58:635 KERNEL/(4108:4108): La consola se desconecto. Finalizando Kernel
+[INFO] 20:44:25:685 KERNEL/(4192:4192): Iniciando conexion con consola
+[INFO] 20:44:25:686 KERNEL/(4192:4192): Kernel listo para recibir a consola
+[INFO] 20:44:29:359 KERNEL/(4192:4192): Se conecto la consola!
+[INFO] 20:44:29:359 KERNEL/(4192:4192): El tamanio del primer segmento es: 32
+[ERROR] 20:44:29:359 KERNEL/(4192:4192): La consola se desconecto. Finalizando Kernel
+[INFO] 21:20:54:699 KERNEL/(6226:6226): Iniciando conexion con consola
+[INFO] 21:20:54:699 KERNEL/(6226:6226): Kernel listo para recibir a consola
+[INFO] 21:20:58:741 KERNEL/(6226:6226): Se conecto la consola!
+[INFO] 21:20:58:741 KERNEL/(6226:6226): El tamanio del primer segmento es: 32
+[INFO] 21:20:58:741 KERNEL/(6226:6226): me llegaron las instrucciones
+[INFO] 21:30:02:995 KERNEL/(6574:6574): Iniciando conexion con consola
+[INFO] 21:30:02:995 KERNEL/(6574:6574): Kernel listo para recibir a consola
+[INFO] 21:30:06:075 KERNEL/(6574:6574): Se conecto la consola!
+[INFO] 21:30:06:076 KERNEL/(6574:6574): El tamanio del primer segmento es: 32
+[INFO] 21:30:06:076 KERNEL/(6574:6574): me llegaron las instrucciones
+[INFO] 21:32:31:758 KERNEL/(6820:6820): Iniciando conexion con consola
+[INFO] 21:32:31:758 KERNEL/(6820:6820): Kernel listo para recibir a consola
+[INFO] 21:32:35:771 KERNEL/(6820:6820): Se conecto la consola!
+[INFO] 21:32:35:771 KERNEL/(6820:6820): El tamanio del primer segmento es: 32
+[INFO] 21:32:35:771 KERNEL/(6820:6820): me llegaron las instrucciones
+[INFO] 21:33:46:095 KERNEL/(6878:6878): Iniciando conexion con consola
+[INFO] 21:33:55:396 KERNEL/(6878:6878): Kernel listo para recibir a consola
+[INFO] 21:34:25:538 KERNEL/(6878:6878): Se conecto la consola!
+[INFO] 21:34:38:535 KERNEL/(6878:6878): El tamanio del primer segmento es: 32
+[INFO] 21:34:43:043 KERNEL/(6878:6878): me llegaron las instrucciones
+[INFO] 21:36:33:767 KERNEL/(7006:7006): Iniciando conexion con consola
+[INFO] 21:36:41:591 KERNEL/(7006:7006): Kernel listo para recibir a consola
+[INFO] 21:36:51:629 KERNEL/(7006:7006): Se conecto la consola!
+[INFO] 21:37:05:405 KERNEL/(7006:7006): El tamanio del primer segmento es: 32
+[INFO] 21:38:06:999 KERNEL/(7092:7092): Iniciando conexion con consola
+[INFO] 21:38:12:837 KERNEL/(7092:7092): Kernel listo para recibir a consola
+[INFO] 21:38:17:682 KERNEL/(7092:7092): Se conecto la consola!
+[INFO] 21:38:20:427 KERNEL/(7092:7092): El tamanio del primer segmento es: 32
+[INFO] 21:45:33:210 KERNEL/(7299:7299): Iniciando conexion con consola
+[INFO] 21:45:33:210 KERNEL/(7299:7299): Kernel listo para recibir a consola
+[INFO] 21:45:36:319 KERNEL/(7299:7299): Se conecto la consola!
+[INFO] 21:45:36:319 KERNEL/(7299:7299): El tamanio del primer segmento es: 32
+[ERROR] 21:45:36:319 KERNEL/(7299:7299): La consola se desconecto. Finalizando Kernel
+[INFO] 21:47:53:388 KERNEL/(7378:7378): Iniciando conexion con consola
+[INFO] 21:47:53:389 KERNEL/(7378:7378): Kernel listo para recibir a consola
+[INFO] 21:48:09:808 KERNEL/(7378:7378): Se conecto la consola!
+[INFO] 21:48:10:259 KERNEL/(7378:7378): El tamanio del primer segmento es: 32
+[INFO] 21:48:46:958 KERNEL/(7378:7378): me llegaron las instrucciones
+[INFO] 21:52:52:814 KERNEL/(7618:7618): Iniciando conexion con consola
+[INFO] 21:52:52:814 KERNEL/(7618:7618): Kernel listo para recibir a consola
+[INFO] 21:52:55:905 KERNEL/(7618:7618): Se conecto la consola!
+[INFO] 21:52:55:905 KERNEL/(7618:7618): El tamanio del primer segmento es: 32
+[INFO] 21:52:55:906 KERNEL/(7618:7618): me llegaron las instrucciones
+[INFO] 22:19:06:643 KERNEL/(7750:7750): Iniciando conexion con consola
+[INFO] 22:19:06:644 KERNEL/(7750:7750): Kernel listo para recibir a consola
+[INFO] 22:19:09:100 KERNEL/(7750:7750): Se conecto la consola!
+[INFO] 22:19:09:100 KERNEL/(7750:7750): El tamanio del primer segmento es: 32
+[INFO] 22:19:09:100 KERNEL/(7750:7750): me llegaron las instrucciones
+[INFO] 22:20:56:519 KERNEL/(7949:7949): Iniciando conexion con consola
+[INFO] 22:20:56:519 KERNEL/(7949:7949): Kernel listo para recibir a consola
+[INFO] 22:20:58:338 KERNEL/(7962:7962): Iniciando conexion con consola
+[INFO] 22:20:58:339 KERNEL/(7962:7962): Kernel listo para recibir a consola
+[INFO] 22:21:12:804 KERNEL/(8025:8025): Iniciando conexion con consola
+[INFO] 22:21:12:805 KERNEL/(8025:8025): Kernel listo para recibir a consola
+[INFO] 22:21:14:261 KERNEL/(8025:8025): Se conecto la consola!
+[INFO] 22:21:14:263 KERNEL/(8025:8025): El tamanio del primer segmento es: 32
+[INFO] 22:21:14:263 KERNEL/(8025:8025): me llegaron las instrucciones
+[INFO] 22:24:34:861 KERNEL/(8143:8143): Iniciando conexion con consola
+[INFO] 22:24:34:861 KERNEL/(8143:8143): Kernel listo para recibir a consola
+[INFO] 22:24:42:833 KERNEL/(8143:8143): Se conecto la consola!
+[INFO] 22:24:46:963 KERNEL/(8143:8143): El tamanio del primer segmento es: 32
+[ERROR] 22:25:14:333 KERNEL/(8143:8143): La consola se desconecto. Finalizando Kernel
+[INFO] 22:25:27:204 KERNEL/(8221:8221): Iniciando conexion con consola
+[INFO] 22:25:27:207 KERNEL/(8221:8221): Kernel listo para recibir a consola
+[INFO] 22:25:33:853 KERNEL/(8221:8221): Se conecto la consola!
+[INFO] 22:25:34:298 KERNEL/(8221:8221): El tamanio del primer segmento es: 32
+[ERROR] 22:25:46:957 KERNEL/(8221:8221): La consola se desconecto. Finalizando Kernel
+[INFO] 22:25:58:871 KERNEL/(8290:8290): Iniciando conexion con consola
+[INFO] 22:25:58:874 KERNEL/(8290:8290): Kernel listo para recibir a consola
+[INFO] 22:26:05:296 KERNEL/(8290:8290): Se conecto la consola!
+[INFO] 22:26:06:201 KERNEL/(8290:8290): El tamanio del primer segmento es: 32
+[INFO] 22:26:09:874 KERNEL/(8290:8290): me llegaron las instrucciones
+[INFO] 22:26:41:386 KERNEL/(8384:8384): Iniciando conexion con consola
+[INFO] 22:26:41:386 KERNEL/(8384:8384): Kernel listo para recibir a consola
+[INFO] 22:27:05:267 KERNEL/(8416:8416): Iniciando conexion con consola
+[INFO] 22:27:08:847 KERNEL/(8416:8416): Kernel listo para recibir a consola
+[INFO] 22:30:59:781 KERNEL/(8493:8493): Iniciando conexion con consola
+[INFO] 22:31:05:971 KERNEL/(8493:8493): Kernel listo para recibir a consola
+[INFO] 22:31:18:895 KERNEL/(8493:8493): Se conecto la consola!
+[INFO] 22:31:25:325 KERNEL/(8493:8493): El tamanio del primer segmento es: 32
+[INFO] 22:36:35:246 KERNEL/(8493:8493): me llegaron las instrucciones
+[INFO] 22:37:25:531 KERNEL/(8877:8877): Iniciando conexion con consola
+[INFO] 22:37:25:532 KERNEL/(8877:8877): Kernel listo para recibir a consola
+[INFO] 22:37:28:505 KERNEL/(8877:8877): Se conecto la consola!
+[INFO] 22:37:28:505 KERNEL/(8877:8877): El tamanio del primer segmento es: 32
+[INFO] 22:37:28:505 KERNEL/(8877:8877): me llegaron las instrucciones
+[INFO] 22:41:02:256 KERNEL/(9025:9025): Iniciando conexion con consola
+[INFO] 22:41:02:256 KERNEL/(9025:9025): Kernel listo para recibir a consola
+[INFO] 22:41:04:231 KERNEL/(9044:9044): Iniciando conexion con consola
+[INFO] 22:41:04:234 KERNEL/(9044:9044): Kernel listo para recibir a consola
+[INFO] 22:41:13:419 KERNEL/(9060:9060): Iniciando conexion con consola
+[INFO] 22:41:13:419 KERNEL/(9060:9060): Kernel listo para recibir a consola
+[INFO] 22:41:15:728 KERNEL/(9060:9060): Se conecto la consola!
+[INFO] 22:41:15:728 KERNEL/(9060:9060): El tamanio del primer segmento es: 32
+[INFO] 22:41:15:729 KERNEL/(9060:9060): me llegaron las instrucciones
+[INFO] 22:41:15:729 KERNEL/(9060:9060): me llego SET 
+[ERROR] 22:41:15:729 KERNEL/(9060:9060): La consola se desconecto. Finalizando Kernel
+[INFO] 22:41:54:361 KERNEL/(9128:9128): Iniciando conexion con consola
+[INFO] 22:41:54:368 KERNEL/(9128:9128): Kernel listo para recibir a consola
+[INFO] 22:41:56:176 KERNEL/(9146:9146): Iniciando conexion con consola
+[INFO] 22:41:56:182 KERNEL/(9146:9146): Kernel listo para recibir a consola
+[INFO] 22:42:02:515 KERNEL/(9167:9167): Iniciando conexion con consola
+[INFO] 22:42:02:516 KERNEL/(9167:9167): Kernel listo para recibir a consola
+[INFO] 22:42:04:072 KERNEL/(9167:9167): Se conecto la consola!
+[INFO] 22:42:04:072 KERNEL/(9167:9167): El tamanio del primer segmento es: 32
+[INFO] 22:42:04:072 KERNEL/(9167:9167): me llegaron las instrucciones
+[INFO] 22:42:04:072 KERNEL/(9167:9167): SET
+[INFO] 22:42:04:072 KERNEL/(9167:9167): ADD
+[INFO] 22:42:04:072 KERNEL/(9167:9167): MOV_IN
+[INFO] 22:42:04:072 KERNEL/(9167:9167): MOV_OUT
+[INFO] 22:42:04:072 KERNEL/(9167:9167): I/O
+[INFO] 22:42:04:072 KERNEL/(9167:9167): EXIT
+[ERROR] 22:42:04:073 KERNEL/(9167:9167): La consola se desconecto. Finalizando Kernel
+[INFO] 22:42:55:312 KERNEL/(9223:9223): Iniciando conexion con consola
+[INFO] 22:42:55:319 KERNEL/(9223:9223): Kernel listo para recibir a consola
+[INFO] 22:42:56:735 KERNEL/(9223:9223): Se conecto la consola!
+[INFO] 22:42:56:735 KERNEL/(9223:9223): El tamanio del primer segmento es: 32
+[INFO] 22:42:56:735 KERNEL/(9223:9223): me llegaron las instrucciones
+[INFO] 22:42:56:735 KERNEL/(9223:9223): SET
+[INFO] 22:42:56:736 KERNEL/(9223:9223): ADD
+[INFO] 22:42:56:736 KERNEL/(9223:9223): MOV_IN
+[INFO] 22:42:56:736 KERNEL/(9223:9223): MOV_OUT
+[INFO] 22:42:56:736 KERNEL/(9223:9223): I/O
+[INFO] 22:42:56:736 KERNEL/(9223:9223): EXIT
+[ERROR] 22:42:56:736 KERNEL/(9223:9223): La consola se desconecto. Finalizando Kernel
+[INFO] 22:44:02:586 KERNEL/(9301:9301): Iniciando conexion con consola
+[INFO] 22:44:02:589 KERNEL/(9301:9301): Kernel listo para recibir a consola
+[INFO] 22:44:05:016 KERNEL/(9301:9301): Se conecto la consola!
+[INFO] 22:44:05:016 KERNEL/(9301:9301): El tamanio del primer segmento es: 32
+[INFO] 22:44:05:016 KERNEL/(9301:9301): me llegaron las instrucciones
+[INFO] 22:44:05:016 KERNEL/(9301:9301): SET
+[INFO] 22:44:05:016 KERNEL/(9301:9301): ADD
+[INFO] 22:44:05:016 KERNEL/(9301:9301): MOV_IN
+[INFO] 22:44:05:016 KERNEL/(9301:9301): MOV_OUT
+[INFO] 22:44:05:016 KERNEL/(9301:9301): I/O
+[INFO] 22:44:05:016 KERNEL/(9301:9301): EXIT
+[ERROR] 22:44:05:016 KERNEL/(9301:9301): La consola se desconecto. Finalizando Kernel
+[INFO] 22:52:10:708 KERNEL/(9700:9700): Iniciando conexion con consola
+[INFO] 22:52:10:708 KERNEL/(9700:9700): Kernel listo para recibir a consola
+[INFO] 22:52:13:502 KERNEL/(9700:9700): Se conecto la consola!
+[INFO] 22:52:13:502 KERNEL/(9700:9700): El tamanio del primer segmento es: 32
+[INFO] 22:52:13:503 KERNEL/(9700:9700): me llegaron las instrucciones
+[INFO] 22:52:13:503 KERNEL/(9700:9700): SET
+[INFO] 22:52:13:503 KERNEL/(9700:9700): ADD
+[INFO] 22:52:13:503 KERNEL/(9700:9700): MOV_IN
+[INFO] 22:52:13:503 KERNEL/(9700:9700): MOV_OUT
+[INFO] 22:52:13:503 KERNEL/(9700:9700): I/O
+[INFO] 22:52:13:503 KERNEL/(9700:9700): EXIT
+[ERROR] 22:52:13:503 KERNEL/(9700:9700): La consola se desconecto. Finalizando Kernel
+[INFO] 22:54:43:562 KERNEL/(9865:9865): Iniciando conexion con consola
+[INFO] 22:54:43:563 KERNEL/(9865:9865): Kernel listo para recibir a consola
+[INFO] 22:54:46:064 KERNEL/(9865:9865): Se conecto la consola!
+[INFO] 22:54:46:064 KERNEL/(9865:9865): El tamanio del primer segmento es: 32
+[INFO] 22:54:46:064 KERNEL/(9865:9865): me llegaron las instrucciones
+[INFO] 22:54:46:064 KERNEL/(9865:9865): SET
+[INFO] 22:54:46:064 KERNEL/(9865:9865): ADD
+[INFO] 22:54:46:064 KERNEL/(9865:9865): MOV_IN
+[INFO] 22:54:46:064 KERNEL/(9865:9865): MOV_OUT
+[INFO] 22:54:46:064 KERNEL/(9865:9865): I/O
+[INFO] 22:54:46:064 KERNEL/(9865:9865): EXIT
+[ERROR] 22:54:46:065 KERNEL/(9865:9865): La consola se desconecto. Finalizando Kernel
+[INFO] 22:58:51:111 KERNEL/(9990:9990): Iniciando conexion con consola
+[INFO] 22:58:51:111 KERNEL/(9990:9990): Kernel listo para recibir a consola
+[INFO] 22:58:53:759 KERNEL/(9990:9990): Se conecto la consola!
+[INFO] 22:58:53:759 KERNEL/(9990:9990): El tamanio del primer segmento es: 32
+[INFO] 22:58:53:759 KERNEL/(9990:9990): me llegaron las instrucciones
+[INFO] 22:58:53:759 KERNEL/(9990:9990): SET
+[INFO] 22:58:53:759 KERNEL/(9990:9990): ADD
+[INFO] 22:58:53:759 KERNEL/(9990:9990): MOV_IN
+[INFO] 22:58:53:759 KERNEL/(9990:9990): MOV_OUT
+[INFO] 22:58:53:759 KERNEL/(9990:9990): I/O
+[INFO] 22:58:53:759 KERNEL/(9990:9990): EXIT
+[ERROR] 22:58:53:759 KERNEL/(9990:9990): La consola se desconecto. Finalizando Kernel
+[INFO] 23:07:06:974 KERNEL/(10568:10568): Iniciando conexion con consola
+[INFO] 23:07:06:978 KERNEL/(10568:10568): Kernel listo para recibir a consola
+[INFO] 23:07:09:088 KERNEL/(10579:10579): Iniciando conexion con consola
+[INFO] 23:07:09:088 KERNEL/(10579:10579): Kernel listo para recibir a consola
+[INFO] 23:07:15:679 KERNEL/(10602:10602): Iniciando conexion con consola
+[INFO] 23:07:15:679 KERNEL/(10602:10602): Kernel listo para recibir a consola
+[INFO] 23:07:17:920 KERNEL/(10602:10602): Se conecto la consola!
+[INFO] 23:07:17:920 KERNEL/(10602:10602): El tamanio del primer segmento es: 32
+[INFO] 23:07:17:920 KERNEL/(10602:10602): me llegaron las instrucciones
+[INFO] 23:07:17:920 KERNEL/(10602:10602): SET
+[INFO] 23:07:17:920 KERNEL/(10602:10602): ADD
+[INFO] 23:07:17:920 KERNEL/(10602:10602): MOV_IN
+[INFO] 23:07:17:920 KERNEL/(10602:10602): MOV_OUT
+[INFO] 23:07:17:920 KERNEL/(10602:10602): I/O
+[INFO] 23:07:17:920 KERNEL/(10602:10602): EXIT
+[ERROR] 23:07:17:920 KERNEL/(10602:10602): La consola se desconecto. Finalizando Kernel
+[INFO] 23:12:53:795 KERNEL/(10947:10947): Iniciando conexion con consola
+[INFO] 23:12:53:795 KERNEL/(10947:10947): Kernel listo para recibir a consola
+[INFO] 23:12:57:026 KERNEL/(10947:10947): Se conecto la consola!
+[INFO] 23:12:57:026 KERNEL/(10947:10947): El tamanio del primer segmento es: 32
+[INFO] 23:12:57:026 KERNEL/(10947:10947): me llegaron las instrucciones
+[INFO] 23:12:57:026 KERNEL/(10947:10947): SET
+[INFO] 23:12:57:026 KERNEL/(10947:10947): ADD
+[INFO] 23:12:57:026 KERNEL/(10947:10947): MOV_IN
+[INFO] 23:12:57:026 KERNEL/(10947:10947): MOV_OUT
+[INFO] 23:12:57:026 KERNEL/(10947:10947): I/O
+[INFO] 23:12:57:026 KERNEL/(10947:10947): EXIT
+[ERROR] 23:12:57:026 KERNEL/(10947:10947): La consola se desconecto. Finalizando Kernel
+[INFO] 12:30:33:829 KERNEL/(5316:5316): Iniciando conexion con consola
+[INFO] 12:30:33:844 KERNEL/(5316:5316): Kernel listo para recibir a consola
+[INFO] 12:30:43:615 KERNEL/(5316:5316): Se conecto la consola!
+[INFO] 12:30:43:615 KERNEL/(5316:5316): El tamanio del primer segmento es: 32
+[INFO] 12:30:43:618 KERNEL/(5316:5316): me llegaron las instrucciones
+[INFO] 12:30:43:618 KERNEL/(5316:5316): SET
+[INFO] 12:30:43:618 KERNEL/(5316:5316): ADD
+[INFO] 12:30:43:618 KERNEL/(5316:5316): MOV_IN
+[INFO] 12:30:43:619 KERNEL/(5316:5316): MOV_OUT
+[INFO] 12:30:43:619 KERNEL/(5316:5316): I/O
+[INFO] 12:30:43:619 KERNEL/(5316:5316): EXIT
+[ERROR] 12:30:43:619 KERNEL/(5316:5316): La consola se desconecto. Finalizando Kernel
+[ERROR] 20:18:59:252 KERNEL/(3312:3312): Falta un parametro
+[INFO] 20:21:33:361 KERNEL/(3389:3389): hola
+[INFO] 20:22:02:953 KERNEL/(3436:3436): hola
+[INFO] 20:23:01:286 KERNEL/(3488:3488): Iniciando conexion con consola
+[INFO] 20:23:01:296 KERNEL/(3488:3488): Kernel listo para recibir a consola
+[INFO] 20:27:24:982 KERNEL/(3615:3615): Iniciando conexion con consola
+[INFO] 20:27:24:984 KERNEL/(3615:3615): Kernel listo para recibir a consola
+[INFO] 20:28:24:213 KERNEL/(3632:3632): Iniciando conexion con consola
+[INFO] 20:28:24:220 KERNEL/(3632:3632): Kernel listo para recibir a consola
+[INFO] 20:28:28:382 KERNEL/(3632:3632): Se conecto la consola!
+[INFO] 20:28:28:382 KERNEL/(3632:3632): El tamanio del primer segmento es: 32
+[INFO] 20:28:28:384 KERNEL/(3632:3632): me llegaron las instrucciones
+[INFO] 20:28:28:384 KERNEL/(3632:3632): SET
+[INFO] 20:28:28:384 KERNEL/(3632:3632): ADD
+[INFO] 20:28:28:384 KERNEL/(3632:3632): MOV_IN
+[INFO] 20:28:28:384 KERNEL/(3632:3632): MOV_OUT
+[INFO] 20:28:28:384 KERNEL/(3632:3632): I/O
+[INFO] 20:28:28:384 KERNEL/(3632:3632): EXIT
+[ERROR] 20:28:28:384 KERNEL/(3632:3632): La consola se desconecto. Finalizando Kernel
+[INFO] 21:35:39:032 KERNEL/(4177:4177): Iniciando conexion con consola
+[INFO] 21:35:39:034 KERNEL/(4177:4177): Kernel listo para recibir a consola
+[INFO] 01:45:32:630 KERNEL/(1718:1718): Iniciando conexion con consola
+[INFO] 01:45:32:633 KERNEL/(1718:1718): Kernel listo para recibir a consola
+[INFO] 01:45:36:494 KERNEL/(1718:1718): Se conecto la consola!
+[INFO] 01:45:36:494 KERNEL/(1718:1718): El tamanio del primer segmento es: 32
+[INFO] 01:45:36:495 KERNEL/(1718:1718): me llegaron las instrucciones
+[INFO] 01:45:36:496 KERNEL/(1718:1718): SET
+[INFO] 01:45:36:496 KERNEL/(1718:1718): ADD
+[INFO] 01:45:36:496 KERNEL/(1718:1718): MOV_IN
+[INFO] 01:45:36:496 KERNEL/(1718:1718): MOV_OUT
+[INFO] 01:45:36:496 KERNEL/(1718:1718): I/O
+[INFO] 01:45:36:496 KERNEL/(1718:1718): EXIT
+[ERROR] 01:45:36:496 KERNEL/(1718:1718): La consola se desconecto. Finalizando Kernel
+[INFO] 01:46:44:141 KERNEL/(1827:1827): Iniciando conexion con consola
+[INFO] 01:46:44:143 KERNEL/(1827:1827): Kernel listo para recibir a consola
+[INFO] 01:46:48:946 KERNEL/(1827:1827): Se conecto la consola!
+[INFO] 01:46:48:946 KERNEL/(1827:1827): El tamanio del primer segmento es: 32
+[INFO] 01:46:48:947 KERNEL/(1827:1827): me llegaron las instrucciones
+[INFO] 01:46:48:947 KERNEL/(1827:1827): SET
+[INFO] 01:46:48:947 KERNEL/(1827:1827): ADD
+[INFO] 01:46:48:947 KERNEL/(1827:1827): MOV_IN
+[INFO] 01:46:48:947 KERNEL/(1827:1827): MOV_OUT
+[INFO] 01:46:48:947 KERNEL/(1827:1827): I/O
+[INFO] 01:46:48:947 KERNEL/(1827:1827): EXIT
+[ERROR] 01:46:48:947 KERNEL/(1827:1827): La consola se desconecto. Finalizando Kernel
+[INFO] 02:18:37:914 KERNEL/(2646:2646): Iniciando conexion con consola
+[INFO] 02:18:37:926 KERNEL/(2646:2646): Kernel listo para recibir a consola
+[INFO] 02:18:42:586 KERNEL/(2646:2646): Se conecto la consola!
+[INFO] 02:18:42:586 KERNEL/(2646:2646): El tamanio del primer segmento es: 32
+[INFO] 02:18:42:587 KERNEL/(2646:2646): me llegaron las instrucciones
+[INFO] 02:18:42:587 KERNEL/(2646:2646): SET
+[INFO] 02:18:42:587 KERNEL/(2646:2646): ADD
+[INFO] 02:18:42:587 KERNEL/(2646:2646): MOV_IN
+[INFO] 02:18:42:587 KERNEL/(2646:2646): MOV_OUT
+[INFO] 02:18:42:587 KERNEL/(2646:2646): I/O
+[INFO] 02:18:42:587 KERNEL/(2646:2646): EXIT
+[ERROR] 02:18:42:588 KERNEL/(2646:2646): La consola se desconecto. Finalizando Kernel
+[INFO] 08:28:30:457 KERNEL/(14246:14246): El tamanio de la lista es 8
+[INFO] 08:28:30:458 KERNEL/(14246:14246): Iniciando conexion con consola
+[INFO] 08:28:30:458 KERNEL/(14246:14246): Kernel listo para recibir a consola
+[INFO] 08:28:35:495 KERNEL/(14246:14246): Se conecto la consola!
+[INFO] 08:28:35:495 KERNEL/(14246:14246): El tamanio del primer segmento es: 32
+[INFO] 08:28:35:499 KERNEL/(14246:14246): me llegaron las instrucciones
+[INFO] 08:28:35:499 KERNEL/(14246:14246): SET
+[INFO] 08:28:35:499 KERNEL/(14246:14246): ADD
+[INFO] 08:28:35:499 KERNEL/(14246:14246): MOV_IN
+[INFO] 08:28:35:499 KERNEL/(14246:14246): MOV_OUT
+[INFO] 08:28:35:499 KERNEL/(14246:14246): I/O
+[INFO] 08:28:35:499 KERNEL/(14246:14246): EXIT
+[ERROR] 08:28:35:500 KERNEL/(14246:14246): La consola se desconecto. Finalizando Kernel
+[INFO] 08:29:00:841 KERNEL/(14307:14307): El tamanio de la lista es 8
+[INFO] 08:29:00:843 KERNEL/(14307:14307): Iniciando conexion con consola
+[INFO] 08:29:00:846 KERNEL/(14307:14307): Kernel listo para recibir a consola
+[INFO] 08:29:12:844 KERNEL/(14307:14307): Se conecto la consola!
+[INFO] 08:29:12:844 KERNEL/(14307:14307): El tamanio del primer segmento es: 32
+[INFO] 08:29:12:846 KERNEL/(14307:14307): me llegaron las instrucciones
+[INFO] 08:29:12:846 KERNEL/(14307:14307): SET
+[INFO] 08:29:12:846 KERNEL/(14307:14307): ADD
+[INFO] 08:29:12:846 KERNEL/(14307:14307): MOV_IN
+[INFO] 08:29:12:846 KERNEL/(14307:14307): MOV_OUT
+[INFO] 08:29:12:846 KERNEL/(14307:14307): I/O
+[INFO] 08:29:12:846 KERNEL/(14307:14307): EXIT
+[ERROR] 08:29:12:846 KERNEL/(14307:14307): La consola se desconecto. Finalizando Kernel
+[INFO] 08:31:19:017 KERNEL/(14392:14392): El tamanio de la lista es 864930048
+[INFO] 08:31:19:018 KERNEL/(14392:14392): Iniciando conexion con consola
+[INFO] 08:31:19:018 KERNEL/(14392:14392): Kernel listo para recibir a consola
+[INFO] 08:35:07:318 KERNEL/(14467:14467): El tamanio de la lista es 2
+[INFO] 08:35:07:326 KERNEL/(14467:14467): Iniciando conexion con consola
+[INFO] 08:35:07:326 KERNEL/(14467:14467): Kernel listo para recibir a consola
+[INFO] 08:48:08:758 KERNEL/(14650:14650): Iniciando conexion con consola
+[INFO] 08:48:08:765 KERNEL/(14650:14650): Kernel listo para recibir a consola
+[INFO] 11:46:28:993 KERNEL/(15709:15709): Iniciando conexion con consola
+[INFO] 11:46:29:007 KERNEL/(15709:15709): Kernel listo para recibir a consola
+[INFO] 11:47:48:966 KERNEL/(15771:15771): Iniciando conexion con consola
+[INFO] 11:47:48:971 KERNEL/(15771:15771): Kernel listo para recibir a consola
+[INFO] 11:48:34:262 KERNEL/(15836:15836): Iniciando conexion con consola
+[INFO] 11:48:34:273 KERNEL/(15836:15836): Kernel listo para recibir a consola
+[INFO] 11:48:59:587 KERNEL/(15908:15908): Iniciando conexion con consola
+[INFO] 11:48:59:591 KERNEL/(15908:15908): Kernel listo para recibir a consola
+[INFO] 16:52:02:562 KERNEL/(16873:16873): Iniciando conexion con consola
+[INFO] 16:52:02:567 KERNEL/(16873:16873): Kernel listo para recibir a consola
+[INFO] 17:09:50:929 KERNEL/(17488:17488): Iniciando conexion con consola
+[INFO] 17:09:50:950 KERNEL/(17488:17488): Kernel listo para recibir a consola
+[INFO] 17:10:11:121 KERNEL/(17527:17527): Iniciando conexion con consola
+[INFO] 17:10:11:121 KERNEL/(17527:17527): Kernel listo para recibir a consola
+[INFO] 17:12:44:795 KERNEL/(17637:17637): Iniciando conexion con consola
+[INFO] 17:12:44:801 KERNEL/(17637:17637): Kernel listo para recibir a consola
+[INFO] 02:05:23:923 KERNEL/(2207:2207): Iniciando conexion con consola
+[INFO] 02:05:23:927 KERNEL/(2207:2207): Kernel listo para recibir a consola
+[INFO] 02:05:28:951 KERNEL/(2207:2207): Se conecto la consola!
+[INFO] 02:05:28:951 KERNEL/(2207:2207): El tamanio del primer segmento es: 32
+[INFO] 02:05:28:952 KERNEL/(2207:2207): me llegaron las instrucciones
+[INFO] 02:05:28:953 KERNEL/(2207:2207): SET
+[INFO] 02:05:28:954 KERNEL/(2207:2207): ADD
+[INFO] 02:05:28:954 KERNEL/(2207:2207): MOV_IN
+[INFO] 02:05:28:954 KERNEL/(2207:2207): MOV_OUT
+[INFO] 02:05:28:954 KERNEL/(2207:2207): I/O
+[INFO] 02:05:28:954 KERNEL/(2207:2207): EXIT
+[ERROR] 02:05:28:954 KERNEL/(2207:2207): La consola se desconecto. Finalizando Kernel
+[INFO] 03:04:05:148 KERNEL/(2803:2803): Iniciando conexion con consola
+[INFO] 03:04:05:160 KERNEL/(2803:2803): Kernel listo para recibir a consola
+[INFO] 03:04:10:820 KERNEL/(2803:2803): Se conecto la consola!
+[INFO] 03:04:10:821 KERNEL/(2803:2803): El tamanio del primer segmento es: 32
+[INFO] 03:04:10:822 KERNEL/(2803:2803): me llegaron las instrucciones
+[INFO] 03:04:10:822 KERNEL/(2803:2803): SET
+[INFO] 03:04:10:822 KERNEL/(2803:2803): ADD
+[INFO] 03:04:10:822 KERNEL/(2803:2803): MOV_IN
+[INFO] 03:04:10:822 KERNEL/(2803:2803): MOV_OUT
+[INFO] 03:04:10:822 KERNEL/(2803:2803): I/O
+[INFO] 03:04:10:822 KERNEL/(2803:2803): EXIT
+[ERROR] 03:04:10:822 KERNEL/(2803:2803): La consola se desconecto. Finalizando Kernel
+[INFO] 11:05:14:877 KERNEL/(44378:44378): Iniciando conexion con consola
+[INFO] 11:05:14:880 KERNEL/(44378:44378): Kernel listo para recibir a consola
+[INFO] 11:05:20:430 KERNEL/(44378:44378): Se conecto la consola!
+[INFO] 11:05:20:430 KERNEL/(44378:44378): El tamanio del primer segmento es: 32
+[INFO] 11:05:20:431 KERNEL/(44378:44378): me llegaron las instrucciones
+[INFO] 11:05:20:431 KERNEL/(44378:44378): SET
+[INFO] 11:05:20:431 KERNEL/(44378:44378): ADD
+[INFO] 11:05:20:431 KERNEL/(44378:44378): MOV_IN
+[INFO] 11:05:20:431 KERNEL/(44378:44378): MOV_OUT
+[INFO] 11:05:20:431 KERNEL/(44378:44378): I/O
+[INFO] 11:05:20:431 KERNEL/(44378:44378): EXIT
+[ERROR] 11:05:20:431 KERNEL/(44378:44378): La consola se desconecto. Finalizando Kernel
+[INFO] 12:31:12:280 KERNEL/(44704:44704): Iniciando conexion con consola
+[INFO] 12:31:12:358 KERNEL/(44704:44704): Kernel listo para recibir a consola
+[INFO] 12:31:16:751 KERNEL/(44704:44704): Se conecto la consola!
+[INFO] 12:31:16:751 KERNEL/(44704:44704): El tamanio del primer segmento es: 32
+[INFO] 12:31:16:751 KERNEL/(44704:44704): me llegaron las instrucciones
+[INFO] 12:31:16:751 KERNEL/(44704:44704): SET
+[INFO] 12:31:16:751 KERNEL/(44704:44704): ADD
+[INFO] 12:31:16:751 KERNEL/(44704:44704): MOV_IN
+[INFO] 12:31:16:751 KERNEL/(44704:44704): MOV_OUT
+[INFO] 12:31:16:751 KERNEL/(44704:44704): I/O
+[INFO] 12:31:16:751 KERNEL/(44704:44704): EXIT
+[ERROR] 12:31:16:751 KERNEL/(44704:44704): La consola se desconecto. Finalizando Kernel
+[INFO] 15:06:04:000 KERNEL/(45351:45351): En la lista de dispositivos tenemos los siguientes:
+[INFO] 15:06:04:000 KERNEL/(45351:45351): el dispositivo de posicion 0 se llama DISCO
+[INFO] 15:06:04:000 KERNEL/(45351:45351): el dispositivo de posicion 0 tiene un tiempo de 100
+[INFO] 15:06:04:000 KERNEL/(45351:45351): el dispositivo de posicion 1 se llama IMPRESORA
+[INFO] 15:06:04:000 KERNEL/(45351:45351): el dispositivo de posicion 1 tiene un tiempo de 50000
+[INFO] 15:06:04:000 KERNEL/(45351:45351): Iniciando conexion con consola
+[INFO] 15:06:04:000 KERNEL/(45351:45351): Kernel listo para recibir a consola
+[INFO] 18:14:16:695 KERNEL/(46461:46461): En la lista de dispositivos tenemos los siguientes:
+[INFO] 18:14:16:696 KERNEL/(46461:46461): Iniciando conexion con consola
+[INFO] 18:14:16:696 KERNEL/(46461:46461): Kernel listo para recibir a consola
+[INFO] 18:14:21:874 KERNEL/(46461:46461): Se conecto la consola!
+[INFO] 18:14:21:875 KERNEL/(46461:46461): El tamanio del primer segmento es: 32
+[INFO] 18:14:21:889 KERNEL/(46461:46461): me llegaron las instrucciones
+[INFO] 18:14:21:890 KERNEL/(46461:46461): SET
+[INFO] 18:14:21:890 KERNEL/(46461:46461): ADD
+[INFO] 18:14:21:890 KERNEL/(46461:46461): MOV_IN
+[INFO] 18:14:21:890 KERNEL/(46461:46461): MOV_OUT
+[INFO] 18:14:21:890 KERNEL/(46461:46461): I/O
+[INFO] 18:14:21:891 KERNEL/(46461:46461): EXIT
+[ERROR] 18:14:21:891 KERNEL/(46461:46461): La consola se desconecto. Finalizando Kernel
+[INFO] 18:18:29:505 KERNEL/(46555:46555): En la lista de dispositivos tenemos los siguientes:
+[INFO] 18:18:29:511 KERNEL/(46555:46555): Iniciando conexion con consola
+[INFO] 18:18:29:512 KERNEL/(46555:46555): Kernel listo para recibir a consola
+[INFO] 18:18:33:516 KERNEL/(46555:46555): Se conecto la consola!
+[INFO] 18:18:33:516 KERNEL/(46555:46555): El tamanio del primer segmento es: 32
+[INFO] 18:18:33:517 KERNEL/(46555:46555): me llegaron las instrucciones
+[INFO] 18:18:33:517 KERNEL/(46555:46555): SET
+[INFO] 18:18:33:517 KERNEL/(46555:46555): ADD
+[INFO] 18:18:33:517 KERNEL/(46555:46555): MOV_IN
+[INFO] 18:18:33:517 KERNEL/(46555:46555): MOV_OUT
+[INFO] 18:18:33:517 KERNEL/(46555:46555): I/O
+[INFO] 18:18:33:517 KERNEL/(46555:46555): EXIT
+[ERROR] 18:18:33:517 KERNEL/(46555:46555): La consola se desconecto. Finalizando Kernel
+[INFO] 18:20:31:268 KERNEL/(46632:46632): En la lista de dispositivos tenemos los siguientes:
+[INFO] 18:20:31:268 KERNEL/(46632:46632): Iniciando conexion con consola
+[INFO] 18:20:31:268 KERNEL/(46632:46632): Kernel listo para recibir a consola
+[INFO] 18:20:35:782 KERNEL/(46632:46632): Se conecto la consola!
+[INFO] 18:20:35:782 KERNEL/(46632:46632): El tamanio del primer segmento es: 32
+[INFO] 18:20:35:784 KERNEL/(46632:46632): me llegaron las instrucciones
+[INFO] 18:20:35:784 KERNEL/(46632:46632): SET
+[INFO] 18:20:35:784 KERNEL/(46632:46632): ADD
+[INFO] 18:20:35:784 KERNEL/(46632:46632): MOV_IN
+[INFO] 18:20:35:784 KERNEL/(46632:46632): MOV_OUT
+[INFO] 18:20:35:784 KERNEL/(46632:46632): I/O
+[INFO] 18:20:35:784 KERNEL/(46632:46632): EXIT
+[ERROR] 18:20:36:785 KERNEL/(46632:46632): La consola se desconecto. Finalizando Kernel
+[INFO] 18:25:24:152 KERNEL/(46789:46789): En la lista de dispositivos tenemos los siguientes:
+[INFO] 18:25:24:155 KERNEL/(46789:46789): Iniciando conexion con consola
+[INFO] 18:25:24:156 KERNEL/(46789:46789): Kernel listo para recibir a consola
+[INFO] 18:25:29:747 KERNEL/(46789:46789): Se conecto la consola!
+[INFO] 18:25:29:747 KERNEL/(46789:46789): El tamanio del primer segmento es: 32
+[INFO] 18:25:29:747 KERNEL/(46789:46789): me llegaron las instrucciones
+[INFO] 18:25:29:747 KERNEL/(46789:46789): SET
+[INFO] 18:25:29:747 KERNEL/(46789:46789): ADD
+[INFO] 18:25:29:747 KERNEL/(46789:46789): MOV_IN
+[INFO] 18:25:29:747 KERNEL/(46789:46789): MOV_OUT
+[INFO] 18:25:29:747 KERNEL/(46789:46789): I/O
+[INFO] 18:25:29:747 KERNEL/(46789:46789): EXIT
+[ERROR] 18:25:29:747 KERNEL/(46789:46789): La consola se desconecto. Finalizando Kernel
+[INFO] 18:31:02:110 KERNEL/(46894:46894): En la lista de dispositivos tenemos los siguientes:
+[INFO] 18:31:02:118 KERNEL/(46894:46894): Iniciando conexion con consola
+[INFO] 18:31:02:118 KERNEL/(46894:46894): Kernel listo para recibir a consola
+[INFO] 18:31:06:716 KERNEL/(46894:46894): Se conecto la consola!
+[INFO] 18:31:06:716 KERNEL/(46894:46894): El tamanio del primer segmento es: 32
+[INFO] 18:31:06:716 KERNEL/(46894:46894): me llegaron las instrucciones
+[INFO] 18:31:06:716 KERNEL/(46894:46894): SET
+[INFO] 18:31:06:716 KERNEL/(46894:46894): ADD
+[INFO] 18:31:06:716 KERNEL/(46894:46894): MOV_IN
+[INFO] 18:31:06:716 KERNEL/(46894:46894): MOV_OUT
+[INFO] 18:31:06:716 KERNEL/(46894:46894): I/O
+[INFO] 18:31:06:716 KERNEL/(46894:46894): EXIT
+[INFO] 22:27:57:706 KERNEL/(47491:47491): En la lista de dispositivos tenemos los siguientes:
+[INFO] 22:27:57:706 KERNEL/(47491:47491): Iniciando conexion con consola
+[INFO] 22:27:57:706 KERNEL/(47491:47491): Kernel listo para recibir a consola
+[INFO] 22:28:01:899 KERNEL/(47491:47491): Se conecto la consola!
+[INFO] 22:28:01:900 KERNEL/(47491:47491): El tamanio del primer segmento es: 32
+[INFO] 22:28:01:901 KERNEL/(47491:47491): me llegaron las instrucciones
+[INFO] 22:28:01:901 KERNEL/(47491:47491): SET
+[INFO] 22:28:01:901 KERNEL/(47491:47491): ADD
+[INFO] 22:28:01:901 KERNEL/(47491:47491): MOV_IN
+[INFO] 22:28:01:901 KERNEL/(47491:47491): MOV_OUT
+[INFO] 22:28:01:901 KERNEL/(47491:47491): I/O
+[INFO] 22:28:01:901 KERNEL/(47491:47491): EXIT
+[ERROR] 22:28:44:443 KERNEL/(47491:47491): La consola se desconecto. Finalizando Kernel
+[INFO] 22:30:04:598 KERNEL/(47566:47566): En la lista de dispositivos tenemos los siguientes:
+[INFO] 22:30:04:602 KERNEL/(47566:47566): Iniciando conexion con consola
+[INFO] 22:30:04:602 KERNEL/(47566:47566): Kernel listo para recibir a consola
+[INFO] 22:30:09:127 KERNEL/(47566:47566): Se conecto la consola!
+[INFO] 22:30:09:127 KERNEL/(47566:47566): El tamanio del primer segmento es: 32
+[INFO] 22:30:09:127 KERNEL/(47566:47566): me llegaron las instrucciones
+[INFO] 22:30:09:127 KERNEL/(47566:47566): SET
+[INFO] 22:30:09:127 KERNEL/(47566:47566): ADD
+[INFO] 22:30:09:127 KERNEL/(47566:47566): MOV_IN
+[INFO] 22:30:09:127 KERNEL/(47566:47566): MOV_OUT
+[INFO] 22:30:09:127 KERNEL/(47566:47566): I/O
+[INFO] 22:30:09:127 KERNEL/(47566:47566): EXIT
+[INFO] 22:37:22:844 KERNEL/(47703:47703): En la lista de dispositivos tenemos los siguientes:
+[INFO] 22:37:22:845 KERNEL/(47703:47703): Iniciando conexion con consola
+[INFO] 22:37:22:845 KERNEL/(47703:47703): Kernel listo para recibir a consola
+[INFO] 22:38:23:331 KERNEL/(47786:47786): En la lista de dispositivos tenemos los siguientes:
+[INFO] 22:38:23:334 KERNEL/(47786:47786): Iniciando conexion con consola
+[INFO] 22:38:23:340 KERNEL/(47786:47786): Kernel listo para recibir a consola
+[INFO] 22:38:27:579 KERNEL/(47786:47786): Se conecto la consola!
+[INFO] 22:38:27:580 KERNEL/(47786:47786): El tamanio del primer segmento es: 32
+[INFO] 22:38:27:583 KERNEL/(47786:47786): me llegaron las instrucciones
+[INFO] 22:38:27:583 KERNEL/(47786:47786): SET
+[INFO] 22:38:27:583 KERNEL/(47786:47786): ADD
+[INFO] 22:38:27:583 KERNEL/(47786:47786): MOV_IN
+[INFO] 22:38:27:583 KERNEL/(47786:47786): MOV_OUT
+[INFO] 22:38:27:583 KERNEL/(47786:47786): I/O
+[INFO] 22:38:27:583 KERNEL/(47786:47786): EXIT
+[ERROR] 22:41:38:776 KERNEL/(47786:47786): La consola se desconecto. Finalizando Kernel
+[INFO] 22:55:14:478 KERNEL/(48064:48064): En la lista de dispositivos tenemos los siguientes:
+[INFO] 22:55:14:480 KERNEL/(48064:48064): Iniciando conexion con consola
+[INFO] 22:55:14:480 KERNEL/(48064:48064): Kernel listo para recibir a consola
+[INFO] 22:55:30:499 KERNEL/(48064:48064): Se conecto la consola!
+[INFO] 22:55:30:500 KERNEL/(48064:48064): El tamanio del primer segmento es: 32
+[INFO] 22:55:30:500 KERNEL/(48064:48064): me llegaron las instrucciones
+[INFO] 22:55:30:500 KERNEL/(48064:48064): SET
+[INFO] 22:55:30:500 KERNEL/(48064:48064): ADD
+[INFO] 22:55:30:500 KERNEL/(48064:48064): MOV_IN
+[INFO] 22:55:30:500 KERNEL/(48064:48064): MOV_OUT
+[INFO] 22:55:30:500 KERNEL/(48064:48064): I/O
+[INFO] 22:55:30:500 KERNEL/(48064:48064): EXIT
+[INFO] 22:55:30:504 KERNEL/(48064:48064): Me llego el mensaje Se imprimio el valor del registro
+[INFO] 23:52:27:165 KERNEL/(48715:48715): En la lista de dispositivos tenemos los siguientes:
+[INFO] 23:52:27:196 KERNEL/(48715:48715): Iniciando conexion con consola
+[INFO] 23:52:27:196 KERNEL/(48715:48715): Kernel listo para recibir a consola
+[INFO] 23:52:33:724 KERNEL/(48715:48715): Se conecto la consola!
+[INFO] 23:52:33:724 KERNEL/(48715:48715): El tamanio del primer segmento es: 32
+[INFO] 23:52:33:726 KERNEL/(48715:48715): me llegaron las instrucciones
+[INFO] 23:52:33:726 KERNEL/(48715:48715): SET
+[INFO] 23:52:33:726 KERNEL/(48715:48715): ADD
+[INFO] 23:52:33:726 KERNEL/(48715:48715): MOV_IN
+[INFO] 23:52:33:726 KERNEL/(48715:48715): MOV_OUT
+[INFO] 23:52:33:728 KERNEL/(48715:48715): I/O
+[INFO] 23:52:33:728 KERNEL/(48715:48715): EXIT
+[INFO] 23:52:33:732 KERNEL/(48715:48715): Me llego el mensaje Se imprimio el valor del registro
+[INFO] 23:52:40:055 KERNEL/(48715:48715): Me llego el mensaje Desbloquear proceso. Ya se ingreso un valor por teclado
+[INFO] 23:52:40:055 KERNEL/(48715:48715): [recibir_entero]: se recibio el numero 4
+[INFO] 23:57:29:157 KERNEL/(48908:48908): En la lista de dispositivos tenemos los siguientes:
+[INFO] 23:57:29:159 KERNEL/(48908:48908): Iniciando conexion con consola
+[INFO] 23:57:29:161 KERNEL/(48908:48908): Kernel listo para recibir a consola
+[INFO] 23:57:33:058 KERNEL/(48908:48908): Se conecto la consola!
+[INFO] 23:57:33:058 KERNEL/(48908:48908): El tamanio del primer segmento es: 32
+[INFO] 23:57:33:059 KERNEL/(48908:48908): me llegaron las instrucciones
+[INFO] 23:57:33:059 KERNEL/(48908:48908): SET
+[INFO] 23:57:33:059 KERNEL/(48908:48908): ADD
+[INFO] 23:57:33:059 KERNEL/(48908:48908): MOV_IN
+[INFO] 23:57:33:059 KERNEL/(48908:48908): MOV_OUT
+[INFO] 23:57:33:059 KERNEL/(48908:48908): I/O
+[INFO] 23:57:33:059 KERNEL/(48908:48908): EXIT
+[INFO] 23:57:33:067 KERNEL/(48908:48908): Me llego el mensaje Se imprimio el valor del registro
+[INFO] 23:57:37:373 KERNEL/(48908:48908): Me llego el mensaje Desbloquear proceso. Ya se ingreso un valor por teclado
+[INFO] 23:57:37:373 KERNEL/(48908:48908): [recibir_entero]: se recibio el numero 5
+[ERROR] 23:57:37:374 KERNEL/(48908:48908): La consola se desconecto. Finalizando Kernel
+[INFO] 14:25:57:359 KERNEL/(51625:51625): En la lista de dispositivos tenemos los siguientes:
+[INFO] 14:25:57:368 KERNEL/(51625:51625): Iniciando conexion con consola
+[INFO] 14:25:57:368 KERNEL/(51625:51625): creamos conexion con un puerto de cpu
+[INFO] 14:25:57:368 KERNEL/(51625:51625): creamos conexion con otro puerto de cpu
+[INFO] 14:28:44:304 KERNEL/(51695:51695): En la lista de dispositivos tenemos los siguientes:
+[INFO] 14:28:44:304 KERNEL/(51695:51695): Iniciando conexion con consola
+[INFO] 14:28:44:316 KERNEL/(51695:51695): creamos conexion con un puerto de cpu
+[INFO] 14:29:36:046 KERNEL/(51713:51713): En la lista de dispositivos tenemos los siguientes:
+[INFO] 14:29:36:049 KERNEL/(51713:51713): Iniciando conexion con consola
+[INFO] 14:29:36:050 KERNEL/(51713:51713): creamos conexion con un puerto de cpu
+[INFO] 14:57:13:113 KERNEL/(52107:52107): En la lista de dispositivos tenemos los siguientes:
+[INFO] 14:57:13:116 KERNEL/(52107:52107): Iniciando conexion con consola
+[INFO] 14:57:13:116 KERNEL/(52107:52107): creamos conexion con un puerto de cpu
+[INFO] 14:57:13:117 KERNEL/(52107:52107): creamos conexion con otro puerto de cpu
+[INFO] 14:57:13:120 KERNEL/(52107:52107): [recibir_entero]: se recibio el numero 20
+[INFO] 15:01:19:504 KERNEL/(52294:52294): En la lista de dispositivos tenemos los siguientes:
+[INFO] 15:01:19:505 KERNEL/(52294:52294): Iniciando conexion con consola
+[INFO] 15:01:19:505 KERNEL/(52294:52294): creamos conexion con un puerto de cpu
+[INFO] 15:01:19:506 KERNEL/(52294:52294): creamos conexion con otro puerto de cpu
+[INFO] 15:01:19:506 KERNEL/(52294:52294): [recibir_entero]: se recibio el numero 20
+[INFO] 15:01:19:508 KERNEL/(52294:52294): [recibir_entero]: se recibio el numero 40
+[INFO] 15:02:54:034 KERNEL/(52388:52388): En la lista de dispositivos tenemos los siguientes:
+[INFO] 15:02:54:043 KERNEL/(52388:52388): Iniciando conexion con consola
+[INFO] 15:02:54:045 KERNEL/(52388:52388): creamos conexion con un puerto de cpu
+[INFO] 15:02:54:045 KERNEL/(52388:52388): creamos conexion con otro puerto de cpu
+[INFO] 15:03:18:941 KERNEL/(52388:52388): [recibir_entero]: se recibio el numero 0
+[INFO] 20:51:53:843 KERNEL/(54452:54452): En la lista de dispositivos tenemos los siguientes:
+[INFO] 20:51:53:851 KERNEL/(54452:54452): Iniciando conexion con consola
+[INFO] 20:51:53:851 KERNEL/(54452:54452): creamos conexion con un puerto de cpu
+[INFO] 20:51:53:851 KERNEL/(54452:54452): creamos conexion con otro puerto de cpu
+[INFO] 20:51:53:852 KERNEL/(54452:54452): [recibir_entero]: se recibio el numero 0
+[INFO] 20:52:48:949 KERNEL/(54494:54494): En la lista de dispositivos tenemos los siguientes:
+[INFO] 20:52:48:956 KERNEL/(54494:54494): Iniciando conexion con consola
+[INFO] 20:54:08:900 KERNEL/(54552:54552): En la lista de dispositivos tenemos los siguientes:
+[INFO] 20:54:08:903 KERNEL/(54552:54552): Iniciando conexion con consola
+[INFO] 20:54:08:905 KERNEL/(54552:54552): Kernel listo para recibir a consola
+[INFO] 20:54:14:070 KERNEL/(54552:54552): Se conecto la consola!
+[INFO] 20:54:14:071 KERNEL/(54552:54552): El tamanio del primer segmento es: 32
+[INFO] 20:54:14:073 KERNEL/(54552:54552): me llegaron las instrucciones
+[INFO] 20:54:14:073 KERNEL/(54552:54552): SET
+[INFO] 20:54:14:073 KERNEL/(54552:54552): ADD
+[INFO] 20:54:14:073 KERNEL/(54552:54552): MOV_IN
+[INFO] 20:54:14:073 KERNEL/(54552:54552): MOV_OUT
+[INFO] 20:54:14:073 KERNEL/(54552:54552): I/O
+[INFO] 20:54:14:073 KERNEL/(54552:54552): EXIT
+[INFO] 20:54:14:076 KERNEL/(54552:54552): Me llego el mensaje Se imprimio el valor del registro
+[INFO] 20:54:19:654 KERNEL/(54552:54552): Me llego el mensaje Desbloquear proceso. Ya se ingreso un valor por teclado
+[INFO] 20:54:19:654 KERNEL/(54552:54552): [recibir_entero]: se recibio el numero 4
+[ERROR] 20:54:19:655 KERNEL/(54552:54552): La consola se desconecto. Finalizando Kernel
+[INFO] 20:57:29:933 KERNEL/(54655:54655): En la lista de dispositivos tenemos los siguientes:
+[INFO] 20:57:29:940 KERNEL/(54655:54655): Iniciando conexion con consola
+[INFO] 20:57:29:940 KERNEL/(54655:54655): Kernel listo para recibir a consola
+[INFO] 20:57:33:870 KERNEL/(54655:54655): Se conecto la consola!
+[INFO] 20:57:33:872 KERNEL/(54655:54655): El tamanio del primer segmento es: 32
+[INFO] 20:57:33:872 KERNEL/(54655:54655): me llegaron las instrucciones
+[INFO] 20:57:33:872 KERNEL/(54655:54655): SET param1: -427609120 param2: -426786352
+[INFO] 20:57:33:872 KERNEL/(54655:54655): ADD param1: -427609120 param2: -426786352
+[INFO] 20:57:33:872 KERNEL/(54655:54655): MOV_IN param1: -427609120 param2: -426786352
+[INFO] 20:57:33:872 KERNEL/(54655:54655): MOV_OUT param1: -427609120 param2: -426786352
+[INFO] 20:57:33:872 KERNEL/(54655:54655): I/O param1: -427609120 param2: -426785568
+[INFO] 20:57:33:872 KERNEL/(54655:54655): EXIT param1: -427609120 param2: -426786352
+[INFO] 20:57:33:876 KERNEL/(54655:54655): Me llego el mensaje Se imprimio el valor del registro
+[INFO] 20:57:37:151 KERNEL/(54655:54655): Me llego el mensaje Desbloquear proceso. Ya se ingreso un valor por teclado
+[INFO] 20:57:37:152 KERNEL/(54655:54655): [recibir_entero]: se recibio el numero 4
+[ERROR] 20:57:37:153 KERNEL/(54655:54655): La consola se desconecto. Finalizando Kernel
+[INFO] 20:58:26:719 KERNEL/(54737:54737): En la lista de dispositivos tenemos los siguientes:
+[INFO] 20:58:26:719 KERNEL/(54737:54737): Iniciando conexion con consola
+[INFO] 20:58:26:719 KERNEL/(54737:54737): Kernel listo para recibir a consola
+[INFO] 20:58:30:773 KERNEL/(54737:54737): Se conecto la consola!
+[INFO] 20:58:30:773 KERNEL/(54737:54737): El tamanio del primer segmento es: 32
+[INFO] 20:58:30:774 KERNEL/(54737:54737): me llegaron las instrucciones
+[INFO] 20:58:30:774 KERNEL/(54737:54737): SET param1: 0 param2: 1
+[INFO] 20:58:30:774 KERNEL/(54737:54737): ADD param1: 0 param2: 1
+[INFO] 20:58:30:774 KERNEL/(54737:54737): MOV_IN param1: 2 param2: 4
+[INFO] 20:58:30:774 KERNEL/(54737:54737): MOV_OUT param1: 8 param2: 3
+[INFO] 20:58:30:774 KERNEL/(54737:54737): I/O param1: 0 param2: 10
+[INFO] 20:58:30:774 KERNEL/(54737:54737): EXIT param1: 0 param2: 0
+[INFO] 20:58:30:776 KERNEL/(54737:54737): Me llego el mensaje Se imprimio el valor del registro
+[INFO] 20:58:35:154 KERNEL/(54737:54737): Me llego el mensaje Desbloquear proceso. Ya se ingreso un valor por teclado
+[INFO] 20:58:35:154 KERNEL/(54737:54737): [recibir_entero]: se recibio el numero 4
+[ERROR] 20:58:35:155 KERNEL/(54737:54737): La consola se desconecto. Finalizando Kernel
+[INFO] 21:10:11:595 KERNEL/(55096:55096): En la lista de dispositivos tenemos los siguientes:
+[INFO] 21:10:11:598 KERNEL/(55096:55096): Iniciando conexion con consola
+[INFO] 21:10:11:599 KERNEL/(55096:55096): Kernel listo para recibir a consola
+[INFO] 21:10:18:189 KERNEL/(55096:55096): Se conecto la consola!
+[INFO] 21:10:18:190 KERNEL/(55096:55096): El tamanio del primer segmento es: 32
+[INFO] 21:10:18:190 KERNEL/(55096:55096): me llegaron las instrucciones
+[INFO] 21:10:18:190 KERNEL/(55096:55096): SET param1: 0 param2: 1
+[INFO] 21:10:18:190 KERNEL/(55096:55096): ADD param1: 0 param2: 1
+[INFO] 21:10:18:190 KERNEL/(55096:55096): MOV_IN param1: 2 param2: 4
+[INFO] 21:10:18:190 KERNEL/(55096:55096): MOV_OUT param1: 8 param2: 3
+[INFO] 21:10:18:190 KERNEL/(55096:55096): I/O param1: 0 param2: 10
+[INFO] 21:10:18:190 KERNEL/(55096:55096): EXIT param1: 0 param2: 0
+[INFO] 21:10:18:193 KERNEL/(55096:55096): Me llego el mensaje Se imprimio el valor del registro
+[INFO] 21:11:37:330 KERNEL/(55096:55096): Me llego el mensaje Desbloquear proceso. Ya se ingreso un valor por teclado
+[INFO] 21:11:37:331 KERNEL/(55096:55096): [recibir_entero]: se recibio el numero 5
+[ERROR] 21:11:37:332 KERNEL/(55096:55096): La consola se desconecto. Finalizando Kernel
+[INFO] 21:40:34:647 KERNEL/(61151:61151): En la lista de dispositivos tenemos los siguientes:
+[INFO] 21:40:34:650 KERNEL/(61151:61151): Iniciando conexion con consola
+[INFO] 21:40:34:652 KERNEL/(61151:61151): Kernel listo para recibir a consola
+[INFO] 21:40:39:781 KERNEL/(61151:61151): Se conecto la consola!
+[INFO] 21:49:31:570 KERNEL/(61389:61389): En la lista de dispositivos tenemos los siguientes:
+[INFO] 21:49:31:574 KERNEL/(61389:61389): Iniciando conexion con consola
+[INFO] 21:49:31:574 KERNEL/(61389:61389): Kernel listo para recibir a consola
+[INFO] 21:49:35:706 KERNEL/(61389:61389): Se conecto la consola!
+[INFO] 21:53:04:693 KERNEL/(61475:61475): En la lista de dispositivos tenemos los siguientes:
+[INFO] 21:53:04:697 KERNEL/(61475:61475): Iniciando conexion con consola
+[INFO] 21:53:04:697 KERNEL/(61475:61475): Kernel listo para recibir a consola
+[INFO] 21:53:09:561 KERNEL/(61475:61475): Se conecto la consola!
+[INFO] 21:53:09:562 KERNEL/(61475:61475): llego antes de recibir_operacion
+[INFO] 22:02:26:854 KERNEL/(61615:61615): En la lista de dispositivos tenemos los siguientes:
+[INFO] 22:02:26:855 KERNEL/(61615:61615): Iniciando conexion con consola
+[INFO] 22:02:26:857 KERNEL/(61615:61615): Kernel listo para recibir a consola
+[INFO] 22:02:30:896 KERNEL/(61615:61615): Se conecto la consola!
+[INFO] 22:02:30:897 KERNEL/(61615:61615): llego antes de recibir_operacion
+[INFO] 22:03:16:324 KERNEL/(61692:61692): En la lista de dispositivos tenemos los siguientes:
+[INFO] 22:03:16:324 KERNEL/(61692:61692): Iniciando conexion con consola
+[INFO] 22:03:16:324 KERNEL/(61692:61692): Kernel listo para recibir a consola
+[INFO] 22:03:19:149 KERNEL/(61692:61692): Se conecto la consola!
+[INFO] 22:03:19:149 KERNEL/(61692:61692): llego antes de recibir_operacion
+[INFO] 22:07:00:658 KERNEL/(61840:61840): En la lista de dispositivos tenemos los siguientes:
+[INFO] 22:07:00:658 KERNEL/(61840:61840): Iniciando conexion con consola
+[INFO] 22:07:00:658 KERNEL/(61840:61840): Kernel listo para recibir a consola
+[INFO] 22:07:08:712 KERNEL/(61840:61840): Se conecto la consola!
+[INFO] 22:07:08:712 KERNEL/(61840:61840): llego antes de recibir_operacion
+[INFO] 22:07:08:712 KERNEL/(61840:61840): El tamanio del primer segmento es: 32
+[INFO] 22:07:08:713 KERNEL/(61840:61840): me llegaron las instrucciones
+[INFO] 22:07:08:713 KERNEL/(61840:61840): SET param1: 0 param2: 1
+[INFO] 22:07:08:713 KERNEL/(61840:61840): ADD param1: 0 param2: 1
+[INFO] 22:07:08:713 KERNEL/(61840:61840): MOV_IN param1: 2 param2: 4
+[INFO] 22:07:08:713 KERNEL/(61840:61840): MOV_OUT param1: 8 param2: 3
+[INFO] 22:07:08:713 KERNEL/(61840:61840): I/O param1: 0 param2: 10
+[INFO] 22:07:08:713 KERNEL/(61840:61840): EXIT param1: 0 param2: 0
+[INFO] 22:07:08:716 KERNEL/(61840:61840): Me llego el mensaje Se imprimio el valor del registro
+[INFO] 22:14:04:208 KERNEL/(61965:61965): En la lista de dispositivos tenemos los siguientes:
+[INFO] 22:14:04:272 KERNEL/(61965:61965): Iniciando conexion con consola
+[INFO] 22:14:04:272 KERNEL/(61965:61965): Kernel listo para recibir a consola
+[INFO] 22:14:08:710 KERNEL/(61965:61965): Se conecto la consola!
+[INFO] 22:14:08:711 KERNEL/(61965:61965): llego antes de recibir_operacion
+[INFO] 22:14:08:711 KERNEL/(61965:61965): se recibio la operacion 0
+[INFO] 22:15:27:185 KERNEL/(62057:62057): En la lista de dispositivos tenemos los siguientes:
+[INFO] 22:15:27:187 KERNEL/(62057:62057): Iniciando conexion con consola
+[INFO] 22:15:27:187 KERNEL/(62057:62057): Kernel listo para recibir a consola
+[INFO] 22:15:28:653 KERNEL/(62057:62057): Se conecto la consola!
+[INFO] 22:15:28:654 KERNEL/(62057:62057): llego antes de recibir_operacion
+[INFO] 22:15:28:654 KERNEL/(62057:62057): se recibio la operacion 0
+[INFO] 22:15:28:654 KERNEL/(62057:62057): El tamanio del primer segmento es: 32
+[INFO] 22:15:28:657 KERNEL/(62057:62057): me llegaron las instrucciones
+[INFO] 22:15:28:657 KERNEL/(62057:62057): SET param1: 0 param2: 1
+[INFO] 22:15:28:657 KERNEL/(62057:62057): ADD param1: 0 param2: 1
+[INFO] 22:15:28:657 KERNEL/(62057:62057): MOV_IN param1: 2 param2: 4
+[INFO] 22:15:28:657 KERNEL/(62057:62057): MOV_OUT param1: 8 param2: 3
+[INFO] 22:15:28:657 KERNEL/(62057:62057): I/O param1: 0 param2: 10
+[INFO] 22:15:28:657 KERNEL/(62057:62057): EXIT param1: 0 param2: 0
+[INFO] 22:15:28:660 KERNEL/(62057:62057): Me llego el mensaje Se imprimio el valor del registro
+[INFO] 22:17:15:072 KERNEL/(62057:62057): Me llego el mensaje Desbloquear proceso. Ya se ingreso un valor por teclado
+[INFO] 22:17:15:072 KERNEL/(62057:62057): [recibir_entero]: se recibio el numero 5
+[ERROR] 22:17:15:072 KERNEL/(62057:62057): La consola se desconecto. Finalizando Kernel
+[INFO] 22:17:15:072 KERNEL/(62057:62057): creamos conexion con un puerto de cpu
+[INFO] 22:17:15:072 KERNEL/(62057:62057): creamos conexion con otro puerto de cpu
+[INFO] 22:21:36:462 KERNEL/(62146:62146): En la lista de dispositivos tenemos los siguientes:
+[INFO] 22:21:36:466 KERNEL/(62146:62146): Iniciando conexion con consola
+[INFO] 22:21:36:466 KERNEL/(62146:62146): Kernel listo para recibir a consola
+[INFO] 22:21:40:360 KERNEL/(62146:62146): Se conecto la consola!
+[INFO] 22:21:40:360 KERNEL/(62146:62146): llego antes de recibir_operacion
+[INFO] 22:21:40:360 KERNEL/(62146:62146): se recibio la operacion 0
+[INFO] 22:21:40:360 KERNEL/(62146:62146): El tamanio del primer segmento es: 32
+[INFO] 22:21:40:361 KERNEL/(62146:62146): me llegaron las instrucciones
+[INFO] 22:21:40:361 KERNEL/(62146:62146): SET param1: 0 param2: 1
+[INFO] 22:21:40:361 KERNEL/(62146:62146): ADD param1: 0 param2: 1
+[INFO] 22:21:40:361 KERNEL/(62146:62146): MOV_IN param1: 2 param2: 4
+[INFO] 22:21:40:361 KERNEL/(62146:62146): MOV_OUT param1: 8 param2: 3
+[INFO] 22:21:40:361 KERNEL/(62146:62146): I/O param1: 0 param2: 10
+[INFO] 22:21:40:361 KERNEL/(62146:62146): EXIT param1: 0 param2: 0
+[INFO] 22:21:40:366 KERNEL/(62146:62146): Me llego el mensaje Se imprimio el valor del registro
+[INFO] 22:21:44:861 KERNEL/(62146:62146): Me llego el mensaje Desbloquear proceso. Ya se ingreso un valor por teclado
+[INFO] 22:21:44:861 KERNEL/(62146:62146): [recibir_entero]: se recibio el numero 5
+[ERROR] 22:21:44:862 KERNEL/(62146:62146): La consola se desconecto. Finalizando Kernel
+[INFO] 22:21:44:862 KERNEL/(62146:62146): creamos conexion con un puerto de cpu
+[INFO] 22:21:44:862 KERNEL/(62146:62146): creamos conexion con otro puerto de cpu
+>>>>>>> branchKernel
