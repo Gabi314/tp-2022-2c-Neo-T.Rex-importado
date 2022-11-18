@@ -1,6 +1,5 @@
 #include "funcionesKernel.h"
 
-
 t_list* lista_dispositivos;
 char* dispositivosIOAplanado;
 t_list *listaTamanioSegmentos;
@@ -75,7 +74,7 @@ int main(int argc, char *argv[]) {
 
 */
 	log_destroy(logger);
-=======
+
 	//inicializar_configuraciones(argv[1]);
 	identificadores_pcb = 0;
 

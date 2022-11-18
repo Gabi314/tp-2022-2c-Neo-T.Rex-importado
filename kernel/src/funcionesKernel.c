@@ -58,7 +58,7 @@ pthread_mutex_t obtenerProceso;
 pthread_mutex_t mutexPantalla;
 pthread_mutex_t mutexTeclado;
 
-<<<<<<< HEAD
+
 int tamanioTotalIdentificadores;
 int contadorInstrucciones;
 int contadorSegmentos;
@@ -180,7 +180,7 @@ t_list * inicializar_tabla_segmentos(int socket_cliente) {
 	int i = 0;
 
 	while (i<list_size(listaSegmentos)) {
-		t_tabla_segmentos * elemento;
+		entradaTablaSegmento * elemento;
 
 		elemento->num_tabla_paginas = 0; // identificador de TP asociado
 		elemento->tam_segmento = list_remove(listaSegmentos,0); // tamanio del segmento
@@ -209,17 +209,13 @@ void levantar_hilo_dispositivo(t_elem_disp * elemento) {
 
 }
 
-<<<<<<< HEAD
-=======
 
 
 
 
->>>>>>> branchKernel
 //-------------------------HILOS---------------------------------
 
 
-<<<<<<< HEAD
 /*
 void recibir_consola(int servidor) {
 =======
@@ -451,9 +447,9 @@ void ejecutar(t_pcb* proceso) {
 
 }
 
+*/
 
-
-void atender_interrupcion_de_ejecucion() {
+/*void atender_interrupcion_de_ejecucion() {
 
 while (1) {
 	int cod_op = recibir_operacion(puertoCpuDispatch); //Puerto o socket (Cuando iniciemos el servidor en el main esto cambia)
@@ -504,13 +500,13 @@ while (1) {
 
 
 
-/*
+
 		//pthread_mutex_lock(&mutexTeclado);
 		t_pcb * pcbTeclado = recibir_pcb(puertoCpuDispatch); // la idea es que sea una varible loca
 		recibir_operacion(puertoCpuDispatch);
 		registroTeclado =recibir_entero(puertoCpuDispatch);
 		//pthread_mutex_unlock(&mutexTeclado);
-*/
+
 
 		pthread_t hiloAtenderTeclado;
 		int hiloTeclado = pthread_create(&hiloAtenderTeclado, NULL,(void*) atender_IO_teclado,aMandarTeclado);
@@ -595,6 +591,8 @@ while (1) {
 
 	}
 }
+
+*/
 
 void terminarEjecucion(t_pcb * procesoAFinalizar) {
 

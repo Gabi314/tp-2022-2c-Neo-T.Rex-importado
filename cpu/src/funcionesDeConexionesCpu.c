@@ -1,5 +1,6 @@
 #include "funcionesCpu.h"
 
+
 //--------------DECLARO VARIABLES
 int clienteKernel;
 int clienteKernelInterrupt;

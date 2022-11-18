@@ -1,9 +1,7 @@
 #ifndef UTILS_H_
 #define UTILS_H_
 
-
 #include <shared/hello.h>
-#include<stdbool.h>
 
 extern t_log* logger;
 extern t_list* listaInstrucciones;
@@ -95,7 +93,7 @@ void inicializar_configuraciones(char* unaConfig);
 void inicializar_listas_y_colas();
 void inicializar_lista_dispositivos();
 void iterator(instruccion*);
-int conexionConConsola();
+int conexionConConsola();// cual usamos
 
 
 int get_identificador();
@@ -110,9 +108,8 @@ void levantar_hilo_dispositivo(t_elem_disp*);
 
 void iterator(instruccion*);
 
-int recibir_operacion(int);
-int iniciar_servidor(void);
-t_pcb * conexionConConsola();
+
+t_pcb * conexionConConsola();// cual usamos
 int conexionConCpu(t_pcb * PCB);
 
 void agregarANew(t_pcb* proceso);
@@ -151,7 +148,6 @@ extern int quantum_rr;
 extern sem_t kernelSinFinalizar;
 
 extern int conexionCpu;
-
 extern int tamanioTotalIdentificadores;
 extern int contadorInstrucciones;
 extern int contadorSegmentos;

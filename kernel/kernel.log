@@ -3466,3 +3466,5 @@
 [INFO] 22:21:44:862 KERNEL/(62146:62146): creamos conexion con un puerto de cpu
 [INFO] 22:21:44:862 KERNEL/(62146:62146): creamos conexion con otro puerto de cpu
 >>>>>>> branchKernel
+[INFO] 18:50:27:340 KERNEL/(3481:3481): DISPOSITIVOS: DISCO-IMPRESORA
+[INFO] 18:50:27:346 KERNEL/(3481:3481): Iniciando conexion con consola
