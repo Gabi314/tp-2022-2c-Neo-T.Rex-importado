@@ -163,9 +163,9 @@ void agregarSegmentosAlPaquete(entradaTablaSegmento* unSegmento){
 	desplazamiento+=sizeof(int);
 	free(unSegmento);
 }
-=======
 
->>>>>>> branchKernel
+
+
 
 void iterator(instruccion* instruccion){
 	log_info(logger,"%s param1: %d param2: %d", instruccion->identificador, instruccion->parametros[0],instruccion->parametros[1]);
@@ -182,8 +182,8 @@ t_list * inicializar_tabla_segmentos(int socket_cliente) {
 	while (i<list_size(listaSegmentos)) {
 		entradaTablaSegmento * elemento;
 
-		elemento->num_tabla_paginas = 0; // identificador de TP asociado
-		elemento->tam_segmento = list_remove(listaSegmentos,0); // tamanio del segmento
+		elemento->numeroTablaPaginas = 0; // identificador de TP asociado
+		elemento->tamanioSegmento = list_remove(listaSegmentos,0); // tamanio del segmento
 
 		list_add(tablaSegmentos,elemento);
 
@@ -227,7 +227,7 @@ void recibir_consola(int servidor) {
 	return socket_cliente;
 }
 
-
+*/
 int get_identificador(){
 	identificadores_pcb++;
 	return identificadores_pcb;
@@ -239,12 +239,11 @@ void recibir_consola(int * servidor) {
 
 	int servidor_int = *servidor;
 
->>>>>>> branchKernel
 
 	while (1) {
 		pthread_t hilo1;
 		log_info(logger,"esperamos una nueva consola");
-		int nuevo_cliente = esperar_cliente(servidor_int);
+		int nuevo_cliente = esperar_cliente(servidor_int,"Consola");
 
 		log_info(logger,"recibimos al cliente de socket %d", nuevo_cliente);
 
@@ -267,11 +266,11 @@ void  atender_consola(int * nuevo_cliente) {
 	PCB->idProceso = get_identificador();
 
 	PCB->instrucciones = list_create();
-	PCB->instrucciones = recibir_lista_instrucciones(nuevo_cliente_int);
-	PCB->program_counter = 0;
+	PCB->instrucciones = recibir_paquete_instrucciones(nuevo_cliente_int);
+	PCB->programCounter = 0;
 	inicializar_registros(PCB->registros);
-	PCB->tabla_segmentos = list_create();
-	PCB->tabla_segmentos = inicializar_tabla_segmentos(nuevo_cliente_int); // aca usariamos el recibir_lista_enteros
+	PCB->tablaSegmentos = list_create();
+	PCB->tablaSegmentos = inicializar_tabla_segmentos(nuevo_cliente_int); // aca usariamos el recibir_lista_enteros
 	PCB->socket = nuevo_cliente_int;
 	PCB->estado = NEW;
 
@@ -284,7 +283,6 @@ void  atender_consola(int * nuevo_cliente) {
 
 	sem_post(&pcbEnNew);
 }
-
 
 
 
@@ -447,7 +445,7 @@ void ejecutar(t_pcb* proceso) {
 
 }
 
-*/
+
 
 /*void atender_interrupcion_de_ejecucion() {
 
@@ -623,7 +621,7 @@ void atender_IO_teclado(t_info_teclado * info){
 
 		t_pcb* unPcb = info->pcb;
 
-		enviar_mensaje("kernel solicita que se ingrese un valor por teclado",unPcb->socket,KERNEL_MENSAJE_SOLICITUD_VALOR_POR_TECLADO);
+		enviar_mensaje("kernel solicita que se ingrese un valor por teclado",unPcb->socket,KERNEL_MENSAJE_PEDIDO_VALOR_POR_TECLADO);
 
 		int codigo = recibir_operacion(unPcb->socket);
 			if(codigo != KERNEL_MENSAJE_DESBLOQUEO_TECLADO){
@@ -717,7 +715,7 @@ void controlar_quantum(){
 
 	usleep(quantum_rr * 1000);
 
-	enviar_mensaje("Cpu desalojá tu proceso por fin de quantum", puertoCpuInterrupt ,DESALOJAR_PROCESO_POR_FIN_DE_QUANTUM); // VER SI ES EL PUERTO O EL SOCKET
+	//enviar_mensaje("Cpu desalojá tu proceso por fin de quantum",  ,DESALOJAR_PROCESO_POR_FIN_DE_QUANTUM); // ES EL SOCKET
 
 }
 

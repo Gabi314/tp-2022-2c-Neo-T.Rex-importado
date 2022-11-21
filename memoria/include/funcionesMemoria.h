@@ -89,8 +89,9 @@ entradaTablaPaginas* entradaCargadaConMarcoAsignado(int);
 uint32_t leerElPedido(int,int);
 
 void crearSwap();
-void escribirEnSwap(int);
+void escribirEnSwap(entradaTablaPaginas*);
 entradaTablaPaginas* entradaCargadaConMarcoAsignado(int);
 void leerDeSwap(int,int);
+void suspensionDeProceso(int);
 
 #endif /* FUNCIONES_MEMORIA_H_*/

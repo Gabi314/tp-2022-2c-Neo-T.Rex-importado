@@ -17,7 +17,7 @@ int main(int argc, char *argv[]) {
 
 	listaDispositivos = recibirListaDispositivos(clienteKernel);
 
-	//conexionConMemoria();
+	conexionConMemoria();
 
 
 

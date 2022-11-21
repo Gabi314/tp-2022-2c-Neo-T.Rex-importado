@@ -33,7 +33,7 @@ typedef struct
 	int programCounter;
 	t_registros registros;
 	t_list* tablaSegmentos;
-	//int socket;
+	int socket;
 	t_estado estado;
 	t_algoritmo_pcb algoritmoActual;
 } t_pcb;
@@ -86,14 +86,10 @@ t_list* recibir_paquete_instrucciones(int);
 t_list * inicializar_tabla_segmentos(int);
 void inicializar_registros(t_registros registros);
 
-void enviar_entero(int valor, int socket_cliente, int cod_op);
-void recibir_consola(int);
-void atender_consola(int);
 void inicializar_configuraciones(char* unaConfig);
 void inicializar_listas_y_colas();
 void inicializar_lista_dispositivos();
 void iterator(instruccion*);
-int conexionConConsola();// cual usamos
 
 
 int get_identificador();
@@ -186,5 +182,7 @@ void agregarInstruccionesAlPaquete(instruccion*);
 void agregarSegmentosAlPaquete(entradaTablaSegmento*);
 void agregar_a_paquete_kernel_cpu(t_pcb*,int,int);
 void aplanarDispositivosIO(char**);
+
+void destruirProceso(t_pcb*);
 
 #endif /* UTILS_H_ */

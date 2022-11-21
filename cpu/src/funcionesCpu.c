@@ -162,25 +162,25 @@ void ejecutar(instruccion* unaInstruccion,t_pcb* pcb){
 				registro += segundoRegistro;
 				log_info(logger,"----------------FINALIZA ADD----------------\n");
 				break;
-//			case MOV_IN:
-//				log_info(logger,"“PID: <%d> - Ejecutando: <%s> - <%s> - <%d>",
-//								pcb->idProceso,unaInstruccion->identificador,imprimirRegistro(primerParametro),
-//									segundoParametro);
-//
-//				registro = registroAUtilizar(primerParametro,pcb->registros);
-//				direccionLogica = segundoParametro;
-//
-//				if(calculoDireccionLogicaExitoso(direccionLogica,pcb->tablaSegmentos)){
-//					marco = buscarDireccionFisica(pcb->idProceso);
-//					uint32_t valorAAlmacenar;// = funcion que devuelve de memoria el valor mandando el marco conseguido previamente
-//					registro = valorAAlmacenar;
-//				}else{
-//					log_info(logger,"Error: Segmentation Fault (segmento nro: %d)",numeroDeSegmento);//Enviar este mensaje a kernel y devolver pcb
-//				//PROBAAAR!!!!
-//				}
-//
-//				log_info(logger,"----------------FINALIZA MOV_IN----------------\n");
-//				break;
+			case MOV_IN:
+				log_info(logger,"“PID: <%d> - Ejecutando: <%s> - <%s> - <%d>",
+								pcb->idProceso,unaInstruccion->identificador,imprimirRegistro(primerParametro),
+									segundoParametro);
+
+				registro = registroAUtilizar(primerParametro,pcb->registros);
+				direccionLogica = segundoParametro;
+
+				if(calculoDireccionLogicaExitoso(direccionLogica,pcb->tablaSegmentos)){
+					marco = buscarDireccionFisica(pcb->idProceso);
+					uint32_t valorAAlmacenar;// = funcion que devuelve de memoria el valor mandando el marco conseguido previamente
+					registro = valorAAlmacenar;
+				}else{
+					log_info(logger,"Error: Segmentation Fault (segmento nro: %d)",numeroDeSegmento);//Enviar este mensaje a kernel y devolver pcb
+				//PROBAAAR!!!!
+				}
+
+				log_info(logger,"----------------FINALIZA MOV_IN----------------\n");
+				break;
 		//	case MOV_OUT:
 		//		log_info(logger,"----------------EXECUTE MOV_OUT----------------");
 		//		direccionLogica = primerParametro;

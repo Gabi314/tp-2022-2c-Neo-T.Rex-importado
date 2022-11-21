@@ -317,8 +317,6 @@ int indiceDeEntradaAReemplazar(int numeroDeMarco){
 	}
 }
 
-
-
 void liberarEspacioEnMemoria(tablaDePaginas* unaTablaDePaginas){
 	entradaTablaPaginas* unaEntrada = malloc(sizeof(entradaTablaPaginas));
 	marco* marcoAsignado = malloc(sizeof(marco));
@@ -334,7 +332,7 @@ void liberarEspacioEnMemoria(tablaDePaginas* unaTablaDePaginas){
 		}
 		if(unaEntrada->presencia == 1 && unaEntrada->modificado ==1){
 			//NO SE QUE TAN UTIL PUEDE SER ESCRIBIR EN SWAP CUANDO SE LIBERA LA MEMORIA PORQUE EN ESTE TP NO HAY SUSPENSION DE PROCESO
-			//escribirEnSwap(unaEntrada->numeroMarco,unaTablaDe1erNivel->pid,unaEntrada->numeroDeEntradaPorProceso);
+			escribirEnSwap(unaEntrada);
 
 			sacarMarcoAPagina(unaEntrada);
 			marcoAsignado = buscarMarco(unaEntrada->numeroMarco);
@@ -375,7 +373,7 @@ void cargarPagina(entradaTablaPaginas* unaEntrada){
 	int numeroMarcoPrevio = unaEntrada->numeroMarco;
 
 	//Caso en el que se puede asignar un marco a un proceso de manera libre
-	if(contadorDeMarcosPorProceso<marcosPorProceso){
+	if(contadorDeMarcosPorProceso<marcosPorProceso && (list_size(listaDeEntradasEnMemoria)<=(tamanioDeMemoria/tamanioDePagina))){
 		marcoAAsignar = siguienteMarcoLibre();
 		modificarPaginaACargar(unaEntrada,marcoAAsignar->numeroDeMarco);
 		list_add(listaDeEntradasEnMemoria,unaEntrada);
@@ -406,6 +404,7 @@ void cargarPagina(entradaTablaPaginas* unaEntrada){
 		}
 	}
 }
+
 void escribirElPedido(uint32_t datoAEscribir,int marco,int desplazamiento){
 	usleep(retardoMemoria);
 	int posicionDeDatoAEscribir = marco * tamanioDePagina + sizeof(uint32_t)*desplazamiento;
@@ -454,12 +453,13 @@ void crearSwap(){
 	fclose(archivoSwap);
 }
 
-void escribirEnSwap(int numeroDeMarco){
+void escribirEnSwap(entradaTablaPaginas* unaEntrada){
+	int numeroDeMarco = unaEntrada->numeroMarco;
 	usleep(retardoSwap);
 	FILE* archivoSwap = fopen(pathSwap, "r+");
 
 	int posicionDeLaPaginaEnSwapInicial = tamanioDePagina * numeroDeMarco; //Aca modifique el numero de pagina por numero de marco
-
+	unaEntrada->posicionEnSwap = posicionDeLaPaginaEnSwapInicial;
 	for(int i=0; i<(tamanioDePagina/sizeof(uint32_t));i++){
 		fseek(archivoSwap, posicionDeLaPaginaEnSwapInicial, SEEK_SET);
 		fseek(archivoSwap, i*4, SEEK_CUR);
@@ -491,6 +491,14 @@ void leerDeSwap(int numeroDeMarcoPrevio,int numeroDeMarcoNuevo){
 		memcpy(&memoria+(tamanioDePagina*numeroDeMarcoNuevo)+i*sizeof(uint32_t),&parteDePaginaEnInt, sizeof(uint32_t));
 	}
 	fclose(archivoSwap);
+}
+
+void suspensionDeProceso(int pid){
+	int nroTablaDePaginas = buscarNroTablaDePaginas(pid);
+	tablaDePaginas* unaTablaDePaginas = malloc(sizeof(tablaDePaginas));
+	unaTablaDePaginas = list_get(listaTablaDePaginas,nroTablaDePaginas);
+	liberarEspacioEnMemoria(unaTablaDePaginas);
+
 }
 
 /* COMENTARIOS:

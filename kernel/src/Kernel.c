@@ -4,6 +4,8 @@ t_list* lista_dispositivos;
 char* dispositivosIOAplanado;
 t_list *listaTamanioSegmentos;
 
+//t_list* listaDeColasDispositivos;
+
 int conexionCpu = 0;
 int conexionCpuInterrupt = 0;
 
@@ -78,20 +80,6 @@ int main(int argc, char *argv[]) {
 	//inicializar_configuraciones(argv[1]);
 	identificadores_pcb = 0;
 
-	t_config* config = inicializar_configuracion(argv[1]);
-/*
-	ipMemoria = config_get_string_value(config, "IP_MEMORIA");
-	puertoMemoria = config_get_string_value(config, "PUERTO_MEMORIA");//son intss
-	ipCpu = config_get_string_value(config, "IP_CPU");
-	puertoCpuDispatch = config_get_string_value(config, "PUERTO_CPU_DISPATCH");//son intss
-	puertoCpuInterrupt = config_get_string_value(config, "PUERTO_CPU_INTERRUPT");
-	puertoKernel = config_get_string_value(config, "PUERTO_ESCUCHA"); //no lo usamos
-	algoritmoPlanificacion = config_get_string_value(config, "ALGORITMO_PLANIFICACION");
-	gradoMultiprogramacionTotal = config_get_int_value(config, "GRADO_MAX_MULTIPROGRAMACION");
-	quantum_rr = config_get_int_value(config,"QUANTUM_RR");
-	dispositivos_io = config_get_array_value(config, "DISPOSITIVOS_IO");
-	tiempos_io = config_get_array_value(config, "TIEMPOS_IO");
-*/
 
 	inicializar_listas_y_colas();
 	log_info(logger, "En la lista de dispositivos tenemos los siguientes:");
@@ -148,8 +136,6 @@ int main(int argc, char *argv[]) {
 
 	//cargar_pcb(nroTabla1erNivel);
 
->>>>>>> branchKernel
-
 }
 
 void inicializar_configuraciones(char* unaConfig){
@@ -181,50 +167,47 @@ void inicializar_listas_y_colas() {
 
 }
 
-<<<<<<< HEAD
-int conexionConConsola(){
-	static pthread_mutex_t mutexMensajes;
-=======
-t_pcb * conexionConConsola(){
->>>>>>> branchKernel
 
-	int server_fd = iniciar_servidor(IP_KERNEL,PUERTO_KERNEL,"Consola");
 
-<<<<<<< HEAD
-	int cliente_fd = esperar_cliente(server_fd,"Consola");
 
-	if (recibir_operacion(cliente_fd) == KERNEL_PAQUETE_TAMANIOS_SEGMENTOS) {
-		listaTamanioSegmentos = list_create();
-		listaTamanioSegmentos = recibir_lista_enteros(cliente_fd); //Hacer que reciba paquete vectorDeEnteros// Muy dificil mandar un vector dinamico, la lista la pueden usar como quieran
-		// Y si usamos la funcion "atoi()"? //No entiendo para que, atoi te convierte string a entero
-		int tamanioDelSegmento = (int) list_get(listaTamanioSegmentos, 0);
-		log_info(logger, "El tamanio del primer segmento es: %d",
-				tamanioDelSegmento);
-=======
-	t_list* listaQueContieneTamSegmento;
-	t_pcb * PCB = malloc(sizeof(t_pcb *));
+t_pcb* conexionConConsola() {
+
+static pthread_mutex_t mutexMensajes;
+int server_fd = iniciar_servidor(IP_KERNEL, PUERTO_KERNEL, "Consola");
+
+int cliente_fd = esperar_cliente(server_fd, "Consola");
+
+if (recibir_operacion(cliente_fd) == KERNEL_PAQUETE_TAMANIOS_SEGMENTOS) {
+	listaTamanioSegmentos = list_create();
+	listaTamanioSegmentos = recibir_lista_enteros(cliente_fd); //Hacer que reciba paquete vectorDeEnteros// Muy dificil mandar un vector dinamico, la lista la pueden usar como quieran
+	// Y si usamos la funcion "atoi()"? //No entiendo para que, atoi te convierte string a entero
+	int tamanioDelSegmento = (int) list_get(listaTamanioSegmentos, 0);
+	log_info(logger, "El tamanio del primer segmento es: %d",
+			tamanioDelSegmento);
+
+	t_list *listaQueContieneTamSegmento;
+	t_pcb *PCB = malloc(sizeof(t_pcb*));
 
 	log_info(logger, "llego antes de recibir_operacion");
 
 	int operacion = recibir_operacion(cliente_fd);
 
-	log_info(logger,"se recibio la operacion %d", operacion);
+	log_info(logger, "se recibio la operacion %d", operacion);
 
-	if (operacion == KERNEL_PAQUETE_TAMANIOS_SEGMENTOS){
-	//	listaQueContieneTamSegmento = list_create();
-	//	listaQueContieneTamSegmento = recibir_lista_enteros(cliente_fd);
-		PCB->tabla_segmentos = list_create();
-		PCB->tabla_segmentos = inicializar_tabla_segmentos(cliente_fd); // aca usariamos el recibir_lista_enteros
-	//	int tamanioDelSegmento = (int) list_get(listaQueContieneTamSegmento,3);
-	//			log_info(logger,"El tamanio del primer segmento es: %d",tamanioDelSegmento);
->>>>>>> branchKernel
+	if (operacion == KERNEL_PAQUETE_TAMANIOS_SEGMENTOS) {
+		//	listaQueContieneTamSegmento = list_create();
+		//	listaQueContieneTamSegmento = recibir_lista_enteros(cliente_fd);
+		PCB->tablaSegmentos = list_create();
+		PCB->tablaSegmentos = inicializar_tabla_segmentos(cliente_fd); // aca usariamos el recibir_lista_enteros
+		//	int tamanioDelSegmento = (int) list_get(listaQueContieneTamSegmento,3);
+		//			log_info(logger,"El tamanio del primer segmento es: %d",tamanioDelSegmento);
 
-		enviar_mensaje(dispositivosIOAplanado, cliente_fd, KERNEL_MENSAJE_DISPOSITIVOS_IO);
+		enviar_mensaje(dispositivosIOAplanado, cliente_fd,
+				KERNEL_MENSAJE_DISPOSITIVOS_IO);
 
 		if (recibir_operacion(cliente_fd) == KERNEL_PAQUETE_INSTRUCCIONES) {
 			listaInstrucciones = list_create();
 			listaInstrucciones = recibir_paquete_instrucciones(cliente_fd);
-
 
 			//enviar_mensaje("segmentos e instrucciones recibidos pibe", cliente_fd,KERNEL_MENSAJE_CONFIRMACION_RECEPCION_INSTRUCCIONES_SEGMENTOS);
 			//me parece que no haria falta con loguear que se recibieron ya alcanza
@@ -232,11 +215,12 @@ t_pcb * conexionConConsola(){
 			//Esto es una prueba
 			enviar_entero(3, cliente_fd, KERNEL_PAQUETE_VALOR_A_IMPRIMIR);
 
-			if(recibir_operacion(cliente_fd) == KERNEL_MENSAJE_VALOR_IMPRESO){
+			if (recibir_operacion(cliente_fd) == KERNEL_MENSAJE_VALOR_IMPRESO) {
 				recibir_mensaje(cliente_fd);
 			}
 
-			enviar_mensaje("Finalizar",cliente_fd,KERNEL_MENSAJE_FINALIZAR_CONSOLA);
+			enviar_mensaje("Finalizar", cliente_fd,
+					KERNEL_MENSAJE_FINALIZAR_CONSOLA);
 			pthread_mutex_unlock(&mutexMensajes);
 
 		} else {
@@ -249,97 +233,95 @@ t_pcb * conexionConConsola(){
 	enviar_entero(10, cliente_fd, KERNEL_PAQUETE_VALOR_A_IMPRIMIR);
 
 	int codigo = recibir_operacion(cliente_fd);
-	if(codigo != KERNEL_MENSAJE_VALOR_IMPRESO){
-			log_info(logger,"codigo de operacion incorrecto");
-		}
+	if (codigo != KERNEL_MENSAJE_VALOR_IMPRESO) {
+		log_info(logger, "codigo de operacion incorrecto");
+	}
 	recibir_mensaje(cliente_fd);
 
-	enviar_mensaje("kernel solicita que se ingrese un valor por teclado",cliente_fd,KERNEL_MENSAJE_SOLICITUD_VALOR_POR_TECLADO);
+	enviar_mensaje("kernel solicita que se ingrese un valor por teclado",
+			cliente_fd, KERNEL_MENSAJE_PEDIDO_VALOR_POR_TECLADO);
 
 	codigo = recibir_operacion(cliente_fd);
-		if(codigo != KERNEL_MENSAJE_DESBLOQUEO_TECLADO){
-				log_info(logger,"codigo de operacion incorrecto");
-			}
+	if (codigo != KERNEL_MENSAJE_DESBLOQUEO_TECLADO) {
+		log_info(logger, "codigo de operacion incorrecto");
+	}
 	recibir_mensaje(cliente_fd);
 
 	codigo = recibir_operacion(cliente_fd);
 
-	if(codigo != KERNEL_PAQUETE_VALOR_RECIBIDO_DE_TECLADO){
-					log_info(logger,"codigo de operacion incorrecto");
-				}
+	if (codigo != KERNEL_PAQUETE_VALOR_RECIBIDO_DE_TECLADO) {
+		log_info(logger, "codigo de operacion incorrecto");
+	}
 	recibir_entero(cliente_fd);
 
-	enviar_mensaje("Finalizar consola",cliente_fd,KERNEL_MENSAJE_FINALIZAR_CONSOLA);
+	enviar_mensaje("Finalizar consola", cliente_fd,
+			KERNEL_MENSAJE_FINALIZAR_CONSOLA);
 
-	if(recibir_operacion(cliente_fd) == -1){
-<<<<<<< HEAD
-		log_warning(logger, "La consola nro %d finalizo",cliente_fd); //kernel debe seguir a la espera de otras consolas
+	if (recibir_operacion(cliente_fd) == -1) {
+
+		log_warning(logger, "La consola nro %d finalizo", cliente_fd); //kernel debe seguir a la espera de otras consolas
 		return EXIT_SUCCESS;
-=======
-		log_error(logger, "La consola se desconecto. Finalizando Kernel");
 
->>>>>>> branchKernel
 	}
 
-
 	//que problema hay con hacerlo asi? en la funcion de arriba se repite la logica del else codigo incorrecto!
-/*	while (1) {
-		int cod_op = recibir_operacion(cliente_fd);
-		switch (cod_op) {
-			case KERNEL_PAQUETE_INSTRUCCIONES:
-				listaInstrucciones = list_create();
-				listaInstrucciones = recibir_paquete_instrucciones(cliente_fd);
-				log_info(logger,"me llegaron las instrucciones");
-				list_iterate(listaInstrucciones, (void*) iterator);
-			break;
-				case KERNEL_PAQUETE_TAMANIOS_SEGMENTOS:
-				listaQueContieneTamSegmento = list_create();
-				listaQueContieneTamSegmento = recibir_lista_enteros(cliente_fd);//Hacer que reciba paquete vectorDeEnteros
-				int tamanioDelSegmento = (int) list_get(listaQueContieneTamSegmento,3);
-				log_info(logger,"El tamanio del primer segmento es: %d",tamanioDelSegmento);
-				break;
-			case -1:
-				log_error(logger, "La consola se desconecto. Finalizando Kernel");
-			return EXIT_FAILURE;
-			default:
-				log_warning(logger,"Operacion desconocida. No quieras meter la pata");
-			break;
-		}
-			}
+	/*	while (1) {
+	 int cod_op = recibir_operacion(cliente_fd);
+	 switch (cod_op) {
+	 case KERNEL_PAQUETE_INSTRUCCIONES:
+	 listaInstrucciones = list_create();
+	 listaInstrucciones = recibir_paquete_instrucciones(cliente_fd);
+	 log_info(logger,"me llegaron las instrucciones");
+	 list_iterate(listaInstrucciones, (void*) iterator);
+	 break;
+	 case KERNEL_PAQUETE_TAMANIOS_SEGMENTOS:
+	 listaQueContieneTamSegmento = list_create();
+	 listaQueContieneTamSegmento = recibir_lista_enteros(cliente_fd);//Hacer que reciba paquete vectorDeEnteros
+	 int tamanioDelSegmento = (int) list_get(listaQueContieneTamSegmento,3);
+	 log_info(logger,"El tamanio del primer segmento es: %d",tamanioDelSegmento);
+	 break;
+	 case -1:
+	 log_error(logger, "La consola se desconecto. Finalizando Kernel");
+	 return EXIT_FAILURE;
+	 default:
+	 log_warning(logger,"Operacion desconocida. No quieras meter la pata");
+	 break;
+	 }
+	 }
 
-	  */
+	 */
 
+	PCB->idProceso = get_identificador();
+	PCB->instrucciones = list_create();
+	PCB->instrucciones = listaInstrucciones;
+	PCB->programCounter = 0;
+	inicializar_registros(PCB->registros);
 
-		PCB->idProceso = get_identificador();
-		PCB->instrucciones = list_create();
-		PCB->instrucciones = listaInstrucciones;
-		PCB->program_counter = 0;
-		inicializar_registros(PCB->registros);
+	PCB->socket = cliente_fd;
+	PCB->estado = NEW;
+	PCB->algoritmoActual = RR;
 
-		PCB->socket = cliente_fd;
-		PCB->estado = NEW;
-		PCB->algoritmoActual = RR;
-
-		return PCB;
+	return PCB;
+}
 }
 
-int conexionConCpu(t_pcb * PCB){
-	log_info(logger,"creamos conexion con un puerto de cpu");
-	int puertoInterrupt = crear_conexion(IP_KERNEL, "8001");
-	log_info(logger,"creamos conexion con otro puerto de cpu");
-	int puertoDispatch = crear_conexion(IP_KERNEL, "8002");
-/*
-	enviar_entero(10,puertoInterrupt,0);
-	recibir_operacion(puertoInterrupt);
-	recibir_entero(puertoInterrupt);
-
-	enviar_entero(30,puertoDispatch,0);
-	recibir_operacion(puertoDispatch);
-	recibir_entero(puertoDispatch);
-*/
-	enviar_pcb(PCB, 0, puertoDispatch);
-	 return EXIT_SUCCESS;
-}
+//int conexionConCpu(t_pcb * PCB){
+//	log_info(logger,"creamos conexion con un puerto de cpu");
+//	int puertoInterrupt = crear_conexion(IP_KERNEL, "8001");
+//	log_info(logger,"creamos conexion con otro puerto de cpu");
+//	int puertoDispatch = crear_conexion(IP_KERNEL, "8002");
+///*
+//	enviar_entero(10,puertoInterrupt,0);
+//	recibir_operacion(puertoInterrupt);
+//	recibir_entero(puertoInterrupt);
+//
+//	enviar_entero(30,puertoDispatch,0);
+//	recibir_operacion(puertoDispatch);
+//	recibir_entero(puertoDispatch);
+//*/
+//	agregar_a_paquete_kernel_cpu(PCB, 0, puertoDispatch);
+//	 return EXIT_SUCCESS;
+//}
 
 /* Aca inicializamos una lista con elementos que contienen:
  * - dispositivo: nombre del dispositivo
