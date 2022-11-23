@@ -176,7 +176,7 @@ static pthread_mutex_t mutexMensajes;
 int server_fd = iniciar_servidor(IP_KERNEL, PUERTO_KERNEL, "Consola");
 
 int cliente_fd = esperar_cliente(server_fd, "Consola");
-
+/*
 if (recibir_operacion(cliente_fd) == KERNEL_PAQUETE_TAMANIOS_SEGMENTOS) {
 	listaTamanioSegmentos = list_create();
 	listaTamanioSegmentos = recibir_lista_enteros(cliente_fd); //Hacer que reciba paquete vectorDeEnteros// Muy dificil mandar un vector dinamico, la lista la pueden usar como quieran
@@ -184,7 +184,7 @@ if (recibir_operacion(cliente_fd) == KERNEL_PAQUETE_TAMANIOS_SEGMENTOS) {
 	int tamanioDelSegmento = (int) list_get(listaTamanioSegmentos, 0);
 	log_info(logger, "El tamanio del primer segmento es: %d",
 			tamanioDelSegmento);
-
+*/
 	t_list *listaQueContieneTamSegmento;
 	t_pcb *PCB = malloc(sizeof(t_pcb*));
 
@@ -209,8 +209,10 @@ if (recibir_operacion(cliente_fd) == KERNEL_PAQUETE_TAMANIOS_SEGMENTOS) {
 			listaInstrucciones = list_create();
 			listaInstrucciones = recibir_paquete_instrucciones(cliente_fd);
 
-			//enviar_mensaje("segmentos e instrucciones recibidos pibe", cliente_fd,KERNEL_MENSAJE_CONFIRMACION_RECEPCION_INSTRUCCIONES_SEGMENTOS);
-			//me parece que no haria falta con loguear que se recibieron ya alcanza
+			enviar_mensaje("segmentos e instrucciones recibidos pibe", cliente_fd,KERNEL_MENSAJE_CONFIRMACION_RECEPCION_INSTRUCCIONES_SEGMENTOS);
+
+
+		/*
 			pthread_mutex_lock(&mutexMensajes);
 			//Esto es una prueba
 			enviar_entero(3, cliente_fd, KERNEL_PAQUETE_VALOR_A_IMPRIMIR);
@@ -222,7 +224,7 @@ if (recibir_operacion(cliente_fd) == KERNEL_PAQUETE_TAMANIOS_SEGMENTOS) {
 			enviar_mensaje("Finalizar", cliente_fd,
 					KERNEL_MENSAJE_FINALIZAR_CONSOLA);
 			pthread_mutex_unlock(&mutexMensajes);
-
+*/
 		} else {
 			log_info(logger, "codigo de operacion incorrecto");
 		}
