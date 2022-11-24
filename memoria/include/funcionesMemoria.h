@@ -54,6 +54,10 @@ extern t_list* listaDePaginasEnMemoria;
 extern int posicionDelPuntero;
 extern int contadorDeMarcosPorProceso;
 
+
+extern int flagDeEntradasPorTabla;
+extern int marco;
+extern int desplazamiento;
 //-------------------------DECLARO FUNCIONES
 int chequeoCantidadArchivos(int);
 void crearConfiguraciones(char*);

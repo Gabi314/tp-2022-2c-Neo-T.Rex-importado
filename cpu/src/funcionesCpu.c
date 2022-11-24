@@ -173,7 +173,13 @@ void ejecutar(instruccion* unaInstruccion,t_pcb* pcb){
 
 				if(calculoDireccionLogicaExitoso(direccionLogica,pcb->tablaSegmentos)){
 					marco = buscarDireccionFisica(pcb);
-					uint32_t valorAAlmacenar;// = funcion que devuelve de memoria el valor mandando el marco conseguido previamente
+					enviarDireccionFisica(marco,desplazamientoDePagina,1); //EL TERCER PARAMETRO CAMBIAR POR COD_OP
+					uint32_t valorAAlmacenar;
+					int cod_op = recibir_operacion(socket_memoria);
+					if(cod_op == MEMORIA_A_CPU_NUMERO_LEIDO){// Recibe que se escribio correctamente el valor en memoria
+						valorAAlmacenar = recibir_entero(socket_memoria);//EN REALIDAD ES ACCEDER A MEMORIA
+						log_info(logger,"----------------FINALIZA MOV_OUT----------------\n");
+					}
 					registro = valorAAlmacenar;
 				}else{
 					log_info(logger,"Error: Segmentation Fault (segmento nro: %d)",numeroDeSegmento);//Enviar este mensaje a kernel y devolver pcb
@@ -188,7 +194,7 @@ void ejecutar(instruccion* unaInstruccion,t_pcb* pcb){
 				registro = registroAUtilizar(segundoParametro,pcb->registros);
 				marco = buscarDireccionFisica(pcb);
 				//funcion que envie valor de registro y que lo guarde en memoria
-				enviarDireccionFisica(marco,desplazamientoDePagina,0);//con 0 envia la dir fisica para escribir
+				enviarDireccionFisica(marco,desplazamientoDePagina,registro);//con 0 envia la dir fisica para escribir
 				//enviarValorAEscribir(primerParametro); Falta hacer esta funcion
 
 				int cod_op = recibir_operacion(socket_memoria);
