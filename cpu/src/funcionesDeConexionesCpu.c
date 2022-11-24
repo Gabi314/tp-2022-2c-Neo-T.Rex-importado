@@ -4,7 +4,7 @@
 //--------------DECLARO VARIABLES
 int clienteKernel;
 int clienteKernelInterrupt;
-int conexionMemoria;
+int socket_memoria;
 char* ipMemoria;
 char* puertoMemoria;
 char* puertoDeEscuchaDispatch;
@@ -46,17 +46,17 @@ int conexionConKernelDispatch(void){//hilo
 int conexionConMemoria(void){
 
 	// Creamos una conexión hacia el servidor
-    conexionMemoria = crear_conexion(ipMemoria, puertoMemoria);
+    socket_memoria = crear_conexion(ipMemoria, puertoMemoria);
 	log_info(logger,"Hola memoria, soy cpu");
 
-	enviar_mensaje("Dame el tamanio de pag y entradas por tabla",conexionMemoria,MENSAJE_CPU_MEMORIA);//MENSAJE_PEDIDO_CPU
+	enviar_mensaje("Dame el tamanio de pag y entradas por tabla",socket_memoria,MENSAJE_CPU_MEMORIA);//MENSAJE_PEDIDO_CPU
 
 	t_list* listaQueContieneTamanioDePagYEntradas = list_create();
 
-	int cod_op = recibir_operacion(conexionMemoria);
+	int cod_op = recibir_operacion(socket_memoria);
 
 	if(cod_op == TAM_PAGINAS_Y_CANT_ENTRADAS){//TAM_PAGINAS_Y_CANT_ENTRADAS
-		listaQueContieneTamanioDePagYEntradas = recibir_lista_enteros(conexionMemoria);
+		listaQueContieneTamanioDePagYEntradas = recibir_lista_enteros(socket_memoria);
 	}
 
 	leerTamanioDePaginaYCantidadDeEntradas(listaQueContieneTamanioDePagYEntradas);
@@ -195,6 +195,34 @@ void agregarSegmentosAlPaquete(entradaTablaSegmento* unSegmento){
 	memcpy(paquete->buffer->stream + desplazamiento, &(unSegmento->tamanioSegmento), sizeof(int));
 	desplazamiento+=sizeof(int);
 	free(unSegmento);
+}
+
+void enviarNroTablaDePaginas(t_list* tablaDeSegmentos,int numeroDeSegmento, int socket_memoria, int numeroDePagina) {
+	entradaTablaSegmento* unaEntradaTablaSegmento = malloc(sizeof(entradaTablaSegmento));
+	unaEntradaTablaSegmento = list_get(tablaDeSegmentos,numeroDeSegmento);
+
+	log_info(logger,"Le envio a memoria nro tabla de paginas %d y la pagina buscada %d",
+			unaEntradaTablaSegmento->numeroTablaPaginas, numeroDePagina);
+
+	t_paquete* paquete = crear_paquete(PRIMER_ACCESO);
+
+	agregar_a_paquete_unInt(paquete, &unaEntradaTablaSegmento->numeroTablaPaginas, sizeof(int));
+	agregar_a_paquete_unInt(paquete, &numeroDePagina, sizeof(int));
+
+	enviar_paquete(paquete, socket_memoria);
+	eliminar_paquete(paquete);
+}
+
+void enviarDireccionFisica(int marco, int desplazamientoPagina,int leer){
+	t_paquete* paquete = crear_paquete(SEGUNDO_ACCESO);
+
+	agregar_a_paquete_unInt(paquete,&marco,sizeof(marco));
+	agregar_a_paquete_unInt(paquete,&desplazamientoPagina,sizeof(desplazamientoPagina));
+	agregar_a_paquete_unInt(paquete,&leer,sizeof(leer));
+
+	log_info(logger,"Le envio a memoria direccion fisica: Marco:%d y Offset: %d",marco,desplazamiento);
+	enviar_paquete(paquete,socket_memoria);
+	eliminar_paquete(paquete);
 }
 
 

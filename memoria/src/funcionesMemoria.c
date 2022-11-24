@@ -25,6 +25,9 @@ t_list* listaTablaDePaginas;
 
 int posicionDelPuntero;
 int contadorDeMarcosPorProceso = 0;
+int cantidadDeSegmentos;
+
+int contNroTablaDePaginas = 0;
 
 //------------------------- DEFINICION DE FUNCIONES
 int chequeoCantidadArchivos(int argc){
@@ -58,16 +61,20 @@ void crearConfiguraciones(char* unaConfig){
 void inicializarMemoria(){
 	memoria = malloc(tamanioDeMemoria); // inicializo el espacio de usuario en memoria
 }
-
+//Mandar el cont antes de inicializar estructuras a kernel
 void inicializarEstructuras(int pid){
 	tablaDePaginas* unaTablaDePaginas = malloc(sizeof(tablaDePaginas));
-	unaTablaDePaginas->pid = pid;
-	unaTablaDePaginas->entradas = list_create();
+	for(int i = 0; i < cantidadDeSegmentos; i++){
+		unaTablaDePaginas->pid = pid;
+		unaTablaDePaginas->entradas = list_create();
 
-	cargarEntradasATabla(unaTablaDePaginas);
+		cargarEntradasATabla(unaTablaDePaginas);
 
-	//DEJO ESTA LISTA PARA "INICIALIZAR PROCESO", PORQUE DESPUES HAY QUE VER DONDE SE AGREGO ESTA TABLA DE PAGINAS Y MANDARLA A CPU
-	list_add(listaTablaDePaginas,unaTablaDePaginas);
+		//DEJO ESTA LISTA PARA "INICIALIZAR PROCESO", PORQUE DESPUES HAY QUE VER DONDE SE AGREGO ESTA TABLA DE PAGINAS Y MANDARLA A CPU
+		list_add(listaTablaDePaginas,unaTablaDePaginas);
+		contNroTablaDePaginas++;
+	}
+
 }
 
 

@@ -1,4 +1,5 @@
 #include "funcionesCpu.h"
+#include "tlb.h"
 
 //------------------DECLARO VARIABLES
 t_log* logger;
@@ -18,8 +19,6 @@ int tamanioMaximoDeSegmento;
 int numeroDePagina;
 int desplazamientoDePagina;
 
-t_list* tlb;
-
 uint32_t ax;
 uint32_t bx;
 uint32_t cx;
@@ -28,6 +27,8 @@ uint32_t dx;
 bool hayInterrupcion = false;
 static pthread_mutex_t mutexInterrupcion;
 pthread_t hiloInterrupciones;
+
+
 //--------------------FUNCIONES ELEMENTALES------------------------------
 int chequeoCantidadArchivos(int argc){
 	if(argc < 2) {
@@ -171,7 +172,7 @@ void ejecutar(instruccion* unaInstruccion,t_pcb* pcb){
 				direccionLogica = segundoParametro;
 
 				if(calculoDireccionLogicaExitoso(direccionLogica,pcb->tablaSegmentos)){
-					marco = buscarDireccionFisica(pcb->idProceso);
+					marco = buscarDireccionFisica(pcb);
 					uint32_t valorAAlmacenar;// = funcion que devuelve de memoria el valor mandando el marco conseguido previamente
 					registro = valorAAlmacenar;
 				}else{
@@ -181,15 +182,23 @@ void ejecutar(instruccion* unaInstruccion,t_pcb* pcb){
 
 				log_info(logger,"----------------FINALIZA MOV_IN----------------\n");
 				break;
-		//	case MOV_OUT:
-		//		log_info(logger,"----------------EXECUTE MOV_OUT----------------");
-		//		direccionLogica = primerParametro;
-		//		registro = registroAUtilizar(segundoParametro);
-		//		marco = buscarDireccionFisica(direccionLogica,pcb->tablaSegmentos);
-		//		//funcion que envie valor de registro y que lo guarde en memoria
-		//
-		//		log_info(logger,"----------------FINALIZA MOV_OUT----------------\n");
-		//		break;
+			case MOV_OUT:
+				log_info(logger,"----------------EXECUTE MOV_OUT----------------");
+				direccionLogica = primerParametro;
+				registro = registroAUtilizar(segundoParametro,pcb->registros);
+				marco = buscarDireccionFisica(pcb);
+				//funcion que envie valor de registro y que lo guarde en memoria
+				enviarDireccionFisica(marco,desplazamientoDePagina,0);//con 0 envia la dir fisica para escribir
+				//enviarValorAEscribir(primerParametro); Falta hacer esta funcion
+
+				int cod_op = recibir_operacion(socket_memoria);
+
+				if(cod_op == MENSAJE_CPU_MEMORIA){// Recibe que se escribio correctamente el valor en memoria
+					recibir_mensaje(socket_memoria);
+					log_info(logger,"----------------FINALIZA MOV_OUT----------------\n");
+				}
+
+				break;
 			case IO:
 				agregar_a_paquete_kernel_cpu(pcb, CPU_PCB_A_KERNEL_POR_IO, paquete); //ver que lo reciba kernel
 				enviar_entero(primerParametro,clienteKernel,CPU_DISPOSITIVO_A_KERNEL);//Mandar asi por separado o todo junto?
@@ -273,11 +282,11 @@ bool calculoDireccionLogicaExitoso(int direccionLogica,t_list* listaTablaSegment
 	return !haySegFault(numeroDeSegmento,desplazamientoDeSegmento,listaTablaSegmentos);
 }
 
-int buscarDireccionFisica(int pid){
-	int marco = chequearMarcoEnTLB(numeroDePagina,numeroDeSegmento,pid);
+int buscarDireccionFisica(t_pcb* pcb){
+	int marco = chequearMarcoEnTLB(numeroDePagina,numeroDeSegmento,pcb->idProceso);
 
 	if (marco == -1){
-		return marco; /*= accederAMemoria(marco)*/
+		return accederAMemoria(marco,numeroDeSegmento,pcb);
 	}
 
 	usleep(retardoDeInstruccion);
@@ -333,40 +342,29 @@ bool haySegFault(int numeroDeSegmento, int desplazamientoSegmento,t_list * lista
 			log_info(logger,"----------------FINALIZA WRITE----------------\n");
 		}
 
-
-int accederAMemoria(int marco){
+*/
+int accederAMemoria(int marco,int numeroDeSegmento,t_pcb* pcb){
 
 	log_info(logger,"La pagina no se encuentra en tlb, se debera acceder a memoria(tabla de paginas)"); // dice que la 0 no esta en tlb DEBUGGEAR
-	enviarEntradaTabla1erNivel();//1er acceso con esto memoria manda nroTabla2doNivel
+	enviarNroTablaDePaginas(pcb->tablaSegmentos,numeroDeSegmento,socket_memoria);//1er acceso con esto memoria manda nroTabla2doNivel
 
 	int seAccedeAMemoria = 1;
 
 	while (seAccedeAMemoria == 1) {
-		int cod_op = recibir_operacion(conexionMemoria);
-
-		t_list* listaQueContieneNroTabla2doNivel = list_create();
-		t_list* listaQueContieneMarco = list_create();
+		int cod_op = recibir_operacion(socket_memoria);
 
 		switch (cod_op){
-			case PRIMER_ACCESO://PRIMER_ACCESO
+			case PRIMER_ACCESO://UNICO ACCESO
 
-				listaQueContieneNroTabla2doNivel = recibir_paquete(conexionMemoria);//finaliza 1er acceso
-				int nroTabla2doNivel = (int) list_get(listaQueContieneNroTabla2doNivel,0);
-				log_info(logger,"Me llego el numero de tabla de segundoNivel que es % d",nroTabla2doNivel);
-
-				enviarEntradaTabla2doNivel(); //2do acceso a memoria
-				break;
-			case SEGUNDO_ACCESO://SEGUNDO_ACCESO
-				listaQueContieneMarco = recibir_paquete(conexionMemoria);//Finaliza el 2do acceso recibiendo el marco
-				marco = (int) list_get(listaQueContieneMarco,0);
+				marco = recibir_entero(socket_memoria);//finaliza 1er acceso
 
 				log_info(logger,"Me llego el marco que es %d",marco);
 
 				if(list_size(tlb) < cantidadEntradasTlb){
-					agregarEntradaATLB(marco,numeroDePagina);
+					agregarEntradaATLB(marco,numeroDePagina,pcb->idProceso,numeroDeSegmento);
 					sleep(1);// Para que espere haya 1 seg de diferencia( a veces pasa que se agregan en el mismo seg y jode los algoritmos)
 				}else{
-					algoritmosDeReemplazoTLB(numeroDePagina,marco);
+					algoritmosDeReemplazoTLB(numeroDePagina,marco,pcb->idProceso,numeroDeSegmento);
 				}
 				seAccedeAMemoria = 0;//salga del while
 				break;
@@ -381,52 +379,48 @@ int accederAMemoria(int marco){
 }
 
 
-	}else if(! strcmp(unaInstruccion->identificador,"READ")){
-		log_info(logger,"----------------EXECUTE READ----------------");
-
-		int marco = buscarDireccionFisica(unaInstruccion->parametros[0]);
-		enviarDireccionFisica(marco,desplazamiento,1);//con 1 enviar dir fisica para leer
-
-		log_info(logger,"----------------FINALIZA READ----------------\n");
-
-	}else if(! strcmp(unaInstruccion->identificador,"COPY")){
-		log_info(logger,"----------------EXECUTE COPY----------------");
-		int marcoDeOrigen = buscarDireccionFisica(unaInstruccion->parametros[1]);//DEBUGGEAR
-		int desplazamientoOrigen = desplazamiento;
-
-		int marcoDeDestino = buscarDireccionFisica(unaInstruccion->parametros[0]);
-		int desplazamientoDestino = desplazamiento;
-
-		enviarDireccionesFisicasParaCopia(marcoDeDestino,desplazamientoDestino,marcoDeOrigen,desplazamientoOrigen);
-		log_info(logger,"----------------FINALIZA COPY----------------\n");
-
-	}else if(! strcmp(unaInstruccion->identificador,"NO_OP")){
-		sleep(retardoDeNOOP/1000);// miliseg
-
-	}else if(! strcmp(unaInstruccion->identificador,"I/O")){
-
-		log_info(logger,"----------------I/O-----------------------");
-		//enviarTiempoIO(unaInstruccion->parametros[0]/1000);
-		//enviar_mensaje("Se suspende el proceso",conexionMemoria,MENSAJE);//Se envia pcb a kernel solamente
-		enviarPcb(unPcb,I_O);
-		//bloqueado = 1; esto no se
-		// luego kernel le avisa a memoria que se suspende
-		reiniciarTLB();
-
-		//log_info(logger,"----------------FIN DE I/O----------------"); esto debe ir cuando vuelve de la I/O
-
-	}else if(! strcmp(unaInstruccion->identificador,"EXIT")){
-		// enviar pcb actualizado finaliza el proceso
-		enviarPcb(unPcb,EXIT);
-		log_info(logger,"Finalizo el proceso ");
-		hayInstrucciones = 0;
-	}
-}
-*/
-
-//void agregarEntradaATLB(marco,numeroDePagina){//TO-DO
+//	}else if(! strcmp(unaInstruccion->identificador,"READ")){
+//		log_info(logger,"----------------EXECUTE READ----------------");
 //
+//		int marco = buscarDireccionFisica(unaInstruccion->parametros[0]);
+//		enviarDireccionFisica(marco,desplazamiento,1);//con 1 enviar dir fisica para leer
+//
+//		log_info(logger,"----------------FINALIZA READ----------------\n");
+//
+//	}else if(! strcmp(unaInstruccion->identificador,"COPY")){
+//		log_info(logger,"----------------EXECUTE COPY----------------");
+//		int marcoDeOrigen = buscarDireccionFisica(unaInstruccion->parametros[1]);//DEBUGGEAR
+//		int desplazamientoOrigen = desplazamiento;
+//
+//		int marcoDeDestino = buscarDireccionFisica(unaInstruccion->parametros[0]);
+//		int desplazamientoDestino = desplazamiento;
+//
+//		enviarDireccionesFisicasParaCopia(marcoDeDestino,desplazamientoDestino,marcoDeOrigen,desplazamientoOrigen);
+//		log_info(logger,"----------------FINALIZA COPY----------------\n");
+//
+//	}else if(! strcmp(unaInstruccion->identificador,"NO_OP")){
+//		sleep(retardoDeNOOP/1000);// miliseg
+//
+//	}else if(! strcmp(unaInstruccion->identificador,"I/O")){
+//
+//		log_info(logger,"----------------I/O-----------------------");
+//		//enviarTiempoIO(unaInstruccion->parametros[0]/1000);
+//		//enviar_mensaje("Se suspende el proceso",conexionMemoria,MENSAJE);//Se envia pcb a kernel solamente
+//		enviarPcb(unPcb,I_O);
+//		//bloqueado = 1; esto no se
+//		// luego kernel le avisa a memoria que se suspende
+//		reiniciarTLB();
+//
+//		//log_info(logger,"----------------FIN DE I/O----------------"); esto debe ir cuando vuelve de la I/O
+//
+//	}else if(! strcmp(unaInstruccion->identificador,"EXIT")){
+//		// enviar pcb actualizado finaliza el proceso
+//		enviarPcb(unPcb,EXIT);
+//		log_info(logger,"Finalizo el proceso ");
+//		hayInstrucciones = 0;
+//	}
 //}
+
 
 
 void leerTamanioDePaginaYCantidadDeEntradas(t_list* listaQueContieneTamanioDePagYEntradas){

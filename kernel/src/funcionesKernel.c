@@ -182,7 +182,8 @@ t_list * inicializar_tabla_segmentos(int socket_cliente) {
 	while (i<list_size(listaSegmentos)) {
 		entradaTablaSegmento * elemento;
 
-		elemento->numeroTablaPaginas = 0; // identificador de TP asociado
+		elemento->numeroSegmento = i;
+		elemento->numeroTablaPaginas = 0; // identificador de TP asociado, esto viene de memoria
 		elemento->tamanioSegmento = list_remove(listaSegmentos,0); // tamanio del segmento
 
 		list_add(tablaSegmentos,elemento);

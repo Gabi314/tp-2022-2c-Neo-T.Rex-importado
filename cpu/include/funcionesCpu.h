@@ -39,7 +39,7 @@ extern char* puertoDeEscuchaInterrupt;
 extern int tamanioTotalIdentificadores;
 extern int contadorInstrucciones;
 extern int desplazamiento;
-extern int conexionMemoria;
+extern int socket_memoria;
 
 //extern uint32_t ax;
 //extern uint32_t bx;
@@ -47,6 +47,9 @@ extern int conexionMemoria;
 //extern uint32_t dx;
 extern bool ejecutando;
 extern bool hayInterrupcion;
+
+extern char* algoritmoReemplazoTlb;
+extern int cantidadEntradasTlb;
 
 typedef struct
 {
@@ -150,7 +153,7 @@ instruccion* buscarInstruccionAEjecutar(t_pcb*);
 void leerTamanioDePaginaYCantidadDeEntradas(t_list*);
 void ejecutar(instruccion*,t_pcb*);
 int decode(instruccion*);
-int buscarDireccionFisica(int);
+int buscarDireccionFisica(t_pcb*);
 char* dispositivoIOSegunParametro(int);
 int chequearMarcoEnTLB(int,int,int);
 bool calculoDireccionLogicaExitoso(int,t_list*);
