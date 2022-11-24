@@ -197,7 +197,10 @@ void solicitudIngresarValorPorTeclado(int cod_op){
 	scanf("%d",&valorIngresadoPorTeclado);
 
 	log_info(logger,"Se ingreso el valor %d correctamente",valorIngresadoPorTeclado);
-	//Falta enviarlo!!!!
+
+	enviar_mensaje("Desbloquear proceso. Ya se ingreso un valor por teclado",conexion,KERNEL_MENSAJE_DESBLOQUEO_TECLADO);
+
+	enviar_entero(valorIngresadoPorTeclado,conexion,KERNEL_PAQUETE_VALOR_RECIBIDO_DE_TECLADO);
 }
 
 void atenderPeticionesKernel(){

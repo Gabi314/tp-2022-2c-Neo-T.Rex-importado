@@ -30,11 +30,12 @@ int main(int argc, char *argv[]) {
 
 	archivo = recorrerArchivo(contenido,archivo);
 
+	atenderPeticionesKernel();
+
 	fclose(archivo);
 	if (contenido != NULL) //valida si contenido es NULL
 	free(contenido);
 
-	atenderPeticionesKernel();
 
 }
 

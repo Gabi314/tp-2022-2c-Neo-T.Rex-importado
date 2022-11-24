@@ -38,8 +38,15 @@ typedef enum {
 	KERNEL_MENSAJE_DESBLOQUEO_TECLADO,
 	KERNEL_PAQUETE_VALOR_RECIBIDO_DE_TECLADO,
 	KERNEL_PCB_A_CPU,
+	IO_GENERAL,
+	IO_TECLADO,
+	IO_PANTALLA,
 	QUANTUM,
 	DESALOJAR_PROCESO_POR_FIN_DE_QUANTUM,
+	KERNEL_MENSAJE_SOLICITUD_CARGAR_PAGINA,
+	KERNEL_MENSAJE_CONFIRMACION_PF,
+	KERNEL_A_MEMORIA_PAGINA_A_CARGAR,
+	KERNEL_A_MEMORIA_MENSAJE_LIBERAR_POR_TERMINADO,
 	PAGE_FAULT,
 	TERMINAR_PROCESO,
 	MENSAJE_CPU_MEMORIA,
@@ -52,7 +59,8 @@ typedef enum {
 	CPU_A_KERNEL_INGRESAR_VALOR_POR_TECLADO,
 	CPU_A_KERNEL_MOSTRAR_REGISTRO_POR_PANTALLA,
 	CPU_PCB_A_KERNEL_POR_IO,
-	CPU_A_KERNEL_UNIDADES_DE_TRABAJO_IO
+	CPU_A_KERNEL_UNIDADES_DE_TRABAJO_IO,
+	CPU_A_KERNEL_PAGINA_PF
 
 } op_code;
 
@@ -68,6 +76,43 @@ typedef struct {
 	op_code codigo_operacion;
 	t_buffer *buffer;
 } t_paquete;
+
+typedef struct
+{
+	char* identificador;
+	int parametros[2];
+} instruccion;
+
+
+typedef struct
+{
+	int numeroSegmento;//revisar
+	int tamanioSegmento;
+	int numeroTablaPaginas;
+}entradaTablaSegmento;
+
+typedef struct
+{
+	int AX;
+	int BX;
+	int CX;
+	int DX;
+} t_registros;
+
+typedef enum estado { NEW, READY, BLOCKED, EXEC, TERMINATED } t_estado;
+typedef enum algoritmo { FIFO, RR } t_algoritmo_pcb;
+
+typedef struct
+{
+	int idProceso;
+	t_list* instrucciones;
+	int programCounter;
+	t_registros registros;
+	t_list* tablaSegmentos;
+	int socket;
+	t_estado estado;
+	t_algoritmo_pcb algoritmoActual;
+} t_pcb;
 
 
 int say_hello(char *who);
@@ -107,5 +152,7 @@ void eliminar_paquete(t_paquete*);
 void liberar_conexion(int);
 
 char** recibirListaDispositivos(int);
+
+t_pcb* recibir_pcb(int);
 
 #endif

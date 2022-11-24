@@ -8,6 +8,7 @@ t_list *listaTamanioSegmentos;
 
 int conexionCpu = 0;
 int conexionCpuInterrupt = 0;
+int socketMemoria = 0;
 
 
 int main(int argc, char *argv[]) {
@@ -305,7 +306,7 @@ if (recibir_operacion(cliente_fd) == KERNEL_PAQUETE_TAMANIOS_SEGMENTOS) {
 
 	return PCB;
 }
-}
+
 
 //int conexionConCpu(t_pcb * PCB){
 //	log_info(logger,"creamos conexion con un puerto de cpu");

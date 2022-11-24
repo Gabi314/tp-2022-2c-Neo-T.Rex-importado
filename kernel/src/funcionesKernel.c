@@ -437,9 +437,8 @@ void ejecutar(t_pcb* proceso) {
 		log_info(logger, "[EXEC] No se logró encontrar un proceso para ejecutar");
 	}
 
- //	conexionConCpu(proceso); Aca mandamos el proceso a cpu
- //	agregarAPaqueteKernelCpu(proceso); ?
-
+ //	agregarAPaqueteKernelCpu(proceso); //Aca mandamos el proceso a cpu
+	agregar_a_paquete_kernel_cpu(proceso,KERNEL_PCB_A_CPU,conexionCpu);
 
 	log_info(logger, "[ejecutar]: enviamos el proceso a cpu");
 
@@ -447,15 +446,15 @@ void ejecutar(t_pcb* proceso) {
 
 
 
-/*void atender_interrupcion_de_ejecucion() {
+void atender_interrupcion_de_ejecucion() {
 
 while (1) {
-	int cod_op = recibir_operacion(puertoCpuDispatch); //Puerto o socket (Cuando iniciemos el servidor en el main esto cambia)
+	int cod_op = recibir_operacion(conexionCpu); //conexionCpu es el socket interrupt
 
 	switch (cod_op) {
 
 	case IO_GENERAL:
-		t_pcb * proceso = recibir_pcb(puertoCpuDispatch);
+		t_pcb * proceso = recibir_pcb(conexionCpu);
 
 		if(!strcmp(algoritmoPlanificacion, "RR") || (!strcmp(algoritmoPlanificacion, "Feedback") && proceso->algoritmoActual == RR)){
 			pthread_cancel(hiloQuantumRR);
@@ -463,8 +462,8 @@ while (1) {
 
 		char * dispositivo;
 
-		recibir_operacion(puertoCpuDispatch);
-		dispositivo = recibir_cadena(puertoCpuDispatch);
+		recibir_operacion(conexionCpu);
+		dispositivo = recibir_mensaje(conexionCpu);
 
 		bool comparar_nombre_dispositivo( t_elem_disp * elemento){
 			return !strcmp(elemento->dispositivo,dispositivo);
@@ -474,8 +473,8 @@ while (1) {
 
 		queue_push(elementoLista->cola_procesos,proceso);
 
-		recibir_operacion(puertoCpuDispatch);
-		int unidadesTrabajo = recibir_entero(puertoCpuDispatch);
+		recibir_operacion(conexionCpu);
+		int unidadesTrabajo = recibir_entero(conexionCpu);
 		queue_push(elementoLista->cola_UTs,&unidadesTrabajo);
 
 		sem_post(&elementoLista->semaforo);
@@ -486,23 +485,21 @@ while (1) {
 
 
 		t_info_teclado * aMandarTeclado = malloc(sizeof(*aMandarTeclado));
-		aMandarTeclado->pcb = recibir_pcb(puertoCpuDispatch);
+		aMandarTeclado->pcb = recibir_pcb(conexionCpu);
 
 
 		if(!strcmp(algoritmoPlanificacion, "RR") || (!strcmp(algoritmoPlanificacion, "Feedback") && aMandarTeclado->pcb->algoritmoActual == RR)){
 									pthread_cancel(hiloQuantumRR);
 								}
 
-		recibir_operacion(puertoCpuDispatch);
-		aMandarTeclado->registro =recibir_entero(puertoCpuDispatch);
-
-
+		recibir_operacion(conexionCpu);
+		aMandarTeclado->registro =recibir_entero(conexionCpu);
 
 
 		//pthread_mutex_lock(&mutexTeclado);
-		t_pcb * pcbTeclado = recibir_pcb(puertoCpuDispatch); // la idea es que sea una varible loca
-		recibir_operacion(puertoCpuDispatch);
-		registroTeclado =recibir_entero(puertoCpuDispatch);
+		t_pcb * pcbTeclado = recibir_pcb(conexionCpu); // la idea es que sea una varible loca
+		recibir_operacion(conexionCpu);
+		registroTeclado =recibir_entero(conexionCpu);
 		//pthread_mutex_unlock(&mutexTeclado);
 
 
@@ -518,19 +515,17 @@ while (1) {
 
 	case IO_PANTALLA:
 
-
-
 		t_info_pantalla * aMandarPantalla = malloc(sizeof(*aMandarPantalla));
 
 	//	pthread_mutex_lock(&mutexPantalla);
-		aMandarPantalla->pcb = recibir_pcb(puertoCpuDispatch);
+		aMandarPantalla->pcb = recibir_pcb(conexionCpu);
 
 		if(!strcmp(algoritmoPlanificacion, "RR") || (!strcmp(algoritmoPlanificacion,"Feedback") && aMandarPantalla->pcb->algoritmoActual == RR)){
 						pthread_cancel(hiloQuantumRR);
 					}
 
-		recibir_operacion(puertoCpuDispatch);
-		registroPantalla = recibir_entero(puertoCpuDispatch);
+		recibir_operacion(conexionCpu);
+		registroPantalla = recibir_entero(conexionCpu);
 	//	pthread_mutex_unlock(&mutexPantalla);
 
 
@@ -541,7 +536,7 @@ while (1) {
 		break;
 
 	case QUANTUM:
-		t_pcb* pcb = recibir_pcb(puertoCpuDispatch);
+		t_pcb* pcb = recibir_pcb(conexionCpu);
 
 		if (!strcmp(algoritmoPlanificacion, "RR")) {
 			queue_push(colaReadyRR,pcb);
@@ -558,20 +553,31 @@ while (1) {
 
 	case PAGE_FAULT:
 
-		t_pcb* pcbPF = recibir_pcb(puertoCpuDispatch);
+		t_pcb* pcbPF = recibir_pcb(conexionCpu);
 
-		//recibir pagina a cargar desde cpu
+		int operacion = recibir_operacion(conexionCpu); //ver si es dispatch o interrupt
+		if (operacion != CPU_A_KERNEL_PAGINA_PF){
+			log_info(logger, "codigo de operacion incorrecto");
+		}
+
+		int paginaRecibida = recibir_entero(conexionCpu);//recibir pagina a cargar desde cpu
+
+		t_info_pf * aMandarPF = malloc(sizeof(*aMandarPF));
+
+		aMandarPF->pcb = pcbPF;
+		aMandarPF->pagina = paginaRecibida;
 
 		pthread_t hiloPF;
-		int hiloPageFault = pthread_create(&hiloPF, NULL, &atender_page_fault, pcbPF);
+		int hiloPageFault = pthread_create(&hiloPF, NULL, &atender_page_fault, aMandarPF);
 		pthread_detach(hiloPageFault);
 
+		free(aMandarPF);
 		break;
 
 	case TERMINAR_PROCESO:
 		log_info(logger,"[atender_interrupcion_de_ejecucion]: recibimos operacion EXIT");
 
-		t_pcb* pcbATerminar = recibir_pcb(puertoCpuDispatch);
+		t_pcb* pcbATerminar = recibir_pcb(conexionCpu);
 
 		if(algoritmoPlanificacion == "RR" || (algoritmoPlanificacion == "Feedback" && pcbATerminar->algoritmoActual == RR)){
 			pthread_cancel(hiloQuantumRR);
@@ -590,19 +596,21 @@ while (1) {
 	}
 }
 
-*/
+
 
 void terminarEjecucion(t_pcb * procesoAFinalizar) {
 
 
 	procesoAFinalizar->estado = TERMINATED; // es local no hace falta mutex
 
-	//enviar_mensaje("Liberar estructuras",socketMemoria,MENSAJE_LIBERAR_POR_TERMINADO);//Enviamos mensaje a memoria para que libere estructuras
+	enviar_mensaje("Liberar estructuras",socketMemoria,KERNEL_A_MEMORIA_MENSAJE_LIBERAR_POR_TERMINADO);//Enviamos mensaje a memoria para que libere estructuras
 
 	log_info(logger, "[terminarEjecucion]: Se envia un mensaje a memoria para que libere estructuras");
 
-	//	enviar_mensaje("Finalizo la ejecucion",unaConsola->socket,MENSAJE_FINALIZAR_EXE); //Avisamos a consola que finalizo el proceso
-	//	liberar_conexion(unaConsola->socket);
+
+	enviar_mensaje("Finalizar consola", procesoAFinalizar->socket,KERNEL_MENSAJE_FINALIZAR_CONSOLA);
+
+	liberar_conexion(procesoAFinalizar->socket);
 
 	log_info(logger, "[terminarEjecucion]: Aumenta grado de multiprogramacion actual y termina terminarEjecucion!!");
 
@@ -715,7 +723,7 @@ void controlar_quantum(){
 
 	usleep(quantum_rr * 1000);
 
-	//enviar_mensaje("Cpu desalojá tu proceso por fin de quantum",  ,DESALOJAR_PROCESO_POR_FIN_DE_QUANTUM); // ES EL SOCKET
+	enviar_mensaje("Cpu desalojá tu proceso por fin de quantum", conexionCpuInterrupt ,DESALOJAR_PROCESO_POR_FIN_DE_QUANTUM); // ES EL SOCKET
 
 }
 
@@ -751,20 +759,25 @@ void atender_IO_generico(t_elem_disp* elemento){
 
 
 
-void atender_page_fault(t_pcb* pcb){
+void atender_page_fault(t_info_pf* infoPF){
+
+	t_pcb * pcb = infoPF->pcb;
+	int pagina = infoPF->pagina;
+
 	pcb->estado = BLOCKED; // hace falta un nuevo estado BLOCKED_PF?
 
-//	enviar_mensaje("kernel solicita que se cargue en memoria la pagina correspondiente",socket que corresponda, KERNEL_MENSAJE_SOLICITUD_CARGAR_PAGINA);
+	enviar_mensaje("kernel solicita que se cargue en memoria la pagina correspondiente",socketMemoria, KERNEL_MENSAJE_SOLICITUD_CARGAR_PAGINA);
 
-	//hay que mandar la pagina recibida de cpu
+	enviar_entero(pagina,socketMemoria, KERNEL_A_MEMORIA_PAGINA_A_CARGAR);//hay que mandar la pagina recibida de cpu
 
-//	int codigo = recibir_operacion(socket que corresponda);
 
-//	if(codigo != KERNEL_MENSAJE_CONFIRMACION_PF){
-//		log_info(logger,"codigo de operacion incorrecto");
-//	}
-//
-//	recibir_mensaje(socket que corresponda);
+	int codigo = recibir_operacion(conexionCpuInterrupt);
+
+	if(codigo != KERNEL_MENSAJE_CONFIRMACION_PF){
+		log_info(logger,"codigo de operacion incorrecto");
+	}
+
+	recibir_mensaje(conexionCpuInterrupt);
 
 	if (!strcmp(algoritmoPlanificacion, "FIFO")) {
 				queue_push(colaReadyFIFO,pcbTeclado);
@@ -783,4 +796,71 @@ void atender_page_fault(t_pcb* pcb){
 	sem_post(&pcbEnReady);
 
 }
+
+
+t_pcb* recibir_pcb(int socket_cliente)//ponerla en shared
+{
+	int size;
+	int desplazamiento = 0;
+	void * buffer;
+
+	buffer = recibir_buffer(&size, socket_cliente);
+	t_pcb* pcb = malloc(sizeof(t_pcb));
+	pcb->instrucciones = list_create();
+	pcb->tablaSegmentos = list_create();
+	int contadorInstrucciones = 0;
+	int contadorSegmentos = 0;
+	int i = 0;
+	memcpy(&pcb->idProceso, buffer + desplazamiento, sizeof(int));
+	desplazamiento+=sizeof(int);
+
+	log_info(logger,"PID: %d",pcb->idProceso);
+	memcpy(&contadorInstrucciones, buffer + desplazamiento, sizeof(int));
+	desplazamiento+=sizeof(int);
+	while(i < contadorInstrucciones){
+		instruccion* unaInstruccion = malloc(sizeof(instruccion));
+		int identificador_length;
+		memcpy(&identificador_length, buffer + desplazamiento, sizeof(int));
+		desplazamiento+=sizeof(int);
+		unaInstruccion->identificador = malloc(identificador_length);
+		memcpy(unaInstruccion->identificador, buffer+desplazamiento, identificador_length);
+		desplazamiento+=identificador_length;
+		memcpy(unaInstruccion->parametros, buffer+desplazamiento, sizeof(int[2]));
+		desplazamiento+=sizeof(int[2]);
+		list_add(pcb -> instrucciones, unaInstruccion);
+		log_info(logger,"Instruccion: %s",unaInstruccion->identificador);
+		log_info(logger,"Primer parametro: %d",unaInstruccion->parametros[0]);
+		i++;
+	}
+	memcpy(&pcb->programCounter, buffer + desplazamiento, sizeof(int));
+	desplazamiento+=sizeof(int);
+	log_info(logger,"program counter: %d",pcb->programCounter);
+	memcpy(&pcb->registros, buffer + desplazamiento, sizeof(t_registros));
+	desplazamiento+=sizeof(t_registros);
+	log_info(logger,"Registro AX: %d y DX: %d",pcb->registros.AX,pcb->registros.DX);
+	memcpy(&contadorSegmentos, buffer + desplazamiento, sizeof(int));
+	desplazamiento+=sizeof(int);
+	i=0;
+	log_info(logger,"cont seg: %d",contadorSegmentos);
+	while(i < contadorSegmentos){
+		entradaTablaSegmento* unSegmento = malloc(sizeof(entradaTablaSegmento));
+		memcpy(&(unSegmento->numeroSegmento),buffer + desplazamiento, sizeof(int));
+		desplazamiento+=sizeof(int);
+		memcpy(&(unSegmento->numeroTablaPaginas),buffer + desplazamiento, sizeof(int));
+		desplazamiento+=sizeof(int);
+		memcpy(&(unSegmento->tamanioSegmento),buffer + desplazamiento, sizeof(int));
+		desplazamiento+=sizeof(int);
+		log_info(logger,"Nro: %d, numero tabla paginas %d, tamanio segmento %d",unSegmento->numeroSegmento,unSegmento->numeroTablaPaginas,unSegmento->tamanioSegmento);
+		list_add(pcb->tablaSegmentos,unSegmento);
+		i++;
+	}
+//	memcpy(&pcb->socket_cliente, buffer + desplazamiento, sizeof(int)); al pedo mepa
+	memcpy(&(pcb->estado), buffer + desplazamiento, sizeof(t_estado));
+	desplazamiento+=sizeof(t_estado);
+	log_info(logger,"Estado: %d",pcb->estado);
+	free(buffer);
+	return pcb;
+}
+
+
 

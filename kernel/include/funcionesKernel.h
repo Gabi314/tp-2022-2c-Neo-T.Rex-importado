@@ -14,7 +14,7 @@ typedef enum
 	PANTALLA,
 	TECLADO
 } dispositivos_IO;
-
+/*
 typedef struct
 {
 	int AX;
@@ -37,7 +37,7 @@ typedef struct
 	t_estado estado;
 	t_algoritmo_pcb algoritmoActual;
 } t_pcb;
-
+*/
 typedef struct
 {
 	t_pcb* pcb;
@@ -49,7 +49,10 @@ typedef struct {
 	int registro;
 } t_info_pantalla;
 
-
+typedef struct {
+	t_pcb* pcb;
+	int pagina;
+} t_info_pf;
 
 // En principio, no hace falta ------------------------------------
 typedef struct {
@@ -61,22 +64,22 @@ typedef struct {
 
 } t_elem_disp;
 // En principio, no hace falta ------------------------------------
-
+/*
 typedef struct
 {
 	char* identificador;
 	int parametros[2];
 } instruccion;
 
-
-
+*/
+/*
 typedef struct
 {
 	int numeroSegmento;//revisar
 	int tamanioSegmento;
 	int numeroTablaPaginas;
 }entradaTablaSegmento;
-
+*/
 
 
 extern int socketServidor;
@@ -125,7 +128,7 @@ void atender_IO_teclado(t_info_teclado * info);
 void atender_IO_pantalla(t_info_pantalla * info);
 void atender_IO_generico(t_elem_disp*);
 void controlar_quantum();
-void atender_page_fault(t_pcb* pcb);
+void atender_page_fault(t_info_pf*);
 
 
 extern char * ipMemoria;
@@ -144,6 +147,8 @@ extern int quantum_rr;
 extern sem_t kernelSinFinalizar;
 
 extern int conexionCpu;
+extern int conexionCpuInterrupt;
+extern int socketMemoria;
 extern int tamanioTotalIdentificadores;
 extern int contadorInstrucciones;
 extern int contadorSegmentos;
@@ -182,6 +187,8 @@ void agregarInstruccionesAlPaquete(instruccion*);
 void agregarSegmentosAlPaquete(entradaTablaSegmento*);
 void agregar_a_paquete_kernel_cpu(t_pcb*,int,int);
 void aplanarDispositivosIO(char**);
+
+
 
 void destruirProceso(t_pcb*);
 
