@@ -133,18 +133,22 @@ t_pcb* recibir_pcb(int socket_cliente)//ponerla en shared
 //----------------------------- Para ser cliente de Memoria -------------------------------------------------
 
 //ESTO ES PARA MANDAR UN PCB A KERNEL-------------------------------------------------------------------------------------
-t_paquete* agregar_a_paquete_kernel_cpu(t_pcb* pcb,int cod_op,t_paquete* paquete)
+void agregar_a_paquete_kernel_cpu(t_pcb* pcb,int cod_op,int clienteKernel)
 {
 	tamanioTotalIdentificadores = 0;
 	contadorInstrucciones = 0;
+	contadorSegmentos = 0;
 	desplazamiento = 0;
-	paquete = crear_paquete(cod_op);
+	t_paquete* paquete = crear_paquete(cod_op);
 	list_iterate(pcb->instrucciones, (void*) obtenerTamanioIdentificadores);
-	//list_iterate(pcb->tablaSegmentos, (void*) obtenerCantidadDeSegmentos);
-	paquete->buffer->stream = realloc(paquete->buffer->stream, paquete->buffer->size + tamanioTotalIdentificadores +
-										contadorInstrucciones*sizeof(int[2]) + contadorInstrucciones*sizeof(int) +
-											4*sizeof(int));/* + sizeof(t_registros) + (contadorSegmentos*sizeof(int)*4) +
-												sizeof(t_estado));*/
+	list_iterate(pcb->tablaSegmentos, (void*) obtenerCantidadDeSegmentos);
+	paquete->buffer->stream = realloc(paquete->buffer->stream,
+			paquete->buffer->size + tamanioTotalIdentificadores
+					+ contadorInstrucciones * sizeof(int[2])
+					+ contadorInstrucciones * sizeof(int) + 3 * sizeof(int)
+					+ sizeof(t_registros)
+					+ contadorSegmentos * sizeof(entradaTablaSegmento)
+					+ sizeof(int));
 	memcpy(paquete->buffer->stream + desplazamiento, &(pcb->idProceso), sizeof(int));
 	desplazamiento+=sizeof(int);
 	memcpy(paquete->buffer->stream + desplazamiento, &contadorInstrucciones, sizeof(int));
@@ -152,17 +156,20 @@ t_paquete* agregar_a_paquete_kernel_cpu(t_pcb* pcb,int cod_op,t_paquete* paquete
 	list_iterate(pcb->instrucciones, (void*) agregarInstruccionesAlPaquete);
 	memcpy(paquete->buffer->stream + desplazamiento, &(pcb->programCounter), sizeof(int));
 	desplazamiento+=sizeof(int);
-//	memcpy(paquete->buffer->stream + desplazamiento, &pcb->registros, sizeof(t_registros));
-//	desplazamiento+=sizeof(int);
-	list_iterate(pcb->instrucciones, (void*) agregarSegmentosAlPaquete);
-//	memcpy(paquete->buffer->stream + desplazamiento, &(pcb->socket_cliente), sizeof(int)); No se para que esta
-//	desplazamiento+=sizeof(int);
-//	memcpy(paquete->buffer->stream + desplazamiento, &pcb->estado, sizeof(t_estado));
-//	desplazamiento+=sizeof(int);
+	memcpy(paquete->buffer->stream + desplazamiento, &(pcb->registros), sizeof(t_registros));
+	desplazamiento+=sizeof(t_registros);
+	memcpy(paquete->buffer->stream + desplazamiento, &contadorSegmentos, sizeof(int));//ver tema contador
+	desplazamiento+=sizeof(int);
+	list_iterate(pcb->tablaSegmentos, (void*) agregarSegmentosAlPaquete);
+	log_info(logger,"cont seg: %d",contadorSegmentos);
+	//	memcpy(paquete->buffer->stream + desplazamiento, &(pcb->socket_cliente), sizeof(int));
+	//	desplazamiento+=sizeof(int);
+	memcpy(paquete->buffer->stream + desplazamiento, &(pcb->estado), sizeof(int));
+	desplazamiento+=sizeof(int);
 	paquete->buffer->size = desplazamiento;
-	free(pcb);
 
-	return paquete;
+	enviar_paquete(paquete, clienteKernel);
+	free(pcb);
 }
 
 void obtenerTamanioIdentificadores(instruccion* unaInstruccion) {
@@ -213,16 +220,26 @@ void enviarNroTablaDePaginas(t_list* tablaDeSegmentos,int numeroDeSegmento, int 
 	eliminar_paquete(paquete);
 }
 
-void enviarDireccionFisica(int marco, int desplazamientoPagina,int leer){
-	t_paquete* paquete = crear_paquete(SEGUNDO_ACCESO);
-
+void enviarDireccionFisica(int marco, int desplazamientoPagina,int leer,int registroAEscribir){
 	agregar_a_paquete_unInt(paquete,&marco,sizeof(marco));
 	agregar_a_paquete_unInt(paquete,&desplazamientoPagina,sizeof(desplazamientoPagina));
-	agregar_a_paquete_unInt(paquete,&leer,sizeof(leer));
+
+	if(leer){
+		t_paquete* paquete = crear_paquete(CPU_A_MEMORIA_LEER);
+	}else{
+		t_paquete* paquete = crear_paquete(CPU_A_MEMORIA_VALOR_A_ESCRIBIR);
+		agregar_a_paquete_unInt(paquete,&registroAEscribir,sizeof(registroAEscribir));
+		log_info(logger,"Le envio a memoria el registro: %d a escribir",registroAEscribir);
+	}
 
 	log_info(logger,"Le envio a memoria direccion fisica: Marco:%d y Offset: %d",marco,desplazamiento);
 	enviar_paquete(paquete,socket_memoria);
 	eliminar_paquete(paquete);
+}
+
+void enviarValorAEscribir(uint32_t valorAEscribir){
+	log_info(logger,"Le envio a memoria el valor a escribir %u",valorAEscribir);
+	enviar_entero(valorAEscribir, socket_memoria, CPU_A_MEMORIA_VALOR_A_ESCRIBIR);
 }
 
 

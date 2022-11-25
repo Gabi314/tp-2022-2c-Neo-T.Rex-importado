@@ -1,14 +1,14 @@
 #include "funcionesMemoria.h"
 
 int flagDeEntradasPorTabla;
-int marco;
+int numeroDeMarco;
 int desplazamiento;
 int clienteCpu;
 int clienteKernel;
 
 int conexionConCpu(void){
 	static pthread_mutex_t mutexMemoriaData;
-	int server_fd = iniciar_servidor(IP_MEMORIA,PUERTO_MEMORIA,"Cpu"); // tendria que estar comentado porque viene despues de coenxion con kernel
+	int server_fd = iniciar_servidor(IP_MEMORIA,puertoMemoria,"Cpu"); // tendria que estar comentado porque viene despues de coenxion con kernel
 
 	log_info(logger, "Memoria lista para recibir a Cpu");
 	clienteCpu = esperar_cliente(server_fd,"Cpu");
@@ -28,97 +28,64 @@ int conexionConCpu(void){
 		pthread_mutex_lock(&mutexMemoriaData);
 		int cod_op = recibir_operacion(clienteCpu);
 		sleep(retardoMemoria/1000); //lo que se tarda en acceder a memoria
-		//log_info(logger,"Accediendo a memoria espere %d segundos\n",retardoMemoria/1000);
+
+		log_info(logger,"Accediendo a memoria espere %d segundos\n",retardoMemoria/1000);
+
 		switch (cod_op) {
 			case MENSAJE_CPU_MEMORIA://mensaje de pedido tam pag y cant entradas
 				recibir_mensaje(clienteCpu);//recibe el pedido de tam_pag y cant_entradas
 				enviarTamanioDePaginaYCantidadDeEntradas(clienteCpu);
 				break;
-//			case PRIMER_ACCESO://envio de nro tabla 2do nivel
-//				listaQueContieneNroTabla1erNivelYentrada = recibir_paquete_int(clienteCpu); // lista con valores de nro y entrada de tabla
-//
-//				nroTabla2doNivel = leerYRetornarNroTabla2doNivel(listaQueContieneNroTabla1erNivelYentrada);
-//
-//				enviarNroTabla2doNivel(clienteCpu,nroTabla2doNivel);
-//				break;
-
-				//CASE DEL ACCESO
 			case PRIMER_ACCESO://ES OBTENER MARCO
-//				numeroTablaDePaginas = recibir_entero(clienteCpu);
-//				numeroDeLaPagina = recibir_entero(clienteCpu);
 
-				listaConTablaDePaginaYPagina = recibir_paquete_int(clienteCpu);
+
+				listaConTablaDePaginaYPagina = recibir_lista_enteros(clienteCpu);
 				numeroTablaDePaginas = list_get(listaConTablaDePaginaYPagina,0);
 				numeroDeLaPagina = list_get(listaConTablaDePaginaYPagina,1);
 
 				//log_info(logger,"Me llego  la entrada de segundo nivel %d",entradaTabla2doNivel);
 
-				marco =  marcoSegunIndice(numeroTablaDePaginas,numeroDeLaPagina);
-				enviar_entero(marco,clienteCpu,MEMORIA_A_CPU_NUMERO_MARCO);
-
-				break;
-				//READ
-			case SEGUNDO_ACCESO: //ESTE VA A SER EL READ
-				listaQueContieneDireccionFisca = recibir_lista_enteros(clienteCpu);
-
-				marco = (int) list_get(listaQueContieneDireccionFisca,0); // por ahora piso la variable de arriba despues ver como manejar el tema de marco que envio y marco que recibo
-				desplazamiento = (int) list_get(listaQueContieneDireccionFisca,1);
-				int mov_in = (int) list_get(listaQueContieneDireccionFisca,2);
-
-				log_info(logger,"Me llego el marco %d con desplazamiento %d",marco,desplazamiento);
-
-				if(mov_in == 1){
-					log_info(logger,"-------------------MOV_IN-------------------");
-
-					uint32_t numeroALeer = leerElPedido(marco,desplazamiento);
-					enviar_entero(numeroALeer,clienteCpu,MEMORIA_A_CPU_NUMERO_LEIDO);
-					log_info(logger, "Valor leido: %u",numeroALeer);
-
-					log_info(logger,"-------------------MOV_IN-------------------\n");
-					mov_in = 0;
+				numeroDeMarco =  marcoSegunIndice(numeroTablaDePaginas,numeroDeLaPagina);
+				if(numeroDeMarco == -1){
+					enviar_mensaje("La pagina no esta en memoria", clienteCpu, MEMORIA_A_CPU_PAGE_FAULT);
+				}else{
+					enviar_entero(numeroDeMarco,clienteCpu,MEMORIA_A_CPU_NUMERO_MARCO);
 				}
 
+
 				break;
-				//WRITE
-			case MOV_OUT://caso: me envia dir fisica y escribo el valor en esa direccion
+			case CPU_A_MEMORIA_LEER: //ESTE VA A SER EL READ
 				listaQueContieneDireccionFisca = recibir_lista_enteros(clienteCpu);
-				marco = (int) list_get(listaQueContieneDireccionFisca,0); // por ahora piso la variable de arriba despues ver como manejar el tema de marco que envio y marco que recibo
+
+				numeroDeMarco = (int) list_get(listaQueContieneDireccionFisca,0); // por ahora piso la variable de arriba despues ver como manejar el tema de marco que envio y marco que recibo
+				desplazamiento = (int) list_get(listaQueContieneDireccionFisca,1);
+
+
+				log_info(logger,"Me llego el marco %d con desplazamiento %d",numeroDeMarco,desplazamiento);
+
+
+				log_info(logger,"-------------------MOV_IN-------------------");
+
+				uint32_t numeroALeer = leerElPedido(numeroDeMarco,desplazamiento);
+				enviar_entero(numeroALeer,clienteCpu,MEMORIA_A_CPU_NUMERO_LEIDO);
+				log_info(logger, "Envio a cpu el valor leido: %u",numeroALeer);
+
+				log_info(logger,"-------------------MOV_IN-------------------\n");
+				break;
+			case CPU_A_MEMORIA_VALOR_A_ESCRIBIR://caso: me envia dir fisica y escribo el valor en esa direccion
+				listaQueContieneDireccionFisca = recibir_lista_enteros(clienteCpu);
+
+				numeroDeMarco = (int) list_get(listaQueContieneDireccionFisca,0); // por ahora piso la variable de arriba despues ver como manejar el tema de marco que envio y marco que recibo
 				desplazamiento = (int) list_get(listaQueContieneDireccionFisca,1);
 				uint32_t valorAEscribir = (uint32_t) list_get(listaQueContieneValorAEscribir,2);
 
 				log_info(logger,"-------------------MOV_OUT-------------------");
 
 				log_info(logger,"Me llego el valor a escribir: %u",valorAEscribir);
-				escribirElPedido((uint32_t) valorAEscribir,marco,desplazamiento); //casteo para que no joda el warning
+				escribirElPedido((uint32_t) valorAEscribir,numeroDeMarco,desplazamiento);
 
 				log_info(logger,"-------------------MOV_OUT-------------------\n");
 				break;
-//			case COPY://caso copiar
-//				listaQueContieneDirFisica1YDirFisica2 = recibir_paquete_int(clienteCpu);
-//
-//				int marcoDeDestino = (int) list_get(listaQueContieneDirFisica1YDirFisica2,0);
-//				int desplazamientoDestino = (int) list_get(listaQueContieneDirFisica1YDirFisica2,1);
-//				int marcoDeOrigen = (int) list_get(listaQueContieneDirFisica1YDirFisica2,2);
-//				int desplazamientoOrigen = (int) list_get(listaQueContieneDirFisica1YDirFisica2,3);
-//
-//				log_info(logger,"-------------------COPIAR-------------------");
-//
-//				copiar(marcoDeDestino,desplazamientoDestino,marcoDeOrigen,desplazamientoOrigen);
-//				uint32_t datoALeer = leerElPedido(marcoDeDestino,desplazamientoDestino);
-//				log_info(logger,"Se copio el valor %u en la dir fisica:(marco %d offset %d)",datoALeer,marcoDeDestino,desplazamientoDestino);
-//
-//				log_info(logger,"-------------------COPIAR-------------------\n");
-//				break;
-//			case SUSPENSION:
-//
-//				recibir_mensaje(clienteCpu);
-//				suspensionDeProceso(pid);
-//
-//				break;
-//			case DESUSPENSION:
-//
-//				recibir_mensaje(clienteCpu);
-//				break;
 			case -1:
 				log_error(logger, "Se desconecto el cliente. Terminando conexion");
 				return EXIT_SUCCESS;
@@ -134,9 +101,10 @@ int conexionConCpu(void){
 
 int conexionConKernel(void){
 	int pidActual;
-	int server_fd = iniciar_servidor(); //ACA AGREGUE EL INT
+
+	int socket_kernel = iniciar_servidor(IP_MEMORIA,puertoMemoria,"Kernel");
 	log_info(logger, "Memoria lista para recibir a Kernel");
-	clienteKernel = esperar_cliente(server_fd);
+	clienteKernel = esperar_cliente(socket_kernel,"Kernel");
 
 	int numeroTablaDePaginas;
 	int numeroPagina;
@@ -148,7 +116,7 @@ int conexionConKernel(void){
 		switch (cod_op) {
 
 			case NRO_TP:
-				listaQueContienePidYCantidadSegmentos = recibir_paquete_int(clienteKernel);
+				listaQueContienePidYCantidadSegmentos = recibir_lista_enteros(clienteKernel);
 				pidActual = (int) list_get(listaQueContienePidYCantidadSegmentos,0);
 				cantidadDeSegmentos = (int) list_get(listaQueContienePidYCantidadSegmentos,1);
 
@@ -161,7 +129,7 @@ int conexionConKernel(void){
 				return EXIT_SUCCESS;
 				break;
 			case PAGE_FAULT://caso: me envia dir fisica y escribo el valor en esa direccion
-				listaQueContieneNumTablaYPagina = recibir_paquete_int(clienteKernel);
+				listaQueContieneNumTablaYPagina = recibir_lista_enteros(clienteKernel);
 				numeroTablaDePaginas = (int) list_get(listaQueContieneNumTablaYPagina,0);
 				numeroPagina = (int) list_get(listaQueContieneNumTablaYPagina,1);
 
@@ -214,8 +182,8 @@ int marcoSegunIndice(int numeroTablaDePaginas,int numeroDePagina){
 		if(unaEntradaTablaDePaginas->presencia == 1){
 			return unaEntradaTablaDePaginas->numeroMarco;
 		}else{
-			cargarPagina(unaEntradaTablaDePaginas);
-			return unaEntradaTablaDePaginas->numeroMarco;
+			//cargarPagina(unaEntradaTablaDePaginas);
+			return -1;
 	//ver tema de si es una pagina con info para swap
 		}
 	}

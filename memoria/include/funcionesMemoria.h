@@ -8,7 +8,6 @@
 #include <unistd.h> //Para el truncate
 
 #define IP_MEMORIA "127.0.0.1"
-#define PUERTO_MEMORIA "8002"
 
 //--------------------------DECLARO STRUCTS
 typedef struct{
@@ -53,16 +52,18 @@ extern t_list* listaTablaDePaginas;
 extern t_list* listaDePaginasEnMemoria;
 extern int posicionDelPuntero;
 extern int contadorDeMarcosPorProceso;
+extern int cantidadDeSegmentos;
 
 
 extern int flagDeEntradasPorTabla;
-extern int marco;
+//extern int marco;
 extern int desplazamiento;
 
 
 extern int contNroTablaDePaginas;
 extern int clienteCpu;
 extern int clienteKernel;
+extern char* puertoMemoria;
 
 //-------------------------DECLARO FUNCIONES
 int chequeoCantidadArchivos(int);

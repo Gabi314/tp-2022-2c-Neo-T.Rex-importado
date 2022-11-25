@@ -51,49 +51,40 @@ extern bool hayInterrupcion;
 extern char* algoritmoReemplazoTlb;
 extern int cantidadEntradasTlb;
 
-typedef struct
-{
-	int AX;
-	int BX;
-	int CX;
-	int DX;
-} t_registros;
-
-typedef struct
-{
-	int numeroSegmento;
-	int tamanioSegmento;
-	int numeroTablaPaginas;
-}entradaTablaSegmento;
-
-typedef enum estado { NEW, READY, BLOCKED, EXEC, TERMINATED } t_estado;
-
-typedef struct
-{
-	int idProceso;
-	t_list* instrucciones;
-	int programCounter;
-	t_registros registros;
-	t_list* tablaSegmentos;
-	//int socket;
-	t_estado estado;
-} t_pcb;
-//Saque el IO[2] porque justamente es una instruccion que ya sabemos los valores se deberia enviar aparte.
-
-
 //typedef struct
 //{
-//	int valor;
-//	char* registro;
-//	char* otroRegistro;
-//}parametro;
-
-typedef struct
-{
-	char* identificador;
-	//parametro* parametros;
-	int parametros[2];
-} instruccion;
+//	int AX;
+//	int BX;
+//	int CX;
+//	int DX;
+//} t_registros;
+//
+//typedef struct
+//{
+//	int numeroSegmento;
+//	int tamanioSegmento;
+//	int numeroTablaPaginas;
+//}entradaTablaSegmento;
+//
+//typedef enum estado { NEW, READY, BLOCKED, EXEC, TERMINATED } t_estado;
+//
+//typedef struct
+//{
+//	int idProceso;
+//	t_list* instrucciones;
+//	int programCounter;
+//	t_registros registros;
+//	t_list* tablaSegmentos;
+//	int socket;
+//	t_estado estado;
+//} t_pcb;
+//
+//
+//typedef struct
+//{
+//	char* identificador;
+//	int parametros[2];
+//} instruccion;
 
 typedef struct
 {
@@ -169,8 +160,9 @@ void iterator(instruccion*);
 //----------------------------FUNCIONES DE CONEXIONES
 int conexionConKernelDispatch(void);
 int conexionConMemoria(void);
-t_paquete* agregar_a_paquete_kernel_cpu(t_pcb*,int,t_paquete*);
+void agregar_a_paquete_kernel_cpu(t_pcb*,int,int);
 void ejecucion();
+void enviarDireccionFisica(int,int,int,int);
 
 extern pthread_t hiloInterrupciones;
 

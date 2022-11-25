@@ -104,6 +104,21 @@ uint32_t registroAUtilizar(int registroInstruccion,t_registros registroPcb){
 	return -1;
 }
 
+void modificarRegistro(int valor,int registroInstruccion,t_registros registroPcb){
+	if(registroInstruccion == AX){
+		 registroPcb.AX = valor;
+	}
+	if(registroInstruccion == BX){
+		registroPcb.BX = valor;
+	}
+	if(registroInstruccion == CX){
+		registroPcb.CX = valor;
+	}
+	if(registroInstruccion == DX){
+		registroPcb.DX = valor;
+	}
+}
+
 char* imprimirRegistro(registros unRegistro){//poner en shared si sirve para kernel
 	if(unRegistro == AX){
 		return "AX";
@@ -149,8 +164,8 @@ void ejecutar(instruccion* unaInstruccion,t_pcb* pcb){
 				log_info(logger,"“PID: <%d> - Ejecutando: <%s> - <%s> - <%d>",
 						pcb->idProceso,unaInstruccion->identificador,imprimirRegistro(primerParametro),
 							segundoParametro);
-				registro = registroAUtilizar(primerParametro,pcb->registros); //En set el primer parametro es el registro
-				registro = (uint32_t) segundoParametro; //En set el segundo registro es el valor a asignar
+				modificarRegistro((uint32_t) segundoParametro,primerParametro,pcb->registros); //En set el primer parametro es el registro
+																							//En set el segundo registro es el valor a asignar
 				log_info(logger,"----------------FINALIZA SET----------------\n");
 				sleep(2);//para probar que interrumpa sino ejecuta todo rapido
 				break;
@@ -161,6 +176,8 @@ void ejecutar(instruccion* unaInstruccion,t_pcb* pcb){
 				registro = registroAUtilizar(primerParametro,pcb->registros);
 				segundoRegistro = registroAUtilizar(segundoParametro,pcb->registros);
 				registro += segundoRegistro;
+
+				modificarRegistro(registro,primerParametro,pcb->registros);
 				log_info(logger,"----------------FINALIZA ADD----------------\n");
 				break;
 			case MOV_IN:
@@ -173,14 +190,23 @@ void ejecutar(instruccion* unaInstruccion,t_pcb* pcb){
 
 				if(calculoDireccionLogicaExitoso(direccionLogica,pcb->tablaSegmentos)){
 					marco = buscarDireccionFisica(pcb);
-					enviarDireccionFisica(marco,desplazamientoDePagina,1); //EL TERCER PARAMETRO CAMBIAR POR COD_OP
+					if(marco == -1){// Hay PF
+						bloqueoPorPageFault(pcb);
+						break;
+					}
+
+					log_info(logger,"No salio!!!!");
+					enviarDireccionFisica(marco,desplazamientoDePagina,1,-1); //1 valor a leer de memoria y registro -1 porque aca no hay que enviar uno
+
 					uint32_t valorAAlmacenar;
+
 					int cod_op = recibir_operacion(socket_memoria);
-					if(cod_op == MEMORIA_A_CPU_NUMERO_LEIDO){// Recibe que se escribio correctamente el valor en memoria
-						valorAAlmacenar = recibir_entero(socket_memoria);//EN REALIDAD ES ACCEDER A MEMORIA
+
+					if(cod_op == MEMORIA_A_CPU_NUMERO_LEIDO){// Recibe el valor leido de memoria
+						valorAAlmacenar = recibir_entero(socket_memoria);
 						log_info(logger,"----------------FINALIZA MOV_OUT----------------\n");
 					}
-					registro = valorAAlmacenar;
+					modificarRegistro(valorAAlmacenar,primerParametro,pcb->registros); // y se almacena en el registro(primer parametro)
 				}else{
 					log_info(logger,"Error: Segmentation Fault (segmento nro: %d)",numeroDeSegmento);//Enviar este mensaje a kernel y devolver pcb
 				//PROBAAAR!!!!
@@ -191,11 +217,19 @@ void ejecutar(instruccion* unaInstruccion,t_pcb* pcb){
 			case MOV_OUT:
 				log_info(logger,"----------------EXECUTE MOV_OUT----------------");
 				direccionLogica = primerParametro;
-				registro = registroAUtilizar(segundoParametro,pcb->registros);
+
+				registro = registroAUtilizar(segundoParametro,pcb->registros);//leo el valor del registro primer parametro
+
 				marco = buscarDireccionFisica(pcb);
-				//funcion que envie valor de registro y que lo guarde en memoria
-				enviarDireccionFisica(marco,desplazamientoDePagina,registro);//con 0 envia la dir fisica para escribir
-				//enviarValorAEscribir(primerParametro); Falta hacer esta funcion
+				if(marco == -1){// Hay PF
+					bloqueoPorPageFault(pcb);
+					break;
+				}
+
+				log_info(logger,"No salio!!!!");
+				enviarDireccionFisica(marco,desplazamientoDePagina,0,registro);//con 0 envia la dir fisica para escribir
+
+				enviarValorAEscribir(primerParametro); // se envia el valor para escribirlo en memoria
 
 				int cod_op = recibir_operacion(socket_memoria);
 
@@ -206,7 +240,7 @@ void ejecutar(instruccion* unaInstruccion,t_pcb* pcb){
 
 				break;
 			case IO:
-				agregar_a_paquete_kernel_cpu(pcb, CPU_PCB_A_KERNEL_POR_IO, paquete); //ver que lo reciba kernel
+				agregar_a_paquete_kernel_cpu(pcb, CPU_PCB_A_KERNEL_POR_IO, clienteKernel); //ver que lo reciba kernel
 				enviar_entero(primerParametro,clienteKernel,CPU_DISPOSITIVO_A_KERNEL);//Mandar asi por separado o todo junto?
 
 				if(primerParametro != TECLADO || primerParametro != PANTALLA){
@@ -332,23 +366,6 @@ bool haySegFault(int numeroDeSegmento, int desplazamientoSegmento,t_list * lista
 }
 
 
-
-	/*
-	if(! strcmp(unaInstruccion->identificador,"WRITE")){
-		log_info(logger,"----------------EXECUTE WRITE----------------");
-
-		int marco = buscarDireccionFisica(unaInstruccion->parametros[0]);// se podria enviar la pagina para saber en memoria cual se modifica
-		enviarDireccionFisica(marco,desplazamiento,0);//con 0 envia la dir fisica para escribir
-		enviarValorAEscribir(unaInstruccion->parametros[1]);
-
-		int cod_op = recibir_operacion(conexionMemoria);
-
-		if(cod_op == MENSAJE_CPU_MEMORIA){// Recibe que se escribio correctamente el valor en memoria
-			recibir_mensaje(conexionMemoria);
-			log_info(logger,"----------------FINALIZA WRITE----------------\n");
-		}
-
-*/
 int accederAMemoria(int marco,int numeroDeSegmento,t_pcb* pcb){
 
 	log_info(logger,"La pagina no se encuentra en tlb, se debera acceder a memoria(tabla de paginas)"); // dice que la 0 no esta en tlb DEBUGGEAR
@@ -360,7 +377,7 @@ int accederAMemoria(int marco,int numeroDeSegmento,t_pcb* pcb){
 		int cod_op = recibir_operacion(socket_memoria);
 
 		switch (cod_op){
-			case PRIMER_ACCESO://UNICO ACCESO
+			case MEMORIA_A_CPU_NUMERO_MARCO://UNICO ACCESO
 
 				marco = recibir_entero(socket_memoria);//finaliza 1er acceso
 
@@ -374,6 +391,10 @@ int accederAMemoria(int marco,int numeroDeSegmento,t_pcb* pcb){
 				}
 				seAccedeAMemoria = 0;//salga del while
 				break;
+			case MEMORIA_A_CPU_PAGE_FAULT:
+				recibir_mensaje(socket_memoria);
+				seAccedeAMemoria = 0;//salga del while
+				break;
 			default:
 				log_warning(logger,"Operacion desconocida. No quieras meter la pata");
 				seAccedeAMemoria = 0;//salga del while
@@ -383,51 +404,6 @@ int accederAMemoria(int marco,int numeroDeSegmento,t_pcb* pcb){
 
 	return marco;
 }
-
-
-//	}else if(! strcmp(unaInstruccion->identificador,"READ")){
-//		log_info(logger,"----------------EXECUTE READ----------------");
-//
-//		int marco = buscarDireccionFisica(unaInstruccion->parametros[0]);
-//		enviarDireccionFisica(marco,desplazamiento,1);//con 1 enviar dir fisica para leer
-//
-//		log_info(logger,"----------------FINALIZA READ----------------\n");
-//
-//	}else if(! strcmp(unaInstruccion->identificador,"COPY")){
-//		log_info(logger,"----------------EXECUTE COPY----------------");
-//		int marcoDeOrigen = buscarDireccionFisica(unaInstruccion->parametros[1]);//DEBUGGEAR
-//		int desplazamientoOrigen = desplazamiento;
-//
-//		int marcoDeDestino = buscarDireccionFisica(unaInstruccion->parametros[0]);
-//		int desplazamientoDestino = desplazamiento;
-//
-//		enviarDireccionesFisicasParaCopia(marcoDeDestino,desplazamientoDestino,marcoDeOrigen,desplazamientoOrigen);
-//		log_info(logger,"----------------FINALIZA COPY----------------\n");
-//
-//	}else if(! strcmp(unaInstruccion->identificador,"NO_OP")){
-//		sleep(retardoDeNOOP/1000);// miliseg
-//
-//	}else if(! strcmp(unaInstruccion->identificador,"I/O")){
-//
-//		log_info(logger,"----------------I/O-----------------------");
-//		//enviarTiempoIO(unaInstruccion->parametros[0]/1000);
-//		//enviar_mensaje("Se suspende el proceso",conexionMemoria,MENSAJE);//Se envia pcb a kernel solamente
-//		enviarPcb(unPcb,I_O);
-//		//bloqueado = 1; esto no se
-//		// luego kernel le avisa a memoria que se suspende
-//		reiniciarTLB();
-//
-//		//log_info(logger,"----------------FIN DE I/O----------------"); esto debe ir cuando vuelve de la I/O
-//
-//	}else if(! strcmp(unaInstruccion->identificador,"EXIT")){
-//		// enviar pcb actualizado finaliza el proceso
-//		enviarPcb(unPcb,EXIT);
-//		log_info(logger,"Finalizo el proceso ");
-//		hayInstrucciones = 0;
-//	}
-//}
-
-
 
 void leerTamanioDePaginaYCantidadDeEntradas(t_list* listaQueContieneTamanioDePagYEntradas){
 	log_info(logger, "Me llegaron los siguientes valores:");
@@ -439,15 +415,26 @@ void leerTamanioDePaginaYCantidadDeEntradas(t_list* listaQueContieneTamanioDePag
 	log_info(logger,"entradas por tabla: %d \n",entradasPorTabla);
 }
 
-//-------------------------FUNCIONES TLB
-//Lista de entradas de TLB
-t_list* inicializarTLB(){
-	tlb = list_create();
-	return tlb;
+void bloqueoPorPageFault(t_pcb* pcb){
+	ejecutando = false;
+	pcb->programCounter -= 1;
+
+	agregar_a_paquete_kernel_cpu(pcb, CPU_A_KERNEL_PCB_PAGE_FAULT,
+			clienteKernel);
+	t_paquete *paquetePageFault = crear_paquete(CPU_A_KERNEL_PAGINA_PF);
+
+	agregar_a_paquete_unInt(paquete, numeroDePagina, sizeof(numeroDePagina));
+	agregar_a_paquete_unInt(paquete, numeroDeSegmento,
+			sizeof(numeroDeSegmento));
+
+	log_info(logger, "Page Fault PID: <%d> - Segmento: <%d> - Pagina: <%d>",
+			pcb->idProceso, numeroDeSegmento, numeroDePagina);
+	log_info(logger, "Envio el pcb a kernel por PF");
+
+	enviar_paquete(paquetePageFault, clienteKernel);
+	eliminar_paquete(paquetePageFault);
 }
 
-//Se utiliza?
-void reiniciarTLB(){
-	list_clean(tlb);
-}
+
+
 

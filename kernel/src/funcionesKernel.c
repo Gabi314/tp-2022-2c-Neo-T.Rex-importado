@@ -173,6 +173,8 @@ void iterator(instruccion* instruccion){
 
 t_list * inicializar_tabla_segmentos(int socket_cliente) {
 	t_list * listaSegmentos = list_create();
+	//recibir con cod_op
+	//poner if igualando cod_op con el codigo de consola
 	listaSegmentos = recibir_lista_enteros(socket_cliente);
 	int tamanioDelSegmento = (int) list_get(listaSegmentos,3);
 			log_info(logger,"El tamanio del primer segmento es: %d",tamanioDelSegmento);

@@ -38,32 +38,14 @@ int main(int argc, char *argv[]) {
 	chequeoCantidadArchivos(argc);
 	crearConfiguraciones(argv[1]);
 	inicializarMemoria();
+	crearSwap();
 	inicializarMarcos();
 
 
 	conexionConCpu();
 
-	crearSwap();
 
-	entradaTablaPaginas* unaEntrada = malloc(sizeof(entradaTablaPaginas));
-	unaEntrada->modificado = 0;
-	unaEntrada->numeroDeEntrada = 0;
-	unaEntrada->posicionEnSwap = 0;
-	unaEntrada->presencia = 0;
-	unaEntrada->uso = 0;
-	cargarPagina(unaEntrada);
-	log_info(logger,"numero de marco asignado es: %d", unaEntrada->numeroMarco);
 
-	escribirElPedido(1234,unaEntrada->numeroMarco,8);
-	uint32_t* datoLeido = leerElPedido(unaEntrada->numeroMarco,8);
-	log_info(logger,"numero leido primero: %d", datoLeido);
-
-	escribirEnSwap(unaEntrada->numeroMarco);
-
-	leerDeSwap(unaEntrada->numeroDeEntrada,unaEntrada->numeroMarco);
-
-	datoLeido = leerElPedido(unaEntrada->numeroMarco,8);
-	log_info(logger,"numero leido tercero: %d", datoLeido);
 
 	log_info(logger,"Fin de memoria");
 	log_info(logger,"Boca");
