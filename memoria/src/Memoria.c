@@ -26,7 +26,7 @@
  *
  *
  * */
-int clienteCpu;
+
 
 int main(int argc, char *argv[]) {
 	//Obligatorios

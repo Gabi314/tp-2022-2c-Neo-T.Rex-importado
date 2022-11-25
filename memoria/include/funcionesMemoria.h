@@ -58,6 +58,12 @@ extern int contadorDeMarcosPorProceso;
 extern int flagDeEntradasPorTabla;
 extern int marco;
 extern int desplazamiento;
+
+
+extern int contNroTablaDePaginas;
+extern int clienteCpu;
+extern int clienteKernel;
+
 //-------------------------DECLARO FUNCIONES
 int chequeoCantidadArchivos(int);
 void crearConfiguraciones(char*);
@@ -97,5 +103,13 @@ void escribirEnSwap(entradaTablaPaginas*);
 entradaTablaPaginas* entradaCargadaConMarcoAsignado(int);
 void leerDeSwap(int,int);
 void suspensionDeProceso(int);
+
+
+//FUNCIONES DE CONEXIONES
+int conexionConCpu(void);
+int conexionConKernel(void);
+int marcoSegunIndice(int,int);
+void chequeoDeIndice(int);
+
 
 #endif /* FUNCIONES_MEMORIA_H_*/

@@ -74,7 +74,7 @@ void inicializarEstructuras(int pid){
 		list_add(listaTablaDePaginas,unaTablaDePaginas);
 		contNroTablaDePaginas++;
 	}
-
+	contNroTablaDePaginas++;
 }
 
 
@@ -376,6 +376,7 @@ int buscarNroTablaDePaginas(int pid){
 
 //Funcion de cargar una pagina, por ahora la hago global y en 1 proceso porque no se como funciona
 void cargarPagina(entradaTablaPaginas* unaEntrada){
+	if(unaEntrada->presencia == 0){
 	marco* marcoAAsignar;
 	int numeroMarcoPrevio = unaEntrada->numeroMarco;
 
@@ -409,6 +410,7 @@ void cargarPagina(entradaTablaPaginas* unaEntrada){
 		if(unaEntrada->modificado == 1){
 			leerDeSwap(numeroMarcoPrevio,unaEntrada->numeroMarco);
 		}
+	}
 	}
 }
 

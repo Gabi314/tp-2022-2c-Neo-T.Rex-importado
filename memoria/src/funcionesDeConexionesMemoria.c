@@ -3,6 +3,8 @@
 int flagDeEntradasPorTabla;
 int marco;
 int desplazamiento;
+int clienteCpu;
+int clienteKernel;
 
 int conexionConCpu(void){
 	static pthread_mutex_t mutexMemoriaData;
@@ -127,6 +129,59 @@ int conexionConCpu(void){
 
 		 pthread_mutex_unlock(&mutexMemoriaData);
 	}
+	return EXIT_SUCCESS;
+}
+
+int conexionConKernel(void){
+	int pidActual;
+	int server_fd = iniciar_servidor(); //ACA AGREGUE EL INT
+	log_info(logger, "Memoria lista para recibir a Kernel");
+	clienteKernel = esperar_cliente(server_fd);
+
+	int numeroTablaDePaginas;
+	int numeroPagina;
+	t_list* listaQueContienePidYCantidadSegmentos = list_create();
+	t_list* listaQueContieneNumTablaYPagina = list_create();
+	while(1) {
+		int cod_op = recibir_operacion(clienteKernel);
+
+		switch (cod_op) {
+
+			case NRO_TP:
+				listaQueContienePidYCantidadSegmentos = recibir_paquete_int(clienteKernel);
+				pidActual = (int) list_get(listaQueContienePidYCantidadSegmentos,0);
+				cantidadDeSegmentos = (int) list_get(listaQueContienePidYCantidadSegmentos,1);
+
+				enviar_entero(contNroTablaDePaginas, clienteKernel, MEMORIA_A_KERNEL_NUMERO_TABLA_PAGINAS);
+				inicializarEstructuras(pidActual);//inicializo estructuras
+				inicializarMarcos();
+
+				//int nroTablaPaginas = buscarNroTablaDe1erNivel(pidActual);
+				//enviarNroTabla1erNivel(clienteKernel,nroTabla1erNivel);
+				return EXIT_SUCCESS;
+				break;
+			case PAGE_FAULT://caso: me envia dir fisica y escribo el valor en esa direccion
+				listaQueContieneNumTablaYPagina = recibir_paquete_int(clienteKernel);
+				numeroTablaDePaginas = (int) list_get(listaQueContieneNumTablaYPagina,0);
+				numeroPagina = (int) list_get(listaQueContieneNumTablaYPagina,1);
+
+				tablaDePaginas* unaTablaDePaginas = malloc(sizeof(tablaDePaginas));
+				entradaTablaPaginas* unaEntrada = malloc(sizeof(entradaTablaPaginas));
+				unaTablaDePaginas = list_get(listaTablaDePaginas,numeroTablaDePaginas);
+				unaEntrada = list_get(unaTablaDePaginas->entradas,numeroPagina);
+				cargarPagina(unaEntrada);
+				enviar_mensaje("Se ha cargado la pagina correctamente", clienteKernel, KERNEL_MENSAJE_CONFIRMACION_PF);
+				break;
+			case -1:
+				log_error(logger, "Se desconecto el cliente. Terminando conexion");
+				return EXIT_FAILURE;
+			default:
+				log_warning(logger,"Operacion desconocida. No quieras meter la pata");
+				break;
+			}
+
+	}
+
 	return EXIT_SUCCESS;
 }
 
