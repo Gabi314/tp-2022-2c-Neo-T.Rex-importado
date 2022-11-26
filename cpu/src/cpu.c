@@ -3,6 +3,7 @@
 bool ejecutando;
 char** listaDispositivos;
 
+
 int main(int argc, char *argv[]) {
 
 	logger = log_create("./cpu.log", "CPU", 1, LOG_LEVEL_INFO);
@@ -93,12 +94,13 @@ int main(int argc, char *argv[]) {
 	//pthread_detach(hiloEjecutar);
 
 
-	log_info(logger,"boca");
+
 	//pthread_join(hiloInterrupciones,NULL);
 	pthread_join(hiloEjecutar,NULL);
 
 	free(unPcb);
 
+	log_info(logger,"boca");
 	return EXIT_SUCCESS;
 
 }
@@ -110,8 +112,9 @@ void ejecucion(){
 	while (ejecutando) {
 		ejecutar(unaInstruccion, unPcb);
 		unaInstruccion = buscarInstruccionAEjecutar(unPcb);
-
 	}
 
-	free(unaInstruccion);
+	log_info(logger,"Mañana nos comemos 4 contra Mexico");
+	log_info(logger,"Valor de CX: %d",unPcb->registros.CX);
+	//free(unaInstruccion);
 }

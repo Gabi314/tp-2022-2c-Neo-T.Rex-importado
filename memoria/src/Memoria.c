@@ -1,5 +1,7 @@
 #include "funcionesMemoria.h"
 
+
+
 /*ANOTACIONES DE MEMORIA
  * Un unico archivo de swap para TODO EL SISTEMA
  *
@@ -26,7 +28,7 @@
  *
  *
  * */
-
+t_list* listaTablaDePaginas;
 
 int main(int argc, char *argv[]) {
 	//Obligatorios
@@ -40,12 +42,17 @@ int main(int argc, char *argv[]) {
 	inicializarMemoria();
 	crearSwap();
 	inicializarMarcos();
+	cantidadDeSegmentos = 4;
+	inicializarEstructuras(0);
 
+	tablaDePaginas* unaTablaDePaginas = malloc(sizeof(tablaDePaginas));
+	unaTablaDePaginas = list_get(listaTablaDePaginas,0);
+	entradaTablaPaginas* unaEntrada = malloc(sizeof(entradaTablaPaginas));
+	unaEntrada = list_get(unaTablaDePaginas->entradas,0);
+
+	cargarPagina(unaEntrada);
 
 	conexionConCpu();
-
-
-
 
 	log_info(logger,"Fin de memoria");
 	log_info(logger,"Boca");

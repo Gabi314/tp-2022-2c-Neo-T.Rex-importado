@@ -54,11 +54,12 @@ void inicializarConfiguraciones(char* unaConfig){
 
 
 instruccion* buscarInstruccionAEjecutar(t_pcb* unPCB){//FETCH CREO QUE ES IGUAL
-
+	if((unPCB->programCounter)<list_size(unPCB->instrucciones)){
 	instruccion* unaInstruccion = list_get(unPCB->instrucciones,unPCB->programCounter);
 	unPCB->programCounter++;
 
 	return unaInstruccion;
+	}
 }
 /*Decode
 Esta etapa consiste en interpretar qué instrucción es la que se va a ejecutar y si la misma
@@ -104,18 +105,18 @@ uint32_t registroAUtilizar(int registroInstruccion,t_registros registroPcb){
 	return -1;
 }
 
-void modificarRegistro(int valor,int registroInstruccion,t_registros registroPcb){
+void modificarRegistro(int valor,int registroInstruccion,t_pcb* unPcb){
 	if(registroInstruccion == AX){
-		 registroPcb.AX = valor;
+		 unPcb->registros.AX = valor;
 	}
 	if(registroInstruccion == BX){
-		registroPcb.BX = valor;
+		unPcb->registros.BX = valor;
 	}
 	if(registroInstruccion == CX){
-		registroPcb.CX = valor;
+		unPcb->registros.CX = valor;
 	}
 	if(registroInstruccion == DX){
-		registroPcb.DX = valor;
+		unPcb->registros.DX = valor;
 	}
 }
 
@@ -164,8 +165,9 @@ void ejecutar(instruccion* unaInstruccion,t_pcb* pcb){
 				log_info(logger,"“PID: <%d> - Ejecutando: <%s> - <%s> - <%d>",
 						pcb->idProceso,unaInstruccion->identificador,imprimirRegistro(primerParametro),
 							segundoParametro);
-				modificarRegistro((uint32_t) segundoParametro,primerParametro,pcb->registros); //En set el primer parametro es el registro
-																							//En set el segundo registro es el valor a asignar
+				modificarRegistro((uint32_t) segundoParametro,primerParametro,pcb); //En set el primer parametro es el registro
+				log_info(logger,"Valor del registro: %u",pcb->registros.AX);
+				//En set el segundo registro es el valor a asignar
 				log_info(logger,"----------------FINALIZA SET----------------\n");
 				sleep(2);//para probar que interrumpa sino ejecuta todo rapido
 				break;
@@ -177,14 +179,14 @@ void ejecutar(instruccion* unaInstruccion,t_pcb* pcb){
 				segundoRegistro = registroAUtilizar(segundoParametro,pcb->registros);
 				registro += segundoRegistro;
 
-				modificarRegistro(registro,primerParametro,pcb->registros);
+				modificarRegistro(registro,primerParametro,pcb);
 				log_info(logger,"----------------FINALIZA ADD----------------\n");
 				break;
 			case MOV_IN:
+				log_info(logger,"----------------EXECUTE MOV_IN----------------");
 				log_info(logger,"“PID: <%d> - Ejecutando: <%s> - <%s> - <%d>",
 								pcb->idProceso,unaInstruccion->identificador,imprimirRegistro(primerParametro),
 									segundoParametro);
-
 				registro = registroAUtilizar(primerParametro,pcb->registros);
 				direccionLogica = segundoParametro;
 
@@ -194,7 +196,6 @@ void ejecutar(instruccion* unaInstruccion,t_pcb* pcb){
 						bloqueoPorPageFault(pcb);
 						break;
 					}
-
 					log_info(logger,"No salio!!!!");
 					enviarDireccionFisica(marco,desplazamientoDePagina,1,-1); //1 valor a leer de memoria y registro -1 porque aca no hay que enviar uno
 
@@ -204,21 +205,21 @@ void ejecutar(instruccion* unaInstruccion,t_pcb* pcb){
 
 					if(cod_op == MEMORIA_A_CPU_NUMERO_LEIDO){// Recibe el valor leido de memoria
 						valorAAlmacenar = recibir_entero(socket_memoria);
-						log_info(logger,"----------------FINALIZA MOV_OUT----------------\n");
+						log_info(logger,"----------------FINALIZA MOV_IN----------------\n");
 					}
-					modificarRegistro(valorAAlmacenar,primerParametro,pcb->registros); // y se almacena en el registro(primer parametro)
+					modificarRegistro(valorAAlmacenar,primerParametro,pcb); // y se almacena en el registro(primer parametro)
 				}else{
 					log_info(logger,"Error: Segmentation Fault (segmento nro: %d)",numeroDeSegmento);//Enviar este mensaje a kernel y devolver pcb
 				//PROBAAAR!!!!
+					log_info(logger,"----------------FINALIZA MOV_IN----------------\n");
 				}
-
-				log_info(logger,"----------------FINALIZA MOV_IN----------------\n");
 				break;
 			case MOV_OUT:
 				log_info(logger,"----------------EXECUTE MOV_OUT----------------");
 				direccionLogica = primerParametro;
 
 				registro = registroAUtilizar(segundoParametro,pcb->registros);//leo el valor del registro primer parametro
+
 
 				marco = buscarDireccionFisica(pcb);
 				if(marco == -1){// Hay PF
@@ -229,7 +230,7 @@ void ejecutar(instruccion* unaInstruccion,t_pcb* pcb){
 				log_info(logger,"No salio!!!!");
 				enviarDireccionFisica(marco,desplazamientoDePagina,0,registro);//con 0 envia la dir fisica para escribir
 
-				enviarValorAEscribir(primerParametro); // se envia el valor para escribirlo en memoria
+				//enviarValorAEscribir(primerParametro); // se envia el valor para escribirlo en memoria
 
 				int cod_op = recibir_operacion(socket_memoria);
 
@@ -419,20 +420,18 @@ void bloqueoPorPageFault(t_pcb* pcb){
 	ejecutando = false;
 	pcb->programCounter -= 1;
 
-	agregar_a_paquete_kernel_cpu(pcb, CPU_A_KERNEL_PCB_PAGE_FAULT,
-			clienteKernel);
-	t_paquete *paquetePageFault = crear_paquete(CPU_A_KERNEL_PAGINA_PF);
+	//agregar_a_paquete_kernel_cpu(pcb, CPU_A_KERNEL_PCB_PAGE_FAULT,clienteKernel);
+	//t_paquete *paquetePageFault = crear_paquete(CPU_A_KERNEL_PAGINA_PF);
 
-	agregar_a_paquete_unInt(paquete, numeroDePagina, sizeof(numeroDePagina));
-	agregar_a_paquete_unInt(paquete, numeroDeSegmento,
-			sizeof(numeroDeSegmento));
+	//agregar_a_paquete_unInt(paquete, numeroDePagina, sizeof(numeroDePagina));
+	//agregar_a_paquete_unInt(paquete, numeroDeSegmento,sizeof(numeroDeSegmento));
 
 	log_info(logger, "Page Fault PID: <%d> - Segmento: <%d> - Pagina: <%d>",
 			pcb->idProceso, numeroDeSegmento, numeroDePagina);
 	log_info(logger, "Envio el pcb a kernel por PF");
 
-	enviar_paquete(paquetePageFault, clienteKernel);
-	eliminar_paquete(paquetePageFault);
+//	enviar_paquete(paquetePageFault, clienteKernel);
+//	eliminar_paquete(paquetePageFault);
 }
 
 

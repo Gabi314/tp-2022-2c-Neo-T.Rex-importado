@@ -220,16 +220,18 @@ void enviarNroTablaDePaginas(t_list* tablaDeSegmentos,int numeroDeSegmento, int 
 	eliminar_paquete(paquete);
 }
 
-void enviarDireccionFisica(int marco, int desplazamientoPagina,int leer,int registroAEscribir){
-	agregar_a_paquete_unInt(paquete,&marco,sizeof(marco));
-	agregar_a_paquete_unInt(paquete,&desplazamientoPagina,sizeof(desplazamientoPagina));
-
+void enviarDireccionFisica(int marco, int desplazamientoPagina,int leer,int valorDelRegistro){
+	t_paquete* paquete;
 	if(leer){
-		t_paquete* paquete = crear_paquete(CPU_A_MEMORIA_LEER);
+		paquete = crear_paquete(CPU_A_MEMORIA_LEER);
+		agregar_a_paquete_unInt(paquete,&marco,sizeof(marco));
+		agregar_a_paquete_unInt(paquete,&desplazamientoPagina,sizeof(desplazamientoPagina));
 	}else{
-		t_paquete* paquete = crear_paquete(CPU_A_MEMORIA_VALOR_A_ESCRIBIR);
-		agregar_a_paquete_unInt(paquete,&registroAEscribir,sizeof(registroAEscribir));
-		log_info(logger,"Le envio a memoria el registro: %d a escribir",registroAEscribir);
+		paquete = crear_paquete(CPU_A_MEMORIA_VALOR_A_ESCRIBIR);
+		agregar_a_paquete_unInt(paquete,&marco,sizeof(marco));
+		agregar_a_paquete_unInt(paquete,&desplazamientoPagina,sizeof(desplazamientoPagina));
+		agregar_a_paquete_unInt(paquete,&valorDelRegistro,sizeof(valorDelRegistro));
+		log_info(logger,"Le envio a memoria el valor del registro: %d a escribir",valorDelRegistro);
 	}
 
 	log_info(logger,"Le envio a memoria direccion fisica: Marco:%d y Offset: %d",marco,desplazamiento);

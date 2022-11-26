@@ -6,6 +6,8 @@ int desplazamiento;
 int clienteCpu;
 int clienteKernel;
 
+
+
 int conexionConCpu(void){
 	static pthread_mutex_t mutexMemoriaData;
 	int server_fd = iniciar_servidor(IP_MEMORIA,puertoMemoria,"Cpu"); // tendria que estar comentado porque viene despues de coenxion con kernel
@@ -77,7 +79,8 @@ int conexionConCpu(void){
 
 				numeroDeMarco = (int) list_get(listaQueContieneDireccionFisca,0); // por ahora piso la variable de arriba despues ver como manejar el tema de marco que envio y marco que recibo
 				desplazamiento = (int) list_get(listaQueContieneDireccionFisca,1);
-				uint32_t valorAEscribir = (uint32_t) list_get(listaQueContieneValorAEscribir,2);
+
+				uint32_t valorAEscribir = (uint32_t) list_get(listaQueContieneDireccionFisca,2);
 
 				log_info(logger,"-------------------MOV_OUT-------------------");
 
@@ -85,6 +88,7 @@ int conexionConCpu(void){
 				escribirElPedido((uint32_t) valorAEscribir,numeroDeMarco,desplazamiento);
 
 				log_info(logger,"-------------------MOV_OUT-------------------\n");
+				enviar_mensaje("Se escribio correctamente el valor", clienteCpu, MENSAJE_CPU_MEMORIA);
 				break;
 			case -1:
 				log_error(logger, "Se desconecto el cliente. Terminando conexion");
@@ -114,6 +118,7 @@ int conexionConKernel(void){
 		int cod_op = recibir_operacion(clienteKernel);
 
 		switch (cod_op) {
+
 
 			case NRO_TP:
 				listaQueContienePidYCantidadSegmentos = recibir_lista_enteros(clienteKernel);

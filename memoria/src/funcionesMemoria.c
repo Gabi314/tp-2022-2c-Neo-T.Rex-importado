@@ -22,7 +22,7 @@ int contadorDeEntradasPorProceso;
 t_list* listaDeMarcos;
 t_list* listaDeEntradasEnMemoria;
 //CREO QUE NO SE UTILIZA t_list* listaDePaginasEnMemoria;
-t_list* listaTablaDePaginas;
+
 
 int posicionDelPuntero;
 int contadorDeMarcosPorProceso = 0;
@@ -358,7 +358,8 @@ void finalizacionDeProceso(int pid){
 	unaTablaDePaginas = list_get(listaTablaDePaginas,nroTablaDePaginas);
 	liberarEspacioEnMemoria(unaTablaDePaginas);
 
-//Para eliminar espacio ocupado en SWAP no es necesario que borre algo en el archivo ni nada porque con escribirSwap, se sobreescribe, asi que si alguno ocupa el lugar lo borra
+//Para eliminar espacio ocupado en SWAP no es necesario que borre algo en el archivo ni nada porque con escribirSwap,
+//se sobreescribe, asi que si alguno ocupa el lugar lo borra
 }
 
 int buscarNroTablaDePaginas(int pid){
