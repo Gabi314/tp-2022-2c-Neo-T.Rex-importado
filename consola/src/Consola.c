@@ -30,6 +30,11 @@ int main(int argc, char *argv[]) {
 
 	archivo = recorrerArchivo(contenido,archivo);
 
+	 if (recibir_operacion(conexion) != KERNEL_MENSAJE_CONFIRMACION_RECEPCION_INSTRUCCIONES_SEGMENTOS){
+	                log_info(logger,"codigo de operacion incorrecto");
+	        }
+	        recibir_mensaje(conexion);
+
 	atenderPeticionesKernel();
 
 	fclose(archivo);

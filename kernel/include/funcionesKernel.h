@@ -82,7 +82,7 @@ typedef struct
 */
 
 
-extern int socketServidor;
+extern int socketServidorKernel;
 
 t_list* recibir_paquete_instrucciones(int);
 
@@ -108,8 +108,8 @@ void levantar_hilo_dispositivo(t_elem_disp*);
 void iterator(instruccion*);
 
 
-t_pcb * conexionConConsola();// cual usamos
-int conexionConCpu(t_pcb * PCB);
+t_pcb * pruebaDeConexionConConsola();// cual usamos
+int pruebaDeConexionConCpu(t_pcb * PCB);
 
 void agregarANew(t_pcb* proceso);
 t_pcb* sacarDeNew();

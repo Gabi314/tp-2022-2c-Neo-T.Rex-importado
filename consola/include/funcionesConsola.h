@@ -27,14 +27,14 @@ typedef struct
 	char* otroRegistro;
 }parametro;
 
-
+/*
 typedef struct
 {
 	char* identificador;
 	//parametro* parametros;
 	int parametros[2];
 } instruccion;
-
+*/
 //------------------ DECLARACION
 extern t_log* logger;
 extern t_config* config;

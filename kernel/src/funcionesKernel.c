@@ -16,7 +16,7 @@ La idea seria tener las siguientes funciones:
 
 t_log* logger;
 
-int socketServidor;
+int socketServidorKernel;
 t_list* listaInstrucciones;
 
 char * ipMemoria;

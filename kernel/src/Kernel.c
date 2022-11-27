@@ -12,6 +12,9 @@ int socketMemoria = 0;
 
 
 int main(int argc, char *argv[]) {
+
+//-----------------------------------------------PRIMER PARTE DEL MAIN ------------------------------------------------------------
+
 	logger = log_create("kernel.log", "KERNEL", 1, LOG_LEVEL_INFO);
 
 	if(argc < 2) {
@@ -20,23 +23,43 @@ int main(int argc, char *argv[]) {
 	}
 
 
-	//sem_init(&kernelSinFinalizar,0,0);
+	//sem_init(&kernelSinFinalizar,0,0); // puede que lo usemos algunas veces
 
-	// Inicializaciones
+	// Inicializacion de kernel como servidor
+	socketServidorKernel = iniciar_servidor(IP_KERNEL, PUERTO_KERNEL, "Consola");
+
+	// Inicializaciones de estructuras de datos
 
 	inicializar_configuraciones(argv[1]);
+	inicializar_listas_y_colas();
+	identificadores_pcb = 0;
+	inicializar_semaforos();
+	log_info(logger, "En la lista de dispositivos tenemos los siguientes:");
+		for (int i = 0; i < list_size(listaDeColasDispositivos); i++) {
+			t_elem_disp* aux = list_get(listaDeColasDispositivos,i);
+			log_info(logger,"el dispositivo de posicion %d se llama %s", i , aux->dispositivo);
+			log_info(logger,"el dispositivo de posicion %d tiene un tiempo de %d", i, aux->tiempo);
+				}
 
+
+	// armamos el string de dispositivos que enviamos a consola
 	dispositivosIOAplanado = string_new();
 	aplanarDispositivosIO(dispositivos_io);
-
 	log_info(logger,"DISPOSITIVOS: %s",dispositivosIOAplanado);
-	//inicializar_listas_y_colas();
 
-	log_info(logger,"Iniciando conexion con consola");
+// ------------------------------------------------- PRUEBAS DE GABI DE CONEXIONES -----------------------------------------------------
 
-	conexionConConsola();
-	log_info(logger, "me llegaron las instrucciones");
-	list_iterate(listaInstrucciones, (void*) iterator);
+	// prueba de conexion con la consola
+	pruebaDeConexionConConsola();
+
+	//t_pcb * PCB = pruebaDeConexionConConsola();
+	//pruebaDeConexionConCpu(PCB);
+
+
+	log_destroy(logger);
+
+// -------------------------------------------------- PRUEBAS DE LEO DE CONEXIONES ---------------------------------------------------
+
 
 	t_pcb* pcb = malloc(sizeof(t_pcb));
 	pcb->estado = READY;
@@ -57,7 +80,7 @@ int main(int argc, char *argv[]) {
 																				// tamanio -> viene del config de consola(lista)
 	list_add(pcb->tablaSegmentos,unaEntrada);
 	conexionCpu = crear_conexion(ipCpu, puertoCpuDispatch);
-	sleep(1);
+
 	conexionCpuInterrupt = crear_conexion(ipCpu, puertoCpuInterrupt);
 	log_info(logger,"Conexion con interrupt establecida");
 
@@ -70,36 +93,10 @@ int main(int argc, char *argv[]) {
 	enviar_mensaje("DESALOJO",conexionCpuInterrupt,KERNEL_MENSAJE_INTERRUPT); //Para probar
 
 	log_info(logger,"Interrupcion enviada");
-/*
-	while(1){
 
-	}
-
-*/
 	log_destroy(logger);
 
-	//inicializar_configuraciones(argv[1]);
-	identificadores_pcb = 0;
-
-
-	inicializar_listas_y_colas();
-	log_info(logger, "En la lista de dispositivos tenemos los siguientes:");
-	for (int i = 0; i < list_size(listaDeColasDispositivos); i++) {
-		t_elem_disp* aux = list_get(listaDeColasDispositivos,i);
-		log_info(logger,"el dispositivo de posicion %d se llama %s", i , aux->dispositivo);
-		log_info(logger,"el dispositivo de posicion %d tiene un tiempo de %d", i, aux->tiempo);
-			}
-
-	log_info(logger,"Iniciando conexion con consola");
-
-	//socketServidor = iniciar_servidor();
-
-	inicializar_semaforos();
-
-	//t_pcb * PCB = conexionConConsola();
-	//conexionConCpu(PCB);
-
-
+//------------------------------------------------SEGUNDA PARTE DEL MAIN ----------------------------------------------------------
 /*
 	pthread_t hilo0;
 	pthread_t hiloAdmin[3];
@@ -128,8 +125,8 @@ int main(int argc, char *argv[]) {
 
 */
 
+//-------------------------------------------------RESTOS DE OTRAS PARTES -----------------------------------------------------------
 
-	log_destroy(logger);
 	//sem_wait(&kernelSinFinalizar);
 
 	//int nroTabla1erNivel = conexionConMemoria();
@@ -171,12 +168,9 @@ void inicializar_listas_y_colas() {
 
 
 
-t_pcb* conexionConConsola() {
+t_pcb* pruebaDeConexionConConsola() {
 
-static pthread_mutex_t mutexMensajes;
-int server_fd = iniciar_servidor(IP_KERNEL, PUERTO_KERNEL, "Consola");
-
-int cliente_fd = esperar_cliente(server_fd, "Consola");
+int cliente_fd = esperar_cliente(socketServidorKernel, "Consola");
 /*
 if (recibir_operacion(cliente_fd) == KERNEL_PAQUETE_TAMANIOS_SEGMENTOS) {
 	listaTamanioSegmentos = list_create();
@@ -189,27 +183,38 @@ if (recibir_operacion(cliente_fd) == KERNEL_PAQUETE_TAMANIOS_SEGMENTOS) {
 	t_list *listaQueContieneTamSegmento;
 	t_pcb *PCB = malloc(sizeof(t_pcb*));
 
-	log_info(logger, "llego antes de recibir_operacion");
 
+// SE RECIBEN LOS SEGMENTOS Y SE METEN EN EL PCB
 	int operacion = recibir_operacion(cliente_fd);
 
-	log_info(logger, "se recibio la operacion %d", operacion);
+
 
 	if (operacion == KERNEL_PAQUETE_TAMANIOS_SEGMENTOS) {
-		//	listaQueContieneTamSegmento = list_create();
-		//	listaQueContieneTamSegmento = recibir_lista_enteros(cliente_fd);
+
 		PCB->tablaSegmentos = list_create();
 		PCB->tablaSegmentos = inicializar_tabla_segmentos(cliente_fd); // aca usariamos el recibir_lista_enteros
-		//	int tamanioDelSegmento = (int) list_get(listaQueContieneTamSegmento,3);
-		//			log_info(logger,"El tamanio del primer segmento es: %d",tamanioDelSegmento);
 
+
+//SE ENVIAN LOS DISPOSITIVOS
 		enviar_mensaje(dispositivosIOAplanado, cliente_fd,
 				KERNEL_MENSAJE_DISPOSITIVOS_IO);
+
+//SE RECIBEN LAS INSTRUCCIONES
 
 		if (recibir_operacion(cliente_fd) == KERNEL_PAQUETE_INSTRUCCIONES) {
 			listaInstrucciones = list_create();
 			listaInstrucciones = recibir_paquete_instrucciones(cliente_fd);
 
+//MOSTRAMOS LAS INSTRUCCIONES
+			log_info(logger, "me llegaron las instrucciones");
+			list_iterate(listaInstrucciones, (void*) iterator);
+
+//METEMOS LAS INSTRUCCIONES EN EL PCB
+
+			PCB->instrucciones = list_create();
+			PCB->instrucciones = listaInstrucciones;
+
+// CONFIRMAMOS RECEPCION DE INSTRUCCIONES
 			enviar_mensaje("segmentos e instrucciones recibidos pibe", cliente_fd,KERNEL_MENSAJE_CONFIRMACION_RECEPCION_INSTRUCCIONES_SEGMENTOS);
 
 
@@ -233,7 +238,12 @@ if (recibir_operacion(cliente_fd) == KERNEL_PAQUETE_TAMANIOS_SEGMENTOS) {
 		log_info(logger, "codigo de operacion incorrecto");
 	}
 
+
+//ENVIAMOS UN ENTERO PARA QUE SE IMPRIMA POR PANTALLA
 	enviar_entero(10, cliente_fd, KERNEL_PAQUETE_VALOR_A_IMPRIMIR);
+
+
+//RECIBIMOS CONFIRMACION DE QUE EL VALOR FUE IMPRESO
 
 	int codigo = recibir_operacion(cliente_fd);
 	if (codigo != KERNEL_MENSAJE_VALOR_IMPRESO) {
@@ -241,9 +251,12 @@ if (recibir_operacion(cliente_fd) == KERNEL_PAQUETE_TAMANIOS_SEGMENTOS) {
 	}
 	recibir_mensaje(cliente_fd);
 
+//ENVIAMOS UN PEDIDO DE QUE SE INGRESE UN VALOR POR TECLADO
 	enviar_mensaje("kernel solicita que se ingrese un valor por teclado",
 			cliente_fd, KERNEL_MENSAJE_PEDIDO_VALOR_POR_TECLADO);
 
+
+//RECIBIMOS EL VALOR POR TECLADO
 	codigo = recibir_operacion(cliente_fd);
 	if (codigo != KERNEL_MENSAJE_DESBLOQUEO_TECLADO) {
 		log_info(logger, "codigo de operacion incorrecto");
@@ -257,6 +270,8 @@ if (recibir_operacion(cliente_fd) == KERNEL_PAQUETE_TAMANIOS_SEGMENTOS) {
 	}
 	recibir_entero(cliente_fd);
 
+
+// FINALIZACION DE CONSOLA
 	enviar_mensaje("Finalizar consola", cliente_fd,
 			KERNEL_MENSAJE_FINALIZAR_CONSOLA);
 
@@ -267,36 +282,11 @@ if (recibir_operacion(cliente_fd) == KERNEL_PAQUETE_TAMANIOS_SEGMENTOS) {
 
 	}
 
-	//que problema hay con hacerlo asi? en la funcion de arriba se repite la logica del else codigo incorrecto!
-	/*	while (1) {
-	 int cod_op = recibir_operacion(cliente_fd);
-	 switch (cod_op) {
-	 case KERNEL_PAQUETE_INSTRUCCIONES:
-	 listaInstrucciones = list_create();
-	 listaInstrucciones = recibir_paquete_instrucciones(cliente_fd);
-	 log_info(logger,"me llegaron las instrucciones");
-	 list_iterate(listaInstrucciones, (void*) iterator);
-	 break;
-	 case KERNEL_PAQUETE_TAMANIOS_SEGMENTOS:
-	 listaQueContieneTamSegmento = list_create();
-	 listaQueContieneTamSegmento = recibir_lista_enteros(cliente_fd);//Hacer que reciba paquete vectorDeEnteros
-	 int tamanioDelSegmento = (int) list_get(listaQueContieneTamSegmento,3);
-	 log_info(logger,"El tamanio del primer segmento es: %d",tamanioDelSegmento);
-	 break;
-	 case -1:
-	 log_error(logger, "La consola se desconecto. Finalizando Kernel");
-	 return EXIT_FAILURE;
-	 default:
-	 log_warning(logger,"Operacion desconocida. No quieras meter la pata");
-	 break;
-	 }
-	 }
 
-	 */
+
 
 	PCB->idProceso = get_identificador();
-	PCB->instrucciones = list_create();
-	PCB->instrucciones = listaInstrucciones;
+
 	PCB->programCounter = 0;
 	inicializar_registros(PCB->registros);
 
@@ -308,7 +298,7 @@ if (recibir_operacion(cliente_fd) == KERNEL_PAQUETE_TAMANIOS_SEGMENTOS) {
 }
 
 
-//int conexionConCpu(t_pcb * PCB){
+//int pruebaDeConexionConCpu(t_pcb * PCB){
 //	log_info(logger,"creamos conexion con un puerto de cpu");
 //	int puertoInterrupt = crear_conexion(IP_KERNEL, "8001");
 //	log_info(logger,"creamos conexion con otro puerto de cpu");
