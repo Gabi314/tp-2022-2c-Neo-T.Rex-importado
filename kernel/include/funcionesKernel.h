@@ -51,7 +51,7 @@ typedef struct {
 
 typedef struct {
 	t_pcb* pcb;
-	int pagina;
+	t_list * listaTpYNroPAgina;
 } t_info_pf;
 
 // En principio, no hace falta ------------------------------------

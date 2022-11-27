@@ -133,7 +133,7 @@ int conexionConKernel(void){
 				//enviarNroTabla1erNivel(clienteKernel,nroTabla1erNivel);
 				return EXIT_SUCCESS;
 				break;
-			case PAGE_FAULT://caso: me envia dir fisica y escribo el valor en esa direccion
+			case KERNEL_A_MEMORIA_PAGE_FAULT:
 				listaQueContieneNumTablaYPagina = recibir_lista_enteros(clienteKernel);
 				numeroTablaDePaginas = (int) list_get(listaQueContieneNumTablaYPagina,0);
 				numeroPagina = (int) list_get(listaQueContieneNumTablaYPagina,1);

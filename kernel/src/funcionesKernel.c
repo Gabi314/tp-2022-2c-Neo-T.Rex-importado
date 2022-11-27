@@ -340,6 +340,11 @@ void asignar_memoria() {
 			}
 		}
 
+		t_paquete * paquete = crear_paquete(NRO_TP);
+		agregar_a_paquete_unInt(paquete, proceso->idProceso, sizeof(int));
+		agregar_a_paquete_unInt(paquete, list_size(proceso->tablaSegmentos), sizeof(int));
+		enviar_paquete(paquete,socketMemoria);
+
 		sem_post(&pcbEnReady);
 
 		//para que sea un switch habria que tener un conversor del string que leemos al enum de algoritmos que tenemos
@@ -554,7 +559,7 @@ while (1) {
 
 		break;
 
-	case PAGE_FAULT:
+	case CPU_A_KERNEL_PCB_PAGE_FAULT:
 
 		t_pcb* pcbPF = recibir_pcb(conexionCpu);
 
@@ -563,12 +568,14 @@ while (1) {
 			log_info(logger, "codigo de operacion incorrecto");
 		}
 
-		int paginaRecibida = recibir_entero(conexionCpu);//recibir pagina a cargar desde cpu
+		t_list * listaTPyNroPag = list_create();
+		listaTPyNroPag = recibir_lista_enteros(conexionCpu);
+
 
 		t_info_pf * aMandarPF = malloc(sizeof(*aMandarPF));
 
 		aMandarPF->pcb = pcbPF;
-		aMandarPF->pagina = paginaRecibida;
+		aMandarPF->listaTpYNroPAgina = listaTPyNroPag;
 
 		pthread_t hiloPF;
 		int hiloPageFault = pthread_create(&hiloPF, NULL, &atender_page_fault, aMandarPF);
@@ -765,13 +772,17 @@ void atender_IO_generico(t_elem_disp* elemento){
 void atender_page_fault(t_info_pf* infoPF){
 
 	t_pcb * pcb = infoPF->pcb;
-	int pagina = infoPF->pagina;
+	t_list * listaTPyNroPag = infoPF->listaTpYNroPAgina;
 
 	pcb->estado = BLOCKED; // hace falta un nuevo estado BLOCKED_PF?
 
 	enviar_mensaje("kernel solicita que se cargue en memoria la pagina correspondiente",socketMemoria, KERNEL_MENSAJE_SOLICITUD_CARGAR_PAGINA);
 
-	enviar_entero(pagina,socketMemoria, KERNEL_A_MEMORIA_PAGINA_A_CARGAR);//hay que mandar la pagina recibida de cpu
+	t_paquete * paquete = crear_paquete(KERNEL_A_MEMORIA_PAGE_FAULT);
+			agregar_a_paquete_unInt(paquete, list_get(listaTPyNroPag,0), sizeof(int));
+			agregar_a_paquete_unInt(paquete, list_get(listaTPyNroPag,1), sizeof(int));
+			enviar_paquete(paquete,socketMemoria);
+
 
 
 	int codigo = recibir_operacion(conexionCpuInterrupt);
