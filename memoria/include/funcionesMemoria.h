@@ -59,6 +59,7 @@ extern int flagDeEntradasPorTabla;
 //extern int marco;
 extern int desplazamiento;
 
+extern int posicionActualDeSwap;
 
 extern int contNroTablaDePaginas;
 extern int clienteCpu;
@@ -104,7 +105,6 @@ void escribirEnSwap(entradaTablaPaginas*);
 entradaTablaPaginas* entradaCargadaConMarcoAsignado(int);
 void leerDeSwap(int,int);
 void suspensionDeProceso(int);
-
 
 //FUNCIONES DE CONEXIONES
 int conexionConCpu(void);
