@@ -47,29 +47,38 @@ int main(int argc, char *argv[]) {
 
 	tablaDePaginas* unaTablaDePaginas = malloc(sizeof(tablaDePaginas));
 	unaTablaDePaginas = list_get(listaTablaDePaginas,0);
+
+	tablaDePaginas* unaTablaDePaginas1 = malloc(sizeof(tablaDePaginas));
+	unaTablaDePaginas1 = list_get(listaTablaDePaginas,1);
+
 	entradaTablaPaginas* unaEntrada = malloc(sizeof(entradaTablaPaginas));
 	unaEntrada = list_get(unaTablaDePaginas->entradas,0);
+	entradaTablaPaginas* unaEntrada1 = malloc(sizeof(entradaTablaPaginas));
+	unaEntrada1 = list_get(unaTablaDePaginas->entradas,1);
+	entradaTablaPaginas* unaEntrada2 = malloc(sizeof(entradaTablaPaginas));
+	unaEntrada2 = list_get(unaTablaDePaginas->entradas,2);
+	entradaTablaPaginas* unaEntrada3 = malloc(sizeof(entradaTablaPaginas));
+	unaEntrada3 = list_get(unaTablaDePaginas->entradas,3);
+
+	entradaTablaPaginas* unaEntrada4 = malloc(sizeof(entradaTablaPaginas));
+	unaEntrada4 = list_get(unaTablaDePaginas1->entradas,0);
 
 	cargarPagina(unaEntrada);
+	cargarPagina(unaEntrada1);
+	cargarPagina(unaEntrada2);
+	cargarPagina(unaEntrada3);
 
-	conexionConCpu();
+	cargarPagina(unaEntrada4);
+
+
+
+
+
+	//conexionConCpu();
 
 	log_info(logger,"Fin de memoria");
 	log_info(logger,"Boca");
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

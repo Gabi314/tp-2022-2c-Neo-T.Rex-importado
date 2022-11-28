@@ -615,8 +615,9 @@ void terminarEjecucion(t_pcb * procesoAFinalizar) {
 
 	enviar_mensaje("Liberar estructuras",socketMemoria,KERNEL_A_MEMORIA_MENSAJE_LIBERAR_POR_TERMINADO);//Enviamos mensaje a memoria para que libere estructuras
 
-	log_info(logger, "[terminarEjecucion]: Se envia un mensaje a memoria para que libere estructuras");
+	enviar_entero(procesoAFinalizar->idProceso, socketMemoria, KERNEL_A_MEMORIA_PID_PARA_FINALIZAR);
 
+	log_info(logger, "[terminarEjecucion]: Se envia un mensaje a memoria para que libere estructuras");
 
 	enviar_mensaje("Finalizar consola", procesoAFinalizar->socket,KERNEL_MENSAJE_FINALIZAR_CONSOLA);
 

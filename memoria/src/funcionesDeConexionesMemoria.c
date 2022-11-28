@@ -145,6 +145,13 @@ int conexionConKernel(void){
 				cargarPagina(unaEntrada);
 				enviar_mensaje("Se ha cargado la pagina correctamente", clienteKernel, KERNEL_MENSAJE_CONFIRMACION_PF);
 				break;
+			case KERNEL_A_MEMORIA_MENSAJE_LIBERAR_POR_TERMINADO:
+				recibir_mensaje(clienteKernel);
+				break;
+			case KERNEL_A_MEMORIA_PID_PARA_FINALIZAR:
+				int numeroDePid = recibir_entero(clienteKernel);
+				finalizacionDeProceso(numeroDePid);
+				break;
 			case -1:
 				log_error(logger, "Se desconecto el cliente. Terminando conexion");
 				return EXIT_FAILURE;

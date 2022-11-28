@@ -76,14 +76,7 @@ int main(int argc, char *argv[]) {
 	//listaDispositivos = recibirListaDispositivos(clienteKernel);
 	char** listaDispositivos = {"DISCO","IMPRESORA"};
 
-//	strcpy(palabra[0],"DISCO");
-//	strcpy(palabra[1],"IMPRESORA");
-
-
-
 	conexionConMemoria();
-
-
 
 	checkInterrupt();
 
