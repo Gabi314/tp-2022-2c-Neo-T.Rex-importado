@@ -55,7 +55,7 @@ typedef enum {
 	PRIMER_ACCESO,
 	OBTENER_MARCO,
 	CPU_DISPOSITIVO_A_KERNEL,
-	KERNEL_MENSAJE_INTERRUPT,
+	//KERNEL_MENSAJE_INTERRUPT,
 	CPU_A_KERNEL_INGRESAR_VALOR_POR_TECLADO,
 	CPU_A_KERNEL_MOSTRAR_REGISTRO_POR_PANTALLA,
 	CPU_PCB_A_KERNEL_POR_IO,
@@ -97,7 +97,7 @@ typedef struct
 
 typedef struct
 {
-	int numeroSegmento;//revisar
+	int numeroSegmento;//revisar   [(0,64,n),(1,128,n+1),..]
 	int tamanioSegmento;
 	int numeroTablaPaginas;
 }entradaTablaSegmento;

@@ -396,7 +396,7 @@ void cargarPagina(entradaTablaPaginas* unaEntrada){
 	//int numeroMarcoPrevio = unaEntrada->numeroMarco;
 
 	//Caso en el que se puede asignar un marco a un proceso de manera libre
-	if(<marcosPorProceso && (list_size(listaDeEntradasEnMemoria)<=(tamanioDeMemoria/tamanioDePagina))){
+	if(contadorDeMarcosPorProceso < marcosPorProceso && (list_size(listaDeEntradasEnMemoria)<=(tamanioDeMemoria/tamanioDePagina))){
 		marcoAAsignar = siguienteMarcoLibre();
 		modificarPaginaACargar(unaEntrada,marcoAAsignar->numeroDeMarco);
 		list_add(listaDeEntradasEnMemoria,unaEntrada);

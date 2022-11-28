@@ -693,7 +693,7 @@ void atender_IO_pantalla(t_info_pantalla * info) {
 
 	enviar_entero(valor_registro, unPcb->socket, KERNEL_PAQUETE_VALOR_A_IMPRIMIR);
 
-	recibir_operacion(unPcb->socket);
+	recibir_operacion(unPcb->socket);//recibir con cod_op
 
 	recibir_mensaje(unPcb->socket);
 
@@ -785,13 +785,13 @@ void atender_page_fault(t_info_pf* infoPF){
 
 
 
-	int codigo = recibir_operacion(conexionCpuInterrupt);
+	int codigo = recibir_operacion(socketMemoria);
 
 	if(codigo != KERNEL_MENSAJE_CONFIRMACION_PF){
 		log_info(logger,"codigo de operacion incorrecto");
 	}
 
-	recibir_mensaje(conexionCpuInterrupt);
+	recibir_mensaje(socketMemoria);
 
 	if (!strcmp(algoritmoPlanificacion, "FIFO")) {
 				queue_push(colaReadyFIFO,pcbTeclado);

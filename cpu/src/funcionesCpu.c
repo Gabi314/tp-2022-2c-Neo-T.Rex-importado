@@ -301,7 +301,7 @@ int escucharInterrupciones(){
 		while (1) {
 			int cod_op = recibir_operacion(clienteKernelInterrupt);
 			log_info(logger, "Entro");
-			if (cod_op == KERNEL_MENSAJE_INTERRUPT) {
+			if (cod_op == DESALOJAR_PROCESO_POR_FIN_DE_QUANTUM) {
 				pthread_mutex_lock(&mutexInterrupcion);
 				recibir_mensaje(clienteKernelInterrupt);
 				hayInterrupcion = true;
