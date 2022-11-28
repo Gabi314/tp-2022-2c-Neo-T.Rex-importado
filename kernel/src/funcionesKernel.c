@@ -433,8 +433,6 @@ t_pcb* obtenerSiguienteRR() {
 	return procesoPlanificado;
 }
 
-
-
 void ejecutar(t_pcb* proceso) {
 
 	if (proceso != NULL) {
@@ -452,16 +450,13 @@ void ejecutar(t_pcb* proceso) {
 
 }
 
-
-
 void atender_interrupcion_de_ejecucion() {
 
 while (1) {
 	int cod_op = recibir_operacion(conexionCpu); //conexionCpu es el socket interrupt
 
 	switch (cod_op) {
-
-	case IO_GENERAL:
+	case CPU_PCB_A_KERNEL_POR_IO:
 		t_pcb * proceso = recibir_pcb(conexionCpu);
 
 		if(!strcmp(algoritmoPlanificacion, "RR") || (!strcmp(algoritmoPlanificacion, "Feedback") && proceso->algoritmoActual == RR)){
@@ -470,8 +465,11 @@ while (1) {
 
 		char * dispositivo;
 
-		recibir_operacion(conexionCpu);
-		dispositivo = recibir_mensaje(conexionCpu);
+		cod_op = recibir_operacion(conexionCpu);
+		if(cod_op == CPU_DISPOSITIVO_A_KERNEL){
+			dispositivo = recibir_mensaje(conexionCpu);
+		}
+
 
 		bool comparar_nombre_dispositivo( t_elem_disp * elemento){
 			return !strcmp(elemento->dispositivo,dispositivo);
@@ -481,15 +479,20 @@ while (1) {
 
 		queue_push(elementoLista->cola_procesos,proceso);
 
-		recibir_operacion(conexionCpu);
-		int unidadesTrabajo = recibir_entero(conexionCpu);
+		cod_op = recibir_operacion(conexionCpu);
+		int unidadesTrabajo = 0;
+
+		if(cod_op == CPU_A_KERNEL_UNIDADES_DE_TRABAJO_IO){
+			unidadesTrabajo = recibir_entero(conexionCpu);
+		}
+
 		queue_push(elementoLista->cola_UTs,&unidadesTrabajo);
 
 		sem_post(&elementoLista->semaforo);
 
 
 		break;
-	case IO_TECLADO:
+	case CPU_PCB_A_KERNEL_POR_IO_TECLADO:
 
 
 		t_info_teclado * aMandarTeclado = malloc(sizeof(*aMandarTeclado));
@@ -499,17 +502,14 @@ while (1) {
 		if(!strcmp(algoritmoPlanificacion, "RR") || (!strcmp(algoritmoPlanificacion, "Feedback") && aMandarTeclado->pcb->algoritmoActual == RR)){
 									pthread_cancel(hiloQuantumRR);
 								}
+		cod_op = recibir_operacion(conexionCpu);
 
-		recibir_operacion(conexionCpu);
-		aMandarTeclado->registro =recibir_entero(conexionCpu);
-
+		if(cod_op == CPU_A_KERNEL_INGRESAR_VALOR_POR_TECLADO){
+			aMandarTeclado->registro =recibir_entero(conexionCpu);
+		}
 
 		//pthread_mutex_lock(&mutexTeclado);
-		t_pcb * pcbTeclado = recibir_pcb(conexionCpu); // la idea es que sea una varible loca
-		recibir_operacion(conexionCpu);
-		registroTeclado =recibir_entero(conexionCpu);
 		//pthread_mutex_unlock(&mutexTeclado);
-
 
 		pthread_t hiloAtenderTeclado;
 		int hiloTeclado = pthread_create(&hiloAtenderTeclado, NULL,(void*) atender_IO_teclado,aMandarTeclado);
@@ -521,7 +521,7 @@ while (1) {
 
 		break;
 
-	case IO_PANTALLA:
+	case CPU_PCB_A_KERNEL_POR_IO_PANTALLA:
 
 		t_info_pantalla * aMandarPantalla = malloc(sizeof(*aMandarPantalla));
 
@@ -532,8 +532,12 @@ while (1) {
 						pthread_cancel(hiloQuantumRR);
 					}
 
-		recibir_operacion(conexionCpu);
-		registroPantalla = recibir_entero(conexionCpu);
+		cod_op = recibir_operacion(conexionCpu);
+
+		if(cod_op == CPU_A_KERNEL_MOSTRAR_REGISTRO_POR_PANTALLA){
+			aMandarPantalla->registro = recibir_entero(conexionCpu);
+		}
+
 	//	pthread_mutex_unlock(&mutexPantalla);
 
 
@@ -543,7 +547,7 @@ while (1) {
 
 		break;
 
-	case QUANTUM:
+	case CPU_A_KERNEL_PCB_POR_DESALOJO:
 		t_pcb* pcb = recibir_pcb(conexionCpu);
 
 		if (!strcmp(algoritmoPlanificacion, "RR")) {
@@ -606,13 +610,8 @@ while (1) {
 	}
 }
 
-
-
 void terminarEjecucion(t_pcb * procesoAFinalizar) {
-
-
 	procesoAFinalizar->estado = TERMINATED; // es local no hace falta mutex
-
 	enviar_mensaje("Liberar estructuras",socketMemoria,KERNEL_A_MEMORIA_MENSAJE_LIBERAR_POR_TERMINADO);//Enviamos mensaje a memoria para que libere estructuras
 
 	enviar_entero(procesoAFinalizar->idProceso, socketMemoria, KERNEL_A_MEMORIA_PID_PARA_FINALIZAR);

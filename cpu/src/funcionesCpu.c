@@ -242,27 +242,27 @@ void ejecutar(instruccion* unaInstruccion,t_pcb* pcb){
 
 				break;
 			case IO:
-				enviar_pcb(pcb, CPU_PCB_A_KERNEL_POR_IO, clienteKernel); //ver que lo reciba kernel
-				enviar_entero(primerParametro,clienteKernel,CPU_DISPOSITIVO_A_KERNEL);
+				enviar_pcb(pcb, CPU_PCB_A_KERNEL_POR_IO, clienteKernel);
 
 				if(primerParametro != TECLADO || primerParametro != PANTALLA){
-
 					log_info(logger,"“PID: <%d> - Ejecutando: <%s> - <%s> - <%d>",
 							pcb->idProceso, unaInstruccion->identificador,
 							dispositivoIOSegunParametro(primerParametro),
 							segundoParametro);
 
+					enviar_mensaje(dispositivoIOSegunParametro(primerParametro),clienteKernel,CPU_DISPOSITIVO_A_KERNEL);
 					enviar_entero(segundoParametro, clienteKernel, CPU_A_KERNEL_UNIDADES_DE_TRABAJO_IO);
 				} else {
-
 					log_info(logger,"“PID: <%d> - Ejecutando: <%s> - <%s> - <%s>",
 							pcb->idProceso, unaInstruccion->identificador,
 							dispositivoIOSegunParametro(primerParametro),
 							imprimirRegistro(segundoParametro));
 
 					if(primerParametro == TECLADO){
+						enviar_pcb(pcb, CPU_PCB_A_KERNEL_POR_IO_TECLADO, clienteKernel);
 						enviar_entero(segundoParametro, clienteKernel, CPU_A_KERNEL_INGRESAR_VALOR_POR_TECLADO);
 					}else if(primerParametro == PANTALLA){
+						enviar_pcb(pcb, CPU_PCB_A_KERNEL_POR_IO_PANTALLA, clienteKernel);
 						enviar_entero(segundoParametro, clienteKernel, CPU_A_KERNEL_MOSTRAR_REGISTRO_POR_PANTALLA);
 					}
 				}
