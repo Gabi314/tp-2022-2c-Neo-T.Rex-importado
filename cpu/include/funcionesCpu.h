@@ -155,14 +155,16 @@ int escucharInterrupciones();
 
 t_list* inicializarTLB();
 void reiniciarTLB();
+void ejecucion();
+void enviarDireccionFisica(int,int,int,int);
+void bloqueoPorPageFault(t_pcb*);
+
 void iterator(instruccion*);
 
 //----------------------------FUNCIONES DE CONEXIONES
 int conexionConKernelDispatch(void);
 int conexionConMemoria(void);
-void agregar_a_paquete_kernel_cpu(t_pcb*,int,int);
-void ejecucion();
-void enviarDireccionFisica(int,int,int,int);
+void enviar_pcb(t_pcb*,int,int);
 
 extern pthread_t hiloInterrupciones;
 

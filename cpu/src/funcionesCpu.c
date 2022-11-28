@@ -165,16 +165,20 @@ void ejecutar(instruccion* unaInstruccion,t_pcb* pcb){
 				log_info(logger,"“PID: <%d> - Ejecutando: <%s> - <%s> - <%d>",
 						pcb->idProceso,unaInstruccion->identificador,imprimirRegistro(primerParametro),
 							segundoParametro);
+				sleep(retardoDeInstruccion);
+
 				modificarRegistro((uint32_t) segundoParametro,primerParametro,pcb); //En set el primer parametro es el registro
 				log_info(logger,"Valor del registro: %u",pcb->registros.AX);
 				//En set el segundo registro es el valor a asignar
 				log_info(logger,"----------------FINALIZA SET----------------\n");
-				sleep(2);//para probar que interrumpa sino ejecuta todo rapido
+
 				break;
 			case ADD:
 				log_info(logger,"“PID: <%d> - Ejecutando: <%s> - <%s> - <%s>",
 								pcb->idProceso,unaInstruccion->identificador,imprimirRegistro(primerParametro),
 									imprimirRegistro(segundoParametro));
+				sleep(retardoDeInstruccion);
+
 				registro = registroAUtilizar(primerParametro,pcb->registros);
 				segundoRegistro = registroAUtilizar(segundoParametro,pcb->registros);
 				registro += segundoRegistro;
@@ -220,7 +224,6 @@ void ejecutar(instruccion* unaInstruccion,t_pcb* pcb){
 
 				registro = registroAUtilizar(segundoParametro,pcb->registros);//leo el valor del registro primer parametro
 
-
 				marco = buscarDireccionFisica(pcb);
 				if(marco == -1){// Hay PF
 					bloqueoPorPageFault(pcb);
@@ -229,8 +232,6 @@ void ejecutar(instruccion* unaInstruccion,t_pcb* pcb){
 
 				log_info(logger,"No salio!!!!");
 				enviarDireccionFisica(marco,desplazamientoDePagina,0,registro);//con 0 envia la dir fisica para escribir
-
-				//enviarValorAEscribir(primerParametro); // se envia el valor para escribirlo en memoria
 
 				int cod_op = recibir_operacion(socket_memoria);
 
@@ -241,8 +242,8 @@ void ejecutar(instruccion* unaInstruccion,t_pcb* pcb){
 
 				break;
 			case IO:
-				agregar_a_paquete_kernel_cpu(pcb, CPU_PCB_A_KERNEL_POR_IO, clienteKernel); //ver que lo reciba kernel
-				enviar_entero(primerParametro,clienteKernel,CPU_DISPOSITIVO_A_KERNEL);//Mandar asi por separado o todo junto?
+				enviar_pcb(pcb, CPU_PCB_A_KERNEL_POR_IO, clienteKernel); //ver que lo reciba kernel
+				enviar_entero(primerParametro,clienteKernel,CPU_DISPOSITIVO_A_KERNEL);
 
 				if(primerParametro != TECLADO || primerParametro != PANTALLA){
 
@@ -271,15 +272,16 @@ void ejecutar(instruccion* unaInstruccion,t_pcb* pcb){
 			case EXT:
 				log_info(logger,"“PID: <%d> - Ejecutando: <%s>",pcb->idProceso,unaInstruccion->identificador);
 				ejecutando = false;
-				//Se deberá devolver el PCB actualizado al Kernel para su finalización.
+				limpiarEntradasTLB(pcb->idProceso);
+				enviar_pcb(pcb, CPU_PCB_A_KERNEL_PCB_POR_FINALIZACION, clienteKernel);
 				log_info(logger,"----------------FINALIZA EXIT----------------\n");
 				break;
 		}
 	}else{
 		log_info(logger,"Interrupcion!!!");
 		ejecutando = false;
-		//devolver pcb
-		//hayInterrupcion = false ?
+		enviar_pcb(pcb, CPU_A_KERNEL_PCB_POR_DESALOJO, clienteKernel);
+		//hayInterrupcion = false; ?
 	}
 }
 
@@ -336,7 +338,6 @@ int buscarDireccionFisica(t_pcb* pcb){
 
 int chequearMarcoEnTLB(int nroDePagina, int nroDeSegmento,int pid){
 	entradaTLB* unaEntradaTLB = malloc(sizeof(entradaTLB));
-
 	for(int i=0;i < list_size(tlb);i++){
 		unaEntradaTLB = list_get(tlb,i);
 
@@ -420,11 +421,11 @@ void bloqueoPorPageFault(t_pcb* pcb){
 	ejecutando = false;
 	pcb->programCounter -= 1;
 
-	//agregar_a_paquete_kernel_cpu(pcb, CPU_A_KERNEL_PCB_PAGE_FAULT,clienteKernel);
+	//enviar_pcb(pcb, CPU_A_KERNEL_PCB_PAGE_FAULT,clienteKernel);
 	//t_paquete *paquetePageFault = crear_paquete(CPU_A_KERNEL_PAGINA_PF);
 
 	//agregar_a_paquete_unInt(paquete, numeroDePagina, sizeof(numeroDePagina));
-	//agregar_a_paquete_unInt(paquete, numeroDeSegmento,sizeof(numeroDeSegmento));
+	//agregar_a_paquete_unInt(paquete, numeroDeSegmento,sizeof(numeroDeSegmento));COMENTADO PARA PROBAR MEMORIA Y CPU
 
 	log_info(logger, "Page Fault PID: <%d> - Segmento: <%d> - Pagina: <%d>",
 			pcb->idProceso, numeroDeSegmento, numeroDePagina);

@@ -82,7 +82,14 @@ t_list* inicializarTLB(){
 }
 
 //Se debe limpiar cuando finalizan el proceso
-void reiniciarTLB(){
-	list_clean(tlb);
+void limpiarEntradasTLB(int pid){
+	entradaTLB* unaEntradaTLB = malloc(sizeof(entradaTLB));
+
+	for(int i = 0; i<list_size(tlb);i++){
+		unaEntradaTLB = list_get(tlb,i);
+		if(unaEntradaTLB->nroDeProceso == pid){
+			list_remove_and_destroy_element(tlb,i,(void*) unaEntradaTLB);
+		}
+	}
 }
 

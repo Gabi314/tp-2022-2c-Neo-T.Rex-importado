@@ -133,7 +133,7 @@ t_pcb* recibir_pcb(int socket_cliente)//ponerla en shared
 //----------------------------- Para ser cliente de Memoria -------------------------------------------------
 
 //ESTO ES PARA MANDAR UN PCB A KERNEL-------------------------------------------------------------------------------------
-void agregar_a_paquete_kernel_cpu(t_pcb* pcb,int cod_op,int clienteKernel)
+void enviar_pcb(t_pcb* pcb,int cod_op,int clienteKernel)
 {
 	tamanioTotalIdentificadores = 0;
 	contadorInstrucciones = 0;
