@@ -67,8 +67,8 @@ void inicializarMemoria(){
 }
 //Mandar el cont antes de inicializar estructuras a kernel
 void inicializarEstructuras(int pid){
-	tablaDePaginas* unaTablaDePaginas = malloc(sizeof(tablaDePaginas));
 	for(int i = 0; i < cantidadDeSegmentos; i++){
+		tablaDePaginas* unaTablaDePaginas = malloc(sizeof(tablaDePaginas));
 		unaTablaDePaginas->pid = pid;
 		unaTablaDePaginas->entradas = list_create();
 
@@ -109,17 +109,6 @@ void inicializarMarcos(){
 		unMarco->numeroDeMarco = j;
 		unMarco->marcoLibre = 0;
 		list_add(listaDeMarcos,unMarco);
-	}
-}
-
-int posicionDePunteroDelAlgoritmo(int i){
-	posicionDelPuntero += i;
-
-	if(posicionDelPuntero<marcosPorProceso){
-		return posicionDelPuntero;
-	}else{
-		posicionDelPuntero = 0;
-		return	posicionDelPuntero;
 	}
 }
 
@@ -190,6 +179,17 @@ int algoritmoClock(t_list* listaDeEntradasEnMemoria){
 
 }
 
+int posicionDePunteroDelAlgoritmo(int i){
+	posicionDelPuntero += i;
+
+	if(posicionDelPuntero<marcosPorProceso){
+		return posicionDelPuntero;
+	}else{
+		posicionDelPuntero = 0;
+		return	posicionDelPuntero;
+	}
+}
+
 int algoritmoClockM (t_list* listaDeEntradasEnMemoria){
 	entradaTablaPaginas* unaEntrada = malloc(sizeof(entradaTablaPaginas));
 
@@ -215,6 +215,7 @@ int algoritmoClockM (t_list* listaDeEntradasEnMemoria){
 
 	log_info(logger,"No hay ninguna pagina con bit de uso y modificado en 0");
 	log_info(logger,"Busco con bit de uso en 0 y modificado en 1");
+	posicionDelPuntero = posicionDePunteroDelAlgoritmo(1);
 
 	for(int i = 0; i<list_size(listaDeEntradasEnMemoria);i++){
 		if(i==0){
@@ -238,6 +239,7 @@ int algoritmoClockM (t_list* listaDeEntradasEnMemoria){
 
 	log_info(logger,"No hay ninguna pagina con bit de uso en 0 y modificado en 1");
 	log_info(logger,"Reemplazo todos los bit de uso en 0");
+	posicionDelPuntero = posicionDePunteroDelAlgoritmo(1);
 	reemplazarTodosLosUsoACero(listaDeEntradasEnMemoria);
 	log_info(logger,"Busco con bit de uso en 0 y modificado en 0 ");
 
@@ -262,6 +264,7 @@ int algoritmoClockM (t_list* listaDeEntradasEnMemoria){
 	}
 	log_info(logger,"No hay ninguna pagina con bit de uso en 0 y modificado en 0");
 	log_info(logger,"Busco con bit de uso en 0 y modificado en 1");
+	posicionDelPuntero = posicionDePunteroDelAlgoritmo(1);
 
 	for(int i = 0; i<list_size(listaDeEntradasEnMemoria);i++){
 		if(i==0){
@@ -418,7 +421,7 @@ void cargarPagina(entradaTablaPaginas* unaEntrada){
 				unaEntrada->modificado = 0;
 			}
 
-	}else if(strcmp(algoritmoDeReemplazo,"CLOCK M") == 0){
+	}else if(strcmp(algoritmoDeReemplazo,"CLOCK-M") == 0){
 		int marcoAAsignar = algoritmoClockM(listaDeEntradasEnMemoria);
 		modificarPaginaACargar(unaEntrada,marcoAAsignar);
 		int posicionAReemplazar = indiceDeEntradaAReemplazar(marcoAAsignar);

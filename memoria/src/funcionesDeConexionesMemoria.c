@@ -127,7 +127,7 @@ int conexionConKernel(void){
 
 				enviar_entero(contNroTablaDePaginas, clienteKernel, MEMORIA_A_KERNEL_NUMERO_TABLA_PAGINAS);
 				inicializarEstructuras(pidActual);//inicializo estructuras
-				inicializarMarcos();
+				 //inicializarMarcos();
 
 				//int nroTablaPaginas = buscarNroTablaDe1erNivel(pidActual);
 				//enviarNroTabla1erNivel(clienteKernel,nroTabla1erNivel);
@@ -138,12 +138,14 @@ int conexionConKernel(void){
 				numeroTablaDePaginas = (int) list_get(listaQueContieneNumTablaYPagina,0);
 				numeroPagina = (int) list_get(listaQueContieneNumTablaYPagina,1);
 
-				tablaDePaginas* unaTablaDePaginas = malloc(sizeof(tablaDePaginas));
-				entradaTablaPaginas* unaEntrada = malloc(sizeof(entradaTablaPaginas));
-				unaTablaDePaginas = list_get(listaTablaDePaginas,numeroTablaDePaginas);
-				unaEntrada = list_get(unaTablaDePaginas->entradas,numeroPagina);
-				cargarPagina(unaEntrada);
-				enviar_mensaje("Se ha cargado la pagina correctamente", clienteKernel, KERNEL_MENSAJE_CONFIRMACION_PF);
+				if(numeroPagina<entradasPorTabla){
+					tablaDePaginas* unaTablaDePaginas = malloc(sizeof(tablaDePaginas));
+					entradaTablaPaginas* unaEntrada = malloc(sizeof(entradaTablaPaginas));
+					unaTablaDePaginas = list_get(listaTablaDePaginas,numeroTablaDePaginas);
+					unaEntrada = list_get(unaTablaDePaginas->entradas,numeroPagina);
+					cargarPagina(unaEntrada);
+					enviar_mensaje("Se ha cargado la pagina correctamente", clienteKernel, KERNEL_MENSAJE_CONFIRMACION_PF);
+				}
 				break;
 			case KERNEL_A_MEMORIA_MENSAJE_LIBERAR_POR_TERMINADO:
 				recibir_mensaje(clienteKernel);
