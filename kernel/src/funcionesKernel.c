@@ -171,11 +171,16 @@ void iterator(instruccion* instruccion){
 	log_info(logger,"%s param1: %d param2: %d", instruccion->identificador, instruccion->parametros[0],instruccion->parametros[1]);
 }
 
+
 t_list * inicializar_tabla_segmentos(int socket_cliente) {
 	t_list * listaSegmentos = list_create();
 	//recibir con cod_op
 	//poner if igualando cod_op con el codigo de consola
-	listaSegmentos = recibir_lista_enteros(socket_cliente);
+	int codigo = recibir_operacion(socket_cliente);
+	if(codigo == KERNEL_PAQUETE_TAMANIOS_SEGMENTOS){
+		listaSegmentos = recibir_lista_enteros(socket_cliente);
+	}
+
 	int tamanioDelSegmento = (int) list_get(listaSegmentos,3);
 			log_info(logger,"El tamanio del primer segmento es: %d",tamanioDelSegmento);
 	t_list * tablaSegmentos = list_create();
@@ -186,7 +191,7 @@ t_list * inicializar_tabla_segmentos(int socket_cliente) {
 
 		elemento->numeroSegmento = i;
 		elemento->numeroTablaPaginas = 0; // identificador de TP asociado, esto viene de memoria
-		elemento->tamanioSegmento = list_remove(listaSegmentos,0); // tamanio del segmento
+		elemento->tamanioSegmento = list_get(listaSegmentos,i); // tamanio del segmento
 
 		list_add(tablaSegmentos,elemento);
 
@@ -194,7 +199,6 @@ t_list * inicializar_tabla_segmentos(int socket_cliente) {
 	}
 	return tablaSegmentos;
 }
-
 
 void inicializar_registros(t_registros registros) {
 	registros.AX = 0;
@@ -344,6 +348,20 @@ void asignar_memoria() {
 		agregar_a_paquete_unInt(paquete, proceso->idProceso, sizeof(int));
 		agregar_a_paquete_unInt(paquete, list_size(proceso->tablaSegmentos), sizeof(int));
 		enviar_paquete(paquete,socketMemoria);
+
+		int numTablaPag;
+		int cod_op = recibir_operacion(socketMemoria);
+		if (cod_op == MEMORIA_A_KERNEL_NUMERO_TABLA_PAGINAS){
+			numTablaPag = recibir_entero(socketMemoria);
+		}
+
+		for(int i=0;i<list_size(proceso->tablaSegmentos);i++ ){
+			entradaTablaSegmento * entrada = malloc(sizeof(*entrada));
+			entrada = list_get(proceso->tablaSegmentos,i); //ver que devuelve
+			entrada->numeroTablaPaginas = numTablaPag+i;
+			list_replace(proceso->tablaSegmentos,i,entrada);
+			//log_info(logger, list_get());
+		}
 
 		sem_post(&pcbEnReady);
 
