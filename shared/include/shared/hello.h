@@ -125,7 +125,6 @@ typedef struct
 	t_algoritmo_pcb algoritmoActual;
 } t_pcb;
 
-
 int say_hello(char *who);
 
 void enviar_entero(int valor, int socket_cliente, int cod_op);

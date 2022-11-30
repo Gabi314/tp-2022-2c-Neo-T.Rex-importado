@@ -9,7 +9,6 @@ int cantidadEntradasTlb;
 char* algoritmoReemplazoTlb;
 int retardoDeInstruccion;
 
-t_pcb* unPcb;
 int tamanioDePagina;
 int entradasPorTabla;
 
@@ -61,15 +60,6 @@ instruccion* buscarInstruccionAEjecutar(t_pcb* unPCB){//FETCH CREO QUE ES IGUAL
 	return unaInstruccion;
 	}
 }
-/*Decode
-Esta etapa consiste en interpretar qué instrucción es la que se va a ejecutar y si la misma
-requiere de un acceso a memoria o no.
-REQUIEREN USLEEP-> SET, ADD, MOVIN Y MOVOUT EN CASO DE NO ESTAR EN TLB
-
-En el caso de las instrucciones que no accedan a memoria, las mismas deberán esperar un tiempo
-definido por archivo de configuración (RETARDO_INSTRUCCION), a modo de simular el tiempo que transcurre en la CPU.
-Las instrucciones de I/O y EXIT al representar syscalls, no tendrán retardo de instrucción.
-*/
 
 int decode(instruccion* unaInstruccion){
 	if(! strcmp(unaInstruccion->identificador,"SET")){
@@ -242,13 +232,12 @@ void ejecutar(instruccion* unaInstruccion,t_pcb* pcb){
 
 				break;
 			case IO:
-				enviar_pcb(pcb, CPU_PCB_A_KERNEL_POR_IO, clienteKernel);
-
 				if(primerParametro != TECLADO || primerParametro != PANTALLA){
 					log_info(logger,"“PID: <%d> - Ejecutando: <%s> - <%s> - <%d>",
 							pcb->idProceso, unaInstruccion->identificador,
 							dispositivoIOSegunParametro(primerParametro),
 							segundoParametro);
+					enviar_pcb(pcb, CPU_PCB_A_KERNEL_POR_IO, clienteKernel);//envio pcb por IO general
 
 					enviar_mensaje(dispositivoIOSegunParametro(primerParametro),clienteKernel,CPU_DISPOSITIVO_A_KERNEL);
 					enviar_entero(segundoParametro, clienteKernel, CPU_A_KERNEL_UNIDADES_DE_TRABAJO_IO);

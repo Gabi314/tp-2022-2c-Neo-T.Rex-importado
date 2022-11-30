@@ -17,8 +17,9 @@ int desplazamiento;
 t_paquete* paquete;
 
 //-----------------------FUNCIONES
-int conexionConKernelDispatch(void){//hilo
-	static pthread_mutex_t mutexMensajes;
+int conexionConKernelDispatch(void){//un hilo
+	static pthread_mutex_t mutexMensajes;// usar
+
 	int server_dispatch = iniciar_servidor(IP_CPU,puertoDeEscuchaDispatch,"Kernel");
 	log_info(logger,"Cpu lista para recibir a kernel");
 	clienteKernel = esperar_cliente(server_dispatch,"Kernel");
@@ -55,7 +56,7 @@ int conexionConMemoria(void){
 
 	int cod_op = recibir_operacion(socket_memoria);
 
-	if(cod_op == TAM_PAGINAS_Y_CANT_ENTRADAS){//TAM_PAGINAS_Y_CANT_ENTRADAS
+	if(cod_op == TAM_PAGINAS_Y_CANT_ENTRADAS){
 		listaQueContieneTamanioDePagYEntradas = recibir_lista_enteros(socket_memoria);
 	}
 
