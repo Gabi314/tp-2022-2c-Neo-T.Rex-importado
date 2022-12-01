@@ -125,7 +125,15 @@ typedef struct
 	t_algoritmo_pcb algoritmoActual;
 } t_pcb;
 
+typedef struct {
+    t_log* log;
+    int fd;
+    char* server_name;
+} t_procesar_conexion_args;
+
 int say_hello(char *who);
+
+t_log* iniciar_logger(char*, char*);
 
 void enviar_entero(int valor, int socket_cliente, int cod_op);
 

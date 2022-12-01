@@ -6,6 +6,11 @@ int say_hello(char* who) {
     return printf("Hello %s!!\n", who);
 }
 
+t_log* iniciar_logger(char* file, char* logName) {
+    t_log* nuevo_logger = log_create(file, logName, 1, LOG_LEVEL_DEBUG );
+    return nuevo_logger;
+}
+
 void enviar_entero(int valor, int socket_cliente, int cod_op) {
 	send(socket_cliente, &cod_op, sizeof(int), 0);
 	send(socket_cliente, &valor, sizeof(int), 0);
@@ -92,42 +97,44 @@ void* serializar_paquete(t_paquete* paquete, int bytes) // sirve para cualquier 
 	return magic;
 }
 
-int iniciar_servidor(char* ip, char* puerto,char* cliente)
+int iniciar_servidor(char* ip, char* puerto, char* cliente)
 {
 	int socket_servidor;
 
-	struct addrinfo hints, *servinfo;
+	struct addrinfo hints, *server_info;
 
 	memset(&hints, 0, sizeof(hints));
 	hints.ai_family = AF_UNSPEC;
 	hints.ai_socktype = SOCK_STREAM;
 	hints.ai_flags = AI_PASSIVE;
 
-	getaddrinfo(ip, puerto, &hints, &servinfo);
+	getaddrinfo(ip, puerto, &hints, &server_info);
 
 	// Creamos el socket de escucha del servidor
-	socket_servidor = socket(servinfo->ai_family,servinfo->ai_socktype, servinfo->ai_protocol);
+	socket_servidor = socket(server_info->ai_family, server_info->ai_socktype, server_info->ai_protocol);
 
 	// Asociamos el socket a un puerto
-	bind(socket_servidor, servinfo->ai_addr, servinfo->ai_addrlen);
+	bind(socket_servidor, server_info->ai_addr, server_info->ai_addrlen);
 
 	// Escuchamos las conexiones entrantes
 	listen(socket_servidor, SOMAXCONN);
 
-	freeaddrinfo(servinfo);
-	log_trace(logger, "Listo para escuchar a %s",cliente);
+	freeaddrinfo(server_info);
+
+	log_trace(logger, "Listo para escuchar a %s", cliente);
 
 	return socket_servidor;
 }
 
-int esperar_cliente(int socket_servidor,char* cliente)
-{
+int esperar_cliente(int socket_servidor, char* cliente) {
 	struct sockaddr_in dir_cliente;
 
 	socklen_t tam_direccion = sizeof(struct sockaddr_in);
+
 	// Aceptamos un nuevo cliente
 	int socket_cliente = accept(socket_servidor,(void*) &dir_cliente, &tam_direccion);
-	log_info(logger, "Se conecto el %s",cliente);
+
+	log_info(logger, "Se conecto el %s", cliente);
 
 	return socket_cliente;
 }
@@ -145,13 +152,28 @@ int crear_conexion(char *ip, char* puerto)
 
 	getaddrinfo(ip, puerto, &hints, &server_info);
 
-	// Ahora vamos a crear el socket.
+	// Crear el socket
 	int socket_cliente = socket(server_info->ai_family,
 								server_info->ai_socktype,
 								server_info->ai_protocol);
 
-	// Ahora que tenemos el socket, vamos a conectarlo
-	connect(socket_cliente,server_info->ai_addr,server_info->ai_addrlen);
+	// Fallo al crear el socket
+	if (socket_cliente == -1) {
+		// Pasar logger correspondiente por parametro
+		//log_error(logger, "Hubo un error al crear el socket del servidor");
+		return 0;
+	}
+
+	// Conectar el socket...
+	// Error al conectar
+	if(connect(socket_cliente, server_info->ai_addr, server_info->ai_addrlen) == -1) {
+		//log_error(logger, "Error al conectar al servidor);
+		freeaddrinfo(server_info);
+		return 0;
+	} else {
+		// Conexion exitosa
+		//log_info(logger, "Cliente conectado");
+	}
 
 	freeaddrinfo(server_info);
 

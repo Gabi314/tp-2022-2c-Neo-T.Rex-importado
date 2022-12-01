@@ -1,13 +1,26 @@
 #include "funcionesMemoria.h"
 
-
 t_list* listaTablaDePaginas;
 
+int memoria_fd;
+
 int main(int argc, char *argv[]) {
+
 	//OBLIGATORIO
 	funcionMain(argc,argv);
 	//OBLIGATORIO
 
+	/* Comentario interno:
+	 * Con el while ya estamos constantemente escuchando a la CPU.
+	 * Faltaria estar escuchando al kernel.
+	 */
+	memoria_fd = iniciar_servidor(ipMemoria, puertoMemoria, "MEMORIA");
+	while(1) {
+		// Escucho a los clientes (CPUs)
+		server_escuchar(logger, "MEMORIA", memoria_fd);
+	}
+
+	// Organizar
 
 	cantidadDeSegmentos = 4;
 	inicializarEstructuras(0);
@@ -77,6 +90,7 @@ void funcionMain(int argc, char *argv[]){
 	crearSwap();
 	inicializarMemoria();
 	inicializarMarcos();
+	//conexionCpu();
 	//Obligatorios
 	log_info(logger,"Fin de main obligatorio");
 }

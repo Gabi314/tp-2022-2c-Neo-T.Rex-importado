@@ -210,3 +210,22 @@ void chequeoDeIndice(int indice){
 	}
 }
 
+int server_escuchar(t_log* logger, char* server_name, int server_socket) {
+	// Se conecta un cliente
+    int cliente_socket = esperar_cliente(server_socket, server_name);
+    //int cliente_socket = esperar_cliente(logger, server_name, server_socket);
+
+    if (cliente_socket != -1) {
+    	// Creo un hilo para atender al cliente conectado
+        pthread_t hilo;
+        t_procesar_conexion_args* args = malloc(sizeof(t_procesar_conexion_args));
+        args->log = logger;
+        args->fd = cliente_socket;
+        args->server_name = server_name;
+        pthread_create(&hilo, NULL, (void*) conexionConCpu, (void*) args);
+        pthread_detach(hilo);
+        return 1;
+    }
+    return 0;
+}
+
