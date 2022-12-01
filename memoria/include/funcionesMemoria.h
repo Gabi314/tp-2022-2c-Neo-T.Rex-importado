@@ -6,6 +6,7 @@
 #include<stdbool.h>
 #include <errno.h>
 #include <unistd.h> //Para el truncate
+#include <inttypes.h>
 
 #define IP_MEMORIA "127.0.0.1"
 
@@ -64,6 +65,7 @@ extern int posicionActualDeSwap;
 extern int contNroTablaDePaginas;
 extern int clienteCpu;
 extern int clienteKernel;
+extern char* ipMemoria;
 extern char* puertoMemoria;
 
 //-------------------------DECLARO FUNCIONES
@@ -111,6 +113,6 @@ int conexionConCpu(void);
 int conexionConKernel(void);
 int marcoSegunIndice(int,int);
 void chequeoDeIndice(int);
-
+int server_escuchar(t_log*, char*, int);
 
 #endif /* FUNCIONES_MEMORIA_H_*/

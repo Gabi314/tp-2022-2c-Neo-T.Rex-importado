@@ -13,6 +13,7 @@ int marcosPorProceso;
 int retardoSwap;
 char* pathSwap;
 int tamanioSwap;
+char* ipMemoria;
 char* puertoMemoria;
 
 //Variables a utilizar
@@ -50,6 +51,8 @@ void crearConfiguraciones(char* unaConfig){
 
 	tamanioDeMemoria = config_get_int_value(config,"TAM_MEMORIA");
 	tamanioDePagina = config_get_int_value(config,"TAM_PAGINA");
+	// Agregar "IP_MEMORIA" al archivo de config
+	ipMemoria = config_get_string_value(config,"IP_MEMORIA");
 	puertoMemoria = config_get_string_value(config,"PUERTO_ESCUCHA");
 
 	entradasPorTabla = config_get_int_value(config,"ENTRADAS_POR_TABLA");
