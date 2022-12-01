@@ -14,9 +14,9 @@ void agregarEntradaATLB(int marco, int pagina, int pid, int numeroDeSegmento){
 
 	log_info(logger, "<PID: %d> Se agrega la pagina %d perteneciente al segmento %d con marco %d a tlb",
 			pid, pagina, numeroDeSegmento, marco);
-
 	list_add(tlb,unaEntrada);
 
+	imprimirEntradasTLB();
 }
 
 void algoritmosDeReemplazoTLB(int pagina,int marco,int pid, int numeroDeSegmento){//probarrrr-----------------------------------
@@ -73,6 +73,7 @@ void reemplazarPagina(int pagina,int marco ,int indice, int numeroDeSegmento){//
 
 	list_replace(tlb,indice,unaEntradaTLB);
 
+	imprimirEntradasTLB();
 }
 
 t_list* inicializarTLB(){
@@ -90,6 +91,21 @@ void limpiarEntradasTLB(int pid){
 		if(unaEntradaTLB->nroDeProceso == pid){
 			list_remove_and_destroy_element(tlb,i,(void*) unaEntradaTLB);
 		}
+	}
+}
+
+void imprimirEntradasTLB(){
+	entradaTLB* unaEntradaTLB = malloc(sizeof(entradaTLB));
+
+	for(int i = 0; i < list_size(tlb); i++){
+		unaEntradaTLB = list_get(tlb,i);
+		log_info(logger,
+				"<%d>|PID:<%d>|SEGMENTO:<%d>|PAGINA:<%d>|MARCO:<%d>"
+				, i
+				, unaEntradaTLB->nroDeProceso
+				, unaEntradaTLB->nroDeSegmento
+				, unaEntradaTLB->nroDePagina
+				, unaEntradaTLB->nroDeMarco);
 	}
 }
 

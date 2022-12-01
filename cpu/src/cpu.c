@@ -4,9 +4,11 @@ bool ejecutando;
 char** listaDispositivos;
 t_pcb* unPcb;
 
+
 int main(int argc, char *argv[]) {
 
-	logger = log_create("./cpu.log", "CPU", 1, LOG_LEVEL_INFO);
+	logger = log_create("./cpu-auxiliar.log", "CPU-AUX", 1, LOG_LEVEL_INFO);
+	loggerObligatorio = log_create("./cpu.log","CPU",1,LOG_LEVEL_INFO);
 
 	//Chequeo cantidad de archivos recibidos en el main
 	chequeoCantidadArchivos(argc);

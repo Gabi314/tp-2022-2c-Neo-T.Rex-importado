@@ -10,3 +10,5 @@ t_list* inicializarTLB();
 
 void limpiarEntradasTLB(int pid);
 
+void imprimirEntradasTLB();
+
