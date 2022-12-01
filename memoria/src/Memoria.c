@@ -1,7 +1,5 @@
 #include "funcionesMemoria.h"
 
-t_list* listaTablaDePaginas;
-
 int memoria_fd;
 
 int main(int argc, char *argv[]) {
@@ -17,7 +15,7 @@ int main(int argc, char *argv[]) {
 	memoria_fd = iniciar_servidor(ipMemoria, puertoMemoria, "MEMORIA");
 	while(1) {
 		// Escucho a los clientes (CPUs)
-		server_escuchar(logger, "MEMORIA", memoria_fd);
+		server_escuchar(loggerAux, "MEMORIA", memoria_fd);
 	}
 
 	// Organizar
@@ -25,7 +23,7 @@ int main(int argc, char *argv[]) {
 	cantidadDeSegmentos = 4;
 	inicializarEstructuras(0);
 
-	log_info(logger,"Tamaño de la lista tabla de paginas: %d",list_size(listaTablaDePaginas));
+	log_info(loggerAux,"Tamaño de la lista tabla de paginas: %d",list_size(listaTablaDePaginas));
 
 	tablaDePaginas* unaTablaDePaginas = malloc(sizeof(tablaDePaginas));
 	unaTablaDePaginas = list_get(listaTablaDePaginas,0);
@@ -73,14 +71,15 @@ int main(int argc, char *argv[]) {
 
 	//conexionConCpu();
 
-	log_info(logger,"Fin de memoria");
-	log_info(logger,"Boca");
+	log_info(loggerAux,"Fin de memoria");
+	log_info(loggerAux,"Boca");
 }
 
 
 void funcionMain(int argc, char *argv[]){
 	//Obligatorios
-	logger = log_create("memoria.log", "MEMORIA", 1, LOG_LEVEL_INFO);
+	logger = log_create("memoria.log", "MEMORIA", 1, LOG_LEVEL_INFO); //OBLIGATORIOS
+	loggerAux = log_create("memoriaAux.log", "MEMORIA", 1, LOG_LEVEL_INFO); //AUX
 	listaDeMarcos = list_create();
 	listaDeEntradasEnMemoria = list_create();
 	listaTablaDePaginas = list_create();
@@ -92,7 +91,7 @@ void funcionMain(int argc, char *argv[]){
 	inicializarMarcos();
 	//conexionCpu();
 	//Obligatorios
-	log_info(logger,"Fin de main obligatorio");
+	log_info(loggerAux,"Fin de main obligatorio");
 }
 
 

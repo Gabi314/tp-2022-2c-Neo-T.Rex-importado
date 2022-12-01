@@ -6,13 +6,13 @@ int desplazamiento;
 int clienteCpu;
 int clienteKernel;
 
-
+int pidActual;
 
 int conexionConCpu(void){
 	static pthread_mutex_t mutexMemoriaData;
 	int server_fd = iniciar_servidor(IP_MEMORIA,puertoMemoria,"Cpu"); // tendria que estar comentado porque viene despues de coenxion con kernel
 
-	log_info(logger, "Memoria lista para recibir a Cpu");
+	log_info(loggerAux, "Memoria lista para recibir a Cpu");
 	clienteCpu = esperar_cliente(server_fd,"Cpu");
 
 	t_list* listaQueContieneNroTabla1erNivelYentrada = list_create();
@@ -31,7 +31,7 @@ int conexionConCpu(void){
 		int cod_op = recibir_operacion(clienteCpu);
 		sleep(retardoMemoria/1000); //lo que se tarda en acceder a memoria
 
-		log_info(logger,"Accediendo a memoria espere %d segundos\n",retardoMemoria/1000);
+		log_info(loggerAux,"Accediendo a memoria espere %d segundos\n",retardoMemoria/1000);
 
 		switch (cod_op) {
 			case MENSAJE_CPU_MEMORIA://mensaje de pedido tam pag y cant entradas
@@ -40,17 +40,17 @@ int conexionConCpu(void){
 				break;
 			case PRIMER_ACCESO://ES OBTENER MARCO
 
-
 				listaConTablaDePaginaYPagina = recibir_lista_enteros(clienteCpu);
 				numeroTablaDePaginas = list_get(listaConTablaDePaginaYPagina,0);
 				numeroDeLaPagina = list_get(listaConTablaDePaginaYPagina,1);
 
-				//log_info(logger,"Me llego  la entrada de segundo nivel %d",entradaTabla2doNivel);
+				//log_info(loggerAux,"Me llego  la entrada de segundo nivel %d",entradaTabla2doNivel);
 
 				numeroDeMarco =  marcoSegunIndice(numeroTablaDePaginas,numeroDeLaPagina);
 				if(numeroDeMarco == -1){
 					enviar_mensaje("La pagina no esta en memoria", clienteCpu, MEMORIA_A_CPU_PAGE_FAULT);
 				}else{
+					log_info(logger, "PID: <%d> - Página: <%d> - Marco: <%d>",pidActual,numeroDeLaPagina,numeroDeMarco);
 					enviar_entero(numeroDeMarco,clienteCpu,MEMORIA_A_CPU_NUMERO_MARCO);
 				}
 
@@ -62,17 +62,16 @@ int conexionConCpu(void){
 				numeroDeMarco = (int) list_get(listaQueContieneDireccionFisca,0); // por ahora piso la variable de arriba despues ver como manejar el tema de marco que envio y marco que recibo
 				desplazamiento = (int) list_get(listaQueContieneDireccionFisca,1);
 
+				log_info(loggerAux,"Me llego el marco %d con desplazamiento %d",numeroDeMarco,desplazamiento);
 
-				log_info(logger,"Me llego el marco %d con desplazamiento %d",numeroDeMarco,desplazamiento);
 
-
-				log_info(logger,"-------------------MOV_IN-------------------");
+				log_info(loggerAux,"-------------------MOV_IN-------------------");
 
 				uint32_t numeroALeer = leerElPedido(numeroDeMarco,desplazamiento);
 				enviar_entero(numeroALeer,clienteCpu,MEMORIA_A_CPU_NUMERO_LEIDO);
-				log_info(logger, "Envio a cpu el valor leido: %u",numeroALeer);
+				log_info(loggerAux, "Envio a cpu el valor leido: %u",numeroALeer);
 
-				log_info(logger,"-------------------MOV_IN-------------------\n");
+				log_info(loggerAux,"-------------------MOV_IN-------------------\n");
 				break;
 			case CPU_A_MEMORIA_VALOR_A_ESCRIBIR://caso: me envia dir fisica y escribo el valor en esa direccion
 				listaQueContieneDireccionFisca = recibir_lista_enteros(clienteCpu);
@@ -82,19 +81,19 @@ int conexionConCpu(void){
 
 				uint32_t valorAEscribir = (uint32_t) list_get(listaQueContieneDireccionFisca,2);
 
-				log_info(logger,"-------------------MOV_OUT-------------------");
+				log_info(loggerAux,"-------------------MOV_OUT-------------------");
 
-				log_info(logger,"Me llego el valor a escribir: %u",valorAEscribir);
+				log_info(loggerAux,"Me llego el valor a escribir: %u",valorAEscribir);
 				escribirElPedido((uint32_t) valorAEscribir,numeroDeMarco,desplazamiento);
 
-				log_info(logger,"-------------------MOV_OUT-------------------\n");
+				log_info(loggerAux,"-------------------MOV_OUT-------------------\n");
 				enviar_mensaje("Se escribio correctamente el valor", clienteCpu, MENSAJE_CPU_MEMORIA);
 				break;
 			case -1:
-				log_error(logger, "Se desconecto el cliente. Terminando conexion");
+				log_error(loggerAux, "Se desconecto el cliente. Terminando conexion");
 				return EXIT_SUCCESS;
 			default:
-				log_warning(logger,"Operacion desconocida. No quieras meter la pata");
+				log_warning(loggerAux,"Operacion desconocida. No quieras meter la pata");
 				break;
 		}
 
@@ -104,10 +103,9 @@ int conexionConCpu(void){
 }
 
 int conexionConKernel(void){
-	int pidActual;
 
 	int socket_kernel = iniciar_servidor(IP_MEMORIA,puertoMemoria,"Kernel");
-	log_info(logger, "Memoria lista para recibir a Kernel");
+	log_info(loggerAux, "Memoria lista para recibir a Kernel");
 	clienteKernel = esperar_cliente(socket_kernel,"Kernel");
 
 	int numeroTablaDePaginas;
@@ -119,7 +117,6 @@ int conexionConKernel(void){
 
 		switch (cod_op) {
 
-
 			case NRO_TP:
 				listaQueContienePidYCantidadSegmentos = recibir_lista_enteros(clienteKernel);
 				pidActual = (int) list_get(listaQueContienePidYCantidadSegmentos,0);
@@ -127,10 +124,7 @@ int conexionConKernel(void){
 
 				enviar_entero(contNroTablaDePaginas, clienteKernel, MEMORIA_A_KERNEL_NUMERO_TABLA_PAGINAS);
 				inicializarEstructuras(pidActual);//inicializo estructuras
-				 //inicializarMarcos();
 
-				//int nroTablaPaginas = buscarNroTablaDe1erNivel(pidActual);
-				//enviarNroTabla1erNivel(clienteKernel,nroTabla1erNivel);
 				return EXIT_SUCCESS;
 				break;
 			case KERNEL_A_MEMORIA_PAGE_FAULT:
@@ -144,6 +138,7 @@ int conexionConKernel(void){
 					unaTablaDePaginas = list_get(listaTablaDePaginas,numeroTablaDePaginas);
 					unaEntrada = list_get(unaTablaDePaginas->entradas,numeroPagina);
 					cargarPagina(unaEntrada);
+					log_info(logger, "PID: <%d> - Página: <%d> - Marco: <%d>",pidActual,unaEntrada->numeroDeEntrada,unaEntrada->numeroMarco);
 					enviar_mensaje("Se ha cargado la pagina correctamente", clienteKernel, KERNEL_MENSAJE_CONFIRMACION_PF);
 				}
 				break;
@@ -155,10 +150,10 @@ int conexionConKernel(void){
 				finalizacionDeProceso(numeroDePid);
 				break;
 			case -1:
-				log_error(logger, "Se desconecto el cliente. Terminando conexion");
+				log_error(loggerAux, "Se desconecto el cliente. Terminando conexion");
 				return EXIT_FAILURE;
 			default:
-				log_warning(logger,"Operacion desconocida. No quieras meter la pata");
+				log_warning(loggerAux,"Operacion desconocida. No quieras meter la pata");
 				break;
 			}
 
@@ -169,7 +164,7 @@ int conexionConKernel(void){
 
 void enviarTamanioDePaginaYCantidadDeEntradas(int socket_cliente){
 	t_paquete* paquete = crear_paquete(TAM_PAGINAS_Y_CANT_ENTRADAS);
-	log_info(logger,"Envio el tamanio de pag y cant entradas");
+	log_info(loggerAux,"Envio el tamanio de pag y cant entradas");
 
 	agregar_a_paquete_unInt(paquete,&tamanioDePagina,sizeof(tamanioDePagina));
 	agregar_a_paquete_unInt(paquete,&entradasPorTabla,sizeof(entradasPorTabla));
@@ -210,16 +205,16 @@ void chequeoDeIndice(int indice){
 	}
 }
 
-int server_escuchar(t_log* logger, char* server_name, int server_socket) {
+int server_escuchar(t_log* loggerAux, char* server_name, int server_socket) {
 	// Se conecta un cliente
     int cliente_socket = esperar_cliente(server_socket, server_name);
-    //int cliente_socket = esperar_cliente(logger, server_name, server_socket);
+    //int cliente_socket = esperar_cliente(loggerAux, server_name, server_socket);
 
     if (cliente_socket != -1) {
     	// Creo un hilo para atender al cliente conectado
         pthread_t hilo;
         t_procesar_conexion_args* args = malloc(sizeof(t_procesar_conexion_args));
-        args->log = logger;
+        args->log = loggerAux;
         args->fd = cliente_socket;
         args->server_name = server_name;
         pthread_create(&hilo, NULL, (void*) conexionConCpu, (void*) args);
