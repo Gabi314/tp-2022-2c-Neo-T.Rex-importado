@@ -1135,3 +1135,5 @@
 [INFO] 22:19:28:592 CONSOLA/(14315:14315): [recibir_entero]: se recibio el numero 3
 [INFO] 22:19:28:594 CONSOLA/(14315:14315): Se imprime el valor 3 por pantalla a pedido del kernel
 [INFO] 22:19:28:595 CONSOLA/(14315:14315): Me llego el mensaje Finalizar
+[INFO] 22:03:08:005 CONSOLA/(2946:2946): Config creado
+[INFO] 22:03:08:019 CONSOLA/(2946:2946): Se leyo el archivo correctamente

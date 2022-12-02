@@ -15,6 +15,7 @@ La idea seria tener las siguientes funciones:
 // Hacemos uso de las siguientes funciones de servidor
 
 t_log* logger;
+t_log* loggerAux;
 
 int socketServidorKernel;
 t_list* listaInstrucciones;
@@ -128,7 +129,8 @@ void agregar_a_paquete_kernel_cpu(t_pcb* pcb,int cod_op,int conexionCpu)
 	memcpy(paquete->buffer->stream + desplazamiento, &contadorSegmentos, sizeof(int));//ver tema contador
 	desplazamiento+=sizeof(int);
 	list_iterate(pcb->tablaSegmentos, (void*) agregarSegmentosAlPaquete);
-	log_info(logger,"cont seg: %d",contadorSegmentos);
+
+	log_info(loggerAux,"cont seg: %d",contadorSegmentos);
 	memcpy(paquete->buffer->stream + desplazamiento, &(pcb->socket), sizeof(int));
 	desplazamiento+=sizeof(int);
 	memcpy(paquete->buffer->stream + desplazamiento, &(pcb->estado), sizeof(int));
@@ -178,17 +180,24 @@ void agregarSegmentosAlPaquete(entradaTablaSegmento* unSegmento){
 
 /*
 void iterator(instruccion* instruccion){
-	log_info(logger,"%s param1: %d param2: %d", instruccion->identificador, instruccion->parametros[0],instruccion->parametros[1]);
+	log_info(loggerAux,"%s param1: %d param2: %d", instruccion->identificador, instruccion->parametros[0],instruccion->parametros[1]);
 }
 */
+
+
 t_list * inicializar_tabla_segmentos(int socket_cliente) {
 	t_list * listaSegmentos = list_create();
 	//recibir con cod_op
 	//poner if igualando cod_op con el codigo de consola
-	listaSegmentos = recibir_lista_enteros(socket_cliente);
+
+	int codigo = recibir_operacion(socket_cliente);
+	if(codigo == KERNEL_PAQUETE_TAMANIOS_SEGMENTOS){
+		listaSegmentos = recibir_lista_enteros(socket_cliente);
+	}
 	log_info(logger,"tamanios de segmentos recibidos");
-	int  tamanioDelSegmento = (int) list_get(listaSegmentos,3);
-			log_info(logger,"El tamanio del primer segmento es: %d", tamanioDelSegmento);
+	int tamanioDelSegmento = (int) list_get(listaSegmentos,3);
+	log_info(loggerAux,"El tamanio del primer segmento es: %d",tamanioDelSegmento);
+
 	t_list * tablaSegmentos = list_create();
 	int i = 0;
 	int tamanioLista = list_size(listaSegmentos);
@@ -197,9 +206,11 @@ t_list * inicializar_tabla_segmentos(int socket_cliente) {
 
 		elemento->numeroSegmento = i;
 		elemento->numeroTablaPaginas = 0; // identificador de TP asociado, esto viene de memoria
+
 		int  tamanio =  (int) list_remove(listaSegmentos,0);
 		log_info(logger,"el tamanio es %d",tamanio);
 		elemento->tamanioSegmento = tamanio ;// tamanio del segmento
+
 
 		list_add(tablaSegmentos,elemento);
 
@@ -207,7 +218,6 @@ t_list * inicializar_tabla_segmentos(int socket_cliente) {
 	}
 	return tablaSegmentos;
 }
-
 
 void inicializar_registros(t_registros registros) {
 	registros.AX = 0;
@@ -258,16 +268,17 @@ void recibir_consola(int * servidor) {
 
 	while (1) {
 		pthread_t hilo1;
-		log_info(logger,"esperamos una nueva consola");
+
+		log_info(loggerAux,"esperamos una nueva consola");
 
 		int nuevo_cliente = esperar_cliente(servidor_int,"Consola");
 
-		log_info(logger,"recibimos al cliente de socket %d", nuevo_cliente);
+		log_info(loggerAux,"recibimos al cliente de socket %d", nuevo_cliente);
 
 		int hiloCreado = pthread_create(&hilo1, NULL,  (void *)atender_consola, &nuevo_cliente);
 		pthread_detach(hilo1);
 
-		log_info(logger,"levantamos y detacheamos el hilo de la consola %d", nuevo_cliente);
+		log_info(loggerAux,"levantamos y detacheamos el hilo de la consola %d", nuevo_cliente);
 	}
 
 }
@@ -277,7 +288,9 @@ void  atender_consola(int * nuevo_cliente) {
 	t_pcb* PCB = malloc(sizeof(t_pcb));
 	int  nuevo_cliente_int = *nuevo_cliente;
 
-	log_info(logger,"[atender_consola]recibimos las instrucciones y segmentos del cliente %d!", nuevo_cliente_int);
+
+	log_info(loggerAux,"[atender_consola]recibimos las instrucciones y segmentos del cliente %d!", nuevo_cliente_int);
+
 
 
 	log_info(logger,"[atender_consola]esperando segmentos");
@@ -333,7 +346,9 @@ void  atender_consola(int * nuevo_cliente) {
 	PCB->estado = NEW;
 	PCB->algoritmoActual = RR;
 
-	log_info(logger,"[atender_consola]inicializamos PCB de id_proceso %d", PCB->idProceso);
+	log_info(loggerAux,"[atender_consola]inicializamos PCB de id_proceso %d", PCB->idProceso);
+
+	log_info(logger,"Se crea el proceso <%d> en NEW", PCB->idProceso);
 
 	agregarANew(PCB);
 
@@ -350,18 +365,20 @@ void agregarANew(t_pcb* proceso) {
 
 	pthread_mutex_lock(&mutexNew);
 	queue_push(colaNew, proceso);
-	log_info(logger, "[NEW] Entra el proceso de PID: %d a la cola.",
+	log_info(loggerAux, "[NEW] Entra el proceso de PID: %d a la cola.",
 			proceso->idProceso);
-	log_info(logger,"el tamanio de la cola de new es %d", queue_size(colaNew));
+	log_info(loggerAux,"el tamanio de la cola de new es %d", queue_size(colaNew));
 	pthread_mutex_unlock(&mutexNew);
 }
 
 t_pcb* sacarDeNew() {
 
+
 	//pthread_mutex_lock(&mutexNew);
 	t_pcb* proceso = malloc(sizeof(t_pcb));// = malloc(sizeof(t_pcb*));
 	proceso = queue_pop(colaNew);
-	log_info(logger, "[NEW] Se saca el proceso de PID: %d de la cola",
+	log_info(loggerAux, "[NEW] Se saca el proceso de PID: %d de la cola",
+
 			proceso->idProceso);
 	log_info(logger,"el tamanio de la cola de new es %d", queue_size(colaNew));
 //	pthread_mutex_unlock(&mutexNew);
@@ -377,19 +394,23 @@ void asignar_memoria() {
 
 		sem_wait(&pcbEnNew);
 		sem_wait(&gradoDeMultiprogramacion);
+
 		t_pcb* proceso = malloc(sizeof(t_pcb));
-		log_info(logger, "[asignar_memoria] :se desperto ");
+		log_info(loggerAux, "[asignar_memoria] :se desperto ");
+
 
 
 		proceso = sacarDeNew();
+		t_pcb* pcbAux= malloc(sizeof(* pcbAux)); // malloc?
 
-		log_info(logger,"llego antes de crear el paquete");
+
+		log_info(loggerAux,"llego antes de crear el paquete");
 		t_paquete * paquete = crear_paquete(NRO_TP);
-		log_info(logger,"llego antes de agregar dos enteros al paquete");
+		log_info(loggerAux,"llego antes de agregar dos enteros al paquete");
 		agregar_a_paquete_unInt(paquete, &(proceso->idProceso), sizeof(int));
 		int tamanioTablaSegmentos = list_size(proceso->tablaSegmentos);
 		agregar_a_paquete_unInt(paquete, &tamanioTablaSegmentos, sizeof(int));
-		log_info(logger,"llego antes de enviar el paquete");
+		log_info(loggerAux,"llego antes de enviar el paquete");
 		enviar_paquete(paquete,socketMemoria);
 
 		int cod_op = recibir_operacion(socketMemoria);
@@ -399,42 +420,90 @@ void asignar_memoria() {
 			numTablaPag = recibir_entero(socketMemoria);
 		}
 		else {
-			log_info(logger,"operacion de memoria invalida");
+			log_info(loggerAux,"operacion de memoria invalida");
 		}
 
-		log_info(logger,"llego antes del for");
+		log_info(loggerAux,"llego antes del for");
 		for(int i=0;i<list_size(proceso->tablaSegmentos);i++ ){
 					entradaTablaSegmento * entrada = malloc(sizeof(entradaTablaSegmento));
 					entrada = list_get(proceso->tablaSegmentos,i); //ver que devuelve
 					entrada->numeroTablaPaginas = numTablaPag+i;
 					list_replace(proceso->tablaSegmentos,i,entrada);
-					//log_info(logger, list_get());
+					//log_info(loggerAux, list_get());
 				}
 
-		log_info(logger,"llego antes del push a cola de ready");
+		log_info(loggerAux,"llego antes del push a cola de ready");
 			pthread_mutex_lock(&primerPushColaReady);
-			if (!strcmp(algoritmoPlanificacion, "FIFO")) {
-				queue_push(colaReadyFIFO,proceso);
+		
+
+		if (!strcmp(algoritmoPlanificacion, "FIFO")) {
+			queue_push(colaReadyFIFO,proceso);
+
+			log_info(logger, "Cola Ready <FIFO>: [<LISTA DE PIDS>]");
+			for(int i=0; i<queue_size(colaReadyFIFO); i++){
+				pcbAux = list_get(colaReadyFIFO,i);
+				log_info(logger, "%d", pcbAux->idProceso);
+			}
+		} else {
+			if (!strcmp(algoritmoPlanificacion, "RR")) {
+				queue_push(colaReadyRR,proceso);
+
+				log_info(logger, "Cola Ready <RR>: [<LISTA DE PIDS>]");
+				for(int i=0; i<queue_size(colaReadyRR); i++){
+					pcbAux = list_get(colaReadyRR,i);
+					log_info(logger, "%d", pcbAux->idProceso);
+				}
 			} else {
-				if (!strcmp(algoritmoPlanificacion, "RR")) {
+				if(!strcmp(algoritmoPlanificacion, "Feedback")) {// ver si esta asi en los config
 					queue_push(colaReadyRR,proceso);
-				} else {
-					if(!strcmp(algoritmoPlanificacion, "Feedback")) {// ver si esta asi en los config
-						queue_push(colaReadyRR,proceso);
-					}else{
-						log_info(logger, "Algoritmo invalido");
+
+					log_info(logger, "Cola Ready <Feedback>: [<LISTA DE PIDS RR>]");
+					for(int i=0; i<queue_size(colaReadyRR); i++){
+						pcbAux = list_get(colaReadyRR,i);
+						log_info(logger, "%d", pcbAux->idProceso);
 					}
+					log_info(logger,"[<LISTA DE PIDS FIFO>]");
+					for(int i=0; i<queue_size(colaReadyFIFO); i++){
+						pcbAux = list_get(colaReadyFIFO,i);
+						log_info(logger, "%d", pcbAux->idProceso);
+					}
+				}else{
+					log_info(logger, "Algoritmo invalido");
 				}
 			}
-			pthread_mutex_unlock(&primerPushColaReady);
+		}
 
-			log_info(logger,"llego antes de despertar readyAExe");
+		free(pcbAux);
+
+		t_paquete * paquete = crear_paquete(NRO_TP);
+		agregar_a_paquete_unInt(paquete, proceso->idProceso, sizeof(int));
+		agregar_a_paquete_unInt(paquete, list_size(proceso->tablaSegmentos), sizeof(int));
+		enviar_paquete(paquete,socketMemoria);
+
+		int numTablaPag;
+		int cod_op = recibir_operacion(socketMemoria);
+		if (cod_op == MEMORIA_A_KERNEL_NUMERO_TABLA_PAGINAS){
+			numTablaPag = recibir_entero(socketMemoria);
+		}
+
+		for(int i=0;i<list_size(proceso->tablaSegmentos);i++ ){
+			entradaTablaSegmento * entrada = malloc(sizeof(*entrada));
+			entrada = list_get(proceso->tablaSegmentos,i); //ver que devuelve
+			entrada->numeroTablaPaginas = numTablaPag+i;
+			list_replace(proceso->tablaSegmentos,i,entrada);
+			//log_info(logger, list_get());
+		}
+
+		log_info(logger,"PID: <%d> - Estado Anterior: <NEW> - Estado Actual: <READY>", proceso->idProceso);
 
 
-			sem_post(&pcbEnReady);
+		sem_post(&pcbEnReady);
 
 
-		log_info(logger,"[asignar_memoria]: desde asignar_memoria despertamos a readyAExe");
+		
+
+
+		log_info(loggerAux,"[asignar_memoria]: desde asignar_memoria despertamos a readyAExe");
 	}
 
 }
@@ -454,7 +523,7 @@ void readyAExe() {
 		procesoAEjecutar = obtenerSiguienteDeReady();
 		pthread_mutex_unlock(&obtenerProceso);
 
-		log_info(logger,
+		log_info(loggerAux,
 			"[readyAExe]: Desde readyAExe mandamos al proceso de pid %d a ejecutar  ",
 			procesoAEjecutar->idProceso);
 
@@ -463,7 +532,11 @@ void readyAExe() {
 			//free(procesoAEjecutar);
 			log_info(logger, "[readyAExe]: enviamos el proceso a cpu");
 
-		if(!strcmp(algoritmoPlanificacion, "RR") || (!strcmp(algoritmoPlanificacion, "Feedback") && procesoAEjecutar->algoritmoActual == RR)){
+
+		log_info(logger,"PID: <%d> - Estado Anterior: <READY> - Estado Actual: <EXE>", procesoAEjecutar->idProceso);
+
+		if(algoritmoPlanificacion == "RR" || (algoritmoPlanificacion == "Feedback" && procesoAEjecutar->algoritmoActual == RR)){
+
 			int hiloQuantum = pthread_create(&hiloQuantumRR, NULL,(void*) controlar_quantum,NULL);
 			pthread_detach(hiloQuantumRR);
 		}
@@ -493,7 +566,7 @@ t_pcb * procesoPlanificado = malloc(sizeof(t_pcb));
 				}
 			}else{
 
-				log_info(logger, "[obtenerSiguienteDeReady]: algoritmo invalido");
+				log_info(loggerAux, "[obtenerSiguienteDeReady]: algoritmo invalido");
 			}
 		}
 	}
@@ -506,24 +579,40 @@ t_pcb* obtenerSiguienteFIFO() {
 	t_pcb* procesoPlanificado = malloc(sizeof(t_pcb));
 	procesoPlanificado = queue_pop(colaReadyFIFO);
 
-	log_info(logger, "[obtenerSiguienteFIFO]: PROCESOS EN READY FIFO: %d \n", queue_size(colaReadyFIFO));
+	log_info(loggerAux, "[obtenerSiguienteFIFO]: PROCESOS EN READY FIFO: %d \n", queue_size(colaReadyFIFO));
 
 	return procesoPlanificado;
 }
 
 t_pcb* obtenerSiguienteRR() {
-	log_info(logger, "[obtenerSiguienteRR]: PROCESOS EN READY RR: %d \n", queue_size(colaReadyRR));
+
+
 
 	t_pcb* procesoPlanificado = malloc(sizeof(t_pcb));
 	procesoPlanificado = queue_pop(colaReadyRR);
+
+	log_info(loggerAux, "[obtenerSiguienteFIFO]: PROCESOS EN READY RR: %d \n", queue_size(colaReadyRR));
 
 	return procesoPlanificado;
 }
 
 
+void ejecutar(t_pcb* proceso) {
 
+	if (proceso != NULL) {
 
+		log_info(loggerAux, "[EXEC] Ingresa el proceso de PID: %d",proceso->idProceso);
 
+	} else {
+		log_info(loggerAux, "[EXEC] No se logró encontrar un proceso para ejecutar");
+	}
+
+ //	agregarAPaqueteKernelCpu(proceso); //Aca mandamos el proceso a cpu
+	agregar_a_paquete_kernel_cpu(proceso,KERNEL_PCB_A_CPU,conexionCpu);
+
+	log_info(loggerAux, "[ejecutar]: enviamos el proceso a cpu");
+
+}
 
 
 void atender_interrupcion_de_ejecucion() {
@@ -534,8 +623,9 @@ while (1) {
 
 	switch (cod_op) {
 
-	case IO_GENERAL:
+	case CPU_PCB_A_KERNEL_POR_IO:
 		t_pcb * proceso = recibir_pcb(conexionCpuDispatch);
+
 
 		if(!strcmp(algoritmoPlanificacion, "RR") || (!strcmp(algoritmoPlanificacion, "Feedback") && proceso->algoritmoActual == RR)){
 			pthread_cancel(hiloQuantumRR);
@@ -543,8 +633,13 @@ while (1) {
 
 		char * dispositivo;
 
-		recibir_operacion(conexionCpuInterrupt);
-		dispositivo = recibir_mensaje(conexionCpuInterrupt);
+
+		cod_op = recibir_operacion(conexionCpuDispatch);
+		if(cod_op == CPU_DISPOSITIVO_A_KERNEL){
+			dispositivo = recibir_mensaje(conexionCpuDispatch);
+		}
+
+
 
 		bool comparar_nombre_dispositivo( t_elem_disp * elemento){
 			return !strcmp(elemento->dispositivo,dispositivo);
@@ -554,15 +649,26 @@ while (1) {
 
 		queue_push(elementoLista->cola_procesos,proceso);
 
-		recibir_operacion(conexionCpuInterrupt);
-		int unidadesTrabajo = recibir_entero(conexionCpuInterrupt);
+
+		cod_op = recibir_operacion(conexionCpuDispatch);
+		int unidadesTrabajo = 0;
+
+		if(cod_op == CPU_A_KERNEL_UNIDADES_DE_TRABAJO_IO){
+			unidadesTrabajo = recibir_entero(conexionCpuDispatch);
+		}
+
+
 		queue_push(elementoLista->cola_UTs,&unidadesTrabajo);
+
+		log_info(logger, "PID: <%d> - Bloqueado por: <%s>" , proceso->idProceso, elementoLista->dispositivo);
+
+		log_info(logger,"PID: <%d> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>", proceso->idProceso);
 
 		sem_post(&elementoLista->semaforo);
 
 
 		break;
-	case IO_TECLADO:
+	case CPU_PCB_A_KERNEL_POR_IO_TECLADO:
 
 
 		t_info_teclado * aMandarTeclado = malloc(sizeof(*aMandarTeclado));
@@ -570,19 +676,21 @@ while (1) {
 
 
 		if(!strcmp(algoritmoPlanificacion, "RR") || (!strcmp(algoritmoPlanificacion, "Feedback") && aMandarTeclado->pcb->algoritmoActual == RR)){
-									pthread_cancel(hiloQuantumRR);
-								}
 
-		recibir_operacion(conexionCpuInterrupt);
-		aMandarTeclado->registro =recibir_entero(conexionCpuInterrupt);
+			pthread_cancel(hiloQuantumRR);
+		}
+		cod_op = recibir_operacion(conexionCpu);
 
 
-		//pthread_mutex_lock(&mutexTeclado);
-		t_pcb * pcbTeclado = recibir_pcb(conexionCpuInterrupt); // la idea es que sea una varible loca
-		recibir_operacion(conexionCpuInterrupt);
-		registroTeclado =recibir_entero(conexionCpuInterrupt);
-		//pthread_mutex_unlock(&mutexTeclado);
+		if(cod_op == CPU_A_KERNEL_INGRESAR_VALOR_POR_TECLADO){
+			aMandarTeclado->registro =recibir_entero(conexionCpuDispatch);
+		}
 
+		
+
+		log_info(logger, "PID: <%d> - Bloqueado por: <TECLADO>", proceso->idProceso);
+
+		log_info(logger,"PID: <%d> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>", proceso->idProceso);
 
 		pthread_t hiloAtenderTeclado;
 		int hiloTeclado = pthread_create(&hiloAtenderTeclado, NULL,(void*) atender_IO_teclado,aMandarTeclado);
@@ -594,7 +702,7 @@ while (1) {
 
 		break;
 
-	case IO_PANTALLA:
+	case CPU_PCB_A_KERNEL_POR_IO_PANTALLA:
 
 		t_info_pantalla * aMandarPantalla = malloc(sizeof(*aMandarPantalla));
 
@@ -605,10 +713,19 @@ while (1) {
 						pthread_cancel(hiloQuantumRR);
 					}
 
-		recibir_operacion(conexionCpuInterrupt);
-		registroPantalla = recibir_entero(conexionCpuInterrupt);
+
+		cod_op = recibir_operacion(conexionCpu);
+
+		if(cod_op == CPU_A_KERNEL_MOSTRAR_REGISTRO_POR_PANTALLA){
+			aMandarPantalla->registro = recibir_entero(conexionCpuDispatch);
+		}
+
+
 	//	pthread_mutex_unlock(&mutexPantalla);
 
+		log_info(logger, "PID: <%d> - Bloqueado por: <PANTALLA>", proceso->idProceso);
+
+		log_info(logger,"PID: <%d> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>", proceso->idProceso);
 
 		pthread_t hiloPantalla;
 		int hiloPantallaCreado = pthread_create(&hiloPantalla, NULL, &atender_IO_pantalla, aMandarPantalla);
@@ -616,8 +733,10 @@ while (1) {
 
 		break;
 
-	case QUANTUM:
+
+	case CPU_A_KERNEL_PCB_POR_DESALOJO:
 		t_pcb* pcb = recibir_pcb(conexionCpuDispatch);
+
 
 		if (!strcmp(algoritmoPlanificacion, "RR")) {
 			queue_push(colaReadyRR,pcb);
@@ -625,9 +744,14 @@ while (1) {
 			if (!strcmp(algoritmoPlanificacion, "Feedback")) {
 				queue_push(colaReadyFIFO,pcb);
 			} else {
-					log_info(logger, "Algoritmo invalido");
+					log_info(loggerAux, "Algoritmo invalido");
 			}
 		}
+
+		log_info(logger,"PID: <%d> - Desalojado por fin de Quantum", pcb->idProceso);
+
+		log_info(logger,"PID: <%d> - Estado Anterior: <EXE> - Estado Actual: <READY>", proceso->idProceso);
+
 		sem_post(&pcbEnReady);
 
 		break;
@@ -638,17 +762,20 @@ while (1) {
 
 		int operacion = recibir_operacion(conexionCpuInterrupt); //ver si es dispatch o interrupt
 		if (operacion != CPU_A_KERNEL_PAGINA_PF){
-			log_info(logger, "codigo de operacion incorrecto");
+			log_info(loggerAux, "codigo de operacion incorrecto");
 		}
 
 		t_list * listaTPyNroPag = list_create();
 		listaTPyNroPag = recibir_lista_enteros(conexionCpuInterrupt);
 
-
 		t_info_pf * aMandarPF = malloc(sizeof(*aMandarPF));
 
 		aMandarPF->pcb = pcbPF;
 		aMandarPF->listaTpYNroPAgina = listaTPyNroPag;
+
+		log_info(logger, "Page Fault PID: <%d> - Segmento: <%d> - Pagina: <%d>", pcbPF->idProceso, list_get(listaTPyNroPag,1), list_get(listaTPyNroPag,0));
+
+		log_info(logger,"PID: <%d> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>", proceso->idProceso);
 
 		pthread_t hiloPF;
 		int hiloPageFault = pthread_create(&hiloPF, NULL, &atender_page_fault, aMandarPF);
@@ -658,7 +785,7 @@ while (1) {
 		break;
 
 	case TERMINAR_PROCESO:
-		log_info(logger,"[atender_interrupcion_de_ejecucion]: recibimos operacion EXIT");
+		log_info(loggerAux,"[atender_interrupcion_de_ejecucion]: recibimos operacion EXIT");
 
 		t_pcb* pcbATerminar = recibir_pcb(conexionCpuDispatch);
 
@@ -669,7 +796,7 @@ while (1) {
 		terminarEjecucion(pcbATerminar);
 		break;
 	default:
-		log_info(logger, "operacion invalida");
+		log_info(loggerAux, "operacion invalida");
 		break;
 	}
 
@@ -679,23 +806,21 @@ while (1) {
 	}
 }
 
-
-
 void terminarEjecucion(t_pcb * procesoAFinalizar) {
-
-
 	procesoAFinalizar->estado = TERMINATED; // es local no hace falta mutex
-
 	enviar_mensaje("Liberar estructuras",socketMemoria,KERNEL_A_MEMORIA_MENSAJE_LIBERAR_POR_TERMINADO);//Enviamos mensaje a memoria para que libere estructuras
 
-	log_info(logger, "[terminarEjecucion]: Se envia un mensaje a memoria para que libere estructuras");
+	enviar_entero(procesoAFinalizar->idProceso, socketMemoria, KERNEL_A_MEMORIA_PID_PARA_FINALIZAR);
 
+	log_info(loggerAux, "[terminarEjecucion]: Se envia un mensaje a memoria para que libere estructuras");
 
 	enviar_mensaje("Finalizar consola", procesoAFinalizar->socket,KERNEL_MENSAJE_FINALIZAR_CONSOLA);
 
 	liberar_conexion(procesoAFinalizar->socket);
 
-	log_info(logger, "[terminarEjecucion]: Aumenta grado de multiprogramacion actual y termina terminarEjecucion!!");
+	log_info(loggerAux, "[terminarEjecucion]: Aumenta grado de multiprogramacion actual y termina terminarEjecucion!!");
+
+	log_info(logger,"PID: <%d> - Estado Anterior: <EXE> - Estado Actual: <TERMINATED>", procesoAFinalizar->idProceso);
 
 	sem_post(&gradoDeMultiprogramacion);
 
@@ -716,14 +841,14 @@ void atender_IO_teclado(t_info_teclado * info){
 
 		int codigo = recibir_operacion(unPcb->socket);
 			if(codigo != KERNEL_MENSAJE_DESBLOQUEO_TECLADO){
-					log_info(logger,"codigo de operacion incorrecto");
+					log_info(loggerAux,"codigo de operacion incorrecto");
 				}
 		recibir_mensaje(unPcb->socket);
 
 		codigo = recibir_operacion(unPcb->socket);
 
 		if(codigo != KERNEL_PAQUETE_VALOR_RECIBIDO_DE_TECLADO){
-						log_info(logger,"codigo de operacion incorrecto");
+						log_info(loggerAux,"codigo de operacion incorrecto");
 					}
 		int enteroRecibido = recibir_entero(unPcb->socket);
 
@@ -751,10 +876,12 @@ void atender_IO_teclado(t_info_teclado * info){
 				if(!strcmp(algoritmoPlanificacion, "Feedback")) {// ver si esta asi en los config
 					queue_push(colaReadyRR,unPcb);
 				}else{
-					log_info(logger, "Algoritmo invalido");
+					log_info(loggerAux, "Algoritmo invalido");
 				}
 			}
 		}
+
+		log_info(logger,"PID: <%d> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>", unPcb->idProceso);
 
 		sem_post(&pcbEnReady);
 }
@@ -766,23 +893,25 @@ void atender_IO_pantalla(t_info_pantalla * info) {
 
 	enviar_entero(valor_registro, unPcb->socket, KERNEL_PAQUETE_VALOR_A_IMPRIMIR);
 
-	recibir_operacion(unPcb->socket);
+	recibir_operacion(unPcb->socket);//recibir con cod_op
 
 	recibir_mensaje(unPcb->socket);
 
 	if (!strcmp(algoritmoPlanificacion, "FIFO")) {
-				queue_push(colaReadyFIFO,unPcb);
-			} else {
-				if (!strcmp(algoritmoPlanificacion, "RR")) {
-					queue_push(colaReadyRR,unPcb);
-				} else {
-					if(!strcmp(algoritmoPlanificacion, "Feedback")) {// ver si esta asi en los config
-						queue_push(colaReadyRR,unPcb);
-					}else{
-						log_info(logger, "Algoritmo invalido");
-					}
-				}
+		queue_push(colaReadyFIFO,unPcb);
+	} else {
+		if (!strcmp(algoritmoPlanificacion, "RR")) {
+		queue_push(colaReadyRR,unPcb);
+		} else {
+			if(!strcmp(algoritmoPlanificacion, "Feedback")) {// ver si esta asi en los config
+				queue_push(colaReadyRR,unPcb);
+			}else{
+				log_info(loggerAux, "Algoritmo invalido");
 			}
+		}
+	}
+
+	log_info(logger,"PID: <%d> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>", unPcb->idProceso);
 
 	sem_post(&pcbEnReady);
 }
@@ -833,18 +962,21 @@ void atender_IO_generico(t_elem_disp* elemento){
 		controlar_pcb(proceso);
 
 		if (!strcmp(algoritmoPlanificacion, "FIFO")) {
-						queue_push(colaReadyFIFO,proceso);
-					} else {
-						if (!strcmp(algoritmoPlanificacion, "RR")) {
-							queue_push(colaReadyRR,proceso);
-						} else {
-							if(!strcmp(algoritmoPlanificacion, "Feedback")) {// ver si esta asi en los config
-								queue_push(colaReadyRR,proceso);
-							}else{
-								log_info(logger, "Algoritmo invalido");
-							}
-						}
-					}
+			queue_push(colaReadyFIFO,proceso);
+		} else {
+			if (!strcmp(algoritmoPlanificacion, "RR")) {
+				queue_push(colaReadyRR,proceso);
+			} else {
+				if(!strcmp(algoritmoPlanificacion, "Feedback")) {// ver si esta asi en los config
+					queue_push(colaReadyRR,proceso);
+				}else{
+					log_info(loggerAux, "Algoritmo invalido");
+				}
+			}
+		}
+
+		log_info(logger,"PID: <%d> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>", proceso->idProceso);
+
 		sem_post(&pcbEnReady);
 	}
 
@@ -869,27 +1001,29 @@ void atender_page_fault(t_info_pf* infoPF){
 
 
 
-	int codigo = recibir_operacion(conexionCpuInterrupt);
+	int codigo = recibir_operacion(socketMemoria);
 
 	if(codigo != KERNEL_MENSAJE_CONFIRMACION_PF){
-		log_info(logger,"codigo de operacion incorrecto");
+		log_info(loggerAux,"codigo de operacion incorrecto");
 	}
 
-	recibir_mensaje(conexionCpuInterrupt);
+	recibir_mensaje(socketMemoria);
 
 	if (!strcmp(algoritmoPlanificacion, "FIFO")) {
-				queue_push(colaReadyFIFO,pcbTeclado);
-			} else {
-				if (!strcmp(algoritmoPlanificacion, "RR")) {
-					queue_push(colaReadyRR,pcbTeclado);
-				} else {
-					if(!strcmp(algoritmoPlanificacion, "Feedback")) {// ver si esta asi en los config
-						queue_push(colaReadyRR,pcbTeclado);
-					}else{
-						log_info(logger, "Algoritmo invalido");
-					}
-				}
+		queue_push(colaReadyFIFO,pcbTeclado);
+	} else {
+		if (!strcmp(algoritmoPlanificacion, "RR")) {
+			queue_push(colaReadyRR,pcbTeclado);
+		} else {
+			if(!strcmp(algoritmoPlanificacion, "Feedback")) {// ver si esta asi en los config
+				queue_push(colaReadyRR,pcbTeclado);
+			}else{
+				log_info(loggerAux, "Algoritmo invalido");
 			}
+		}
+	}
+
+	log_info(logger,"PID: <%d> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>", pcbTeclado->idProceso);
 
 	sem_post(&pcbEnReady);
 
@@ -912,7 +1046,7 @@ t_pcb* recibir_pcb(int socket_cliente)//ponerla en shared
 	memcpy(&pcb->idProceso, buffer + desplazamiento, sizeof(int));
 	desplazamiento+=sizeof(int);
 
-	log_info(logger,"PID: %d",pcb->idProceso);
+	log_info(loggerAux,"PID: %d",pcb->idProceso);
 	memcpy(&contadorInstrucciones, buffer + desplazamiento, sizeof(int));
 	desplazamiento+=sizeof(int);
 	while(i < contadorInstrucciones){
@@ -926,20 +1060,20 @@ t_pcb* recibir_pcb(int socket_cliente)//ponerla en shared
 		memcpy(unaInstruccion->parametros, buffer+desplazamiento, sizeof(int[2]));
 		desplazamiento+=sizeof(int[2]);
 		list_add(pcb -> instrucciones, unaInstruccion);
-		log_info(logger,"Instruccion: %s",unaInstruccion->identificador);
-		log_info(logger,"Primer parametro: %d",unaInstruccion->parametros[0]);
+		log_info(loggerAux,"Instruccion: %s",unaInstruccion->identificador);
+		log_info(loggerAux,"Primer parametro: %d",unaInstruccion->parametros[0]);
 		i++;
 	}
 	memcpy(&pcb->programCounter, buffer + desplazamiento, sizeof(int));
 	desplazamiento+=sizeof(int);
-	log_info(logger,"program counter: %d",pcb->programCounter);
+	log_info(loggerAux,"program counter: %d",pcb->programCounter);
 	memcpy(&pcb->registros, buffer + desplazamiento, sizeof(t_registros));
 	desplazamiento+=sizeof(t_registros);
-	log_info(logger,"Registro AX: %d y DX: %d",pcb->registros.AX,pcb->registros.DX);
+	log_info(loggerAux,"Registro AX: %d y DX: %d",pcb->registros.AX,pcb->registros.DX);
 	memcpy(&contadorSegmentos, buffer + desplazamiento, sizeof(int));
 	desplazamiento+=sizeof(int);
 	i=0;
-	log_info(logger,"cont seg: %d",contadorSegmentos);
+	log_info(loggerAux,"cont seg: %d",contadorSegmentos);
 	while(i < contadorSegmentos){
 		entradaTablaSegmento* unSegmento = malloc(sizeof(entradaTablaSegmento));
 		memcpy(&(unSegmento->numeroSegmento),buffer + desplazamiento, sizeof(int));
@@ -948,14 +1082,14 @@ t_pcb* recibir_pcb(int socket_cliente)//ponerla en shared
 		desplazamiento+=sizeof(int);
 		memcpy(&(unSegmento->tamanioSegmento),buffer + desplazamiento, sizeof(int));
 		desplazamiento+=sizeof(int);
-		log_info(logger,"Nro: %d, numero tabla paginas %d, tamanio segmento %d",unSegmento->numeroSegmento,unSegmento->numeroTablaPaginas,unSegmento->tamanioSegmento);
+		log_info(loggerAux,"Nro: %d, numero tabla paginas %d, tamanio segmento %d",unSegmento->numeroSegmento,unSegmento->numeroTablaPaginas,unSegmento->tamanioSegmento);
 		list_add(pcb->tablaSegmentos,unSegmento);
 		i++;
 	}
 //	memcpy(&pcb->socket_cliente, buffer + desplazamiento, sizeof(int)); al pedo mepa
 	memcpy(&(pcb->estado), buffer + desplazamiento, sizeof(t_estado));
 	desplazamiento+=sizeof(t_estado);
-	log_info(logger,"Estado: %d",pcb->estado);
+	log_info(loggerAux,"Estado: %d",pcb->estado);
 	free(buffer);
 	return pcb;
 }

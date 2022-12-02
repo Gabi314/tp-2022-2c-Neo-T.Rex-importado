@@ -21,6 +21,7 @@
 //}op_code_kernel;
 
 extern t_log* logger;
+extern t_log* loggerObligatorio;
 extern t_config* config;
 extern t_paquete* paquete;
 
@@ -50,41 +51,6 @@ extern bool hayInterrupcion;
 
 extern char* algoritmoReemplazoTlb;
 extern int cantidadEntradasTlb;
-
-//typedef struct
-//{
-//	int AX;
-//	int BX;
-//	int CX;
-//	int DX;
-//} t_registros;
-//
-//typedef struct
-//{
-//	int numeroSegmento;
-//	int tamanioSegmento;
-//	int numeroTablaPaginas;
-//}entradaTablaSegmento;
-//
-//typedef enum estado { NEW, READY, BLOCKED, EXEC, TERMINATED } t_estado;
-//
-//typedef struct
-//{
-//	int idProceso;
-//	t_list* instrucciones;
-//	int programCounter;
-//	t_registros registros;
-//	t_list* tablaSegmentos;
-//	int socket;
-//	t_estado estado;
-//} t_pcb;
-//
-//
-//typedef struct
-//{
-//	char* identificador;
-//	int parametros[2];
-//} instruccion;
 
 typedef struct
 {
@@ -148,6 +114,7 @@ int buscarDireccionFisica(t_pcb*);
 char* dispositivoIOSegunParametro(int);
 int chequearMarcoEnTLB(int,int,int);
 bool calculoDireccionLogicaExitoso(int,t_list*);
+int accederAMemoria(int,int,t_pcb*);
 
 bool haySegFault(int, int,t_list *);
 void checkInterrupt();
@@ -155,14 +122,17 @@ int escucharInterrupciones();
 
 t_list* inicializarTLB();
 void reiniciarTLB();
+void ejecucion(void*);
+void enviarNroTablaDePaginas(t_list*,int,int,int);
+void enviarDireccionFisica(int,int,int,int);
+void bloqueoPorPageFault(t_pcb*);
+
 void iterator(instruccion*);
 
 //----------------------------FUNCIONES DE CONEXIONES
 int conexionConKernelDispatch(void);
 int conexionConMemoria(void);
-void agregar_a_paquete_kernel_cpu(t_pcb*,int,int);
-void ejecucion();
-void enviarDireccionFisica(int,int,int,int);
+void enviar_pcb(t_pcb*,int,int);
 
 extern pthread_t hiloInterrupciones;
 

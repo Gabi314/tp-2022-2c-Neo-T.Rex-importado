@@ -47,18 +47,22 @@ typedef enum {
 	KERNEL_MENSAJE_CONFIRMACION_PF,
 	KERNEL_A_MEMORIA_PAGINA_A_CARGAR,
 	KERNEL_A_MEMORIA_MENSAJE_LIBERAR_POR_TERMINADO,
+	KERNEL_A_MEMORIA_PID_PARA_FINALIZAR,
 	KERNEL_A_MEMORIA_PAGE_FAULT,
 	TERMINAR_PROCESO,
 	MENSAJE_CPU_MEMORIA,
 	TAM_PAGINAS_Y_CANT_ENTRADAS,
 	PRIMER_ACCESO,
 	OBTENER_MARCO,
-	CPU_PCB_A_KERNEL,
 	CPU_DISPOSITIVO_A_KERNEL,
-	KERNEL_MENSAJE_INTERRUPT,
+	//KERNEL_MENSAJE_INTERRUPT,
 	CPU_A_KERNEL_INGRESAR_VALOR_POR_TECLADO,
 	CPU_A_KERNEL_MOSTRAR_REGISTRO_POR_PANTALLA,
 	CPU_PCB_A_KERNEL_POR_IO,
+	CPU_PCB_A_KERNEL_POR_IO_TECLADO,
+	CPU_PCB_A_KERNEL_POR_IO_PANTALLA,
+	CPU_A_KERNEL_PCB_POR_DESALOJO,
+	CPU_PCB_A_KERNEL_PCB_POR_FINALIZACION,
 	CPU_A_KERNEL_UNIDADES_DE_TRABAJO_IO,
 	CPU_A_KERNEL_PCB_PAGE_FAULT,
 	CPU_A_KERNEL_PAGINA_PF,
@@ -93,7 +97,7 @@ typedef struct
 
 typedef struct
 {
-	int numeroSegmento;//revisar
+	int numeroSegmento;//revisar   [(0,64,n),(1,128,n+1),..]
 	int tamanioSegmento;
 	int numeroTablaPaginas;
 }entradaTablaSegmento;
@@ -121,8 +125,15 @@ typedef struct
 	t_algoritmo_pcb algoritmoActual;
 } t_pcb;
 
+typedef struct {
+    t_log* log;
+    int fd;
+    char* server_name;
+} t_procesar_conexion_args;
 
 int say_hello(char *who);
+
+t_log* iniciar_logger(char*, char*);
 
 void enviar_entero(int valor, int socket_cliente, int cod_op);
 

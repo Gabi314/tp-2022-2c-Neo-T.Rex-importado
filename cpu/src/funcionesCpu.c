@@ -3,13 +3,13 @@
 
 //------------------DECLARO VARIABLES
 t_log* logger;
+t_log* loggerObligatorio;
 t_config* config;
 
 int cantidadEntradasTlb;
 char* algoritmoReemplazoTlb;
 int retardoDeInstruccion;
 
-t_pcb* unPcb;
 int tamanioDePagina;
 int entradasPorTabla;
 
@@ -61,15 +61,6 @@ instruccion* buscarInstruccionAEjecutar(t_pcb* unPCB){//FETCH CREO QUE ES IGUAL
 	return unaInstruccion;
 	}
 }
-/*Decode
-Esta etapa consiste en interpretar qué instrucción es la que se va a ejecutar y si la misma
-requiere de un acceso a memoria o no.
-REQUIEREN USLEEP-> SET, ADD, MOVIN Y MOVOUT EN CASO DE NO ESTAR EN TLB
-
-En el caso de las instrucciones que no accedan a memoria, las mismas deberán esperar un tiempo
-definido por archivo de configuración (RETARDO_INSTRUCCION), a modo de simular el tiempo que transcurre en la CPU.
-Las instrucciones de I/O y EXIT al representar syscalls, no tendrán retardo de instrucción.
-*/
 
 int decode(instruccion* unaInstruccion){
 	if(! strcmp(unaInstruccion->identificador,"SET")){
@@ -162,19 +153,23 @@ void ejecutar(instruccion* unaInstruccion,t_pcb* pcb){
 	if(!hayInterrupcion){
 		switch(decode(unaInstruccion)){
 			case SET:
-				log_info(logger,"“PID: <%d> - Ejecutando: <%s> - <%s> - <%d>",
+				log_info(loggerObligatorio,"“PID: <%d> - Ejecutando: <%s> - <%s> - <%d>",
 						pcb->idProceso,unaInstruccion->identificador,imprimirRegistro(primerParametro),
 							segundoParametro);
+				usleep(retardoDeInstruccion);
+
 				modificarRegistro((uint32_t) segundoParametro,primerParametro,pcb); //En set el primer parametro es el registro
 				log_info(logger,"Valor del registro: %u",pcb->registros.AX);
 				//En set el segundo registro es el valor a asignar
 				log_info(logger,"----------------FINALIZA SET----------------\n");
-				sleep(2);//para probar que interrumpa sino ejecuta todo rapido
+
 				break;
 			case ADD:
-				log_info(logger,"“PID: <%d> - Ejecutando: <%s> - <%s> - <%s>",
+				log_info(loggerObligatorio,"“PID: <%d> - Ejecutando: <%s> - <%s> - <%s>",
 								pcb->idProceso,unaInstruccion->identificador,imprimirRegistro(primerParametro),
 									imprimirRegistro(segundoParametro));
+				usleep(retardoDeInstruccion);
+
 				registro = registroAUtilizar(primerParametro,pcb->registros);
 				segundoRegistro = registroAUtilizar(segundoParametro,pcb->registros);
 				registro += segundoRegistro;
@@ -184,7 +179,7 @@ void ejecutar(instruccion* unaInstruccion,t_pcb* pcb){
 				break;
 			case MOV_IN:
 				log_info(logger,"----------------EXECUTE MOV_IN----------------");
-				log_info(logger,"“PID: <%d> - Ejecutando: <%s> - <%s> - <%d>",
+				log_info(loggerObligatorio,"“PID: <%d> - Ejecutando: <%s> - <%s> - <%d>",
 								pcb->idProceso,unaInstruccion->identificador,imprimirRegistro(primerParametro),
 									segundoParametro);
 				registro = registroAUtilizar(primerParametro,pcb->registros);
@@ -196,7 +191,14 @@ void ejecutar(instruccion* unaInstruccion,t_pcb* pcb){
 						bloqueoPorPageFault(pcb);
 						break;
 					}
-					log_info(logger,"No salio!!!!");
+					log_info(logger,"No hizo el break por page fault!!!!");
+					log_info(loggerObligatorio,
+						"PID: <%d> - Acción: <LEER> - Segmento: <%d> - Pagina: <%d> - Dirección Fisica: <%d>"
+						,pcb->idProceso
+						,numeroDeSegmento
+						,numeroDePagina
+						,(marco*tamanioDePagina + desplazamiento));
+
 					enviarDireccionFisica(marco,desplazamientoDePagina,1,-1); //1 valor a leer de memoria y registro -1 porque aca no hay que enviar uno
 
 					uint32_t valorAAlmacenar;
@@ -216,10 +218,12 @@ void ejecutar(instruccion* unaInstruccion,t_pcb* pcb){
 				break;
 			case MOV_OUT:
 				log_info(logger,"----------------EXECUTE MOV_OUT----------------");
+				log_info(loggerObligatorio,"“PID: <%d> - Ejecutando: <%s> - <%d> - <%d>",
+												pcb->idProceso,unaInstruccion->identificador,primerParametro,
+													segundoParametro);
 				direccionLogica = primerParametro;
 
 				registro = registroAUtilizar(segundoParametro,pcb->registros);//leo el valor del registro primer parametro
-
 
 				marco = buscarDireccionFisica(pcb);
 				if(marco == -1){// Hay PF
@@ -228,9 +232,13 @@ void ejecutar(instruccion* unaInstruccion,t_pcb* pcb){
 				}
 
 				log_info(logger,"No salio!!!!");
+				log_info(loggerObligatorio,
+					"PID: <%d> - Acción: <ESCRIBIR> - Segmento: <%d> - Pagina: <%d> - Dirección Fisica: <%d>"
+					,pcb->idProceso
+					,numeroDeSegmento
+					,numeroDePagina
+					,(marco*tamanioDePagina + desplazamiento));
 				enviarDireccionFisica(marco,desplazamientoDePagina,0,registro);//con 0 envia la dir fisica para escribir
-
-				//enviarValorAEscribir(primerParametro); // se envia el valor para escribirlo en memoria
 
 				int cod_op = recibir_operacion(socket_memoria);
 
@@ -241,27 +249,26 @@ void ejecutar(instruccion* unaInstruccion,t_pcb* pcb){
 
 				break;
 			case IO:
-				agregar_a_paquete_kernel_cpu(pcb, CPU_PCB_A_KERNEL_POR_IO, clienteKernel); //ver que lo reciba kernel
-				enviar_entero(primerParametro,clienteKernel,CPU_DISPOSITIVO_A_KERNEL);//Mandar asi por separado o todo junto?
-
 				if(primerParametro != TECLADO || primerParametro != PANTALLA){
-
-					log_info(logger,"“PID: <%d> - Ejecutando: <%s> - <%s> - <%d>",
+					log_info(loggerObligatorio,"“PID: <%d> - Ejecutando: <%s> - <%s> - <%d>",
 							pcb->idProceso, unaInstruccion->identificador,
 							dispositivoIOSegunParametro(primerParametro),
 							segundoParametro);
+					enviar_pcb(pcb, CPU_PCB_A_KERNEL_POR_IO, clienteKernel);//envio pcb por IO general
 
+					enviar_mensaje(dispositivoIOSegunParametro(primerParametro),clienteKernel,CPU_DISPOSITIVO_A_KERNEL);
 					enviar_entero(segundoParametro, clienteKernel, CPU_A_KERNEL_UNIDADES_DE_TRABAJO_IO);
 				} else {
-
-					log_info(logger,"“PID: <%d> - Ejecutando: <%s> - <%s> - <%s>",
+					log_info(loggerObligatorio,"“PID: <%d> - Ejecutando: <%s> - <%s> - <%s>",
 							pcb->idProceso, unaInstruccion->identificador,
 							dispositivoIOSegunParametro(primerParametro),
 							imprimirRegistro(segundoParametro));
 
 					if(primerParametro == TECLADO){
+						enviar_pcb(pcb, CPU_PCB_A_KERNEL_POR_IO_TECLADO, clienteKernel);
 						enviar_entero(segundoParametro, clienteKernel, CPU_A_KERNEL_INGRESAR_VALOR_POR_TECLADO);
 					}else if(primerParametro == PANTALLA){
+						enviar_pcb(pcb, CPU_PCB_A_KERNEL_POR_IO_PANTALLA, clienteKernel);
 						enviar_entero(segundoParametro, clienteKernel, CPU_A_KERNEL_MOSTRAR_REGISTRO_POR_PANTALLA);
 					}
 				}
@@ -269,29 +276,27 @@ void ejecutar(instruccion* unaInstruccion,t_pcb* pcb){
 				log_info(logger,"----------------FINALIZA I/O----------------\n");
 				break;
 			case EXT:
-				log_info(logger,"“PID: <%d> - Ejecutando: <%s>",pcb->idProceso,unaInstruccion->identificador);
+				log_info(loggerObligatorio,"“PID: <%d> - Ejecutando: <%s>",pcb->idProceso,unaInstruccion->identificador);
 				ejecutando = false;
-				//Se deberá devolver el PCB actualizado al Kernel para su finalización.
+				limpiarEntradasTLB(pcb->idProceso);
+				//enviar_pcb(pcb, CPU_PCB_A_KERNEL_PCB_POR_FINALIZACION, clienteKernel);
 				log_info(logger,"----------------FINALIZA EXIT----------------\n");
 				break;
 		}
 	}else{
 		log_info(logger,"Interrupcion!!!");
 		ejecutando = false;
-		//devolver pcb
-		//hayInterrupcion = false ?
+		enviar_pcb(pcb, CPU_A_KERNEL_PCB_POR_DESALOJO, clienteKernel);
+		//hayInterrupcion = false; ?
 	}
 }
 
 void checkInterrupt(){
-
-
 	pthread_mutex_init(&mutexInterrupcion, NULL);
 	pthread_create(&hiloInterrupciones, NULL, (void*) escucharInterrupciones,
 			NULL);
-	//pthread_detach(hiloInterrupciones);
 
-
+	pthread_detach(hiloInterrupciones);
 }
 
 int escucharInterrupciones(){
@@ -299,7 +304,7 @@ int escucharInterrupciones(){
 		while (1) {
 			int cod_op = recibir_operacion(clienteKernelInterrupt);
 			log_info(logger, "Entro");
-			if (cod_op == KERNEL_MENSAJE_INTERRUPT) {
+			if (cod_op == DESALOJAR_PROCESO_POR_FIN_DE_QUANTUM) {
 				pthread_mutex_lock(&mutexInterrupcion);
 				recibir_mensaje(clienteKernelInterrupt);
 				hayInterrupcion = true;
@@ -336,20 +341,30 @@ int buscarDireccionFisica(t_pcb* pcb){
 
 int chequearMarcoEnTLB(int nroDePagina, int nroDeSegmento,int pid){
 	entradaTLB* unaEntradaTLB = malloc(sizeof(entradaTLB));
+	int marco = -1;
 
 	for(int i=0;i < list_size(tlb);i++){
 		unaEntradaTLB = list_get(tlb,i);
 
-		if(unaEntradaTLB->nroDePagina == nroDePagina
+		if (unaEntradaTLB->nroDePagina == nroDePagina
 				&& unaEntradaTLB->nroDeSegmento == nroDeSegmento
-				&& unaEntradaTLB->nroDeProceso == pid){
+				&& unaEntradaTLB->nroDeProceso == pid) {
 
 			unaEntradaTLB->ultimaReferencia = time(NULL);// se referencio a esa pagina
-			return unaEntradaTLB->nroDeMarco; // se puede almacenar este valor en una variable y retornarlo fuera del for
+			marco = unaEntradaTLB->nroDeMarco;
+			log_info(loggerObligatorio,
+					"PID: <%d> - TLB HIT - Segmento: <%d> - Pagina: <%d>", pid,
+					nroDeSegmento, nroDePagina);
+
+			free(unaEntradaTLB);
+			return marco; // se puede almacenar este valor en una variable y retornarlo fuera del for
 		}
 	}
-	//free(unaEntradaTLB);
-	return -1;
+	free(unaEntradaTLB);
+	log_info(loggerObligatorio,
+			"PID: <%d> - TLB MISS - Segmento: <%d> - Pagina: <%d>", pid,
+			nroDeSegmento, nroDePagina);
+	return marco;
 }
 
 bool haySegFault(int numeroDeSegmento, int desplazamientoSegmento,t_list * listaDeTablaSegmentos){
@@ -369,8 +384,8 @@ bool haySegFault(int numeroDeSegmento, int desplazamientoSegmento,t_list * lista
 
 int accederAMemoria(int marco,int numeroDeSegmento,t_pcb* pcb){
 
-	log_info(logger,"La pagina no se encuentra en tlb, se debera acceder a memoria(tabla de paginas)"); // dice que la 0 no esta en tlb DEBUGGEAR
-	enviarNroTablaDePaginas(pcb->tablaSegmentos,numeroDeSegmento,socket_memoria);//1er acceso con esto memoria manda nroTabla2doNivel
+	log_info(logger,"La pagina no se encuentra en tlb, se debera acceder a memoria(tabla de paginas)");
+	enviarNroTablaDePaginas(pcb->tablaSegmentos,numeroDeSegmento,socket_memoria,numeroDePagina);//Envio nroTP y nroDePag(los obtengo con nro de segmento de la tabla de segmentos)
 
 	int seAccedeAMemoria = 1;
 
@@ -420,18 +435,18 @@ void bloqueoPorPageFault(t_pcb* pcb){
 	ejecutando = false;
 	pcb->programCounter -= 1;
 
-	//agregar_a_paquete_kernel_cpu(pcb, CPU_A_KERNEL_PCB_PAGE_FAULT,clienteKernel);
-	//t_paquete *paquetePageFault = crear_paquete(CPU_A_KERNEL_PAGINA_PF);
+	enviar_pcb(pcb, CPU_A_KERNEL_PCB_PAGE_FAULT,clienteKernel);
+	t_paquete *paquetePageFault = crear_paquete(CPU_A_KERNEL_PAGINA_PF);
 
-	//agregar_a_paquete_unInt(paquete, numeroDePagina, sizeof(numeroDePagina));
-	//agregar_a_paquete_unInt(paquete, numeroDeSegmento,sizeof(numeroDeSegmento));
+	agregar_a_paquete_unInt(paquete, &numeroDePagina, sizeof(numeroDePagina));
+	agregar_a_paquete_unInt(paquete, &numeroDeSegmento,sizeof(numeroDeSegmento));//COMENTADO PARA PROBAR MEMORIA Y CPU
 
-	log_info(logger, "Page Fault PID: <%d> - Segmento: <%d> - Pagina: <%d>",
+	log_info(loggerObligatorio, "Page Fault PID: <%d> - Segmento: <%d> - Pagina: <%d>",
 			pcb->idProceso, numeroDeSegmento, numeroDePagina);
 	log_info(logger, "Envio el pcb a kernel por PF");
 
-//	enviar_paquete(paquetePageFault, clienteKernel);
-//	eliminar_paquete(paquetePageFault);
+	enviar_paquete(paquetePageFault, clienteKernel);
+	eliminar_paquete(paquetePageFault);
 }
 
 

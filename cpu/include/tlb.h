@@ -8,3 +8,7 @@ void algoritmosDeReemplazoTLB(int pagina,int marco,int pid, int numeroDeSegmento
 
 t_list* inicializarTLB();
 
+void limpiarEntradasTLB(int pid);
+
+void imprimirEntradasTLB();
+
