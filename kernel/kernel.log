@@ -253,3 +253,883 @@
 [INFO] 20:22:23:981 KERNEL/(6515:6525): PID: <1> - Estado Anterior: <NEW> - Estado Actual: <READY>
 [INFO] 20:22:23:981 KERNEL/(6515:6527): [readyAExe]: .........se despierta readyAExe 
 [INFO] 20:22:23:981 KERNEL/(6515:6527): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 21:21:34:890 KERNEL/(6893:6893): servidor kernel inicializado
+[INFO] 21:21:34:891 KERNEL/(6893:6893): DISPOSITIVOS: DISCO-IMPRESORA
+[INFO] 21:21:34:892 KERNEL/(6893:6893): configuraciones inicializadas
+[INFO] 21:21:34:892 KERNEL/(6893:6893): listas y colas inicializadas
+[INFO] 21:21:34:892 KERNEL/(6893:6893): semaforos inicializados
+[INFO] 21:21:34:892 KERNEL/(6893:6893): En la lista de dispositivos tenemos los siguientes:
+[INFO] 21:21:34:892 KERNEL/(6893:6893): el dispositivo de posicion 0 se llama DISCO
+[INFO] 21:21:34:892 KERNEL/(6893:6893): el dispositivo de posicion 0 tiene un tiempo de 100
+[INFO] 21:21:34:892 KERNEL/(6893:6893): el dispositivo de posicion 1 se llama IMPRESORA
+[INFO] 21:21:34:892 KERNEL/(6893:6893): el dispositivo de posicion 1 tiene un tiempo de 50000
+[INFO] 21:21:34:892 KERNEL/(6893:6909): se desperto atender_IO_generico del dispositivo <IMPRESORA> por primera vez 
+[INFO] 21:21:34:892 KERNEL/(6893:6908): se desperto atender_IO_generico del dispositivo <DISCO> por primera vez 
+[INFO] 21:21:34:892 KERNEL/(6893:6907): se desperto readyAExe por primera vez
+[INFO] 21:21:34:892 KERNEL/(6893:6906): se desperto atender_interrupcion_de_ejecucion
+[INFO] 21:21:34:892 KERNEL/(6893:6905): se desperto asignar_memoria por primera vez
+[INFO] 21:21:34:892 KERNEL/(6893:6904): se desperto recibir_consola
+[INFO] 21:21:43:070 KERNEL/(6893:6904): Se conecto el Consola
+[INFO] 21:21:43:071 KERNEL/(6893:6962): [atender_consola]esperando segmentos
+[INFO] 21:21:43:071 KERNEL/(6893:6962): tamanios de segmentos recibidos
+[INFO] 21:21:43:071 KERNEL/(6893:6962): el tamanio es 64
+[INFO] 21:21:43:071 KERNEL/(6893:6962): el tamanio es 256
+[INFO] 21:21:43:071 KERNEL/(6893:6962): el tamanio es 128
+[INFO] 21:21:43:071 KERNEL/(6893:6962): el tamanio es 32
+[INFO] 21:21:43:071 KERNEL/(6893:6962): [atender_consola]enviamos los dispositivos
+[INFO] 21:21:43:071 KERNEL/(6893:6962): [atender_consola]esperando instrucciones
+[INFO] 21:21:43:071 KERNEL/(6893:6962): [atender_consola]me llegaron las instrucciones
+[INFO] 21:21:43:071 KERNEL/(6893:6962): SET param1: 0 param2: 1
+[INFO] 21:21:43:071 KERNEL/(6893:6962): ADD param1: 0 param2: 1
+[INFO] 21:21:43:071 KERNEL/(6893:6962): MOV_IN param1: 2 param2: 4
+[INFO] 21:21:43:071 KERNEL/(6893:6962): MOV_OUT param1: 8 param2: 3
+[INFO] 21:21:43:071 KERNEL/(6893:6962): I/O param1: 2 param2: 10
+[INFO] 21:21:43:071 KERNEL/(6893:6962): I/O param1: 1 param2: 0
+[INFO] 21:21:43:071 KERNEL/(6893:6962): I/O param1: 0 param2: 1
+[INFO] 21:21:43:071 KERNEL/(6893:6962): EXIT param1: 0 param2: 0
+[INFO] 21:21:43:071 KERNEL/(6893:6962): [atender_consola]metemos instrucciones en el pcb
+[INFO] 21:21:43:071 KERNEL/(6893:6962): Se crea el proceso <1> en NEW
+[INFO] 21:21:43:071 KERNEL/(6893:6962): [atender_consola] despertamos a asignar_memoria()
+[INFO] 21:21:43:071 KERNEL/(6893:6905): el tamanio de la cola de new es 0
+[INFO] 21:21:43:074 KERNEL/(6893:6905): [recibir_entero]: se recibio el numero 0
+[INFO] 21:21:43:074 KERNEL/(6893:6905): Cola Ready <RR>: [<LISTA DE PIDS>]
+[INFO] 21:21:43:074 KERNEL/(6893:6905): 469764976
+[INFO] 21:21:43:074 KERNEL/(6893:6905): PID: <1> - Estado Anterior: <NEW> - Estado Actual: <READY>
+[INFO] 21:21:43:075 KERNEL/(6893:6907): [readyAExe]: .........se despierta readyAExe 
+[INFO] 21:21:43:075 KERNEL/(6893:6907): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 21:21:43:075 KERNEL/(6893:6907): ------------------------DATOS DEL PCB----------------------------
+[INFO] 21:21:43:075 KERNEL/(6893:6907): pid: 1
+[INFO] 21:21:43:075 KERNEL/(6893:6907): Instrucciones:
+[INFO] 21:21:43:075 KERNEL/(6893:6907): SET param1: 0 param2: 1
+[INFO] 21:21:43:075 KERNEL/(6893:6907): ADD param1: 0 param2: 1
+[INFO] 21:21:43:075 KERNEL/(6893:6907): MOV_IN param1: 2 param2: 4
+[INFO] 21:21:43:075 KERNEL/(6893:6907): MOV_OUT param1: 8 param2: 3
+[INFO] 21:21:43:075 KERNEL/(6893:6907): I/O param1: 2 param2: 10
+[INFO] 21:21:43:075 KERNEL/(6893:6907): I/O param1: 1 param2: 0
+[INFO] 21:21:43:075 KERNEL/(6893:6907): I/O param1: 0 param2: 1
+[INFO] 21:21:43:075 KERNEL/(6893:6907): EXIT param1: 0 param2: 0
+[INFO] 21:21:43:075 KERNEL/(6893:6907): program counter en posicion: 0
+[INFO] 21:21:43:075 KERNEL/(6893:6907): registro AX: 0
+[INFO] 21:21:43:075 KERNEL/(6893:6907): registro BX: 0
+[INFO] 21:21:43:075 KERNEL/(6893:6907): registro CX: 0
+[INFO] 21:21:43:075 KERNEL/(6893:6907): registro DX: 0
+[INFO] 21:21:43:075 KERNEL/(6893:6907): posicion 0 de la tabla de segmentos |NUMERO DEL SEGMENTO:0 |TAMANIO DEL SEGMENTO: 64 |NUMERO DE TABLA DE PAGINAS: 0
+[INFO] 21:21:43:075 KERNEL/(6893:6907): posicion 1 de la tabla de segmentos |NUMERO DEL SEGMENTO:1 |TAMANIO DEL SEGMENTO: 256 |NUMERO DE TABLA DE PAGINAS: 1
+[INFO] 21:21:43:075 KERNEL/(6893:6907): posicion 2 de la tabla de segmentos |NUMERO DEL SEGMENTO:2 |TAMANIO DEL SEGMENTO: 128 |NUMERO DE TABLA DE PAGINAS: 2
+[INFO] 21:21:43:075 KERNEL/(6893:6907): posicion 3 de la tabla de segmentos |NUMERO DEL SEGMENTO:3 |TAMANIO DEL SEGMENTO: 32 |NUMERO DE TABLA DE PAGINAS: 3
+[INFO] 21:21:43:076 KERNEL/(6893:6907): numero de socket/consola: 9
+[INFO] 21:21:43:076 KERNEL/(6893:6907): estado: EXEC
+[INFO] 21:21:43:076 KERNEL/(6893:6907): algoritmo: ROUND ROBIN
+[INFO] 21:21:43:076 KERNEL/(6893:6907): ------------------------FIN DATOS DEL PCB----------------------------
+[INFO] 21:21:43:076 KERNEL/(6893:6907): [readyAExe]: enviamos el proceso a cpu
+[INFO] 21:21:43:081 KERNEL/(6893:6907): PID: <-449719280> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 21:21:43:081 KERNEL/(6893:6907): [readyAExe]: finaliza
+[INFO] 21:28:58:473 KERNEL/(7295:7295): servidor kernel inicializado
+[INFO] 21:28:58:473 KERNEL/(7295:7295): DISPOSITIVOS: DISCO-IMPRESORA
+[INFO] 21:28:58:474 KERNEL/(7295:7295): configuraciones inicializadas
+[INFO] 21:28:58:474 KERNEL/(7295:7295): listas y colas inicializadas
+[INFO] 21:28:58:474 KERNEL/(7295:7295): semaforos inicializados
+[INFO] 21:28:58:474 KERNEL/(7295:7295): En la lista de dispositivos tenemos los siguientes:
+[INFO] 21:28:58:474 KERNEL/(7295:7295): el dispositivo de posicion 0 se llama DISCO
+[INFO] 21:28:58:474 KERNEL/(7295:7295): el dispositivo de posicion 0 tiene un tiempo de 100
+[INFO] 21:28:58:474 KERNEL/(7295:7295): el dispositivo de posicion 1 se llama IMPRESORA
+[INFO] 21:28:58:474 KERNEL/(7295:7295): el dispositivo de posicion 1 tiene un tiempo de 50000
+[INFO] 21:28:58:475 KERNEL/(7295:7307): se desperto readyAExe por primera vez
+[INFO] 21:28:58:475 KERNEL/(7295:7308): se desperto atender_IO_generico del dispositivo <DISCO> por primera vez 
+[INFO] 21:28:58:475 KERNEL/(7295:7309): se desperto atender_IO_generico del dispositivo <IMPRESORA> por primera vez 
+[INFO] 21:28:58:475 KERNEL/(7295:7306): se desperto atender_interrupcion_de_ejecucion
+[INFO] 21:28:58:475 KERNEL/(7295:7305): se desperto asignar_memoria por primera vez
+[INFO] 21:28:58:475 KERNEL/(7295:7304): se desperto recibir_consola
+[INFO] 21:29:06:157 KERNEL/(7295:7304): Se conecto el Consola
+[INFO] 21:29:06:157 KERNEL/(7295:7357): [atender_consola]esperando segmentos
+[INFO] 21:29:06:158 KERNEL/(7295:7357): tamanios de segmentos recibidos
+[INFO] 21:29:06:158 KERNEL/(7295:7357): el tamanio es 64
+[INFO] 21:29:06:158 KERNEL/(7295:7357): el tamanio es 256
+[INFO] 21:29:06:158 KERNEL/(7295:7357): el tamanio es 128
+[INFO] 21:29:06:158 KERNEL/(7295:7357): el tamanio es 32
+[INFO] 21:29:06:158 KERNEL/(7295:7357): [atender_consola]enviamos los dispositivos
+[INFO] 21:29:06:158 KERNEL/(7295:7357): [atender_consola]esperando instrucciones
+[INFO] 21:29:06:158 KERNEL/(7295:7357): [atender_consola]me llegaron las instrucciones
+[INFO] 21:29:06:158 KERNEL/(7295:7357): SET param1: 0 param2: 1
+[INFO] 21:29:06:158 KERNEL/(7295:7357): ADD param1: 0 param2: 1
+[INFO] 21:29:06:158 KERNEL/(7295:7357): MOV_IN param1: 2 param2: 4
+[INFO] 21:29:06:158 KERNEL/(7295:7357): MOV_OUT param1: 8 param2: 3
+[INFO] 21:29:06:158 KERNEL/(7295:7357): I/O param1: 2 param2: 10
+[INFO] 21:29:06:158 KERNEL/(7295:7357): I/O param1: 1 param2: 0
+[INFO] 21:29:06:158 KERNEL/(7295:7357): I/O param1: 0 param2: 1
+[INFO] 21:29:06:158 KERNEL/(7295:7357): EXIT param1: 0 param2: 0
+[INFO] 21:29:06:158 KERNEL/(7295:7357): [atender_consola]metemos instrucciones en el pcb
+[INFO] 21:29:06:158 KERNEL/(7295:7357): Se crea el proceso <1> en NEW
+[INFO] 21:29:06:158 KERNEL/(7295:7357): [atender_consola] despertamos a asignar_memoria()
+[INFO] 21:29:06:158 KERNEL/(7295:7305): el tamanio de la cola de new es 0
+[INFO] 21:29:06:159 KERNEL/(7295:7305): [recibir_entero]: se recibio el numero 0
+[INFO] 21:29:06:159 KERNEL/(7295:7305): Cola Ready <RR>: [<LISTA DE PIDS>]
+[INFO] 21:29:06:159 KERNEL/(7295:7305): 1
+[INFO] 21:29:06:159 KERNEL/(7295:7305): PID: <1> - Estado Anterior: <NEW> - Estado Actual: <READY>
+[INFO] 21:29:06:159 KERNEL/(7295:7307): [readyAExe]: .........se despierta readyAExe 
+[INFO] 21:29:06:159 KERNEL/(7295:7307): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 21:29:06:159 KERNEL/(7295:7307): ------------------------DATOS DEL PCB----------------------------
+[INFO] 21:29:06:159 KERNEL/(7295:7307): pid: 1
+[INFO] 21:29:06:159 KERNEL/(7295:7307): Instrucciones:
+[INFO] 21:29:06:159 KERNEL/(7295:7307): SET param1: 0 param2: 1
+[INFO] 21:29:06:159 KERNEL/(7295:7307): ADD param1: 0 param2: 1
+[INFO] 21:29:06:159 KERNEL/(7295:7307): MOV_IN param1: 2 param2: 4
+[INFO] 21:29:06:159 KERNEL/(7295:7307): MOV_OUT param1: 8 param2: 3
+[INFO] 21:29:06:159 KERNEL/(7295:7307): I/O param1: 2 param2: 10
+[INFO] 21:29:06:159 KERNEL/(7295:7307): I/O param1: 1 param2: 0
+[INFO] 21:29:06:159 KERNEL/(7295:7307): I/O param1: 0 param2: 1
+[INFO] 21:29:06:159 KERNEL/(7295:7307): EXIT param1: 0 param2: 0
+[INFO] 21:29:06:159 KERNEL/(7295:7307): program counter en posicion: 0
+[INFO] 21:29:06:159 KERNEL/(7295:7307): registro AX: 0
+[INFO] 21:29:06:159 KERNEL/(7295:7307): registro BX: 0
+[INFO] 21:29:06:159 KERNEL/(7295:7307): registro CX: 0
+[INFO] 21:29:06:159 KERNEL/(7295:7307): registro DX: 0
+[INFO] 21:29:06:159 KERNEL/(7295:7307): posicion 0 de la tabla de segmentos |NUMERO DEL SEGMENTO:0 |TAMANIO DEL SEGMENTO: 64 |NUMERO DE TABLA DE PAGINAS: 0
+[INFO] 21:29:06:160 KERNEL/(7295:7307): posicion 1 de la tabla de segmentos |NUMERO DEL SEGMENTO:1 |TAMANIO DEL SEGMENTO: 256 |NUMERO DE TABLA DE PAGINAS: 1
+[INFO] 21:29:06:160 KERNEL/(7295:7307): posicion 2 de la tabla de segmentos |NUMERO DEL SEGMENTO:2 |TAMANIO DEL SEGMENTO: 128 |NUMERO DE TABLA DE PAGINAS: 2
+[INFO] 21:29:06:160 KERNEL/(7295:7307): posicion 3 de la tabla de segmentos |NUMERO DEL SEGMENTO:3 |TAMANIO DEL SEGMENTO: 32 |NUMERO DE TABLA DE PAGINAS: 3
+[INFO] 21:29:06:160 KERNEL/(7295:7307): numero de socket/consola: 9
+[INFO] 21:29:06:160 KERNEL/(7295:7307): estado: EXEC
+[INFO] 21:29:06:160 KERNEL/(7295:7307): algoritmo: ROUND ROBIN
+[INFO] 21:29:06:160 KERNEL/(7295:7307): ------------------------FIN DATOS DEL PCB----------------------------
+[INFO] 21:29:06:160 KERNEL/(7295:7307): [readyAExe]: enviamos el proceso a cpu
+[INFO] 21:29:06:161 KERNEL/(7295:7307): PID: <1473958928> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 21:29:06:161 KERNEL/(7295:7307): [readyAExe]: finaliza
+[INFO] 21:40:00:578 KERNEL/(8097:8097): servidor kernel inicializado
+[INFO] 21:40:00:578 KERNEL/(8097:8097): DISPOSITIVOS: DISCO-IMPRESORA
+[INFO] 21:40:00:580 KERNEL/(8097:8097): configuraciones inicializadas
+[INFO] 21:40:00:580 KERNEL/(8097:8097): listas y colas inicializadas
+[INFO] 21:40:00:580 KERNEL/(8097:8097): semaforos inicializados
+[INFO] 21:40:00:580 KERNEL/(8097:8097): En la lista de dispositivos tenemos los siguientes:
+[INFO] 21:40:00:580 KERNEL/(8097:8097): el dispositivo de posicion 0 se llama DISCO
+[INFO] 21:40:00:580 KERNEL/(8097:8097): el dispositivo de posicion 0 tiene un tiempo de 100
+[INFO] 21:40:00:580 KERNEL/(8097:8097): el dispositivo de posicion 1 se llama IMPRESORA
+[INFO] 21:40:00:580 KERNEL/(8097:8097): el dispositivo de posicion 1 tiene un tiempo de 50000
+[INFO] 21:40:00:580 KERNEL/(8097:8110): se desperto readyAExe por primera vez
+[INFO] 21:40:00:580 KERNEL/(8097:8111): se desperto atender_IO_generico del dispositivo <DISCO> por primera vez 
+[INFO] 21:40:00:580 KERNEL/(8097:8112): se desperto atender_IO_generico del dispositivo <IMPRESORA> por primera vez 
+[INFO] 21:40:00:581 KERNEL/(8097:8109): se desperto atender_interrupcion_de_ejecucion
+[INFO] 21:40:00:581 KERNEL/(8097:8108): se desperto asignar_memoria por primera vez
+[INFO] 21:40:00:581 KERNEL/(8097:8107): se desperto recibir_consola
+[INFO] 21:40:07:327 KERNEL/(8097:8107): Se conecto el Consola
+[INFO] 21:40:07:328 KERNEL/(8097:8164): [atender_consola]esperando segmentos
+[INFO] 21:40:07:328 KERNEL/(8097:8164): tamanios de segmentos recibidos
+[INFO] 21:40:07:328 KERNEL/(8097:8164): el tamanio es 64
+[INFO] 21:40:07:328 KERNEL/(8097:8164): el tamanio es 256
+[INFO] 21:40:07:328 KERNEL/(8097:8164): el tamanio es 128
+[INFO] 21:40:07:328 KERNEL/(8097:8164): el tamanio es 32
+[INFO] 21:40:07:328 KERNEL/(8097:8164): [atender_consola]enviamos los dispositivos
+[INFO] 21:40:07:328 KERNEL/(8097:8164): [atender_consola]esperando instrucciones
+[INFO] 21:40:07:328 KERNEL/(8097:8164): [atender_consola]me llegaron las instrucciones
+[INFO] 21:40:07:328 KERNEL/(8097:8164): SET param1: 0 param2: 1
+[INFO] 21:40:07:328 KERNEL/(8097:8164): ADD param1: 0 param2: 1
+[INFO] 21:40:07:328 KERNEL/(8097:8164): MOV_IN param1: 2 param2: 4
+[INFO] 21:40:07:328 KERNEL/(8097:8164): MOV_OUT param1: 8 param2: 3
+[INFO] 21:40:07:328 KERNEL/(8097:8164): I/O param1: 2 param2: 10
+[INFO] 21:40:07:328 KERNEL/(8097:8164): I/O param1: 1 param2: 0
+[INFO] 21:40:07:328 KERNEL/(8097:8164): I/O param1: 0 param2: 1
+[INFO] 21:40:07:329 KERNEL/(8097:8164): EXIT param1: 0 param2: 0
+[INFO] 21:40:07:329 KERNEL/(8097:8164): [atender_consola]metemos instrucciones en el pcb
+[INFO] 21:40:07:329 KERNEL/(8097:8164): Se crea el proceso <1> en NEW
+[INFO] 21:40:07:329 KERNEL/(8097:8164): [atender_consola] despertamos a asignar_memoria()
+[INFO] 21:40:07:329 KERNEL/(8097:8108): el tamanio de la cola de new es 0
+[INFO] 21:40:07:329 KERNEL/(8097:8108): [recibir_entero]: se recibio el numero 0
+[INFO] 21:40:07:330 KERNEL/(8097:8108): Cola Ready <RR>: [<LISTA DE PIDS>]
+[INFO] 21:40:07:330 KERNEL/(8097:8108): 1
+[INFO] 21:40:07:330 KERNEL/(8097:8108): PID: <1> - Estado Anterior: <NEW> - Estado Actual: <READY>
+[INFO] 21:40:07:330 KERNEL/(8097:8110): [readyAExe]: .........se despierta readyAExe 
+[INFO] 21:40:07:330 KERNEL/(8097:8110): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 21:40:07:330 KERNEL/(8097:8110): ------------------------DATOS DEL PCB----------------------------
+[INFO] 21:40:07:330 KERNEL/(8097:8110): pid: 1
+[INFO] 21:40:07:330 KERNEL/(8097:8110): Instrucciones:
+[INFO] 21:40:07:330 KERNEL/(8097:8110): SET param1: 0 param2: 1
+[INFO] 21:40:07:330 KERNEL/(8097:8110): ADD param1: 0 param2: 1
+[INFO] 21:40:07:330 KERNEL/(8097:8110): MOV_IN param1: 2 param2: 4
+[INFO] 21:40:07:330 KERNEL/(8097:8110): MOV_OUT param1: 8 param2: 3
+[INFO] 21:40:07:330 KERNEL/(8097:8110): I/O param1: 2 param2: 10
+[INFO] 21:40:07:330 KERNEL/(8097:8110): I/O param1: 1 param2: 0
+[INFO] 21:40:07:330 KERNEL/(8097:8110): I/O param1: 0 param2: 1
+[INFO] 21:40:07:330 KERNEL/(8097:8110): EXIT param1: 0 param2: 0
+[INFO] 21:40:07:330 KERNEL/(8097:8110): program counter en posicion: 0
+[INFO] 21:40:07:330 KERNEL/(8097:8110): registro AX: 0
+[INFO] 21:40:07:330 KERNEL/(8097:8110): registro BX: 0
+[INFO] 21:40:07:330 KERNEL/(8097:8110): registro CX: 0
+[INFO] 21:40:07:330 KERNEL/(8097:8110): registro DX: 0
+[INFO] 21:40:07:330 KERNEL/(8097:8110): posicion 0 de la tabla de segmentos |NUMERO DEL SEGMENTO:0 |TAMANIO DEL SEGMENTO: 64 |NUMERO DE TABLA DE PAGINAS: 0
+[INFO] 21:40:07:330 KERNEL/(8097:8110): posicion 1 de la tabla de segmentos |NUMERO DEL SEGMENTO:1 |TAMANIO DEL SEGMENTO: 256 |NUMERO DE TABLA DE PAGINAS: 1
+[INFO] 21:40:07:330 KERNEL/(8097:8110): posicion 2 de la tabla de segmentos |NUMERO DEL SEGMENTO:2 |TAMANIO DEL SEGMENTO: 128 |NUMERO DE TABLA DE PAGINAS: 2
+[INFO] 21:40:07:330 KERNEL/(8097:8110): posicion 3 de la tabla de segmentos |NUMERO DEL SEGMENTO:3 |TAMANIO DEL SEGMENTO: 32 |NUMERO DE TABLA DE PAGINAS: 3
+[INFO] 21:40:07:330 KERNEL/(8097:8110): numero de socket/consola: 9
+[INFO] 21:40:07:330 KERNEL/(8097:8110): estado: EXEC
+[INFO] 21:40:07:330 KERNEL/(8097:8110): algoritmo: ROUND ROBIN
+[INFO] 21:40:07:330 KERNEL/(8097:8110): ------------------------FIN DATOS DEL PCB----------------------------
+[INFO] 21:40:07:330 KERNEL/(8097:8110): [readyAExe]: enviamos el proceso a cpu
+[INFO] 21:40:07:331 KERNEL/(8097:8110): PID: <951850000> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 21:40:07:331 KERNEL/(8097:8110): [readyAExe]: finaliza
+[INFO] 21:43:35:463 KERNEL/(8424:8424): servidor kernel inicializado
+[INFO] 21:43:35:464 KERNEL/(8424:8424): DISPOSITIVOS: DISCO-IMPRESORA
+[INFO] 21:43:35:472 KERNEL/(8424:8424): configuraciones inicializadas
+[INFO] 21:43:35:472 KERNEL/(8424:8424): listas y colas inicializadas
+[INFO] 21:43:35:472 KERNEL/(8424:8424): semaforos inicializados
+[INFO] 21:43:35:472 KERNEL/(8424:8424): En la lista de dispositivos tenemos los siguientes:
+[INFO] 21:43:35:472 KERNEL/(8424:8424): el dispositivo de posicion 0 se llama DISCO
+[INFO] 21:43:35:472 KERNEL/(8424:8424): el dispositivo de posicion 0 tiene un tiempo de 100
+[INFO] 21:43:35:472 KERNEL/(8424:8424): el dispositivo de posicion 1 se llama IMPRESORA
+[INFO] 21:43:35:472 KERNEL/(8424:8424): el dispositivo de posicion 1 tiene un tiempo de 50000
+[INFO] 21:43:35:475 KERNEL/(8424:8436): se desperto readyAExe por primera vez
+[INFO] 21:43:35:475 KERNEL/(8424:8437): se desperto atender_IO_generico del dispositivo <DISCO> por primera vez 
+[INFO] 21:43:35:475 KERNEL/(8424:8438): se desperto atender_IO_generico del dispositivo <IMPRESORA> por primera vez 
+[INFO] 21:43:35:475 KERNEL/(8424:8435): se desperto atender_interrupcion_de_ejecucion
+[INFO] 21:43:35:475 KERNEL/(8424:8434): se desperto asignar_memoria por primera vez
+[INFO] 21:43:35:475 KERNEL/(8424:8433): se desperto recibir_consola
+[INFO] 21:43:42:528 KERNEL/(8424:8433): Se conecto el Consola
+[INFO] 21:43:42:528 KERNEL/(8424:8485): [atender_consola]esperando segmentos
+[INFO] 21:43:42:528 KERNEL/(8424:8485): tamanios de segmentos recibidos
+[INFO] 21:43:42:528 KERNEL/(8424:8485): el tamanio es 64
+[INFO] 21:43:42:528 KERNEL/(8424:8485): el tamanio es 256
+[INFO] 21:43:42:529 KERNEL/(8424:8485): el tamanio es 128
+[INFO] 21:43:42:529 KERNEL/(8424:8485): el tamanio es 32
+[INFO] 21:43:42:529 KERNEL/(8424:8485): [atender_consola]enviamos los dispositivos
+[INFO] 21:43:42:529 KERNEL/(8424:8485): [atender_consola]esperando instrucciones
+[INFO] 21:43:42:529 KERNEL/(8424:8485): [atender_consola]me llegaron las instrucciones
+[INFO] 21:43:42:529 KERNEL/(8424:8485): SET param1: 0 param2: 1
+[INFO] 21:43:42:529 KERNEL/(8424:8485): ADD param1: 0 param2: 1
+[INFO] 21:43:42:529 KERNEL/(8424:8485): MOV_IN param1: 2 param2: 4
+[INFO] 21:43:42:529 KERNEL/(8424:8485): MOV_OUT param1: 8 param2: 3
+[INFO] 21:43:42:529 KERNEL/(8424:8485): I/O param1: 2 param2: 10
+[INFO] 21:43:42:529 KERNEL/(8424:8485): I/O param1: 1 param2: 0
+[INFO] 21:43:42:529 KERNEL/(8424:8485): I/O param1: 0 param2: 1
+[INFO] 21:43:42:529 KERNEL/(8424:8485): EXIT param1: 0 param2: 0
+[INFO] 21:43:42:529 KERNEL/(8424:8485): [atender_consola]metemos instrucciones en el pcb
+[INFO] 21:43:42:529 KERNEL/(8424:8485): Se crea el proceso <1> en NEW
+[INFO] 21:43:42:529 KERNEL/(8424:8485): [atender_consola] despertamos a asignar_memoria()
+[INFO] 21:43:42:529 KERNEL/(8424:8434): el tamanio de la cola de new es 0
+[INFO] 21:43:42:530 KERNEL/(8424:8434): [recibir_entero]: se recibio el numero 0
+[INFO] 21:43:42:531 KERNEL/(8424:8434): Cola Ready <RR>: [<LISTA DE PIDS>]
+[INFO] 21:43:42:531 KERNEL/(8424:8434): 1
+[INFO] 21:43:42:531 KERNEL/(8424:8434): PID: <1> - Estado Anterior: <NEW> - Estado Actual: <READY>
+[INFO] 21:43:42:531 KERNEL/(8424:8436): [readyAExe]: .........se despierta readyAExe 
+[INFO] 21:43:42:531 KERNEL/(8424:8436): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 21:43:42:531 KERNEL/(8424:8436): ------------------------DATOS DEL PCB----------------------------
+[INFO] 21:43:42:531 KERNEL/(8424:8436): pid: 1
+[INFO] 21:43:42:531 KERNEL/(8424:8436): Instrucciones:
+[INFO] 21:43:42:531 KERNEL/(8424:8436): SET param1: 0 param2: 1
+[INFO] 21:43:42:531 KERNEL/(8424:8436): ADD param1: 0 param2: 1
+[INFO] 21:43:42:531 KERNEL/(8424:8436): MOV_IN param1: 2 param2: 4
+[INFO] 21:43:42:531 KERNEL/(8424:8436): MOV_OUT param1: 8 param2: 3
+[INFO] 21:43:42:531 KERNEL/(8424:8436): I/O param1: 2 param2: 10
+[INFO] 21:43:42:531 KERNEL/(8424:8436): I/O param1: 1 param2: 0
+[INFO] 21:43:42:531 KERNEL/(8424:8436): I/O param1: 0 param2: 1
+[INFO] 21:43:42:531 KERNEL/(8424:8436): EXIT param1: 0 param2: 0
+[INFO] 21:43:42:531 KERNEL/(8424:8436): program counter en posicion: 0
+[INFO] 21:43:42:531 KERNEL/(8424:8436): registro AX: 0
+[INFO] 21:43:42:531 KERNEL/(8424:8436): registro BX: 0
+[INFO] 21:43:42:531 KERNEL/(8424:8436): registro CX: 0
+[INFO] 21:43:42:531 KERNEL/(8424:8436): registro DX: 0
+[INFO] 21:43:42:531 KERNEL/(8424:8436): posicion 0 de la tabla de segmentos |NUMERO DEL SEGMENTO:0 |TAMANIO DEL SEGMENTO: 64 |NUMERO DE TABLA DE PAGINAS: 0
+[INFO] 21:43:42:531 KERNEL/(8424:8436): posicion 1 de la tabla de segmentos |NUMERO DEL SEGMENTO:1 |TAMANIO DEL SEGMENTO: 256 |NUMERO DE TABLA DE PAGINAS: 1
+[INFO] 21:43:42:531 KERNEL/(8424:8436): posicion 2 de la tabla de segmentos |NUMERO DEL SEGMENTO:2 |TAMANIO DEL SEGMENTO: 128 |NUMERO DE TABLA DE PAGINAS: 2
+[INFO] 21:43:42:531 KERNEL/(8424:8436): posicion 3 de la tabla de segmentos |NUMERO DEL SEGMENTO:3 |TAMANIO DEL SEGMENTO: 32 |NUMERO DE TABLA DE PAGINAS: 3
+[INFO] 21:43:42:531 KERNEL/(8424:8436): numero de socket/consola: 9
+[INFO] 21:43:42:531 KERNEL/(8424:8436): estado: EXEC
+[INFO] 21:43:42:531 KERNEL/(8424:8436): algoritmo: ROUND ROBIN
+[INFO] 21:43:42:531 KERNEL/(8424:8436): ------------------------FIN DATOS DEL PCB----------------------------
+[INFO] 21:43:42:534 KERNEL/(8424:8436): [readyAExe]: enviamos el proceso a cpu
+[INFO] 21:43:42:534 KERNEL/(8424:8436): PID: <-2042864> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 21:43:42:534 KERNEL/(8424:8436): [readyAExe]: finaliza
+[INFO] 21:47:36:753 KERNEL/(8872:8872): servidor kernel inicializado
+[INFO] 21:47:36:754 KERNEL/(8872:8872): DISPOSITIVOS: DISCO-IMPRESORA
+[INFO] 21:47:36:766 KERNEL/(8872:8872): configuraciones inicializadas
+[INFO] 21:47:36:766 KERNEL/(8872:8872): listas y colas inicializadas
+[INFO] 21:47:36:766 KERNEL/(8872:8872): semaforos inicializados
+[INFO] 21:47:36:766 KERNEL/(8872:8872): En la lista de dispositivos tenemos los siguientes:
+[INFO] 21:47:36:766 KERNEL/(8872:8872): el dispositivo de posicion 0 se llama DISCO
+[INFO] 21:47:36:766 KERNEL/(8872:8872): el dispositivo de posicion 0 tiene un tiempo de 100
+[INFO] 21:47:36:766 KERNEL/(8872:8872): el dispositivo de posicion 1 se llama IMPRESORA
+[INFO] 21:47:36:766 KERNEL/(8872:8872): el dispositivo de posicion 1 tiene un tiempo de 50000
+[INFO] 21:47:36:767 KERNEL/(8872:8885): se desperto readyAExe por primera vez
+[INFO] 21:47:36:767 KERNEL/(8872:8886): se desperto atender_IO_generico del dispositivo <DISCO> por primera vez 
+[INFO] 21:47:36:767 KERNEL/(8872:8887): se desperto atender_IO_generico del dispositivo <IMPRESORA> por primera vez 
+[INFO] 21:47:36:767 KERNEL/(8872:8884): se desperto atender_interrupcion_de_ejecucion
+[INFO] 21:47:36:767 KERNEL/(8872:8883): se desperto asignar_memoria por primera vez
+[INFO] 21:47:36:767 KERNEL/(8872:8882): se desperto recibir_consola
+[INFO] 21:47:42:608 KERNEL/(8872:8882): Se conecto el Consola
+[INFO] 21:47:42:609 KERNEL/(8872:8933): [atender_consola]esperando segmentos
+[INFO] 21:47:42:609 KERNEL/(8872:8933): tamanios de segmentos recibidos
+[INFO] 21:47:42:609 KERNEL/(8872:8933): el tamanio es 64
+[INFO] 21:47:42:609 KERNEL/(8872:8933): el tamanio es 256
+[INFO] 21:47:42:609 KERNEL/(8872:8933): el tamanio es 128
+[INFO] 21:47:42:609 KERNEL/(8872:8933): el tamanio es 32
+[INFO] 21:47:42:609 KERNEL/(8872:8933): [atender_consola]enviamos los dispositivos
+[INFO] 21:47:42:610 KERNEL/(8872:8933): [atender_consola]esperando instrucciones
+[INFO] 21:47:42:610 KERNEL/(8872:8933): [atender_consola]me llegaron las instrucciones
+[INFO] 21:47:42:610 KERNEL/(8872:8933): SET param1: 0 param2: 1
+[INFO] 21:47:42:610 KERNEL/(8872:8933): ADD param1: 0 param2: 1
+[INFO] 21:47:42:610 KERNEL/(8872:8933): MOV_IN param1: 2 param2: 4
+[INFO] 21:47:42:610 KERNEL/(8872:8933): MOV_OUT param1: 8 param2: 3
+[INFO] 21:47:42:610 KERNEL/(8872:8933): I/O param1: 2 param2: 10
+[INFO] 21:47:42:610 KERNEL/(8872:8933): I/O param1: 1 param2: 0
+[INFO] 21:47:42:610 KERNEL/(8872:8933): I/O param1: 0 param2: 1
+[INFO] 21:47:42:610 KERNEL/(8872:8933): EXIT param1: 0 param2: 0
+[INFO] 21:47:42:610 KERNEL/(8872:8933): [atender_consola]metemos instrucciones en el pcb
+[INFO] 21:47:42:610 KERNEL/(8872:8933): Se crea el proceso <1> en NEW
+[INFO] 21:47:42:610 KERNEL/(8872:8933): [atender_consola] despertamos a asignar_memoria()
+[INFO] 21:47:42:610 KERNEL/(8872:8883): el tamanio de la cola de new es 0
+[INFO] 21:47:42:611 KERNEL/(8872:8883): [recibir_entero]: se recibio el numero 0
+[INFO] 21:47:42:611 KERNEL/(8872:8883): Cola Ready <RR>: [<LISTA DE PIDS>]
+[INFO] 21:47:42:611 KERNEL/(8872:8883): 1
+[INFO] 21:47:42:611 KERNEL/(8872:8883): PID: <1> - Estado Anterior: <NEW> - Estado Actual: <READY>
+[INFO] 21:47:42:611 KERNEL/(8872:8885): [readyAExe]: .........se despierta readyAExe 
+[INFO] 21:47:42:611 KERNEL/(8872:8885): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 21:47:42:611 KERNEL/(8872:8885): ------------------------DATOS DEL PCB----------------------------
+[INFO] 21:47:42:611 KERNEL/(8872:8885): pid: 1
+[INFO] 21:47:42:611 KERNEL/(8872:8885): Instrucciones:
+[INFO] 21:47:42:611 KERNEL/(8872:8885): SET param1: 0 param2: 1
+[INFO] 21:47:42:611 KERNEL/(8872:8885): ADD param1: 0 param2: 1
+[INFO] 21:47:42:611 KERNEL/(8872:8885): MOV_IN param1: 2 param2: 4
+[INFO] 21:47:42:611 KERNEL/(8872:8885): MOV_OUT param1: 8 param2: 3
+[INFO] 21:47:42:611 KERNEL/(8872:8885): I/O param1: 2 param2: 10
+[INFO] 21:47:42:611 KERNEL/(8872:8885): I/O param1: 1 param2: 0
+[INFO] 21:47:42:611 KERNEL/(8872:8885): I/O param1: 0 param2: 1
+[INFO] 21:47:42:611 KERNEL/(8872:8885): EXIT param1: 0 param2: 0
+[INFO] 21:47:42:611 KERNEL/(8872:8885): program counter en posicion: 0
+[INFO] 21:47:42:611 KERNEL/(8872:8885): registro AX: 0
+[INFO] 21:47:42:611 KERNEL/(8872:8885): registro BX: 0
+[INFO] 21:47:42:611 KERNEL/(8872:8885): registro CX: 0
+[INFO] 21:47:42:611 KERNEL/(8872:8885): registro DX: 0
+[INFO] 21:47:42:611 KERNEL/(8872:8885): posicion 0 de la tabla de segmentos |NUMERO DEL SEGMENTO:0 |TAMANIO DEL SEGMENTO: 64 |NUMERO DE TABLA DE PAGINAS: 0
+[INFO] 21:47:42:611 KERNEL/(8872:8885): posicion 1 de la tabla de segmentos |NUMERO DEL SEGMENTO:1 |TAMANIO DEL SEGMENTO: 256 |NUMERO DE TABLA DE PAGINAS: 1
+[INFO] 21:47:42:611 KERNEL/(8872:8885): posicion 2 de la tabla de segmentos |NUMERO DEL SEGMENTO:2 |TAMANIO DEL SEGMENTO: 128 |NUMERO DE TABLA DE PAGINAS: 2
+[INFO] 21:47:42:611 KERNEL/(8872:8885): posicion 3 de la tabla de segmentos |NUMERO DEL SEGMENTO:3 |TAMANIO DEL SEGMENTO: 32 |NUMERO DE TABLA DE PAGINAS: 3
+[INFO] 21:47:42:611 KERNEL/(8872:8885): numero de socket/consola: 9
+[INFO] 21:47:42:612 KERNEL/(8872:8885): estado: EXEC
+[INFO] 21:47:42:612 KERNEL/(8872:8885): algoritmo: ROUND ROBIN
+[INFO] 21:47:42:612 KERNEL/(8872:8885): ------------------------FIN DATOS DEL PCB----------------------------
+[INFO] 21:47:42:614 KERNEL/(8872:8885): [readyAExe]: enviamos el proceso a cpu
+[INFO] 21:47:42:614 KERNEL/(8872:8885): PID: <-1137421296> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 21:47:42:614 KERNEL/(8872:8885): [readyAExe]: finaliza
+[INFO] 21:58:32:878 KERNEL/(9547:9547): servidor kernel inicializado
+[INFO] 21:58:32:893 KERNEL/(9547:9547): DISPOSITIVOS: DISCO-IMPRESORA
+[INFO] 21:58:32:921 KERNEL/(9547:9547): configuraciones inicializadas
+[INFO] 21:58:32:921 KERNEL/(9547:9547): listas y colas inicializadas
+[INFO] 21:58:32:921 KERNEL/(9547:9547): semaforos inicializados
+[INFO] 21:58:32:921 KERNEL/(9547:9547): En la lista de dispositivos tenemos los siguientes:
+[INFO] 21:58:32:921 KERNEL/(9547:9547): el dispositivo de posicion 0 se llama DISCO
+[INFO] 21:58:32:921 KERNEL/(9547:9547): el dispositivo de posicion 0 tiene un tiempo de 100
+[INFO] 21:58:32:921 KERNEL/(9547:9547): el dispositivo de posicion 1 se llama IMPRESORA
+[INFO] 21:58:32:921 KERNEL/(9547:9547): el dispositivo de posicion 1 tiene un tiempo de 50000
+[INFO] 21:58:32:928 KERNEL/(9547:9559): se desperto atender_IO_generico del dispositivo <DISCO> por primera vez 
+[INFO] 21:58:32:928 KERNEL/(9547:9560): se desperto atender_IO_generico del dispositivo <IMPRESORA> por primera vez 
+[INFO] 21:58:32:928 KERNEL/(9547:9558): se desperto readyAExe por primera vez
+[INFO] 21:58:32:928 KERNEL/(9547:9557): se desperto atender_interrupcion_de_ejecucion
+[INFO] 21:58:32:928 KERNEL/(9547:9556): se desperto asignar_memoria por primera vez
+[INFO] 21:58:32:928 KERNEL/(9547:9555): se desperto recibir_consola
+[INFO] 21:58:39:830 KERNEL/(9547:9555): Se conecto el Consola
+[INFO] 21:58:39:831 KERNEL/(9547:9612): [atender_consola]esperando segmentos
+[INFO] 21:58:39:842 KERNEL/(9547:9612): tamanios de segmentos recibidos
+[INFO] 21:58:39:842 KERNEL/(9547:9612): el tamanio es 64
+[INFO] 21:58:39:842 KERNEL/(9547:9612): el tamanio es 256
+[INFO] 21:58:39:842 KERNEL/(9547:9612): el tamanio es 128
+[INFO] 21:58:39:842 KERNEL/(9547:9612): el tamanio es 32
+[INFO] 21:58:39:842 KERNEL/(9547:9612): [atender_consola]enviamos los dispositivos
+[INFO] 21:58:39:844 KERNEL/(9547:9612): [atender_consola]esperando instrucciones
+[INFO] 21:58:39:844 KERNEL/(9547:9612): [atender_consola]me llegaron las instrucciones
+[INFO] 21:58:39:844 KERNEL/(9547:9612): SET param1: 0 param2: 1
+[INFO] 21:58:39:844 KERNEL/(9547:9612): ADD param1: 0 param2: 1
+[INFO] 21:58:39:844 KERNEL/(9547:9612): MOV_IN param1: 2 param2: 4
+[INFO] 21:58:39:844 KERNEL/(9547:9612): MOV_OUT param1: 8 param2: 3
+[INFO] 21:58:39:844 KERNEL/(9547:9612): I/O param1: 2 param2: 10
+[INFO] 21:58:39:844 KERNEL/(9547:9612): I/O param1: 1 param2: 0
+[INFO] 21:58:39:844 KERNEL/(9547:9612): I/O param1: 0 param2: 1
+[INFO] 21:58:39:844 KERNEL/(9547:9612): EXIT param1: 0 param2: 0
+[INFO] 21:58:39:844 KERNEL/(9547:9612): [atender_consola]metemos instrucciones en el pcb
+[INFO] 21:58:39:845 KERNEL/(9547:9612): Se crea el proceso <1> en NEW
+[INFO] 21:58:39:845 KERNEL/(9547:9612): [atender_consola] despertamos a asignar_memoria()
+[INFO] 21:58:39:845 KERNEL/(9547:9556): el tamanio de la cola de new es 0
+[INFO] 21:58:39:845 KERNEL/(9547:9556): [recibir_entero]: se recibio el numero 0
+[INFO] 21:58:39:845 KERNEL/(9547:9556): Cola Ready <RR>: [<LISTA DE PIDS>]
+[INFO] 21:58:39:845 KERNEL/(9547:9556): 1
+[INFO] 21:58:39:845 KERNEL/(9547:9556): PID: <1> - Estado Anterior: <NEW> - Estado Actual: <READY>
+[INFO] 21:58:39:846 KERNEL/(9547:9558): [readyAExe]: .........se despierta readyAExe 
+[INFO] 21:58:39:846 KERNEL/(9547:9558): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 21:58:39:846 KERNEL/(9547:9558): ------------------------DATOS DEL PCB----------------------------
+[INFO] 21:58:39:846 KERNEL/(9547:9558): pid: 1
+[INFO] 21:58:39:846 KERNEL/(9547:9558): Instrucciones:
+[INFO] 21:58:39:846 KERNEL/(9547:9558): SET param1: 0 param2: 1
+[INFO] 21:58:39:846 KERNEL/(9547:9558): ADD param1: 0 param2: 1
+[INFO] 21:58:39:846 KERNEL/(9547:9558): MOV_IN param1: 2 param2: 4
+[INFO] 21:58:39:846 KERNEL/(9547:9558): MOV_OUT param1: 8 param2: 3
+[INFO] 21:58:39:846 KERNEL/(9547:9558): I/O param1: 2 param2: 10
+[INFO] 21:58:39:846 KERNEL/(9547:9558): I/O param1: 1 param2: 0
+[INFO] 21:58:39:846 KERNEL/(9547:9558): I/O param1: 0 param2: 1
+[INFO] 21:58:39:846 KERNEL/(9547:9558): EXIT param1: 0 param2: 0
+[INFO] 21:58:39:846 KERNEL/(9547:9558): program counter en posicion: 0
+[INFO] 21:58:39:846 KERNEL/(9547:9558): registro AX: 0
+[INFO] 21:58:39:846 KERNEL/(9547:9558): registro BX: 0
+[INFO] 21:58:39:846 KERNEL/(9547:9558): registro CX: 0
+[INFO] 21:58:39:846 KERNEL/(9547:9558): registro DX: 0
+[INFO] 21:58:39:846 KERNEL/(9547:9558): posicion 0 de la tabla de segmentos |NUMERO DEL SEGMENTO:0 |TAMANIO DEL SEGMENTO: 64 |NUMERO DE TABLA DE PAGINAS: 0
+[INFO] 21:58:39:846 KERNEL/(9547:9558): posicion 1 de la tabla de segmentos |NUMERO DEL SEGMENTO:1 |TAMANIO DEL SEGMENTO: 256 |NUMERO DE TABLA DE PAGINAS: 1
+[INFO] 21:58:39:846 KERNEL/(9547:9558): posicion 2 de la tabla de segmentos |NUMERO DEL SEGMENTO:2 |TAMANIO DEL SEGMENTO: 128 |NUMERO DE TABLA DE PAGINAS: 2
+[INFO] 21:58:39:846 KERNEL/(9547:9558): posicion 3 de la tabla de segmentos |NUMERO DEL SEGMENTO:3 |TAMANIO DEL SEGMENTO: 32 |NUMERO DE TABLA DE PAGINAS: 3
+[INFO] 21:58:39:846 KERNEL/(9547:9558): numero de socket/consola: 9
+[INFO] 21:58:39:846 KERNEL/(9547:9558): estado: EXEC
+[INFO] 21:58:39:846 KERNEL/(9547:9558): algoritmo: ROUND ROBIN
+[INFO] 21:58:39:846 KERNEL/(9547:9558): ------------------------FIN DATOS DEL PCB----------------------------
+[INFO] 21:58:39:851 KERNEL/(9547:9558): [readyAExe]: enviamos el proceso a cpu
+[INFO] 21:58:39:851 KERNEL/(9547:9558): PID: <-738028528> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 21:58:39:851 KERNEL/(9547:9558): [readyAExe]: finaliza
+[INFO] 22:13:09:078 KERNEL/(9904:9904): servidor kernel inicializado
+[INFO] 22:13:09:078 KERNEL/(9904:9904): DISPOSITIVOS: DISCO-IMPRESORA
+[INFO] 22:13:09:080 KERNEL/(9904:9904): configuraciones inicializadas
+[INFO] 22:13:09:080 KERNEL/(9904:9904): listas y colas inicializadas
+[INFO] 22:13:09:080 KERNEL/(9904:9904): semaforos inicializados
+[INFO] 22:13:09:080 KERNEL/(9904:9904): En la lista de dispositivos tenemos los siguientes:
+[INFO] 22:13:09:080 KERNEL/(9904:9904): el dispositivo de posicion 0 se llama DISCO
+[INFO] 22:13:09:080 KERNEL/(9904:9904): el dispositivo de posicion 0 tiene un tiempo de 100
+[INFO] 22:13:09:080 KERNEL/(9904:9904): el dispositivo de posicion 1 se llama IMPRESORA
+[INFO] 22:13:09:080 KERNEL/(9904:9904): el dispositivo de posicion 1 tiene un tiempo de 50000
+[INFO] 22:13:09:080 KERNEL/(9904:9915): se desperto atender_IO_generico del dispositivo <DISCO> por primera vez 
+[INFO] 22:13:09:080 KERNEL/(9904:9916): se desperto atender_IO_generico del dispositivo <IMPRESORA> por primera vez 
+[INFO] 22:13:09:080 KERNEL/(9904:9914): se desperto readyAExe por primera vez
+[INFO] 22:13:09:080 KERNEL/(9904:9913): se desperto atender_interrupcion_de_ejecucion
+[INFO] 22:13:09:081 KERNEL/(9904:9912): se desperto asignar_memoria por primera vez
+[INFO] 22:13:09:081 KERNEL/(9904:9911): se desperto recibir_consola
+[INFO] 22:13:17:377 KERNEL/(9904:9911): Se conecto el Consola
+[INFO] 22:13:17:378 KERNEL/(9904:9968): [atender_consola]esperando segmentos
+[INFO] 22:13:17:378 KERNEL/(9904:9968): tamanios de segmentos recibidos
+[INFO] 22:13:17:378 KERNEL/(9904:9968): el tamanio es 64
+[INFO] 22:13:17:378 KERNEL/(9904:9968): el tamanio es 256
+[INFO] 22:13:17:378 KERNEL/(9904:9968): el tamanio es 128
+[INFO] 22:13:17:378 KERNEL/(9904:9968): el tamanio es 32
+[INFO] 22:13:17:378 KERNEL/(9904:9968): [atender_consola]enviamos los dispositivos
+[INFO] 22:13:17:378 KERNEL/(9904:9968): [atender_consola]esperando instrucciones
+[INFO] 22:13:17:378 KERNEL/(9904:9968): [atender_consola]me llegaron las instrucciones
+[INFO] 22:13:17:379 KERNEL/(9904:9968): SET param1: 0 param2: 1
+[INFO] 22:13:17:379 KERNEL/(9904:9968): ADD param1: 0 param2: 1
+[INFO] 22:13:17:379 KERNEL/(9904:9968): MOV_IN param1: 2 param2: 4
+[INFO] 22:13:17:379 KERNEL/(9904:9968): MOV_OUT param1: 8 param2: 3
+[INFO] 22:13:17:379 KERNEL/(9904:9968): I/O param1: 2 param2: 10
+[INFO] 22:13:17:379 KERNEL/(9904:9968): I/O param1: 1 param2: 0
+[INFO] 22:13:17:379 KERNEL/(9904:9968): I/O param1: 0 param2: 1
+[INFO] 22:13:17:379 KERNEL/(9904:9968): EXIT param1: 0 param2: 0
+[INFO] 22:13:17:379 KERNEL/(9904:9968): [atender_consola]metemos instrucciones en el pcb
+[INFO] 22:13:17:379 KERNEL/(9904:9968): Se crea el proceso <1> en NEW
+[INFO] 22:13:17:379 KERNEL/(9904:9968): [atender_consola] despertamos a asignar_memoria()
+[INFO] 22:13:17:379 KERNEL/(9904:9912): el tamanio de la cola de new es 0
+[INFO] 22:13:17:381 KERNEL/(9904:9912): [recibir_entero]: se recibio el numero 0
+[INFO] 22:13:17:382 KERNEL/(9904:9912): Cola Ready <RR>: [<LISTA DE PIDS>]
+[INFO] 22:13:17:382 KERNEL/(9904:9912): 1
+[INFO] 22:13:17:382 KERNEL/(9904:9912): PID: <1> - Estado Anterior: <NEW> - Estado Actual: <READY>
+[INFO] 22:13:17:382 KERNEL/(9904:9914): [readyAExe]: .........se despierta readyAExe 
+[INFO] 22:13:17:382 KERNEL/(9904:9914): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 22:13:17:382 KERNEL/(9904:9914): ------------------------DATOS DEL PCB----------------------------
+[INFO] 22:13:17:382 KERNEL/(9904:9914): pid: 1
+[INFO] 22:13:17:382 KERNEL/(9904:9914): Instrucciones:
+[INFO] 22:13:17:382 KERNEL/(9904:9914): SET param1: 0 param2: 1
+[INFO] 22:13:17:382 KERNEL/(9904:9914): ADD param1: 0 param2: 1
+[INFO] 22:13:17:382 KERNEL/(9904:9914): MOV_IN param1: 2 param2: 4
+[INFO] 22:13:17:382 KERNEL/(9904:9914): MOV_OUT param1: 8 param2: 3
+[INFO] 22:13:17:382 KERNEL/(9904:9914): I/O param1: 2 param2: 10
+[INFO] 22:13:17:382 KERNEL/(9904:9914): I/O param1: 1 param2: 0
+[INFO] 22:13:17:382 KERNEL/(9904:9914): I/O param1: 0 param2: 1
+[INFO] 22:13:17:382 KERNEL/(9904:9914): EXIT param1: 0 param2: 0
+[INFO] 22:13:17:382 KERNEL/(9904:9914): program counter en posicion: 0
+[INFO] 22:13:17:382 KERNEL/(9904:9914): registro AX: 0
+[INFO] 22:13:17:382 KERNEL/(9904:9914): registro BX: 0
+[INFO] 22:13:17:382 KERNEL/(9904:9914): registro CX: 0
+[INFO] 22:13:17:382 KERNEL/(9904:9914): registro DX: 0
+[INFO] 22:13:17:382 KERNEL/(9904:9914): posicion 0 de la tabla de segmentos |NUMERO DEL SEGMENTO:0 |TAMANIO DEL SEGMENTO: 64 |NUMERO DE TABLA DE PAGINAS: 0
+[INFO] 22:13:17:382 KERNEL/(9904:9914): posicion 1 de la tabla de segmentos |NUMERO DEL SEGMENTO:1 |TAMANIO DEL SEGMENTO: 256 |NUMERO DE TABLA DE PAGINAS: 1
+[INFO] 22:13:17:382 KERNEL/(9904:9914): posicion 2 de la tabla de segmentos |NUMERO DEL SEGMENTO:2 |TAMANIO DEL SEGMENTO: 128 |NUMERO DE TABLA DE PAGINAS: 2
+[INFO] 22:13:17:382 KERNEL/(9904:9914): posicion 3 de la tabla de segmentos |NUMERO DEL SEGMENTO:3 |TAMANIO DEL SEGMENTO: 32 |NUMERO DE TABLA DE PAGINAS: 3
+[INFO] 22:13:17:382 KERNEL/(9904:9914): numero de socket/consola: 9
+[INFO] 22:13:17:382 KERNEL/(9904:9914): estado: EXEC
+[INFO] 22:13:17:382 KERNEL/(9904:9914): algoritmo: ROUND ROBIN
+[INFO] 22:13:17:382 KERNEL/(9904:9914): ------------------------FIN DATOS DEL PCB----------------------------
+[INFO] 22:13:17:382 KERNEL/(9904:9914): [readyAExe]: enviamos el proceso a cpu
+[INFO] 22:13:17:383 KERNEL/(9904:9914): PID: <1941459984> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 22:13:17:383 KERNEL/(9904:9914): [readyAExe]: finaliza
+[INFO] 22:22:47:139 KERNEL/(10338:10338): servidor kernel inicializado
+[INFO] 22:22:47:139 KERNEL/(10338:10338): DISPOSITIVOS: DISCO-IMPRESORA
+[INFO] 22:22:47:141 KERNEL/(10338:10338): configuraciones inicializadas
+[INFO] 22:22:47:141 KERNEL/(10338:10338): listas y colas inicializadas
+[INFO] 22:22:47:141 KERNEL/(10338:10338): semaforos inicializados
+[INFO] 22:22:47:141 KERNEL/(10338:10338): En la lista de dispositivos tenemos los siguientes:
+[INFO] 22:22:47:141 KERNEL/(10338:10338): el dispositivo de posicion 0 se llama DISCO
+[INFO] 22:22:47:141 KERNEL/(10338:10338): el dispositivo de posicion 0 tiene un tiempo de 100
+[INFO] 22:22:47:141 KERNEL/(10338:10338): el dispositivo de posicion 1 se llama IMPRESORA
+[INFO] 22:22:47:141 KERNEL/(10338:10338): el dispositivo de posicion 1 tiene un tiempo de 50000
+[INFO] 22:22:47:141 KERNEL/(10338:10352): se desperto atender_IO_generico del dispositivo <DISCO> por primera vez 
+[INFO] 22:22:47:141 KERNEL/(10338:10353): se desperto atender_IO_generico del dispositivo <IMPRESORA> por primera vez 
+[INFO] 22:22:47:141 KERNEL/(10338:10351): se desperto readyAExe por primera vez
+[INFO] 22:22:47:141 KERNEL/(10338:10350): se desperto atender_interrupcion_de_ejecucion
+[INFO] 22:22:47:141 KERNEL/(10338:10349): se desperto asignar_memoria por primera vez
+[INFO] 22:22:47:141 KERNEL/(10338:10348): se desperto recibir_consola
+[INFO] 22:22:54:742 KERNEL/(10338:10348): Se conecto el Consola
+[INFO] 22:22:54:742 KERNEL/(10338:10407): [atender_consola]esperando segmentos
+[INFO] 22:22:54:742 KERNEL/(10338:10407): tamanios de segmentos recibidos
+[INFO] 22:22:54:742 KERNEL/(10338:10407): el tamanio es 64
+[INFO] 22:22:54:742 KERNEL/(10338:10407): el tamanio es 256
+[INFO] 22:22:54:742 KERNEL/(10338:10407): el tamanio es 128
+[INFO] 22:22:54:742 KERNEL/(10338:10407): el tamanio es 32
+[INFO] 22:22:54:742 KERNEL/(10338:10407): [atender_consola]enviamos los dispositivos
+[INFO] 22:22:54:743 KERNEL/(10338:10407): [atender_consola]esperando instrucciones
+[INFO] 22:22:54:743 KERNEL/(10338:10407): [atender_consola]me llegaron las instrucciones
+[INFO] 22:22:54:743 KERNEL/(10338:10407): SET param1: 0 param2: 1
+[INFO] 22:22:54:743 KERNEL/(10338:10407): ADD param1: 0 param2: 1
+[INFO] 22:22:54:743 KERNEL/(10338:10407): MOV_IN param1: 2 param2: 4
+[INFO] 22:22:54:743 KERNEL/(10338:10407): MOV_OUT param1: 8 param2: 3
+[INFO] 22:22:54:743 KERNEL/(10338:10407): I/O param1: 2 param2: 10
+[INFO] 22:22:54:743 KERNEL/(10338:10407): I/O param1: 1 param2: 0
+[INFO] 22:22:54:743 KERNEL/(10338:10407): I/O param1: 0 param2: 1
+[INFO] 22:22:54:743 KERNEL/(10338:10407): EXIT param1: 0 param2: 0
+[INFO] 22:22:54:743 KERNEL/(10338:10407): [atender_consola]metemos instrucciones en el pcb
+[INFO] 22:22:54:743 KERNEL/(10338:10407): Se crea el proceso <1> en NEW
+[INFO] 22:22:54:743 KERNEL/(10338:10407): [atender_consola] despertamos a asignar_memoria()
+[INFO] 22:22:54:743 KERNEL/(10338:10349): el tamanio de la cola de new es 0
+[INFO] 22:22:54:744 KERNEL/(10338:10349): [recibir_entero]: se recibio el numero 0
+[INFO] 22:22:54:744 KERNEL/(10338:10349): Cola Ready <RR>: [<LISTA DE PIDS>]
+[INFO] 22:22:54:744 KERNEL/(10338:10349): 1
+[INFO] 22:22:54:744 KERNEL/(10338:10349): PID: <1> - Estado Anterior: <NEW> - Estado Actual: <READY>
+[INFO] 22:22:54:744 KERNEL/(10338:10351): [readyAExe]: .........se despierta readyAExe 
+[INFO] 22:22:54:744 KERNEL/(10338:10351): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 22:22:54:744 KERNEL/(10338:10351): ------------------------DATOS DEL PCB----------------------------
+[INFO] 22:22:54:744 KERNEL/(10338:10351): pid: 1
+[INFO] 22:22:54:744 KERNEL/(10338:10351): Instrucciones:
+[INFO] 22:22:54:744 KERNEL/(10338:10351): SET param1: 0 param2: 1
+[INFO] 22:22:54:744 KERNEL/(10338:10351): ADD param1: 0 param2: 1
+[INFO] 22:22:54:744 KERNEL/(10338:10351): MOV_IN param1: 2 param2: 4
+[INFO] 22:22:54:744 KERNEL/(10338:10351): MOV_OUT param1: 8 param2: 3
+[INFO] 22:22:54:744 KERNEL/(10338:10351): I/O param1: 2 param2: 10
+[INFO] 22:22:54:744 KERNEL/(10338:10351): I/O param1: 1 param2: 0
+[INFO] 22:22:54:744 KERNEL/(10338:10351): I/O param1: 0 param2: 1
+[INFO] 22:22:54:744 KERNEL/(10338:10351): EXIT param1: 0 param2: 0
+[INFO] 22:22:54:744 KERNEL/(10338:10351): program counter en posicion: 0
+[INFO] 22:22:54:744 KERNEL/(10338:10351): registro AX: 0
+[INFO] 22:22:54:744 KERNEL/(10338:10351): registro BX: 0
+[INFO] 22:22:54:744 KERNEL/(10338:10351): registro CX: 0
+[INFO] 22:22:54:744 KERNEL/(10338:10351): registro DX: 0
+[INFO] 22:22:54:744 KERNEL/(10338:10351): posicion 0 de la tabla de segmentos |NUMERO DEL SEGMENTO:0 |TAMANIO DEL SEGMENTO: 64 |NUMERO DE TABLA DE PAGINAS: 0
+[INFO] 22:22:54:744 KERNEL/(10338:10351): posicion 1 de la tabla de segmentos |NUMERO DEL SEGMENTO:1 |TAMANIO DEL SEGMENTO: 256 |NUMERO DE TABLA DE PAGINAS: 1
+[INFO] 22:22:54:744 KERNEL/(10338:10351): posicion 2 de la tabla de segmentos |NUMERO DEL SEGMENTO:2 |TAMANIO DEL SEGMENTO: 128 |NUMERO DE TABLA DE PAGINAS: 2
+[INFO] 22:22:54:744 KERNEL/(10338:10351): posicion 3 de la tabla de segmentos |NUMERO DEL SEGMENTO:3 |TAMANIO DEL SEGMENTO: 32 |NUMERO DE TABLA DE PAGINAS: 3
+[INFO] 22:22:54:744 KERNEL/(10338:10351): numero de socket/consola: 9
+[INFO] 22:22:54:744 KERNEL/(10338:10351): estado: EXEC
+[INFO] 22:22:54:745 KERNEL/(10338:10351): algoritmo: ROUND ROBIN
+[INFO] 22:22:54:745 KERNEL/(10338:10351): ------------------------FIN DATOS DEL PCB----------------------------
+[INFO] 22:22:54:745 KERNEL/(10338:10351): [readyAExe]: enviamos el proceso a cpu
+[INFO] 22:22:54:746 KERNEL/(10338:10351): PID: <481203216> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 22:22:54:746 KERNEL/(10338:10351): [readyAExe]: finaliza
+[INFO] 22:28:18:906 KERNEL/(10763:10763): servidor kernel inicializado
+[INFO] 22:28:18:912 KERNEL/(10763:10763): DISPOSITIVOS: DISCO-IMPRESORA
+[INFO] 22:28:18:914 KERNEL/(10763:10763): configuraciones inicializadas
+[INFO] 22:28:18:914 KERNEL/(10763:10763): listas y colas inicializadas
+[INFO] 22:28:18:914 KERNEL/(10763:10763): semaforos inicializados
+[INFO] 22:28:18:914 KERNEL/(10763:10763): En la lista de dispositivos tenemos los siguientes:
+[INFO] 22:28:18:914 KERNEL/(10763:10763): el dispositivo de posicion 0 se llama DISCO
+[INFO] 22:28:18:914 KERNEL/(10763:10763): el dispositivo de posicion 0 tiene un tiempo de 100
+[INFO] 22:28:18:914 KERNEL/(10763:10763): el dispositivo de posicion 1 se llama IMPRESORA
+[INFO] 22:28:18:914 KERNEL/(10763:10763): el dispositivo de posicion 1 tiene un tiempo de 50000
+[INFO] 22:28:18:930 KERNEL/(10763:10770): se desperto recibir_consola
+[INFO] 22:28:18:931 KERNEL/(10763:10771): se desperto asignar_memoria por primera vez
+[INFO] 22:28:18:931 KERNEL/(10763:10772): se desperto atender_interrupcion_de_ejecucion
+[INFO] 22:28:18:931 KERNEL/(10763:10773): se desperto readyAExe por primera vez
+[INFO] 22:28:18:931 KERNEL/(10763:10774): se desperto atender_IO_generico del dispositivo <DISCO> por primera vez 
+[INFO] 22:28:18:931 KERNEL/(10763:10775): se desperto atender_IO_generico del dispositivo <IMPRESORA> por primera vez 
+[INFO] 22:28:27:175 KERNEL/(10763:10770): Se conecto el Consola
+[INFO] 22:28:27:175 KERNEL/(10763:10823): [atender_consola]esperando segmentos
+[INFO] 22:28:27:175 KERNEL/(10763:10823): tamanios de segmentos recibidos
+[INFO] 22:28:27:175 KERNEL/(10763:10823): el tamanio es 64
+[INFO] 22:28:27:175 KERNEL/(10763:10823): el tamanio es 256
+[INFO] 22:28:27:175 KERNEL/(10763:10823): el tamanio es 128
+[INFO] 22:28:27:175 KERNEL/(10763:10823): el tamanio es 32
+[INFO] 22:28:27:175 KERNEL/(10763:10823): [atender_consola]enviamos los dispositivos
+[INFO] 22:28:27:175 KERNEL/(10763:10823): [atender_consola]esperando instrucciones
+[INFO] 22:28:27:175 KERNEL/(10763:10823): [atender_consola]me llegaron las instrucciones
+[INFO] 22:28:27:175 KERNEL/(10763:10823): SET param1: 0 param2: 1
+[INFO] 22:28:27:175 KERNEL/(10763:10823): ADD param1: 0 param2: 1
+[INFO] 22:28:27:175 KERNEL/(10763:10823): MOV_IN param1: 2 param2: 4
+[INFO] 22:28:27:176 KERNEL/(10763:10823): MOV_OUT param1: 8 param2: 3
+[INFO] 22:28:27:176 KERNEL/(10763:10823): I/O param1: 2 param2: 10
+[INFO] 22:28:27:176 KERNEL/(10763:10823): I/O param1: 1 param2: 0
+[INFO] 22:28:27:176 KERNEL/(10763:10823): I/O param1: 0 param2: 1
+[INFO] 22:28:27:176 KERNEL/(10763:10823): EXIT param1: 0 param2: 0
+[INFO] 22:28:27:176 KERNEL/(10763:10823): [atender_consola]metemos instrucciones en el pcb
+[INFO] 22:28:27:176 KERNEL/(10763:10823): Se crea el proceso <1> en NEW
+[INFO] 22:28:27:176 KERNEL/(10763:10823): [atender_consola] despertamos a asignar_memoria()
+[INFO] 22:28:27:176 KERNEL/(10763:10771): el tamanio de la cola de new es 0
+[INFO] 22:28:27:177 KERNEL/(10763:10771): [recibir_entero]: se recibio el numero 0
+[INFO] 22:28:27:177 KERNEL/(10763:10771): Cola Ready <RR>: [<LISTA DE PIDS>]
+[INFO] 22:28:27:177 KERNEL/(10763:10771): 1
+[INFO] 22:28:27:177 KERNEL/(10763:10771): PID: <1> - Estado Anterior: <NEW> - Estado Actual: <READY>
+[INFO] 22:28:27:177 KERNEL/(10763:10773): [readyAExe]: .........se despierta readyAExe 
+[INFO] 22:28:27:177 KERNEL/(10763:10773): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 22:28:27:177 KERNEL/(10763:10773): ------------------------DATOS DEL PCB----------------------------
+[INFO] 22:28:27:177 KERNEL/(10763:10773): pid: 1
+[INFO] 22:28:27:177 KERNEL/(10763:10773): Instrucciones:
+[INFO] 22:28:27:177 KERNEL/(10763:10773): SET param1: 0 param2: 1
+[INFO] 22:28:27:177 KERNEL/(10763:10773): ADD param1: 0 param2: 1
+[INFO] 22:28:27:177 KERNEL/(10763:10773): MOV_IN param1: 2 param2: 4
+[INFO] 22:28:27:177 KERNEL/(10763:10773): MOV_OUT param1: 8 param2: 3
+[INFO] 22:28:27:177 KERNEL/(10763:10773): I/O param1: 2 param2: 10
+[INFO] 22:28:27:177 KERNEL/(10763:10773): I/O param1: 1 param2: 0
+[INFO] 22:28:27:177 KERNEL/(10763:10773): I/O param1: 0 param2: 1
+[INFO] 22:28:27:177 KERNEL/(10763:10773): EXIT param1: 0 param2: 0
+[INFO] 22:28:27:178 KERNEL/(10763:10773): program counter en posicion: 0
+[INFO] 22:28:27:178 KERNEL/(10763:10773): registro AX: 0
+[INFO] 22:28:27:178 KERNEL/(10763:10773): registro BX: 0
+[INFO] 22:28:27:178 KERNEL/(10763:10773): registro CX: 0
+[INFO] 22:28:27:178 KERNEL/(10763:10773): registro DX: 0
+[INFO] 22:28:27:178 KERNEL/(10763:10773): posicion 0 de la tabla de segmentos |NUMERO DEL SEGMENTO:0 |TAMANIO DEL SEGMENTO: 64 |NUMERO DE TABLA DE PAGINAS: 0
+[INFO] 22:28:27:178 KERNEL/(10763:10773): posicion 1 de la tabla de segmentos |NUMERO DEL SEGMENTO:1 |TAMANIO DEL SEGMENTO: 256 |NUMERO DE TABLA DE PAGINAS: 1
+[INFO] 22:28:27:178 KERNEL/(10763:10773): posicion 2 de la tabla de segmentos |NUMERO DEL SEGMENTO:2 |TAMANIO DEL SEGMENTO: 128 |NUMERO DE TABLA DE PAGINAS: 2
+[INFO] 22:28:27:178 KERNEL/(10763:10773): posicion 3 de la tabla de segmentos |NUMERO DEL SEGMENTO:3 |TAMANIO DEL SEGMENTO: 32 |NUMERO DE TABLA DE PAGINAS: 3
+[INFO] 22:28:27:178 KERNEL/(10763:10773): numero de socket/consola: 9
+[INFO] 22:28:27:178 KERNEL/(10763:10773): estado: EXEC
+[INFO] 22:28:27:178 KERNEL/(10763:10773): algoritmo: ROUND ROBIN
+[INFO] 22:28:27:178 KERNEL/(10763:10773): ------------------------FIN DATOS DEL PCB----------------------------
+[INFO] 22:28:27:178 KERNEL/(10763:10773): [readyAExe]: enviamos el proceso a cpu
+[INFO] 22:28:27:178 KERNEL/(10763:10773): PID: <-940370928> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 22:28:27:178 KERNEL/(10763:10773): [readyAExe]: finaliza
+[INFO] 22:32:35:001 KERNEL/(11163:11163): servidor kernel inicializado
+[INFO] 22:32:35:001 KERNEL/(11163:11163): DISPOSITIVOS: DISCO-IMPRESORA
+[INFO] 22:32:35:002 KERNEL/(11163:11163): configuraciones inicializadas
+[INFO] 22:32:35:002 KERNEL/(11163:11163): listas y colas inicializadas
+[INFO] 22:32:35:002 KERNEL/(11163:11163): semaforos inicializados
+[INFO] 22:32:35:002 KERNEL/(11163:11163): En la lista de dispositivos tenemos los siguientes:
+[INFO] 22:32:35:002 KERNEL/(11163:11163): el dispositivo de posicion 0 se llama DISCO
+[INFO] 22:32:35:002 KERNEL/(11163:11163): el dispositivo de posicion 0 tiene un tiempo de 100
+[INFO] 22:32:35:002 KERNEL/(11163:11163): el dispositivo de posicion 1 se llama IMPRESORA
+[INFO] 22:32:35:002 KERNEL/(11163:11163): el dispositivo de posicion 1 tiene un tiempo de 50000
+[INFO] 22:32:35:002 KERNEL/(11163:11171): se desperto recibir_consola
+[INFO] 22:32:35:004 KERNEL/(11163:11172): se desperto asignar_memoria por primera vez
+[INFO] 22:32:35:004 KERNEL/(11163:11174): se desperto atender_interrupcion_de_ejecucion
+[INFO] 22:33:53:698 KERNEL/(11388:11388): servidor kernel inicializado
+[INFO] 22:33:53:730 KERNEL/(11388:11388): DISPOSITIVOS: DISCO-IMPRESORA
+[INFO] 22:33:53:730 KERNEL/(11388:11388): configuraciones inicializadas
+[INFO] 22:33:53:730 KERNEL/(11388:11388): listas y colas inicializadas
+[INFO] 22:33:53:730 KERNEL/(11388:11388): semaforos inicializados
+[INFO] 22:33:53:730 KERNEL/(11388:11388): En la lista de dispositivos tenemos los siguientes:
+[INFO] 22:33:53:730 KERNEL/(11388:11388): el dispositivo de posicion 0 se llama DISCO
+[INFO] 22:33:53:730 KERNEL/(11388:11388): el dispositivo de posicion 0 tiene un tiempo de 100
+[INFO] 22:33:53:730 KERNEL/(11388:11388): el dispositivo de posicion 1 se llama IMPRESORA
+[INFO] 22:33:53:730 KERNEL/(11388:11388): el dispositivo de posicion 1 tiene un tiempo de 50000
+[INFO] 22:33:53:730 KERNEL/(11388:11396): se desperto recibir_consola
+[INFO] 22:33:53:732 KERNEL/(11388:11397): se desperto asignar_memoria por primera vez
+[INFO] 22:33:53:732 KERNEL/(11388:11398): se desperto atender_interrupcion_de_ejecucion
+[INFO] 22:33:53:734 KERNEL/(11388:11399): se desperto readyAExe por primera vez
+[INFO] 22:34:10:998 KERNEL/(11388:11396): Se conecto el Consola
+[INFO] 22:34:11:000 KERNEL/(11388:11450): se desperto atender_IO_generico del dispositivo <DISCO> por primera vez 
+[INFO] 22:34:11:000 KERNEL/(11388:11451): [atender_consola]esperando segmentos
+[INFO] 22:34:11:000 KERNEL/(11388:11451): tamanios de segmentos recibidos
+[INFO] 22:34:11:001 KERNEL/(11388:11451): el tamanio es 64
+[INFO] 22:34:11:001 KERNEL/(11388:11451): el tamanio es 256
+[INFO] 22:34:11:001 KERNEL/(11388:11451): el tamanio es 128
+[INFO] 22:34:11:001 KERNEL/(11388:11451): el tamanio es 32
+[INFO] 22:34:11:001 KERNEL/(11388:11451): [atender_consola]enviamos los dispositivos
+[INFO] 22:34:11:001 KERNEL/(11388:11451): [atender_consola]esperando instrucciones
+[INFO] 22:34:11:001 KERNEL/(11388:11452): se desperto atender_IO_generico del dispositivo <IMPRESORA> por primera vez 
+[INFO] 22:34:11:003 KERNEL/(11388:11451): [atender_consola]me llegaron las instrucciones
+[INFO] 22:34:11:003 KERNEL/(11388:11451): SET param1: 0 param2: 1
+[INFO] 22:34:11:004 KERNEL/(11388:11451): ADD param1: 0 param2: 1
+[INFO] 22:34:11:004 KERNEL/(11388:11451): MOV_IN param1: 2 param2: 4
+[INFO] 22:34:11:004 KERNEL/(11388:11451): MOV_OUT param1: 8 param2: 3
+[INFO] 22:34:11:004 KERNEL/(11388:11451): I/O param1: 2 param2: 10
+[INFO] 22:34:11:004 KERNEL/(11388:11451): I/O param1: 1 param2: 0
+[INFO] 22:34:11:004 KERNEL/(11388:11451): I/O param1: 0 param2: 1
+[INFO] 22:34:11:004 KERNEL/(11388:11451): EXIT param1: 0 param2: 0
+[INFO] 22:34:11:004 KERNEL/(11388:11451): [atender_consola]metemos instrucciones en el pcb
+[INFO] 22:34:11:004 KERNEL/(11388:11451): Se crea el proceso <1> en NEW
+[INFO] 22:34:11:004 KERNEL/(11388:11451): [atender_consola] despertamos a asignar_memoria()
+[INFO] 22:34:11:004 KERNEL/(11388:11397): el tamanio de la cola de new es 0
+[INFO] 22:34:11:004 KERNEL/(11388:11397): [recibir_entero]: se recibio el numero 0
+[INFO] 22:34:11:004 KERNEL/(11388:11397): Cola Ready <RR>: [<LISTA DE PIDS>]
+[INFO] 22:34:11:004 KERNEL/(11388:11397): 1
+[INFO] 22:34:11:004 KERNEL/(11388:11397): PID: <1> - Estado Anterior: <NEW> - Estado Actual: <READY>
+[INFO] 22:34:11:004 KERNEL/(11388:11399): [readyAExe]: .........se despierta readyAExe 
+[INFO] 22:34:11:004 KERNEL/(11388:11399): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 22:34:11:004 KERNEL/(11388:11399): ------------------------DATOS DEL PCB----------------------------
+[INFO] 22:34:11:004 KERNEL/(11388:11399): pid: 1
+[INFO] 22:34:11:004 KERNEL/(11388:11399): Instrucciones:
+[INFO] 22:34:11:004 KERNEL/(11388:11399): SET param1: 0 param2: 1
+[INFO] 22:34:11:004 KERNEL/(11388:11399): ADD param1: 0 param2: 1
+[INFO] 22:34:11:004 KERNEL/(11388:11399): MOV_IN param1: 2 param2: 4
+[INFO] 22:34:11:004 KERNEL/(11388:11399): MOV_OUT param1: 8 param2: 3
+[INFO] 22:34:11:004 KERNEL/(11388:11399): I/O param1: 2 param2: 10
+[INFO] 22:34:11:004 KERNEL/(11388:11399): I/O param1: 1 param2: 0
+[INFO] 22:34:11:004 KERNEL/(11388:11399): I/O param1: 0 param2: 1
+[INFO] 22:34:11:004 KERNEL/(11388:11399): EXIT param1: 0 param2: 0
+[INFO] 22:34:11:004 KERNEL/(11388:11399): program counter en posicion: 0
+[INFO] 22:34:11:004 KERNEL/(11388:11399): registro AX: 0
+[INFO] 22:34:11:004 KERNEL/(11388:11399): registro BX: 0
+[INFO] 22:34:11:004 KERNEL/(11388:11399): registro CX: 0
+[INFO] 22:34:11:004 KERNEL/(11388:11399): registro DX: 0
+[INFO] 22:34:11:004 KERNEL/(11388:11399): posicion 0 de la tabla de segmentos |NUMERO DEL SEGMENTO:0 |TAMANIO DEL SEGMENTO: 64 |NUMERO DE TABLA DE PAGINAS: 0
+[INFO] 22:34:11:004 KERNEL/(11388:11399): posicion 1 de la tabla de segmentos |NUMERO DEL SEGMENTO:1 |TAMANIO DEL SEGMENTO: 256 |NUMERO DE TABLA DE PAGINAS: 1
+[INFO] 22:34:11:004 KERNEL/(11388:11399): posicion 2 de la tabla de segmentos |NUMERO DEL SEGMENTO:2 |TAMANIO DEL SEGMENTO: 128 |NUMERO DE TABLA DE PAGINAS: 2
+[INFO] 22:34:11:004 KERNEL/(11388:11399): posicion 3 de la tabla de segmentos |NUMERO DEL SEGMENTO:3 |TAMANIO DEL SEGMENTO: 32 |NUMERO DE TABLA DE PAGINAS: 3
+[INFO] 22:34:11:005 KERNEL/(11388:11399): numero de socket/consola: 9
+[INFO] 22:34:11:005 KERNEL/(11388:11399): estado: EXEC
+[INFO] 22:34:11:005 KERNEL/(11388:11399): algoritmo: ROUND ROBIN
+[INFO] 22:34:11:005 KERNEL/(11388:11399): ------------------------FIN DATOS DEL PCB----------------------------
+[INFO] 22:34:11:005 KERNEL/(11388:11399): [readyAExe]: enviamos el proceso a cpu
+[INFO] 22:34:11:005 KERNEL/(11388:11399): PID: <469650384> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 22:34:11:005 KERNEL/(11388:11399): [readyAExe]: finaliza
+[INFO] 22:36:29:375 KERNEL/(11619:11619): servidor kernel inicializado
+[INFO] 22:36:29:394 KERNEL/(11619:11619): DISPOSITIVOS: DISCO-IMPRESORA
+[INFO] 22:36:29:394 KERNEL/(11619:11619): configuraciones inicializadas
+[INFO] 22:36:29:394 KERNEL/(11619:11619): listas y colas inicializadas
+[INFO] 22:36:29:394 KERNEL/(11619:11619): semaforos inicializados
+[INFO] 22:36:29:394 KERNEL/(11619:11619): En la lista de dispositivos tenemos los siguientes:
+[INFO] 22:36:29:394 KERNEL/(11619:11619): el dispositivo de posicion 0 se llama DISCO
+[INFO] 22:36:29:394 KERNEL/(11619:11619): el dispositivo de posicion 0 tiene un tiempo de 100
+[INFO] 22:36:29:394 KERNEL/(11619:11619): el dispositivo de posicion 1 se llama IMPRESORA
+[INFO] 22:36:29:394 KERNEL/(11619:11619): el dispositivo de posicion 1 tiene un tiempo de 50000
+[INFO] 22:36:29:395 KERNEL/(11619:11628): se desperto recibir_consola
+[INFO] 22:36:29:395 KERNEL/(11619:11629): se desperto asignar_memoria por primera vez
+[INFO] 22:36:29:395 KERNEL/(11619:11630): se desperto atender_interrupcion_de_ejecucion
+[INFO] 22:36:29:396 KERNEL/(11619:11631): se desperto readyAExe por primera vez
+[INFO] 22:36:29:396 KERNEL/(11619:11632): se desperto atender_IO_generico del dispositivo <DISCO> por primera vez 
+[INFO] 22:36:29:397 KERNEL/(11619:11633): se desperto atender_IO_generico del dispositivo <IMPRESORA> por primera vez 
+[INFO] 22:36:36:304 KERNEL/(11619:11628): Se conecto el Consola
+[INFO] 22:36:36:309 KERNEL/(11619:11685): [atender_consola]esperando segmentos
+[INFO] 22:36:36:322 KERNEL/(11619:11685): tamanios de segmentos recibidos
+[INFO] 22:36:36:322 KERNEL/(11619:11685): el tamanio es 64
+[INFO] 22:36:36:322 KERNEL/(11619:11685): el tamanio es 256
+[INFO] 22:36:36:322 KERNEL/(11619:11685): el tamanio es 128
+[INFO] 22:36:36:322 KERNEL/(11619:11685): el tamanio es 32
+[INFO] 22:36:36:322 KERNEL/(11619:11685): [atender_consola]enviamos los dispositivos
+[INFO] 22:36:36:322 KERNEL/(11619:11685): [atender_consola]esperando instrucciones
+[INFO] 22:36:36:322 KERNEL/(11619:11685): [atender_consola]me llegaron las instrucciones
+[INFO] 22:36:36:322 KERNEL/(11619:11685): SET param1: 0 param2: 1
+[INFO] 22:36:36:322 KERNEL/(11619:11685): ADD param1: 0 param2: 1
+[INFO] 22:36:36:322 KERNEL/(11619:11685): MOV_IN param1: 2 param2: 4
+[INFO] 22:36:36:322 KERNEL/(11619:11685): MOV_OUT param1: 8 param2: 3
+[INFO] 22:36:36:322 KERNEL/(11619:11685): I/O param1: 2 param2: 10
+[INFO] 22:36:36:322 KERNEL/(11619:11685): I/O param1: 1 param2: 0
+[INFO] 22:36:36:322 KERNEL/(11619:11685): I/O param1: 0 param2: 1
+[INFO] 22:36:36:322 KERNEL/(11619:11685): EXIT param1: 0 param2: 0
+[INFO] 22:36:36:322 KERNEL/(11619:11685): [atender_consola]metemos instrucciones en el pcb
+[INFO] 22:36:36:322 KERNEL/(11619:11685): Se crea el proceso <1> en NEW
+[INFO] 22:36:36:322 KERNEL/(11619:11685): [atender_consola] despertamos a asignar_memoria()
+[INFO] 22:36:36:322 KERNEL/(11619:11629): el tamanio de la cola de new es 0
+[INFO] 22:36:36:323 KERNEL/(11619:11629): [recibir_entero]: se recibio el numero 0
+[INFO] 22:36:36:323 KERNEL/(11619:11629): Cola Ready <RR>: [<LISTA DE PIDS>]
+[INFO] 22:36:36:323 KERNEL/(11619:11629): 1
+[INFO] 22:36:36:323 KERNEL/(11619:11629): PID: <1> - Estado Anterior: <NEW> - Estado Actual: <READY>
+[INFO] 22:36:36:323 KERNEL/(11619:11631): [readyAExe]: .........se despierta readyAExe 
+[INFO] 22:36:36:323 KERNEL/(11619:11631): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 22:36:36:323 KERNEL/(11619:11631): ------------------------DATOS DEL PCB----------------------------
+[INFO] 22:36:36:323 KERNEL/(11619:11631): pid: 1
+[INFO] 22:36:36:323 KERNEL/(11619:11631): Instrucciones:
+[INFO] 22:36:36:323 KERNEL/(11619:11631): SET param1: 0 param2: 1
+[INFO] 22:36:36:323 KERNEL/(11619:11631): ADD param1: 0 param2: 1
+[INFO] 22:36:36:323 KERNEL/(11619:11631): MOV_IN param1: 2 param2: 4
+[INFO] 22:36:36:323 KERNEL/(11619:11631): MOV_OUT param1: 8 param2: 3
+[INFO] 22:36:36:323 KERNEL/(11619:11631): I/O param1: 2 param2: 10
+[INFO] 22:36:36:323 KERNEL/(11619:11631): I/O param1: 1 param2: 0
+[INFO] 22:36:36:323 KERNEL/(11619:11631): I/O param1: 0 param2: 1
+[INFO] 22:36:36:323 KERNEL/(11619:11631): EXIT param1: 0 param2: 0
+[INFO] 22:36:36:323 KERNEL/(11619:11631): program counter en posicion: 0
+[INFO] 22:36:36:323 KERNEL/(11619:11631): registro AX: 0
+[INFO] 22:36:36:323 KERNEL/(11619:11631): registro BX: 0
+[INFO] 22:36:36:323 KERNEL/(11619:11631): registro CX: 0
+[INFO] 22:36:36:323 KERNEL/(11619:11631): registro DX: 0
+[INFO] 22:36:36:323 KERNEL/(11619:11631): posicion 0 de la tabla de segmentos |NUMERO DEL SEGMENTO:0 |TAMANIO DEL SEGMENTO: 64 |NUMERO DE TABLA DE PAGINAS: 0
+[INFO] 22:36:36:323 KERNEL/(11619:11631): posicion 1 de la tabla de segmentos |NUMERO DEL SEGMENTO:1 |TAMANIO DEL SEGMENTO: 256 |NUMERO DE TABLA DE PAGINAS: 1
+[INFO] 22:36:36:323 KERNEL/(11619:11631): posicion 2 de la tabla de segmentos |NUMERO DEL SEGMENTO:2 |TAMANIO DEL SEGMENTO: 128 |NUMERO DE TABLA DE PAGINAS: 2
+[INFO] 22:36:36:323 KERNEL/(11619:11631): posicion 3 de la tabla de segmentos |NUMERO DEL SEGMENTO:3 |TAMANIO DEL SEGMENTO: 32 |NUMERO DE TABLA DE PAGINAS: 3
+[INFO] 22:36:36:323 KERNEL/(11619:11631): numero de socket/consola: 9
+[INFO] 22:36:36:323 KERNEL/(11619:11631): estado: EXEC
+[INFO] 22:36:36:323 KERNEL/(11619:11631): algoritmo: ROUND ROBIN
+[INFO] 22:36:36:323 KERNEL/(11619:11631): ------------------------FIN DATOS DEL PCB----------------------------
+[INFO] 22:36:36:323 KERNEL/(11619:11631): [readyAExe]: enviamos el proceso a cpu
+[INFO] 22:36:36:323 KERNEL/(11619:11631): PID: <603835344> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 22:36:36:323 KERNEL/(11619:11631): [readyAExe]: finaliza
+[INFO] 22:38:06:236 KERNEL/(11828:11828): servidor kernel inicializado
+[INFO] 22:38:06:373 KERNEL/(11828:11828): DISPOSITIVOS: DISCO-IMPRESORA
+[INFO] 22:38:06:374 KERNEL/(11828:11828): configuraciones inicializadas
+[INFO] 22:38:06:374 KERNEL/(11828:11828): listas y colas inicializadas
+[INFO] 22:38:06:374 KERNEL/(11828:11828): semaforos inicializados
+[INFO] 22:38:06:374 KERNEL/(11828:11828): En la lista de dispositivos tenemos los siguientes:
+[INFO] 22:38:06:374 KERNEL/(11828:11828): el dispositivo de posicion 0 se llama DISCO
+[INFO] 22:38:06:374 KERNEL/(11828:11828): el dispositivo de posicion 0 tiene un tiempo de 100
+[INFO] 22:38:06:374 KERNEL/(11828:11828): el dispositivo de posicion 1 se llama IMPRESORA
+[INFO] 22:38:06:374 KERNEL/(11828:11828): el dispositivo de posicion 1 tiene un tiempo de 50000
+[INFO] 22:38:06:381 KERNEL/(11828:11837): se desperto atender_IO_generico del dispositivo <DISCO> por primera vez 
+[INFO] 22:38:06:382 KERNEL/(11828:11836): se desperto readyAExe por primera vez
+[INFO] 22:38:06:382 KERNEL/(11828:11838): se desperto atender_IO_generico del dispositivo <IMPRESORA> por primera vez 
+[INFO] 22:38:06:382 KERNEL/(11828:11835): se desperto atender_interrupcion_de_ejecucion
+[INFO] 22:38:06:382 KERNEL/(11828:11834): se desperto asignar_memoria por primera vez
+[INFO] 22:38:06:382 KERNEL/(11828:11833): se desperto recibir_consola
+[INFO] 22:39:05:428 KERNEL/(12021:12021): servidor kernel inicializado
+[INFO] 22:39:05:428 KERNEL/(12021:12021): DISPOSITIVOS: DISCO-IMPRESORA
+[INFO] 22:39:05:428 KERNEL/(12021:12021): configuraciones inicializadas
+[INFO] 22:39:05:428 KERNEL/(12021:12021): listas y colas inicializadas
+[INFO] 22:39:05:428 KERNEL/(12021:12021): semaforos inicializados
+[INFO] 22:39:05:428 KERNEL/(12021:12021): En la lista de dispositivos tenemos los siguientes:
+[INFO] 22:39:05:428 KERNEL/(12021:12021): el dispositivo de posicion 0 se llama DISCO
+[INFO] 22:39:05:428 KERNEL/(12021:12021): el dispositivo de posicion 0 tiene un tiempo de 100
+[INFO] 22:39:05:429 KERNEL/(12021:12021): el dispositivo de posicion 1 se llama IMPRESORA
+[INFO] 22:39:05:429 KERNEL/(12021:12021): el dispositivo de posicion 1 tiene un tiempo de 50000
+[INFO] 22:39:05:434 KERNEL/(12021:12032): se desperto atender_IO_generico del dispositivo <IMPRESORA> por primera vez 
+[INFO] 22:39:05:434 KERNEL/(12021:12031): se desperto atender_IO_generico del dispositivo <DISCO> por primera vez 
+[INFO] 22:39:05:434 KERNEL/(12021:12030): se desperto readyAExe por primera vez
+[INFO] 22:39:05:434 KERNEL/(12021:12029): se desperto atender_interrupcion_de_ejecucion
+[INFO] 22:39:05:434 KERNEL/(12021:12028): se desperto asignar_memoria por primera vez
+[INFO] 22:39:05:434 KERNEL/(12021:12027): se desperto recibir_consola
+[INFO] 22:39:17:553 KERNEL/(12021:12027): Se conecto el Consola
+[INFO] 22:39:17:556 KERNEL/(12021:12080): [atender_consola]esperando segmentos
+[INFO] 22:39:17:557 KERNEL/(12021:12080): tamanios de segmentos recibidos
+[INFO] 22:39:17:557 KERNEL/(12021:12080): el tamanio es 64
+[INFO] 22:39:17:557 KERNEL/(12021:12080): el tamanio es 256
+[INFO] 22:39:17:557 KERNEL/(12021:12080): el tamanio es 128
+[INFO] 22:39:17:557 KERNEL/(12021:12080): el tamanio es 32
+[INFO] 22:39:17:557 KERNEL/(12021:12080): [atender_consola]enviamos los dispositivos
+[INFO] 22:39:17:557 KERNEL/(12021:12080): [atender_consola]esperando instrucciones
+[INFO] 22:39:17:557 KERNEL/(12021:12080): [atender_consola]me llegaron las instrucciones
+[INFO] 22:39:17:560 KERNEL/(12021:12080): SET param1: 0 param2: 1
+[INFO] 22:39:17:560 KERNEL/(12021:12080): ADD param1: 0 param2: 1
+[INFO] 22:39:17:560 KERNEL/(12021:12080): MOV_IN param1: 2 param2: 4
+[INFO] 22:39:17:560 KERNEL/(12021:12080): MOV_OUT param1: 8 param2: 3
+[INFO] 22:39:17:560 KERNEL/(12021:12080): I/O param1: 2 param2: 10
+[INFO] 22:39:17:560 KERNEL/(12021:12080): I/O param1: 1 param2: 0
+[INFO] 22:39:17:560 KERNEL/(12021:12080): I/O param1: 0 param2: 1
+[INFO] 22:39:17:560 KERNEL/(12021:12080): EXIT param1: 0 param2: 0
+[INFO] 22:39:17:560 KERNEL/(12021:12080): [atender_consola]metemos instrucciones en el pcb
+[INFO] 22:39:17:560 KERNEL/(12021:12080): Se crea el proceso <1> en NEW
+[INFO] 22:39:17:560 KERNEL/(12021:12080): [atender_consola] despertamos a asignar_memoria()
+[INFO] 22:39:17:561 KERNEL/(12021:12028): el tamanio de la cola de new es 0
+[INFO] 22:39:17:561 KERNEL/(12021:12028): Cola Ready <RR>: [<LISTA DE PIDS>]
+[INFO] 22:39:17:561 KERNEL/(12021:12028): 1
+[INFO] 22:39:17:561 KERNEL/(12021:12028): PID: <1> - Estado Anterior: <NEW> - Estado Actual: <READY>
+[INFO] 22:39:17:561 KERNEL/(12021:12030): [readyAExe]: .........se despierta readyAExe 
+[INFO] 22:39:17:561 KERNEL/(12021:12030): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 22:39:17:561 KERNEL/(12021:12030): ------------------------DATOS DEL PCB----------------------------
+[INFO] 22:39:17:561 KERNEL/(12021:12030): pid: 1
+[INFO] 22:39:17:561 KERNEL/(12021:12030): Instrucciones:
+[INFO] 22:39:17:561 KERNEL/(12021:12030): SET param1: 0 param2: 1
+[INFO] 22:39:17:561 KERNEL/(12021:12030): ADD param1: 0 param2: 1
+[INFO] 22:39:17:561 KERNEL/(12021:12030): MOV_IN param1: 2 param2: 4
+[INFO] 22:39:17:561 KERNEL/(12021:12030): MOV_OUT param1: 8 param2: 3
+[INFO] 22:39:17:561 KERNEL/(12021:12030): I/O param1: 2 param2: 10
+[INFO] 22:39:17:561 KERNEL/(12021:12030): I/O param1: 1 param2: 0
+[INFO] 22:39:17:561 KERNEL/(12021:12030): I/O param1: 0 param2: 1
+[INFO] 22:39:17:561 KERNEL/(12021:12030): EXIT param1: 0 param2: 0
+[INFO] 22:39:17:561 KERNEL/(12021:12030): program counter en posicion: 0
+[INFO] 22:39:17:561 KERNEL/(12021:12030): registro AX: 0
+[INFO] 22:39:17:561 KERNEL/(12021:12030): registro BX: 0
+[INFO] 22:39:17:561 KERNEL/(12021:12030): registro CX: 0
+[INFO] 22:39:17:561 KERNEL/(12021:12030): registro DX: 0
+[INFO] 22:39:17:561 KERNEL/(12021:12030): posicion 0 de la tabla de segmentos |NUMERO DEL SEGMENTO:0 |TAMANIO DEL SEGMENTO: 64 |NUMERO DE TABLA DE PAGINAS: 0
+[INFO] 22:39:17:561 KERNEL/(12021:12030): posicion 1 de la tabla de segmentos |NUMERO DEL SEGMENTO:1 |TAMANIO DEL SEGMENTO: 256 |NUMERO DE TABLA DE PAGINAS: 1
+[INFO] 22:39:17:561 KERNEL/(12021:12030): posicion 2 de la tabla de segmentos |NUMERO DEL SEGMENTO:2 |TAMANIO DEL SEGMENTO: 128 |NUMERO DE TABLA DE PAGINAS: 2
+[INFO] 22:39:17:561 KERNEL/(12021:12030): posicion 3 de la tabla de segmentos |NUMERO DEL SEGMENTO:3 |TAMANIO DEL SEGMENTO: 32 |NUMERO DE TABLA DE PAGINAS: 3
+[INFO] 22:39:17:561 KERNEL/(12021:12030): numero de socket/consola: 9
+[INFO] 22:39:17:561 KERNEL/(12021:12030): estado: EXEC
+[INFO] 22:39:17:561 KERNEL/(12021:12030): algoritmo: ROUND ROBIN
+[INFO] 22:39:17:561 KERNEL/(12021:12030): ------------------------FIN DATOS DEL PCB----------------------------
+[INFO] 22:39:17:561 KERNEL/(12021:12030): [readyAExe]: enviamos el proceso a cpu
+[INFO] 22:39:17:561 KERNEL/(12021:12030): PID: <844942288> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 22:39:17:561 KERNEL/(12021:12030): [readyAExe]: finaliza

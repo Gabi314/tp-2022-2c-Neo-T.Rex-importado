@@ -103,7 +103,7 @@ t_list* recibir_paquete_instrucciones(int socket_cliente)
 	return listaDeInstrucciones;
 }
 
-void agregar_a_paquete_kernel_cpu(t_pcb* pcb,int cod_op,int conexionCpu)
+void enviar_pcb(t_pcb* pcb,int cod_op,int conexionCpu)
 {
 	tamanioTotalIdentificadores = 0;
 	contadorInstrucciones = 0;
@@ -140,6 +140,7 @@ void agregar_a_paquete_kernel_cpu(t_pcb* pcb,int cod_op,int conexionCpu)
 	paquete->buffer->size = desplazamiento;
 
 	enviar_paquete(paquete, conexionCpu);
+	eliminar_paquete(paquete);
 	free(pcb);
 }
 
@@ -400,7 +401,7 @@ void asignar_memoria() {
 
 
 		proceso = sacarDeNew();
-		t_pcb* pcbAux= malloc(sizeof(* pcbAux)); // malloc?
+		t_pcb* pcbAux= malloc(sizeof(t_pcb)); // malloc?
 
 
 		log_info(loggerAux,"llego antes de crear el paquete");
@@ -441,7 +442,7 @@ void asignar_memoria() {
 
 			log_info(logger, "Cola Ready <FIFO>: [<LISTA DE PIDS>]");
 			for(int i=0; i<queue_size(colaReadyFIFO); i++){
-				pcbAux = list_get(colaReadyFIFO,i);
+				pcbAux = list_get(colaReadyFIFO->elements,i);
 				log_info(logger, "%d", pcbAux->idProceso);
 			}
 		} else {
@@ -450,7 +451,7 @@ void asignar_memoria() {
 
 				log_info(logger, "Cola Ready <RR>: [<LISTA DE PIDS>]");
 				for(int i=0; i<queue_size(colaReadyRR); i++){
-					pcbAux = list_get(colaReadyRR,i);
+					pcbAux = list_get(colaReadyRR->elements,i);
 					log_info(logger, "%d", pcbAux->idProceso);
 				}
 			} else {
@@ -459,12 +460,12 @@ void asignar_memoria() {
 
 					log_info(logger, "Cola Ready <Feedback>: [<LISTA DE PIDS RR>]");
 					for(int i=0; i<queue_size(colaReadyRR); i++){
-						pcbAux = list_get(colaReadyRR,i);
+						pcbAux = list_get(colaReadyRR->elements,i);
 						log_info(logger, "%d", pcbAux->idProceso);
 					}
 					log_info(logger,"[<LISTA DE PIDS FIFO>]");
 					for(int i=0; i<queue_size(colaReadyFIFO); i++){
-						pcbAux = list_get(colaReadyFIFO,i);
+						pcbAux = list_get(colaReadyFIFO->elements,i);
 						log_info(logger, "%d", pcbAux->idProceso);
 					}
 				}else{
@@ -472,18 +473,11 @@ void asignar_memoria() {
 				}
 			}
 		}
-
-		free(pcbAux);
-
-
+		//free(pcbAux);
 		log_info(logger,"PID: <%d> - Estado Anterior: <NEW> - Estado Actual: <READY>", proceso->idProceso);
-
-
 		sem_post(&pcbEnReady);
-
 		log_info(loggerAux,"[asignar_memoria]: desde asignar_memoria despertamos a readyAExe");
 	}
-
 }
 
 
@@ -506,7 +500,7 @@ void readyAExe() {
 			procesoAEjecutar->idProceso);
 
 			procesoAEjecutar->estado = EXEC;
-			agregar_a_paquete_kernel_cpu(procesoAEjecutar,KERNEL_PCB_A_CPU,conexionCpuDispatch);
+			enviar_pcb(procesoAEjecutar,KERNEL_PCB_A_CPU,conexionCpuDispatch);
 			//free(procesoAEjecutar);
 			log_info(logger, "[readyAExe]: enviamos el proceso a cpu");
 
@@ -586,7 +580,7 @@ void ejecutar(t_pcb* proceso) {
 	}
 
  //	agregarAPaqueteKernelCpu(proceso); //Aca mandamos el proceso a cpu
-	agregar_a_paquete_kernel_cpu(proceso,KERNEL_PCB_A_CPU,conexionCpuDispatch);
+	enviar_pcb(proceso,KERNEL_PCB_A_CPU,conexionCpuDispatch);
 
 	log_info(loggerAux, "[ejecutar]: enviamos el proceso a cpu");
 
@@ -762,7 +756,7 @@ while (1) {
 		free(aMandarPF);
 		break;
 
-	case TERMINAR_PROCESO:
+	case CPU_PCB_A_KERNEL_PCB_POR_FINALIZACION:
 		log_info(loggerAux,"[atender_interrupcion_de_ejecucion]: recibimos operacion EXIT");
 
 		t_pcb* pcbATerminar = recibir_pcb(conexionCpuDispatch);
@@ -976,7 +970,7 @@ void atender_page_fault(t_info_pf* infoPF){
 			agregar_a_paquete_unInt(paquete, list_get(listaTPyNroPag,0), sizeof(int));
 			agregar_a_paquete_unInt(paquete, list_get(listaTPyNroPag,1), sizeof(int));
 			enviar_paquete(paquete,socketMemoria);
-
+			eliminar_paquete(paquete);
 
 
 	int codigo = recibir_operacion(socketMemoria);
@@ -1064,9 +1058,12 @@ t_pcb* recibir_pcb(int socket_cliente)//ponerla en shared
 		list_add(pcb->tablaSegmentos,unSegmento);
 		i++;
 	}
-//	memcpy(&pcb->socket_cliente, buffer + desplazamiento, sizeof(int)); al pedo mepa
+	memcpy(&pcb->socket, buffer + desplazamiento, sizeof(int));
+	desplazamiento+=sizeof(int);
 	memcpy(&(pcb->estado), buffer + desplazamiento, sizeof(t_estado));
 	desplazamiento+=sizeof(t_estado);
+	memcpy(&pcb->algoritmoActual, buffer + desplazamiento, sizeof(t_algoritmo_pcb));
+	desplazamiento+=sizeof(int);
 	log_info(loggerAux,"Estado: %d",pcb->estado);
 	free(buffer);
 	return pcb;

@@ -45,7 +45,7 @@ int main(int argc, char *argv[]) {
 	sem_init(&cpuSinFinalizar,0,0);
 	sem_wait(&cpuSinFinalizar);
 
-	free(unPcb);
+	//free(unPcb);
 }
 
 void ejecucion(void* aa){

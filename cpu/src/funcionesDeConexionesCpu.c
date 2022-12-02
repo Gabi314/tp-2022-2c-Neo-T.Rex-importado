@@ -120,9 +120,12 @@ t_pcb* recibir_pcb(int socket_cliente)//ponerla en shared
 		list_add(pcb->tablaSegmentos,unSegmento);
 		i++;
 	}
-//	memcpy(&pcb->socket_cliente, buffer + desplazamiento, sizeof(int)); al pedo mepa
+	memcpy(&pcb->socket, buffer + desplazamiento, sizeof(int));
+	desplazamiento+=sizeof(int);
 	memcpy(&(pcb->estado), buffer + desplazamiento, sizeof(t_estado));
 	desplazamiento+=sizeof(t_estado);
+	memcpy(&(pcb->algoritmoActual), buffer + desplazamiento, sizeof(t_estado));
+	desplazamiento+=sizeof(t_algoritmo_pcb);
 	log_info(logger,"Estado: %d",pcb->estado);
 	free(buffer);
 	return pcb;
@@ -138,13 +141,13 @@ void enviar_pcb(t_pcb* pcb,int cod_op,int clienteKernel)
 	contadorInstrucciones = 0;
 	contadorSegmentos = 0;
 	desplazamiento = 0;
-	t_paquete* paquete = crear_paquete(cod_op);
+	paquete = crear_paquete(cod_op);
 	list_iterate(pcb->instrucciones, (void*) obtenerTamanioIdentificadores);
 	list_iterate(pcb->tablaSegmentos, (void*) obtenerCantidadDeSegmentos);
 	paquete->buffer->stream = realloc(paquete->buffer->stream,
 			paquete->buffer->size + tamanioTotalIdentificadores
 					+ contadorInstrucciones * sizeof(int[2])
-					+ contadorInstrucciones * sizeof(int) + 3 * sizeof(int)
+					+ contadorInstrucciones * sizeof(int) + 5 * sizeof(int)
 					+ sizeof(t_registros)
 					+ contadorSegmentos * sizeof(entradaTablaSegmento)
 					+ sizeof(int));
@@ -161,14 +164,17 @@ void enviar_pcb(t_pcb* pcb,int cod_op,int clienteKernel)
 	desplazamiento+=sizeof(int);
 	list_iterate(pcb->tablaSegmentos, (void*) agregarSegmentosAlPaquete);
 	log_info(logger,"cont seg: %d",contadorSegmentos);
-	//	memcpy(paquete->buffer->stream + desplazamiento, &(pcb->socket_cliente), sizeof(int));
-	//	desplazamiento+=sizeof(int);
+	memcpy(paquete->buffer->stream + desplazamiento, &(pcb->socket), sizeof(int));
+	desplazamiento+=sizeof(int);
 	memcpy(paquete->buffer->stream + desplazamiento, &(pcb->estado), sizeof(int));
+	desplazamiento+=sizeof(int);
+	memcpy(paquete->buffer->stream + desplazamiento, &(pcb->algoritmoActual), sizeof(int));
 	desplazamiento+=sizeof(int);
 	paquete->buffer->size = desplazamiento;
 
 	enviar_paquete(paquete, clienteKernel);
-	free(pcb);
+	eliminar_paquete(paquete);
+	//free(pcb); en realidad se libera al finalizar el proceso
 }
 
 void obtenerTamanioIdentificadores(instruccion* unaInstruccion) {
@@ -181,6 +187,7 @@ void obtenerCantidadDeSegmentos(entradaTablaSegmento* unSegmento){
 }
 
 void agregarInstruccionesAlPaquete(instruccion* unaInstruccion) {
+	log_info(logger,"Instruccion a enviar %s",unaInstruccion->identificador);
 	void* id = unaInstruccion->identificador;
 	int longitudId = strlen(unaInstruccion->identificador)+1;
 	memcpy(paquete->buffer->stream + desplazamiento, &longitudId, sizeof(int));

@@ -15,30 +15,7 @@ typedef enum
 	PANTALLA,
 	TECLADO
 } dispositivos_IO;
-/*
-typedef struct
-{
-	int AX;
-	int BX;
-	int CX;
-	int DX;
-} t_registros;
 
-typedef enum estado { NEW, READY, BLOCKED, EXEC, TERMINATED } t_estado;
-typedef enum algoritmo { FIFO, RR } t_algoritmo_pcb;
-
-typedef struct
-{
-	int idProceso;
-	t_list* instrucciones;
-	int programCounter;
-	t_registros registros;
-	t_list* tablaSegmentos;
-	int socket;
-	t_estado estado;
-	t_algoritmo_pcb algoritmoActual;
-} t_pcb;
-*/
 typedef struct
 {
 	t_pcb* pcb;
@@ -55,7 +32,7 @@ typedef struct {
 	t_list * listaTpYNroPAgina;
 } t_info_pf;
 
-// En principio, no hace falta ------------------------------------
+
 typedef struct {
 	char* dispositivo;
 	int tiempo;
@@ -64,24 +41,6 @@ typedef struct {
 	sem_t semaforo;
 
 } t_elem_disp;
-// En principio, no hace falta ------------------------------------
-/*
-typedef struct
-{
-	char* identificador;
-	int parametros[2];
-} instruccion;
-
-*/
-/*
-typedef struct
-{
-	int numeroSegmento;//revisar
-	int tamanioSegmento;
-	int numeroTablaPaginas;
-}entradaTablaSegmento;
-*/
-
 
 extern int socketServidorKernel;
 
@@ -187,7 +146,7 @@ void obtenerTamanioIdentificadores(instruccion*);
 void obtenerCantidadDeSegmentos(entradaTablaSegmento*);
 void agregarInstruccionesAlPaquete(instruccion*);
 void agregarSegmentosAlPaquete(entradaTablaSegmento*);
-void agregar_a_paquete_kernel_cpu(t_pcb*,int,int);
+void enviar_pcb(t_pcb*,int,int);
 void aplanarDispositivosIO(char**);
 
 

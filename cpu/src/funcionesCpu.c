@@ -283,7 +283,7 @@ void ejecutar(instruccion* unaInstruccion,t_pcb* pcb){
 				log_info(loggerObligatorio,"“PID: <%d> - Ejecutando: <%s>",pcb->idProceso,unaInstruccion->identificador);
 				ejecutando = false;
 				limpiarEntradasTLB(pcb->idProceso);
-				//enviar_pcb(pcb, CPU_PCB_A_KERNEL_PCB_POR_FINALIZACION, clienteKernel);
+				enviar_pcb(pcb, CPU_PCB_A_KERNEL_PCB_POR_FINALIZACION, clienteKernel);
 				log_info(logger,"----------------FINALIZA EXIT----------------\n");
 				break;
 		}
@@ -442,8 +442,8 @@ void bloqueoPorPageFault(t_pcb* pcb){
 	enviar_pcb(pcb, CPU_A_KERNEL_PCB_PAGE_FAULT,clienteKernel);
 	t_paquete *paquetePageFault = crear_paquete(CPU_A_KERNEL_PAGINA_PF);
 
-	agregar_a_paquete_unInt(paquete, &numeroDePagina, sizeof(numeroDePagina));
-	agregar_a_paquete_unInt(paquete, &numeroDeSegmento,sizeof(numeroDeSegmento));//COMENTADO PARA PROBAR MEMORIA Y CPU
+	agregar_a_paquete_unInt(paquetePageFault, &numeroDePagina, sizeof(numeroDePagina));
+	agregar_a_paquete_unInt(paquetePageFault, &numeroDeSegmento,sizeof(numeroDeSegmento));//COMENTADO PARA PROBAR MEMORIA Y CPU
 
 	log_info(loggerObligatorio, "Page Fault PID: <%d> - Segmento: <%d> - Pagina: <%d>",
 			pcb->idProceso, numeroDeSegmento, numeroDePagina);
