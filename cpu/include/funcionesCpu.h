@@ -135,6 +135,7 @@ int conexionConMemoria(void);
 void enviar_pcb(t_pcb*,int,int);
 
 extern pthread_t hiloInterrupciones;
+extern sem_t pcbRecibido;
 
 
 #endif /*FUNCIONES_CPU_H_*/

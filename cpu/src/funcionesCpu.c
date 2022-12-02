@@ -28,6 +28,8 @@ bool hayInterrupcion = false;
 static pthread_mutex_t mutexInterrupcion;
 pthread_t hiloInterrupciones;
 
+sem_t pcbRecibido;
+
 
 //--------------------FUNCIONES ELEMENTALES------------------------------
 int chequeoCantidadArchivos(int argc){
@@ -50,6 +52,8 @@ void inicializarConfiguraciones(char* unaConfig){
 
 	puertoDeEscuchaDispatch = config_get_string_value(config,"PUERTO_ESCUCHA_DISPATCH");
 	puertoDeEscuchaInterrupt = config_get_string_value(config,"PUERTO_ESCUCHA_INTERRUPT");
+
+	sem_init(&pcbRecibido,0,0);
 }
 
 

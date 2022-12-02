@@ -28,6 +28,7 @@ int conexionConKernelDispatch(void){//un hilo
 		if(cod_op == KERNEL_PCB_A_CPU){
 
 			unPcb = recibir_pcb(clienteKernel);
+			sem_post(&pcbRecibido);
 
 			return EXIT_SUCCESS;
 		}else if(cod_op == -1){

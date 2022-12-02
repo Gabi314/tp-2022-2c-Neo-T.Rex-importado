@@ -49,6 +49,7 @@ int main(int argc, char *argv[]) {
 }
 
 void ejecucion(void* aa){
+	sem_wait(&pcbRecibido);
 	instruccion *unaInstruccion = malloc(sizeof(instruccion));
 	unaInstruccion = buscarInstruccionAEjecutar(unPcb);
 

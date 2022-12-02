@@ -1171,3 +1171,15 @@
 [INFO] 19:47:09:623 CONSOLA/(4610:4610): Primer dispositivo DISCO
 [INFO] 19:47:09:623 CONSOLA/(4610:4610): Se leyo el archivo correctamente
 [INFO] 19:47:09:623 CONSOLA/(4610:4610): Me llego el mensaje [atender_consola]segmentos e instrucciones recibidos pibe
+[INFO] 20:17:43:575 CONSOLA/(5863:5863): Config creado
+[INFO] 20:17:43:577 CONSOLA/(5863:5863): llego hasta recibir lista dispositivos
+[INFO] 20:17:43:577 CONSOLA/(5863:5863): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 20:17:43:577 CONSOLA/(5863:5863): Primer dispositivo DISCO
+[INFO] 20:17:43:577 CONSOLA/(5863:5863): Se leyo el archivo correctamente
+[INFO] 20:17:43:577 CONSOLA/(5863:5863): Me llego el mensaje [atender_consola]segmentos e instrucciones recibidos pibe
+[INFO] 20:22:23:976 CONSOLA/(6569:6569): Config creado
+[INFO] 20:22:23:978 CONSOLA/(6569:6569): llego hasta recibir lista dispositivos
+[INFO] 20:22:23:979 CONSOLA/(6569:6569): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 20:22:23:979 CONSOLA/(6569:6569): Primer dispositivo DISCO
+[INFO] 20:22:23:979 CONSOLA/(6569:6569): Se leyo el archivo correctamente
+[INFO] 20:22:23:979 CONSOLA/(6569:6569): Me llego el mensaje [atender_consola]segmentos e instrucciones recibidos pibe

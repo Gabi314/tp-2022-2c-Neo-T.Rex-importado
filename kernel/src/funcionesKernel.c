@@ -417,6 +417,7 @@ void asignar_memoria() {
 
 		if(cod_op == MEMORIA_A_KERNEL_NUMERO_TABLA_PAGINAS) {
 			numTablaPag = recibir_entero(socketMemoria);
+			log_info(loggerAux,"Es el nro de tp correspondiente al proceso actual");
 		}
 		else {
 			log_info(loggerAux,"operacion de memoria invalida");
@@ -475,17 +476,10 @@ void asignar_memoria() {
 		free(pcbAux);
 
 
-
-
-
 		log_info(logger,"PID: <%d> - Estado Anterior: <NEW> - Estado Actual: <READY>", proceso->idProceso);
 
 
 		sem_post(&pcbEnReady);
-
-
-		
-
 
 		log_info(loggerAux,"[asignar_memoria]: desde asignar_memoria despertamos a readyAExe");
 	}
