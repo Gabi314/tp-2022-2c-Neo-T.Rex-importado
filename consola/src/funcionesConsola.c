@@ -36,8 +36,9 @@ void enviarPaqueteTamanioDeSegmentos(){
 
 	agregarAPaqueteSegmentos(segmentos,paquete);
 	// Enviamos el paquete
+
 	enviar_paquete(paquete,conexion);
-	eliminar_paquete(paquete);
+
 }
 
 FILE* abrirArchivo(char* pathArchivo){
@@ -214,6 +215,9 @@ void atenderPeticionesKernel(){
 			solicitudIngresarValorPorTeclado(cod_op);
 		}else if(cod_op == KERNEL_MENSAJE_FINALIZAR_CONSOLA){
 			recibir_mensaje(conexion);
+			noFinalizar = 0;
+		}
+		else{
 			noFinalizar = 0;
 		}
 

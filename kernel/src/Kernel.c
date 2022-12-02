@@ -1,15 +1,15 @@
 #include "funcionesKernel.h"
 
 t_list* lista_dispositivos;
-char* dispositivosIOAplanado;
+
 t_list *listaTamanioSegmentos;
 
 //t_list* listaDeColasDispositivos;
-
+/*
 int conexionCpu = 0;
 int conexionCpuInterrupt = 0;
 int socketMemoria = 0;
-
+*/
 
 int main(int argc, char *argv[]) {
 
@@ -29,16 +29,26 @@ int main(int argc, char *argv[]) {
 
 	// Inicializacion de kernel como servidor
 	socketServidorKernel = iniciar_servidor(IP_KERNEL, PUERTO_KERNEL, "Consola");
-
-	// Inicializaciones de estructuras de datos
+	log_info(logger,"servidor kernel inicializado");
 
 	inicializar_configuraciones(argv[1]);
+
+	socketMemoria = crear_conexion(ipMemoria, puertoMemoria);
+	conexionCpuDispatch = crear_conexion(ipCpu, puertoCpuDispatch);
+	conexionCpuInterrupt = crear_conexion(ipCpu, puertoCpuInterrupt);
+	// Inicializaciones de estructuras de datos
+
+
+	log_info(logger,"configuraciones inicializadas");
 	inicializar_listas_y_colas();
+	log_info(logger,"listas y colas inicializadas");
 	identificadores_pcb = 0;
 	inicializar_semaforos();
+	log_info(logger,"semaforos inicializados");
 	log_info(logger, "En la lista de dispositivos tenemos los siguientes:");
 		for (int i = 0; i < list_size(listaDeColasDispositivos); i++) {
-			t_elem_disp* aux = list_get(listaDeColasDispositivos,i);
+			t_elem_disp* aux = malloc(sizeof(t_elem_disp));
+			aux = list_get(listaDeColasDispositivos,i);
 			log_info(logger,"el dispositivo de posicion %d se llama %s", i , aux->dispositivo);
 			log_info(logger,"el dispositivo de posicion %d tiene un tiempo de %d", i, aux->tiempo);
 				}
@@ -50,8 +60,9 @@ int main(int argc, char *argv[]) {
 	log_info(logger,"DISPOSITIVOS: %s",dispositivosIOAplanado);
 
 // ------------------------------------------------- PRUEBAS DE GABI DE CONEXIONES -----------------------------------------------------
-
+/*
 	// prueba de conexion con la consola
+	log_info(logger,"iniciamos prueba de conexion con consola");
 	pruebaDeConexionConConsola();
 
 	//t_pcb * PCB = pruebaDeConexionConConsola();
@@ -59,10 +70,10 @@ int main(int argc, char *argv[]) {
 
 
 	log_destroy(logger);
-
+*/
 // -------------------------------------------------- PRUEBAS DE LEO DE CONEXIONES ---------------------------------------------------
 
-
+/*
 	t_pcb* pcb = malloc(sizeof(t_pcb));
 	pcb->estado = READY;
 	pcb->idProceso = 0;
@@ -97,23 +108,22 @@ int main(int argc, char *argv[]) {
 	log_info(logger,"Interrupcion enviada");
 
 	log_destroy(logger);
+
 	log_destroy(loggerAux);
 
 //------------------------------------------------SEGUNDA PARTE DEL MAIN ----------------------------------------------------------
-/*
+
 	pthread_t hilo0;
 	pthread_t hiloAdmin[3];
 	int hiloAdminCreado[3];
 
 
 	//conexiones
-	socketMemoria = crear_conexion(ipMemoria, puertoMemoria);
-	socketCpuDispatch = crear_conexion(ipCpu, puertoCpuDispatch);
-	socketCpuInterrupt = crear_conexion(ipCpu, puertoCpuInterrupt);
-	socketServidor = iniciar_servidor();
 
-	int hiloCreado = pthread_create(&hilo0, NULL,&recibir_consola,socketServidor);
-	pthread_detach(hiloCreado);
+
+
+	int hiloCreado = pthread_create(&hilo0, NULL,&recibir_consola,&socketServidorKernel);
+	pthread_detach(hilo0);
 
 	hiloAdminCreado[0] = pthread_create(&hiloAdmin[0],NULL,&asignar_memoria,NULL);
 	hiloAdminCreado[1] = pthread_create(&hiloAdmin[1],NULL,&atender_interrupcion_de_ejecucion,NULL); // problemas con esto
@@ -126,11 +136,11 @@ int main(int argc, char *argv[]) {
 
 	list_iterate(listaDeColasDispositivos,(void *)levantar_hilo_dispositivo);
 
-*/
+
 
 //-------------------------------------------------RESTOS DE OTRAS PARTES -----------------------------------------------------------
 
-	//sem_wait(&kernelSinFinalizar);
+	sem_wait(&kernelSinFinalizar);
 
 	//int nroTabla1erNivel = conexionConMemoria();
 
@@ -173,7 +183,9 @@ void inicializar_listas_y_colas() {
 
 t_pcb* pruebaDeConexionConConsola() {
 
+log_info(logger,"esperando a la consola");
 int cliente_fd = esperar_cliente(socketServidorKernel, "Consola");
+log_info(logger,"es la consola numero %d",cliente_fd);
 /*
 if (recibir_operacion(cliente_fd) == KERNEL_PAQUETE_TAMANIOS_SEGMENTOS) {
 	listaTamanioSegmentos = list_create();
@@ -188,6 +200,8 @@ if (recibir_operacion(cliente_fd) == KERNEL_PAQUETE_TAMANIOS_SEGMENTOS) {
 
 
 // SE RECIBEN LOS SEGMENTOS Y SE METEN EN EL PCB
+
+	log_info(logger,"esperando segmentos");
 	int operacion = recibir_operacion(cliente_fd);
 
 
@@ -199,23 +213,25 @@ if (recibir_operacion(cliente_fd) == KERNEL_PAQUETE_TAMANIOS_SEGMENTOS) {
 
 
 //SE ENVIAN LOS DISPOSITIVOS
+		log_info(logger,"enviamos los dispositivos");
 		enviar_mensaje(dispositivosIOAplanado, cliente_fd,
 				KERNEL_MENSAJE_DISPOSITIVOS_IO);
 
 //SE RECIBEN LAS INSTRUCCIONES
-
+		log_info(logger,"esperando instrucciones");
 		if (recibir_operacion(cliente_fd) == KERNEL_PAQUETE_INSTRUCCIONES) {
 			listaInstrucciones = list_create();
 			listaInstrucciones = recibir_paquete_instrucciones(cliente_fd);
 
 //MOSTRAMOS LAS INSTRUCCIONES
 			log_info(logger, "me llegaron las instrucciones");
-			list_iterate(listaInstrucciones, (void*) iterator);
+			list_iterate(listaInstrucciones, (void*) iteratorMostrarInstrucciones);
 
 //METEMOS LAS INSTRUCCIONES EN EL PCB
 
 			PCB->instrucciones = list_create();
 			PCB->instrucciones = listaInstrucciones;
+			log_info(logger,"metemos instrucciones en el pcb");
 
 // CONFIRMAMOS RECEPCION DE INSTRUCCIONES
 			enviar_mensaje("segmentos e instrucciones recibidos pibe", cliente_fd,KERNEL_MENSAJE_CONFIRMACION_RECEPCION_INSTRUCCIONES_SEGMENTOS);
@@ -243,6 +259,7 @@ if (recibir_operacion(cliente_fd) == KERNEL_PAQUETE_TAMANIOS_SEGMENTOS) {
 
 
 //ENVIAMOS UN ENTERO PARA QUE SE IMPRIMA POR PANTALLA
+	log_info(logger,"enviamos un entero a la consola");
 	enviar_entero(10, cliente_fd, KERNEL_PAQUETE_VALOR_A_IMPRIMIR);
 
 
@@ -255,6 +272,7 @@ if (recibir_operacion(cliente_fd) == KERNEL_PAQUETE_TAMANIOS_SEGMENTOS) {
 	recibir_mensaje(cliente_fd);
 
 //ENVIAMOS UN PEDIDO DE QUE SE INGRESE UN VALOR POR TECLADO
+	log_info(logger,"enviamos un pedido de ingresar un valor por teclado");
 	enviar_mensaje("kernel solicita que se ingrese un valor por teclado",
 			cliente_fd, KERNEL_MENSAJE_PEDIDO_VALOR_POR_TECLADO);
 
@@ -271,10 +289,12 @@ if (recibir_operacion(cliente_fd) == KERNEL_PAQUETE_TAMANIOS_SEGMENTOS) {
 	if (codigo != KERNEL_PAQUETE_VALOR_RECIBIDO_DE_TECLADO) {
 		log_info(logger, "codigo de operacion incorrecto");
 	}
+	log_info(logger,"esperamos el valor ingresado por teclado");
 	recibir_entero(cliente_fd);
 
 
 // FINALIZACION DE CONSOLA
+	log_info(logger,"enviamos un mensaje a consola para que finalice");
 	enviar_mensaje("Finalizar consola", cliente_fd,
 			KERNEL_MENSAJE_FINALIZAR_CONSOLA);
 
@@ -394,6 +414,7 @@ void inicializar_semaforos(){
 
 	pthread_mutex_init(&mutexNew,NULL);
 	pthread_mutex_init(&obtenerProceso,NULL);
+	pthread_mutex_init(&primerPushColaReady,NULL);
 	pthread_mutex_init(&mutexPantalla,NULL);
 	pthread_mutex_init(&mutexTeclado,NULL);
 }

@@ -32,6 +32,11 @@ char** dispositivos_io;
 char** tiempos_io;
 int quantum_rr;
 int identificadores_pcb;
+int conexionCpuInterrupt;
+int conexionCpuDispatch;
+int socketMemoria;
+char* dispositivosIOAplanado;
+
 
 t_pcb* pcbTeclado;
 int registroTeclado;
@@ -56,6 +61,7 @@ sem_t pcbEnNew;
 sem_t cpuDisponible;
 pthread_mutex_t mutexNew;
 pthread_mutex_t obtenerProceso;
+pthread_mutex_t primerPushColaReady;
 pthread_mutex_t mutexPantalla;
 pthread_mutex_t mutexTeclado;
 
@@ -104,11 +110,13 @@ void agregar_a_paquete_kernel_cpu(t_pcb* pcb,int cod_op,int conexionCpu)
 	contadorSegmentos = 0;
 	desplazamiento = 0;
 	paquete = crear_paquete(cod_op);
+
+	controlar_pcb(pcb);
 	list_iterate(pcb->instrucciones, (void*) obtenerTamanioIdentificadores);
 	list_iterate(pcb->tablaSegmentos, (void*) obtenerCantidadDeSegmentos);
 	paquete->buffer->stream = realloc(paquete->buffer->stream, paquete->buffer->size + tamanioTotalIdentificadores +
 										contadorInstrucciones*sizeof(int[2]) + contadorInstrucciones*sizeof(int) +
-											3*sizeof(int)+ sizeof(t_registros) + contadorSegmentos*sizeof(entradaTablaSegmento) + sizeof(int));
+											5*sizeof(int)+ sizeof(t_registros) + contadorSegmentos*sizeof(entradaTablaSegmento) + sizeof(int));
 	memcpy(paquete->buffer->stream + desplazamiento, &(pcb->idProceso), sizeof(int));
 	desplazamiento+=sizeof(int);
 	memcpy(paquete->buffer->stream + desplazamiento, &contadorInstrucciones, sizeof(int));
@@ -121,10 +129,13 @@ void agregar_a_paquete_kernel_cpu(t_pcb* pcb,int cod_op,int conexionCpu)
 	memcpy(paquete->buffer->stream + desplazamiento, &contadorSegmentos, sizeof(int));//ver tema contador
 	desplazamiento+=sizeof(int);
 	list_iterate(pcb->tablaSegmentos, (void*) agregarSegmentosAlPaquete);
+
 	log_info(loggerAux,"cont seg: %d",contadorSegmentos);
-//	memcpy(paquete->buffer->stream + desplazamiento, &(pcb->socket_cliente), sizeof(int));
-//	desplazamiento+=sizeof(int);
+	memcpy(paquete->buffer->stream + desplazamiento, &(pcb->socket), sizeof(int));
+	desplazamiento+=sizeof(int);
 	memcpy(paquete->buffer->stream + desplazamiento, &(pcb->estado), sizeof(int));
+	desplazamiento+=sizeof(int);
+	memcpy(paquete->buffer->stream + desplazamiento, &(pcb->algoritmoActual), sizeof(int));
 	desplazamiento+=sizeof(int);
 	paquete->buffer->size = desplazamiento;
 
@@ -167,32 +178,39 @@ void agregarSegmentosAlPaquete(entradaTablaSegmento* unSegmento){
 
 
 
-
+/*
 void iterator(instruccion* instruccion){
 	log_info(loggerAux,"%s param1: %d param2: %d", instruccion->identificador, instruccion->parametros[0],instruccion->parametros[1]);
 }
+*/
 
 
 t_list * inicializar_tabla_segmentos(int socket_cliente) {
 	t_list * listaSegmentos = list_create();
 	//recibir con cod_op
 	//poner if igualando cod_op con el codigo de consola
+
 	int codigo = recibir_operacion(socket_cliente);
 	if(codigo == KERNEL_PAQUETE_TAMANIOS_SEGMENTOS){
 		listaSegmentos = recibir_lista_enteros(socket_cliente);
 	}
-
+	log_info(logger,"tamanios de segmentos recibidos");
 	int tamanioDelSegmento = (int) list_get(listaSegmentos,3);
-			log_info(loggerAux,"El tamanio del primer segmento es: %d",tamanioDelSegmento);
+	log_info(loggerAux,"El tamanio del primer segmento es: %d",tamanioDelSegmento);
+
 	t_list * tablaSegmentos = list_create();
 	int i = 0;
-
-	while (i<list_size(listaSegmentos)) {
-		entradaTablaSegmento * elemento;
+	int tamanioLista = list_size(listaSegmentos);
+	while (i<tamanioLista) {
+		entradaTablaSegmento * elemento = malloc(sizeof(entradaTablaSegmento));
 
 		elemento->numeroSegmento = i;
 		elemento->numeroTablaPaginas = 0; // identificador de TP asociado, esto viene de memoria
-		elemento->tamanioSegmento = list_get(listaSegmentos,i); // tamanio del segmento
+
+		int  tamanio =  (int) list_remove(listaSegmentos,0);
+		log_info(logger,"el tamanio es %d",tamanio);
+		elemento->tamanioSegmento = tamanio ;// tamanio del segmento
+
 
 		list_add(tablaSegmentos,elemento);
 
@@ -246,11 +264,13 @@ int get_identificador(){
 void recibir_consola(int * servidor) {
 
 	int servidor_int = *servidor;
-
+	log_info(logger,"se desperto recibir_consola");
 
 	while (1) {
 		pthread_t hilo1;
+
 		log_info(loggerAux,"esperamos una nueva consola");
+
 		int nuevo_cliente = esperar_cliente(servidor_int,"Consola");
 
 		log_info(loggerAux,"recibimos al cliente de socket %d", nuevo_cliente);
@@ -268,19 +288,63 @@ void  atender_consola(int * nuevo_cliente) {
 	t_pcb* PCB = malloc(sizeof(t_pcb));
 	int  nuevo_cliente_int = *nuevo_cliente;
 
-	log_info(loggerAux,"[atender_consola]recibimos las instrucciones del cliente %d!", nuevo_cliente_int);
+
+	log_info(loggerAux,"[atender_consola]recibimos las instrucciones y segmentos del cliente %d!", nuevo_cliente_int);
+
+
+
+	log_info(logger,"[atender_consola]esperando segmentos");
+		int operacion = recibir_operacion(nuevo_cliente_int);
+
+
+
+		if (operacion == KERNEL_PAQUETE_TAMANIOS_SEGMENTOS) {
+
+			PCB->tablaSegmentos = list_create();
+			PCB->tablaSegmentos = inicializar_tabla_segmentos(nuevo_cliente_int); // aca usariamos el recibir_lista_enteros
+
+
+	//SE ENVIAN LOS DISPOSITIVOS
+			log_info(logger,"[atender_consola]enviamos los dispositivos");
+			enviar_mensaje(dispositivosIOAplanado, nuevo_cliente_int,
+					KERNEL_MENSAJE_DISPOSITIVOS_IO);
+
+	//SE RECIBEN LAS INSTRUCCIONES
+			log_info(logger,"[atender_consola]esperando instrucciones");
+			operacion =	recibir_operacion(nuevo_cliente_int);
+			if ( operacion == KERNEL_PAQUETE_INSTRUCCIONES) {
+				listaInstrucciones = list_create();
+				listaInstrucciones = recibir_paquete_instrucciones(nuevo_cliente_int);
+
+	//MOSTRAMOS LAS INSTRUCCIONES
+				log_info(logger, "[atender_consola]me llegaron las instrucciones");
+				list_iterate(listaInstrucciones, (void*) iteratorMostrarInstrucciones);
+
+	//METEMOS LAS INSTRUCCIONES EN EL PCB
+
+				PCB->instrucciones = list_create();
+				PCB->instrucciones = listaInstrucciones;
+				log_info(logger,"[atender_consola]metemos instrucciones en el pcb");
+
+	// CONFIRMAMOS RECEPCION DE INSTRUCCIONES
+				enviar_mensaje("[atender_consola]segmentos e instrucciones recibidos pibe", nuevo_cliente_int,KERNEL_MENSAJE_CONFIRMACION_RECEPCION_INSTRUCCIONES_SEGMENTOS);
+
+			} else {
+				log_info(logger, "[atender_consola]codigo de operacion incorrecto %d", operacion);
+			}
+		} else {
+			log_info(logger, "[atender_consola]codigo de operacion incorrecto %d", operacion);
+		}
+
+
 
 
 	PCB->idProceso = get_identificador();
-
-	PCB->instrucciones = list_create();
-	PCB->instrucciones = recibir_paquete_instrucciones(nuevo_cliente_int);
 	PCB->programCounter = 0;
 	inicializar_registros(PCB->registros);
-	PCB->tablaSegmentos = list_create();
-	PCB->tablaSegmentos = inicializar_tabla_segmentos(nuevo_cliente_int); // aca usariamos el recibir_lista_enteros
 	PCB->socket = nuevo_cliente_int;
 	PCB->estado = NEW;
+	PCB->algoritmoActual = RR;
 
 	log_info(loggerAux,"[atender_consola]inicializamos PCB de id_proceso %d", PCB->idProceso);
 
@@ -289,7 +353,7 @@ void  atender_consola(int * nuevo_cliente) {
 	agregarANew(PCB);
 
 
-	//log_info(logger,"[atender_consola] despertamos a asignar_memoria()");
+	log_info(logger,"[atender_consola] despertamos a asignar_memoria()");
 
 	sem_post(&pcbEnNew);
 }
@@ -309,11 +373,15 @@ void agregarANew(t_pcb* proceso) {
 
 t_pcb* sacarDeNew() {
 
-	pthread_mutex_lock(&mutexNew);
-	t_pcb* proceso = queue_pop(colaNew);
+
+	//pthread_mutex_lock(&mutexNew);
+	t_pcb* proceso = malloc(sizeof(t_pcb));// = malloc(sizeof(t_pcb*));
+	proceso = queue_pop(colaNew);
 	log_info(loggerAux, "[NEW] Se saca el proceso de PID: %d de la cola",
+
 			proceso->idProceso);
-	pthread_mutex_unlock(&mutexNew);
+	log_info(logger,"el tamanio de la cola de new es %d", queue_size(colaNew));
+//	pthread_mutex_unlock(&mutexNew);
 
 	return proceso;
 }
@@ -321,18 +389,52 @@ t_pcb* sacarDeNew() {
 
 
 void asignar_memoria() {
-
+	log_info(logger,"se desperto asignar_memoria por primera vez");
 	while (1) {
 
 		sem_wait(&pcbEnNew);
 		sem_wait(&gradoDeMultiprogramacion);
-		t_pcb* proceso;
+
+		t_pcb* proceso = malloc(sizeof(t_pcb));
 		log_info(loggerAux, "[asignar_memoria] :se desperto ");
 
-		//pthread_mutex_lock(&asignarMemoria); VER SI ESTE MUTEX ES NECESARIO
+
 
 		proceso = sacarDeNew();
 		t_pcb* pcbAux= malloc(sizeof(* pcbAux)); // malloc?
+
+
+		log_info(loggerAux,"llego antes de crear el paquete");
+		t_paquete * paquete = crear_paquete(NRO_TP);
+		log_info(loggerAux,"llego antes de agregar dos enteros al paquete");
+		agregar_a_paquete_unInt(paquete, &(proceso->idProceso), sizeof(int));
+		int tamanioTablaSegmentos = list_size(proceso->tablaSegmentos);
+		agregar_a_paquete_unInt(paquete, &tamanioTablaSegmentos, sizeof(int));
+		log_info(loggerAux,"llego antes de enviar el paquete");
+		enviar_paquete(paquete,socketMemoria);
+
+		int cod_op = recibir_operacion(socketMemoria);
+		int numTablaPag = 0;
+
+		if(cod_op == MEMORIA_A_KERNEL_NUMERO_TABLA_PAGINAS) {
+			numTablaPag = recibir_entero(socketMemoria);
+		}
+		else {
+			log_info(loggerAux,"operacion de memoria invalida");
+		}
+
+		log_info(loggerAux,"llego antes del for");
+		for(int i=0;i<list_size(proceso->tablaSegmentos);i++ ){
+					entradaTablaSegmento * entrada = malloc(sizeof(entradaTablaSegmento));
+					entrada = list_get(proceso->tablaSegmentos,i); //ver que devuelve
+					entrada->numeroTablaPaginas = numTablaPag+i;
+					list_replace(proceso->tablaSegmentos,i,entrada);
+					//log_info(loggerAux, list_get());
+				}
+
+		log_info(loggerAux,"llego antes del push a cola de ready");
+			pthread_mutex_lock(&primerPushColaReady);
+		
 
 		if (!strcmp(algoritmoPlanificacion, "FIFO")) {
 			queue_push(colaReadyFIFO,proceso);
@@ -397,9 +499,9 @@ void asignar_memoria() {
 
 		sem_post(&pcbEnReady);
 
-		//para que sea un switch habria que tener un conversor del string que leemos al enum de algoritmos que tenemos
 
-		//pthread_mutex_unlock(&asignarMemoria);
+		
+
 
 		log_info(loggerAux,"[asignar_memoria]: desde asignar_memoria despertamos a readyAExe");
 	}
@@ -408,40 +510,45 @@ void asignar_memoria() {
 
 
 void readyAExe() {
-
+	log_info(logger,"se desperto readyAExe por primera vez");
 	while (1) {
 
 		sem_wait(&pcbEnReady);
 		sem_wait(&cpuDisponible);
 
-	//	log_info(logger, "[readyAExe]: .........se despierta readyAExe ");
-	//	log_info(logger, "[readyAExe]: a partir de ahora, CPU NO DISPONIBLE! ");
-
+		log_info(logger, "[readyAExe]: .........se despierta readyAExe ");
+		log_info(logger, "[readyAExe]: a partir de ahora, CPU NO DISPONIBLE! ");
+		t_pcb * procesoAEjecutar = malloc(sizeof(t_pcb));
 		pthread_mutex_lock(&obtenerProceso);
-		t_pcb * procesoAEjecutar = obtenerSiguienteDeReady();
+		procesoAEjecutar = obtenerSiguienteDeReady();
 		pthread_mutex_unlock(&obtenerProceso);
 
 		log_info(loggerAux,
 			"[readyAExe]: Desde readyAExe mandamos al proceso de pid %d a ejecutar  ",
 			procesoAEjecutar->idProceso);
 
-		ejecutar(procesoAEjecutar);
+			procesoAEjecutar->estado = EXEC;
+			agregar_a_paquete_kernel_cpu(procesoAEjecutar,KERNEL_PCB_A_CPU,conexionCpuDispatch);
+			//free(procesoAEjecutar);
+			log_info(logger, "[readyAExe]: enviamos el proceso a cpu");
+
 
 		log_info(logger,"PID: <%d> - Estado Anterior: <READY> - Estado Actual: <EXE>", procesoAEjecutar->idProceso);
 
 		if(algoritmoPlanificacion == "RR" || (algoritmoPlanificacion == "Feedback" && procesoAEjecutar->algoritmoActual == RR)){
+
 			int hiloQuantum = pthread_create(&hiloQuantumRR, NULL,(void*) controlar_quantum,NULL);
-			pthread_detach(hiloQuantum);
+			pthread_detach(hiloQuantumRR);
 		}
 
-	//	log_info(logger,"[readyAExe]: finaliza");
+		log_info(logger,"[readyAExe]: finaliza");
 	}
 }
 
 
 t_pcb* obtenerSiguienteDeReady() {
 
-t_pcb * procesoPlanificado;
+t_pcb * procesoPlanificado = malloc(sizeof(t_pcb));
 
 	if (!strcmp(algoritmoPlanificacion, "FIFO")) {
 		procesoPlanificado = obtenerSiguienteFIFO();
@@ -469,7 +576,8 @@ t_pcb * procesoPlanificado;
 
 t_pcb* obtenerSiguienteFIFO() {
 
-	t_pcb* procesoPlanificado = queue_pop(colaReadyFIFO);
+	t_pcb* procesoPlanificado = malloc(sizeof(t_pcb));
+	procesoPlanificado = queue_pop(colaReadyFIFO);
 
 	log_info(loggerAux, "[obtenerSiguienteFIFO]: PROCESOS EN READY FIFO: %d \n", queue_size(colaReadyFIFO));
 
@@ -478,12 +586,16 @@ t_pcb* obtenerSiguienteFIFO() {
 
 t_pcb* obtenerSiguienteRR() {
 
-	t_pcb* procesoPlanificado = queue_pop(colaReadyRR);
+
+
+	t_pcb* procesoPlanificado = malloc(sizeof(t_pcb));
+	procesoPlanificado = queue_pop(colaReadyRR);
 
 	log_info(loggerAux, "[obtenerSiguienteFIFO]: PROCESOS EN READY RR: %d \n", queue_size(colaReadyRR));
 
 	return procesoPlanificado;
 }
+
 
 void ejecutar(t_pcb* proceso) {
 
@@ -502,14 +614,18 @@ void ejecutar(t_pcb* proceso) {
 
 }
 
-void atender_interrupcion_de_ejecucion() {
 
+void atender_interrupcion_de_ejecucion() {
+	log_info(logger,"se desperto atender_interrupcion_de_ejecucion");
 while (1) {
-	int cod_op = recibir_operacion(conexionCpu); //conexionCpu es el socket interrupt
+
+	int cod_op = recibir_operacion(conexionCpuDispatch); //conexionCpu es el socket interrupt
 
 	switch (cod_op) {
+
 	case CPU_PCB_A_KERNEL_POR_IO:
-		t_pcb * proceso = recibir_pcb(conexionCpu);
+		t_pcb * proceso = recibir_pcb(conexionCpuDispatch);
+
 
 		if(!strcmp(algoritmoPlanificacion, "RR") || (!strcmp(algoritmoPlanificacion, "Feedback") && proceso->algoritmoActual == RR)){
 			pthread_cancel(hiloQuantumRR);
@@ -517,10 +633,12 @@ while (1) {
 
 		char * dispositivo;
 
-		cod_op = recibir_operacion(conexionCpu);
+
+		cod_op = recibir_operacion(conexionCpuDispatch);
 		if(cod_op == CPU_DISPOSITIVO_A_KERNEL){
-			dispositivo = recibir_mensaje(conexionCpu);
+			dispositivo = recibir_mensaje(conexionCpuDispatch);
 		}
+
 
 
 		bool comparar_nombre_dispositivo( t_elem_disp * elemento){
@@ -531,12 +649,14 @@ while (1) {
 
 		queue_push(elementoLista->cola_procesos,proceso);
 
-		cod_op = recibir_operacion(conexionCpu);
+
+		cod_op = recibir_operacion(conexionCpuDispatch);
 		int unidadesTrabajo = 0;
 
 		if(cod_op == CPU_A_KERNEL_UNIDADES_DE_TRABAJO_IO){
-			unidadesTrabajo = recibir_entero(conexionCpu);
+			unidadesTrabajo = recibir_entero(conexionCpuDispatch);
 		}
+
 
 		queue_push(elementoLista->cola_UTs,&unidadesTrabajo);
 
@@ -552,20 +672,21 @@ while (1) {
 
 
 		t_info_teclado * aMandarTeclado = malloc(sizeof(*aMandarTeclado));
-		aMandarTeclado->pcb = recibir_pcb(conexionCpu);
+		aMandarTeclado->pcb = recibir_pcb(conexionCpuDispatch);
 
 
 		if(!strcmp(algoritmoPlanificacion, "RR") || (!strcmp(algoritmoPlanificacion, "Feedback") && aMandarTeclado->pcb->algoritmoActual == RR)){
+
 			pthread_cancel(hiloQuantumRR);
 		}
 		cod_op = recibir_operacion(conexionCpu);
 
+
 		if(cod_op == CPU_A_KERNEL_INGRESAR_VALOR_POR_TECLADO){
-			aMandarTeclado->registro =recibir_entero(conexionCpu);
+			aMandarTeclado->registro =recibir_entero(conexionCpuDispatch);
 		}
 
-		//pthread_mutex_lock(&mutexTeclado);
-		//pthread_mutex_unlock(&mutexTeclado);
+		
 
 		log_info(logger, "PID: <%d> - Bloqueado por: <TECLADO>", proceso->idProceso);
 
@@ -586,17 +707,19 @@ while (1) {
 		t_info_pantalla * aMandarPantalla = malloc(sizeof(*aMandarPantalla));
 
 	//	pthread_mutex_lock(&mutexPantalla);
-		aMandarPantalla->pcb = recibir_pcb(conexionCpu);
+		aMandarPantalla->pcb = recibir_pcb(conexionCpuDispatch);
 
 		if(!strcmp(algoritmoPlanificacion, "RR") || (!strcmp(algoritmoPlanificacion,"Feedback") && aMandarPantalla->pcb->algoritmoActual == RR)){
 						pthread_cancel(hiloQuantumRR);
 					}
 
+
 		cod_op = recibir_operacion(conexionCpu);
 
 		if(cod_op == CPU_A_KERNEL_MOSTRAR_REGISTRO_POR_PANTALLA){
-			aMandarPantalla->registro = recibir_entero(conexionCpu);
+			aMandarPantalla->registro = recibir_entero(conexionCpuDispatch);
 		}
+
 
 	//	pthread_mutex_unlock(&mutexPantalla);
 
@@ -610,8 +733,10 @@ while (1) {
 
 		break;
 
+
 	case CPU_A_KERNEL_PCB_POR_DESALOJO:
-		t_pcb* pcb = recibir_pcb(conexionCpu);
+		t_pcb* pcb = recibir_pcb(conexionCpuDispatch);
+
 
 		if (!strcmp(algoritmoPlanificacion, "RR")) {
 			queue_push(colaReadyRR,pcb);
@@ -633,15 +758,15 @@ while (1) {
 
 	case CPU_A_KERNEL_PCB_PAGE_FAULT:
 
-		t_pcb* pcbPF = recibir_pcb(conexionCpu);
+		t_pcb* pcbPF = recibir_pcb(conexionCpuDispatch);
 
-		int operacion = recibir_operacion(conexionCpu); //ver si es dispatch o interrupt
+		int operacion = recibir_operacion(conexionCpuInterrupt); //ver si es dispatch o interrupt
 		if (operacion != CPU_A_KERNEL_PAGINA_PF){
 			log_info(loggerAux, "codigo de operacion incorrecto");
 		}
 
 		t_list * listaTPyNroPag = list_create();
-		listaTPyNroPag = recibir_lista_enteros(conexionCpu);
+		listaTPyNroPag = recibir_lista_enteros(conexionCpuInterrupt);
 
 		t_info_pf * aMandarPF = malloc(sizeof(*aMandarPF));
 
@@ -662,7 +787,7 @@ while (1) {
 	case TERMINAR_PROCESO:
 		log_info(loggerAux,"[atender_interrupcion_de_ejecucion]: recibimos operacion EXIT");
 
-		t_pcb* pcbATerminar = recibir_pcb(conexionCpu);
+		t_pcb* pcbATerminar = recibir_pcb(conexionCpuDispatch);
 
 		if(algoritmoPlanificacion == "RR" || (algoritmoPlanificacion == "Feedback" && pcbATerminar->algoritmoActual == RR)){
 			pthread_cancel(hiloQuantumRR);
@@ -815,15 +940,26 @@ void controlar_quantum(){
 }
 
 void atender_IO_generico(t_elem_disp* elemento){
+	log_info(logger,"se desperto atender_IO_generico del dispositivo <%s> por primera vez ", elemento->dispositivo);
+
 	while(1) {
 		sem_wait(&elemento->semaforo);
+		log_info(logger," [atender_IO_generico del dispositivo <%s>] : se desperto ", elemento->dispositivo);
 
 		int * unidades_trabajo = queue_pop(elemento->cola_UTs);
 		int tiempo_dispositivo = elemento->tiempo;
+		log_info(logger," [atender_IO_generico del dispositivo <%s>] : el tiempo de dispositivo es %d y las unidades de trabajo obtenidas de la cola son %d ", elemento->dispositivo, tiempo_dispositivo,*unidades_trabajo);
+		log_info(logger," [atender_IO_generico del dispositivo <%s>] : simulando tiempo de bloqueo  ", elemento->dispositivo);
 
 		usleep(tiempo_dispositivo * 1000 * (*unidades_trabajo));
 
+
+
 		t_pcb * proceso = queue_pop(elemento->cola_procesos);
+
+		log_info(logger," [atender_IO_generico del dispositivo <%s>] : obtuvimos el siguiente PCB  ", elemento->dispositivo);
+
+		controlar_pcb(proceso);
 
 		if (!strcmp(algoritmoPlanificacion, "FIFO")) {
 			queue_push(colaReadyFIFO,proceso);

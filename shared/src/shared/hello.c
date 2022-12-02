@@ -252,6 +252,7 @@ void liberar_conexion(int socket_cliente)
 }
 
 char** recibirListaDispositivos(int conexion){
+	log_info(logger,"llego hasta recibir lista dispositivos");
 	int cod_op = recibir_operacion(conexion);
 	char** listaDispositivos;
 
@@ -261,8 +262,70 @@ char** recibirListaDispositivos(int conexion){
 		log_info(logger,"Primer dispositivo %s",listaDispositivos[0]);
 
 	}
+	else {
+		log_info(logger,"codigo de operacion incorrecto");
+	}
 
 	return listaDispositivos;
 }
 
+void iteratorMostrarInstrucciones(instruccion* instruccion){
+	log_info(logger,"%s param1: %d param2: %d", instruccion->identificador, instruccion->parametros[0],instruccion->parametros[1]);
+}
 
+void controlar_pcb(t_pcb * PCB){
+	log_info(logger,"------------------------DATOS DEL PCB----------------------------");
+	log_info(logger,"pid: %d",PCB->idProceso);
+	log_info(logger,"Instrucciones:");
+	list_iterate(PCB->instrucciones, (void*) iteratorMostrarInstrucciones);
+	log_info(logger,"program counter en posicion: %d",PCB->programCounter);
+	t_registros  registro = PCB->registros;
+	log_info(logger,"registro AX: %d", registro.AX);
+	log_info(logger,"registro BX: %d", registro.BX);
+	log_info(logger,"registro CX: %d", registro.CX);
+	log_info(logger,"registro DX: %d", registro.DX);
+
+	for(int i=0;i<list_size(PCB->tablaSegmentos);i++) {
+		entradaTablaSegmento * elemento = list_get(PCB->tablaSegmentos,i);
+		log_info(logger,"posicion %d de la tabla de segmentos |NUMERO DEL SEGMENTO:%d |TAMANIO DEL SEGMENTO: %d |NUMERO DE TABLA DE PAGINAS: %d", i,elemento->numeroSegmento,elemento->tamanioSegmento, elemento->numeroTablaPaginas);
+	}
+	log_info(logger,"numero de socket/consola: %d", PCB->socket);
+
+
+	switch(PCB->estado){
+	case NEW:
+		log_info(logger,"estado: NEW");
+		break;
+	case READY:
+		log_info(logger,"estado: READY");
+		break;
+	case BLOCKED:
+		log_info(logger,"estado: BLOCKED");
+		break;
+	case EXEC:
+		log_info(logger,"estado: EXEC");
+		break;
+	case TERMINATED:
+		log_info(logger,"estado: TERMINATED");
+		break;
+	default:
+		log_info(logger,"estado invalido");
+		break;
+	}
+
+	switch(PCB->algoritmoActual){
+		case FIFO:
+			log_info(logger,"algoritmo: FIFO");
+			break;
+		case RR:
+			log_info(logger,"algoritmo: ROUND ROBIN");
+			break;
+		default:
+			log_info(logger,"algoritmo invalido");
+			break;
+
+		}
+
+	log_info(logger,"------------------------FIN DATOS DEL PCB----------------------------");
+
+}
