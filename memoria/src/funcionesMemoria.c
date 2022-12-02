@@ -35,25 +35,24 @@ int contNroTablaDePaginas = 0;
 int posicionActualDeSwap = 0;
 
 //------------------------- DEFINICION DE FUNCIONES
-int chequeoCantidadArchivos(int argc){
+int chequeoCantidadArchivos(int argc) {
 	if(argc < 2) {
-		    log_error(loggerAux,"Falta un parametro");
+		    log_error(loggerAux, "Falta un parametro");
 		    return EXIT_FAILURE;
 		}
 	return EXIT_SUCCESS;
 }
 
-void crearConfiguraciones(char* unaConfig){
+void crearConfiguraciones(char* unaConfig) {
 	t_config* config = config_create(unaConfig);
 
-	if(config == NULL){
+	if(config == NULL) {
 		printf("Error leyendo archivo de configuración. \n");
 	}
 
 	tamanioDeMemoria = config_get_int_value(config, "TAM_MEMORIA");
 	tamanioDePagina = config_get_int_value(config, "TAM_PAGINA");
 	// Agregar "IP_MEMORIA" al archivo de config
-	ipMemoria = config_get_string_value(config, "IP_MEMORIA");
 	puertoMemoria = config_get_string_value(config, "PUERTO_ESCUCHA");
 
 	entradasPorTabla = config_get_int_value(config, "ENTRADAS_POR_TABLA");
@@ -63,15 +62,15 @@ void crearConfiguraciones(char* unaConfig){
 	retardoSwap = config_get_int_value(config, "RETARDO_SWAP");
 	pathSwap = config_get_string_value(config, "PATH_SWAP");
 	tamanioSwap = config_get_int_value(config, "TAMANIO_SWAP");
-
 }
 
 void inicializarMemoria() {
 	memoria = malloc(tamanioDeMemoria); // inicializo el espacio de usuario en memoria
 }
+
 //Mandar el cont antes de inicializar estructuras a kernel
 void inicializarEstructuras(int pid) {
-	for(int i = 0; i < cantidadDeSegmentos; i++)  {
+	for(int i = 0; i < cantidadDeSegmentos; i++) {
 		tablaDePaginas* unaTablaDePaginas = malloc(sizeof(tablaDePaginas));
 		unaTablaDePaginas->pid = pid;
 		unaTablaDePaginas->entradas = list_create();
@@ -160,11 +159,12 @@ int algoritmoClock(t_list* listaDeEntradasEnMemoria, entradaTablaPaginas* entrad
 
 	log_info(loggerAux, "No hay ninguna pagina con bit de uso en 0");
 	log_info(loggerAux, "Por algoritmo reemplazo todos los bit de uso a 0 y busco de nuevo");
+
 	posicionDelPuntero = posicionDePunteroDelAlgoritmo(1);
 	reemplazarTodosLosUsoACero(listaDeEntradasEnMemoria);
 
 	for(int i = 0; i < list_size(listaDeEntradasEnMemoria); i++) {
-		if(i==0) {
+		if(i == 0) {
 			posicionDelPuntero = posicionDePunteroDelAlgoritmo(0);
 			log_info(loggerAux,"La posicion del puntero en la lista de marcos es: %d", posicionDelPuntero);
 		} else {
@@ -172,7 +172,7 @@ int algoritmoClock(t_list* listaDeEntradasEnMemoria, entradaTablaPaginas* entrad
 			log_info(loggerAux,"La posicion del puntero en la lista de marcos es: %d", posicionDelPuntero);
 		}
 
-		unaEntrada = list_get(listaDeEntradasEnMemoria,posicionDelPuntero);
+		unaEntrada = list_get(listaDeEntradasEnMemoria, posicionDelPuntero);
 
 		if(unaEntrada->uso == 0) {
 			int numeroDeMarcoAReemplazar = unaEntrada->numeroMarco;
@@ -204,7 +204,7 @@ int algoritmoClockM (t_list* listaDeEntradasEnMemoria,entradaTablaPaginas* entra
 	entradaTablaPaginas* unaEntrada = malloc(sizeof(entradaTablaPaginas));
 
 	for(int i = 0; i < list_size(listaDeEntradasEnMemoria); i++) {
-		if(i==0) {
+		if(i == 0) {
 			posicionDelPuntero = posicionDePunteroDelAlgoritmo(0);
 			log_info(loggerAux, "La posicion del puntero en la lista de marcos es: %d", posicionDelPuntero);
 		} else {
@@ -220,7 +220,7 @@ int algoritmoClockM (t_list* listaDeEntradasEnMemoria,entradaTablaPaginas* entra
 			posicionDelPuntero = posicionDePunteroDelAlgoritmo(1);//Si reemplaza se mueve al siguiente
 
 			log_info(loggerAux, "PF, la posicion del puntero en la lista de marcos queda en: %d", posicionDelPuntero);
-			log_info(logger,"REEMPLAZO - PID: <%d> - Marco: <%d> - Page Out: <%d>|<%d> - Page In: <%d>|<%d>",
+			log_info(logger, "REEMPLAZO - PID: <%d> - Marco: <%d> - Page Out: <%d>|<%d> - Page In: <%d>|<%d>",
 						pidActual, numeroDeMarcoAReemplazar, unaEntrada->numeroDeSegmento, unaEntrada->numeroDeEntrada,
 						entradaACargar->numeroDeSegmento, entradaACargar->numeroDeEntrada);
 
@@ -228,8 +228,8 @@ int algoritmoClockM (t_list* listaDeEntradasEnMemoria,entradaTablaPaginas* entra
 		}
 	}
 
-	log_info(loggerAux,"No hay ninguna pagina con bit de uso y modificado en 0");
-	log_info(loggerAux,"Busco con bit de uso en 0 y modificado en 1");
+	log_info(loggerAux, "No hay ninguna pagina con bit de uso y modificado en 0");
+	log_info(loggerAux, "Busco con bit de uso en 0 y modificado en 1");
 
 	posicionDelPuntero = posicionDePunteroDelAlgoritmo(1);
 
@@ -455,7 +455,6 @@ void cargarPagina(entradaTablaPaginas* unaEntrada) {
 					leerDeSwap(unaEntrada, unaEntrada->numeroMarco);
 					unaEntrada->modificado = 0;
 				}
-
 		} else if(strcmp(algoritmoDeReemplazo, "CLOCK-M") == 0) {
 			int marcoAAsignar = algoritmoClockM(listaDeEntradasEnMemoria, unaEntrada);
 			modificarPaginaACargar(unaEntrada, marcoAAsignar);

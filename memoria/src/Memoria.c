@@ -5,17 +5,14 @@ int memoria_fd;
 int main(int argc, char *argv[]) {
 
 	//OBLIGATORIO
-	funcionMain(argc,argv);
+	funcionMain(argc, argv);
 	//OBLIGATORIO
 
-	/* Comentario interno:
-	 * Con el while ya estamos constantemente escuchando a la CPU.
-	 * Faltaria estar escuchando al kernel.
-	 */
-	memoria_fd = iniciar_servidor(ipMemoria, puertoMemoria, "MEMORIA");
+	memoria_fd = iniciar_servidor(IP_MEMORIA, puertoMemoria, "MEMORIA");
 	while(1) {
 		// Escucho a cliente Kernel
 		server_escuchar(loggerAux, "MEMORIA", "KERNEL", memoria_fd);
+
 		// Escucho a cliente CPU
 		server_escuchar(loggerAux, "MEMORIA", "CPU", memoria_fd);
 	}
@@ -25,7 +22,7 @@ int main(int argc, char *argv[]) {
 	cantidadDeSegmentos = 4;
 	inicializarEstructuras(0);
 
-	log_info(loggerAux,"Tamaño de la lista tabla de paginas: %d",list_size(listaTablaDePaginas));
+	log_info(loggerAux, "Tamaño de la lista tabla de paginas: %d", list_size(listaTablaDePaginas));
 
 	tablaDePaginas* unaTablaDePaginas = malloc(sizeof(tablaDePaginas));
 	unaTablaDePaginas = list_get(listaTablaDePaginas,0);
@@ -77,8 +74,7 @@ int main(int argc, char *argv[]) {
 	log_info(loggerAux,"Boca");
 }
 
-
-void funcionMain(int argc, char *argv[]){
+void funcionMain(int argc, char *argv[]) {
 	//Obligatorios
 	logger = log_create("memoria.log", "MEMORIA", 1, LOG_LEVEL_INFO); //OBLIGATORIOS
 	loggerAux = log_create("memoriaAux.log", "MEMORIA", 1, LOG_LEVEL_INFO); //AUX
@@ -93,7 +89,7 @@ void funcionMain(int argc, char *argv[]){
 	inicializarMarcos();
 	//conexionCpu();
 	//Obligatorios
-	log_info(loggerAux,"Fin de main obligatorio");
+	log_info(loggerAux, "Fin de main obligatorio");
 }
 
 
