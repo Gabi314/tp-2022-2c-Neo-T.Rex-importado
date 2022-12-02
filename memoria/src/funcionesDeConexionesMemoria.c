@@ -201,11 +201,10 @@ int marcoSegunIndice(int numeroTablaDePaginas, int numeroDePagina) {
 
 		if(unaEntradaTablaDePaginas->presencia == 1) {
 			return unaEntradaTablaDePaginas->numeroMarco;
-		} else {
-			return -1;
-	//ver tema de si es una pagina con info para swap
 		}
 	}
+
+	return -1;
 }
 
 void chequeoDeIndice(int indice) {
