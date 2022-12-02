@@ -87,7 +87,7 @@ extern int socketServidorKernel;
 
 t_list* recibir_paquete_instrucciones(int);
 
-t_list * inicializar_tabla_segmentos(int);
+t_list * inicializar_tabla_segmentos(int,int);
 void inicializar_registros(t_registros registros);
 
 void inicializar_configuraciones(char* unaConfig);

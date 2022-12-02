@@ -33,11 +33,18 @@ int main(int argc, char *argv[]) {
 
 	inicializar_configuraciones(argv[1]);
 
+	// armamos el string de dispositivos que enviamos a consola
+	dispositivosIOAplanado = string_new();
+	aplanarDispositivosIO(dispositivos_io);
+	log_info(logger,"DISPOSITIVOS: %s",dispositivosIOAplanado);
+
 	socketMemoria = crear_conexion(ipMemoria, puertoMemoria);
 	conexionCpuDispatch = crear_conexion(ipCpu, puertoCpuDispatch);
+
+	enviar_mensaje(dispositivosIOAplanado, conexionCpuDispatch,
+						KERNEL_MENSAJE_DISPOSITIVOS_IO);
 	conexionCpuInterrupt = crear_conexion(ipCpu, puertoCpuInterrupt);
 	// Inicializaciones de estructuras de datos
-
 
 	log_info(logger,"configuraciones inicializadas");
 	inicializar_listas_y_colas();
@@ -54,10 +61,7 @@ int main(int argc, char *argv[]) {
 				}
 
 
-	// armamos el string de dispositivos que enviamos a consola
-	dispositivosIOAplanado = string_new();
-	aplanarDispositivosIO(dispositivos_io);
-	log_info(logger,"DISPOSITIVOS: %s",dispositivosIOAplanado);
+
 
 // ------------------------------------------------- PRUEBAS DE GABI DE CONEXIONES -----------------------------------------------------
 /*

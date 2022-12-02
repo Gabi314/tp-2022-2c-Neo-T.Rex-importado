@@ -17,71 +17,19 @@ int main(int argc, char *argv[]) {
 
 	tlb = inicializarTLB();
 
-	unPcb = malloc(sizeof(t_pcb));
+	int server_dispatch = iniciar_servidor(IP_CPU,puertoDeEscuchaDispatch,"Kernel");
+	log_info(logger,"Cpu lista para recibir a kernel");
+	clienteKernel = esperar_cliente(server_dispatch,"Kernel");
 
-	unPcb->idProceso = 0; //PARA HACER PRUEBAS SIN KERNEL
+	listaDispositivos = recibirListaDispositivos(clienteKernel);//verificar que los reciba bien
 
-	instruccion* instruccion1 = malloc(sizeof(instruccion));
-	instruccion1->identificador = "SET";
-	instruccion1->parametros[0]=AX;
-	instruccion1->parametros[1]=10;
-
-	instruccion* instruccion2 = malloc(sizeof(instruccion));
-	instruccion2->identificador = "SET";
-	instruccion2->parametros[0]=BX;
-	instruccion2->parametros[1]=12;
-
-	instruccion* instruccion3 = malloc(sizeof(instruccion));
-	instruccion3->identificador = "ADD";
-	instruccion3->parametros[0]=AX;
-	instruccion3->parametros[1]=BX;
-
-	instruccion* instruccion4 = malloc(sizeof(instruccion));
-	instruccion4->identificador = "MOV_OUT";
-	instruccion4->parametros[0] = 0;
-	instruccion4->parametros[1]= AX;
-
-	instruccion* instruccion5 = malloc(sizeof(instruccion));
-	instruccion5->identificador = "MOV_IN";
-	instruccion5->parametros[0] = CX;
-	instruccion5->parametros[1]= 0;
-
-	instruccion* instruccion6 = malloc(sizeof(instruccion));
-	instruccion6->identificador = "EXIT";
-
-	unPcb->instrucciones = list_create();
-
-	list_add(unPcb->instrucciones,instruccion1);
-	list_add(unPcb->instrucciones,instruccion2);
-	list_add(unPcb->instrucciones,instruccion3);
-	list_add(unPcb->instrucciones,instruccion4);
-	list_add(unPcb->instrucciones,instruccion5);
-	list_add(unPcb->instrucciones,instruccion6);
-
-	unPcb->programCounter = 0;
-	unPcb->registros.AX = 0;
-	unPcb->registros.BX = 0;
-	unPcb->registros.CX = 0;
-	unPcb->registros.DX = 0;
-
-	entradaTablaSegmento* unaEntradaTS = malloc(sizeof(entradaTablaSegmento));
-
-	unaEntradaTS->numeroSegmento = 0;
-	unaEntradaTS->numeroTablaPaginas = 0;
-	unaEntradaTS->tamanioSegmento = 64;
-
-	unPcb->tablaSegmentos = list_create();
-
-	list_add(unPcb->tablaSegmentos,unaEntradaTS);
-
+	int server_interrupt = iniciar_servidor(IP_CPU, puertoDeEscuchaInterrupt,"Kernel");
+	clienteKernelInterrupt = esperar_cliente(server_interrupt, "Kernel por interrupt");
 
 	pthread_t hiloRecibirPcb;
 
-
 	pthread_create(&hiloRecibirPcb, NULL, (void*) conexionConKernelDispatch, NULL);
 	pthread_detach(hiloRecibirPcb);
-
-	listaDispositivos = recibirListaDispositivos(clienteKernel);//verificar que los reciba bien
 
 	conexionConMemoria();
 
@@ -110,4 +58,62 @@ void ejecucion(void* aa){
 	}
 
 }
+
+
+//	unPcb = malloc(sizeof(t_pcb));
+//
+//	unPcb->idProceso = 0; //PARA HACER PRUEBAS SIN KERNEL
+//
+//	instruccion* instruccion1 = malloc(sizeof(instruccion));
+//	instruccion1->identificador = "SET";
+//	instruccion1->parametros[0]=AX;
+//	instruccion1->parametros[1]=10;
+//
+//	instruccion* instruccion2 = malloc(sizeof(instruccion));
+//	instruccion2->identificador = "SET";
+//	instruccion2->parametros[0]=BX;
+//	instruccion2->parametros[1]=12;
+//
+//	instruccion* instruccion3 = malloc(sizeof(instruccion));
+//	instruccion3->identificador = "ADD";
+//	instruccion3->parametros[0]=AX;
+//	instruccion3->parametros[1]=BX;
+//
+//	instruccion* instruccion4 = malloc(sizeof(instruccion));
+//	instruccion4->identificador = "MOV_OUT";
+//	instruccion4->parametros[0] = 0;
+//	instruccion4->parametros[1]= AX;
+//
+//	instruccion* instruccion5 = malloc(sizeof(instruccion));
+//	instruccion5->identificador = "MOV_IN";
+//	instruccion5->parametros[0] = CX;
+//	instruccion5->parametros[1]= 0;
+//
+//	instruccion* instruccion6 = malloc(sizeof(instruccion));
+//	instruccion6->identificador = "EXIT";
+//
+//	unPcb->instrucciones = list_create();
+//
+//	list_add(unPcb->instrucciones,instruccion1);
+//	list_add(unPcb->instrucciones,instruccion2);
+//	list_add(unPcb->instrucciones,instruccion3);
+//	list_add(unPcb->instrucciones,instruccion4);
+//	list_add(unPcb->instrucciones,instruccion5);
+//	list_add(unPcb->instrucciones,instruccion6);
+//
+//	unPcb->programCounter = 0;
+//	unPcb->registros.AX = 0;
+//	unPcb->registros.BX = 0;
+//	unPcb->registros.CX = 0;
+//	unPcb->registros.DX = 0;
+//
+//	entradaTablaSegmento* unaEntradaTS = malloc(sizeof(entradaTablaSegmento));
+//
+//	unaEntradaTS->numeroSegmento = 0;
+//	unaEntradaTS->numeroTablaPaginas = 0;
+//	unaEntradaTS->tamanioSegmento = 64;
+//
+//	unPcb->tablaSegmentos = list_create();
+//
+//	list_add(unPcb->tablaSegmentos,unaEntradaTS);
 

@@ -185,17 +185,19 @@ void iterator(instruccion* instruccion){
 */
 
 
-t_list * inicializar_tabla_segmentos(int socket_cliente) {
+t_list * inicializar_tabla_segmentos(int socket_cliente,int codigo) {
 	t_list * listaSegmentos = list_create();
 	//recibir con cod_op
 	//poner if igualando cod_op con el codigo de consola
 
-	int codigo = recibir_operacion(socket_cliente);
+	//int codigo = recibir_operacion(socket_cliente);
 	if(codigo == KERNEL_PAQUETE_TAMANIOS_SEGMENTOS){
 		listaSegmentos = recibir_lista_enteros(socket_cliente);
+	}else{
+		log_info(logger,"No se recibio la lista correctamente");
 	}
 	log_info(logger,"tamanios de segmentos recibidos");
-	int tamanioDelSegmento = (int) list_get(listaSegmentos,3);
+	int tamanioDelSegmento = (int) list_get(listaSegmentos,0);
 	log_info(loggerAux,"El tamanio del primer segmento es: %d",tamanioDelSegmento);
 
 	t_list * tablaSegmentos = list_create();
@@ -301,7 +303,7 @@ void  atender_consola(int * nuevo_cliente) {
 		if (operacion == KERNEL_PAQUETE_TAMANIOS_SEGMENTOS) {
 
 			PCB->tablaSegmentos = list_create();
-			PCB->tablaSegmentos = inicializar_tabla_segmentos(nuevo_cliente_int); // aca usariamos el recibir_lista_enteros
+			PCB->tablaSegmentos = inicializar_tabla_segmentos(nuevo_cliente_int,operacion); // aca usariamos el recibir_lista_enteros
 
 
 	//SE ENVIAN LOS DISPOSITIVOS
@@ -332,12 +334,9 @@ void  atender_consola(int * nuevo_cliente) {
 			} else {
 				log_info(logger, "[atender_consola]codigo de operacion incorrecto %d", operacion);
 			}
-		} else {
+		}else{
 			log_info(logger, "[atender_consola]codigo de operacion incorrecto %d", operacion);
 		}
-
-
-
 
 	PCB->idProceso = get_identificador();
 	PCB->programCounter = 0;

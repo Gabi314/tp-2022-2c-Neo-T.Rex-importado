@@ -20,12 +20,6 @@ t_paquete* paquete;
 int conexionConKernelDispatch(void){//un hilo
 	static pthread_mutex_t mutexMensajes;// usar
 
-	int server_dispatch = iniciar_servidor(IP_CPU,puertoDeEscuchaDispatch,"Kernel");
-	log_info(logger,"Cpu lista para recibir a kernel");
-	clienteKernel = esperar_cliente(server_dispatch,"Kernel");
-
-	int server_interrupt = iniciar_servidor(IP_CPU, puertoDeEscuchaInterrupt,"Kernel");
-	clienteKernelInterrupt = esperar_cliente(server_interrupt, "Kernel por interrupt");
 
 	//int salirDelWhile = 0;
 	while (1) {
