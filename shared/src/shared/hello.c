@@ -2,6 +2,7 @@
 
 t_log* logger;
 
+
 int say_hello(char* who) {
     return printf("Hello %s!!\n", who);
 }

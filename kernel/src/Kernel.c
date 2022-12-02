@@ -17,6 +17,8 @@ int main(int argc, char *argv[]) {
 
 	logger = log_create("kernel.log", "KERNEL", 1, LOG_LEVEL_INFO);
 
+	loggerAux = log_create("kernelAux.log", "KERNEL", 1, LOG_LEVEL_INFO);
+
 	if(argc < 2) {
 	    log_error(logger,"Falta un parametro");
 	    return EXIT_FAILURE;
@@ -95,6 +97,7 @@ int main(int argc, char *argv[]) {
 	log_info(logger,"Interrupcion enviada");
 
 	log_destroy(logger);
+	log_destroy(loggerAux);
 
 //------------------------------------------------SEGUNDA PARTE DEL MAIN ----------------------------------------------------------
 /*

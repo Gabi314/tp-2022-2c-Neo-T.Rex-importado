@@ -4,6 +4,7 @@
 #include <shared/hello.h>
 
 extern t_log* logger;
+extern t_log* loggerAux;
 extern t_list* listaInstrucciones;
 #define IP_KERNEL "127.0.0.1"
 #define PUERTO_KERNEL "8000"
