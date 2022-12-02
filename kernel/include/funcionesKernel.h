@@ -146,14 +146,14 @@ extern int quantum_rr;
 
 extern sem_t kernelSinFinalizar;
 
-extern int conexionCpu;
+extern int conexionCpuDispatch;
 extern int conexionCpuInterrupt;
 extern int socketMemoria;
 extern int tamanioTotalIdentificadores;
 extern int contadorInstrucciones;
 extern int contadorSegmentos;
 extern int desplazamiento;
-
+extern char* dispositivosIOAplanado;
 
 extern t_queue* colaNew;
 extern t_queue* colaReadyFIFO;
@@ -178,6 +178,7 @@ extern sem_t pcbEnNew;
 extern sem_t pcbEnReady;
 extern pthread_mutex_t mutexNew;
 extern pthread_mutex_t obtenerProceso;
+extern pthread_mutex_t primerPushColaReady;
 extern pthread_mutex_t mutexPantalla;
 extern pthread_mutex_t mutexTeclado;
 

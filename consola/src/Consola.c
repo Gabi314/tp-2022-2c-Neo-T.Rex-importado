@@ -17,7 +17,10 @@ int main(int argc, char *argv[]) {
 	//pthread_create(&hiloConexionKernel, NULL,(void*) enviarPaqueteTamanioDeSegmentos, ipKernel);
 
 	//Envio los tamanios de segmentos recibidos por config
+
+
 	enviarPaqueteTamanioDeSegmentos();
+
 
 	listaDispositivos = recibirListaDispositivos(conexion);
 

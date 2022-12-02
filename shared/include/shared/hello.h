@@ -162,4 +162,8 @@ char** recibirListaDispositivos(int);
 
 t_pcb* recibir_pcb(int);
 
+void iteratorMostrarInstrucciones(instruccion* instruccion);
+
+void controlar_pcb(t_pcb*);
+
 #endif
