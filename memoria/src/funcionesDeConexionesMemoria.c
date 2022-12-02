@@ -8,12 +8,14 @@ int clienteKernel;
 
 int pidActual;
 
-int conexionConCpu(void){
+int conexionConCpu(void* void_args){
 	static pthread_mutex_t mutexMemoriaData;
-	int server_fd = iniciar_servidor(IP_MEMORIA,puertoMemoria,"Cpu"); // tendria que estar comentado porque viene despues de coenxion con kernel
+	// int server_fd = iniciar_servidor(IP_MEMORIA,puertoMemoria,"Cpu"); // tendria que estar comentado porque viene despues de coenxion con kernel
 
 	log_info(loggerAux, "Memoria lista para recibir a Cpu");
-	clienteCpu = esperar_cliente(server_fd,"Cpu");
+	// clienteCpu = esperar_cliente(server_fd,"Cpu");
+
+	t_procesar_conexion_args* args = (t_procesar_conexion_args*) void_args;
 
 	t_list* listaQueContieneNroTabla1erNivelYentrada = list_create();
 	t_list* listaConTablaDePaginaYPagina = list_create();
@@ -28,7 +30,7 @@ int conexionConCpu(void){
 	//int a = 1;
 	while(1) {
 		pthread_mutex_lock(&mutexMemoriaData);
-		int cod_op = recibir_operacion(clienteCpu);
+		int cod_op = recibir_operacion(args->fd);
 		sleep(retardoMemoria/1000); //lo que se tarda en acceder a memoria
 
 		log_info(loggerAux,"Accediendo a memoria espere %d segundos\n",retardoMemoria/1000);
@@ -102,18 +104,21 @@ int conexionConCpu(void){
 	return EXIT_SUCCESS;
 }
 
-int conexionConKernel(void){
+int conexionConKernel(void* void_args){
+	int pidActual;
 
-	int socket_kernel = iniciar_servidor(IP_MEMORIA,puertoMemoria,"Kernel");
+	// int socket_kernel = iniciar_servidor(IP_MEMORIA,puertoMemoria,"Kernel");
 	log_info(loggerAux, "Memoria lista para recibir a Kernel");
-	clienteKernel = esperar_cliente(socket_kernel,"Kernel");
+	// clienteKernel = esperar_cliente(socket_kernel,"Kernel");
+
+	t_procesar_conexion_args* args = (t_procesar_conexion_args*) void_args;
 
 	int numeroTablaDePaginas;
 	int numeroPagina;
 	t_list* listaQueContienePidYCantidadSegmentos = list_create();
 	t_list* listaQueContieneNumTablaYPagina = list_create();
 	while(1) {
-		int cod_op = recibir_operacion(clienteKernel);
+		int cod_op = recibir_operacion(args->fd);
 
 		switch (cod_op) {
 
@@ -205,10 +210,10 @@ void chequeoDeIndice(int indice){
 	}
 }
 
-int server_escuchar(t_log* loggerAux, char* server_name, int server_socket) {
+int server_escuchar(t_log* logger, char* server_nombre, char* cliente_nombre, int server_socket) {
 	// Se conecta un cliente
-    int cliente_socket = esperar_cliente(server_socket, server_name);
-    //int cliente_socket = esperar_cliente(loggerAux, server_name, server_socket);
+    int cliente_socket = esperar_cliente(server_socket, server_nombre);
+    //int cliente_socket = esperar_cliente(logger, server_name, server_socket);
 
     if (cliente_socket != -1) {
     	// Creo un hilo para atender al cliente conectado
@@ -216,8 +221,12 @@ int server_escuchar(t_log* loggerAux, char* server_name, int server_socket) {
         t_procesar_conexion_args* args = malloc(sizeof(t_procesar_conexion_args));
         args->log = loggerAux;
         args->fd = cliente_socket;
-        args->server_name = server_name;
-        pthread_create(&hilo, NULL, (void*) conexionConCpu, (void*) args);
+        args->server_name = server_nombre;
+        if (!strcmp(cliente_nombre, "KERNEL")) {
+        	pthread_create(&hilo, NULL, (void*) conexionConKernel, (void*) args);
+        } else if (!strcmp(cliente_nombre, "CPU")) {
+			pthread_create(&hilo, NULL, (void*) conexionConCpu, (void*) args);
+		}
         pthread_detach(hilo);
         return 1;
     }

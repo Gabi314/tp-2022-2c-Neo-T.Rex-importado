@@ -14,8 +14,10 @@ int main(int argc, char *argv[]) {
 	 */
 	memoria_fd = iniciar_servidor(ipMemoria, puertoMemoria, "MEMORIA");
 	while(1) {
-		// Escucho a los clientes (CPUs)
-		server_escuchar(loggerAux, "MEMORIA", memoria_fd);
+		// Escucho a cliente Kernel
+		server_escuchar(loggerAux, "MEMORIA", "KERNEL", memoria_fd);
+		// Escucho a cliente CPU
+		server_escuchar(loggerAux, "MEMORIA", "CPU", memoria_fd);
 	}
 
 	// Organizar

@@ -103,9 +103,9 @@ void enviarTamanioDePaginaYCantidadDeEntradas(int);
 extern int clienteCpu;
 
 
-void escribirElPedido(uint32_t,int,int);
+void escribirElPedido(uint32_t,int, int);
 entradaTablaPaginas* entradaCargadaConMarcoAsignado(int);
-uint32_t leerElPedido(int,int);
+uint32_t leerElPedido(int, int);
 
 void crearSwap();
 void escribirEnSwap(entradaTablaPaginas*);
@@ -114,10 +114,10 @@ void leerDeSwap(entradaTablaPaginas*,int);
 void suspensionDeProceso(int);
 
 //FUNCIONES DE CONEXIONES
-int conexionConCpu(void);
-int conexionConKernel(void);
-int marcoSegunIndice(int,int);
+int conexionConCpu(void*);
+int conexionConKernel(void*);
+int marcoSegunIndice(int, int);
 void chequeoDeIndice(int);
-int server_escuchar(t_log*, char*, int);
+int server_escuchar(t_log*, char*, char*, int);
 
 #endif /* FUNCIONES_MEMORIA_H_*/
