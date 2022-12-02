@@ -156,7 +156,7 @@ void ejecutar(instruccion* unaInstruccion,t_pcb* pcb){
 				log_info(loggerObligatorio,"“PID: <%d> - Ejecutando: <%s> - <%s> - <%d>",
 						pcb->idProceso,unaInstruccion->identificador,imprimirRegistro(primerParametro),
 							segundoParametro);
-				sleep(retardoDeInstruccion);
+				usleep(retardoDeInstruccion);
 
 				modificarRegistro((uint32_t) segundoParametro,primerParametro,pcb); //En set el primer parametro es el registro
 				log_info(logger,"Valor del registro: %u",pcb->registros.AX);
@@ -168,7 +168,7 @@ void ejecutar(instruccion* unaInstruccion,t_pcb* pcb){
 				log_info(loggerObligatorio,"“PID: <%d> - Ejecutando: <%s> - <%s> - <%s>",
 								pcb->idProceso,unaInstruccion->identificador,imprimirRegistro(primerParametro),
 									imprimirRegistro(segundoParametro));
-				sleep(retardoDeInstruccion);
+				usleep(retardoDeInstruccion);
 
 				registro = registroAUtilizar(primerParametro,pcb->registros);
 				segundoRegistro = registroAUtilizar(segundoParametro,pcb->registros);
@@ -276,10 +276,10 @@ void ejecutar(instruccion* unaInstruccion,t_pcb* pcb){
 				log_info(logger,"----------------FINALIZA I/O----------------\n");
 				break;
 			case EXT:
-				log_info(logger,"“PID: <%d> - Ejecutando: <%s>",pcb->idProceso,unaInstruccion->identificador);
+				log_info(loggerObligatorio,"“PID: <%d> - Ejecutando: <%s>",pcb->idProceso,unaInstruccion->identificador);
 				ejecutando = false;
 				limpiarEntradasTLB(pcb->idProceso);
-				enviar_pcb(pcb, CPU_PCB_A_KERNEL_PCB_POR_FINALIZACION, clienteKernel);
+				//enviar_pcb(pcb, CPU_PCB_A_KERNEL_PCB_POR_FINALIZACION, clienteKernel);
 				log_info(logger,"----------------FINALIZA EXIT----------------\n");
 				break;
 		}
@@ -292,14 +292,11 @@ void ejecutar(instruccion* unaInstruccion,t_pcb* pcb){
 }
 
 void checkInterrupt(){
-
-
 	pthread_mutex_init(&mutexInterrupcion, NULL);
 	pthread_create(&hiloInterrupciones, NULL, (void*) escucharInterrupciones,
 			NULL);
-	//pthread_detach(hiloInterrupciones);
 
-
+	pthread_detach(hiloInterrupciones);
 }
 
 int escucharInterrupciones(){
@@ -444,7 +441,7 @@ void bloqueoPorPageFault(t_pcb* pcb){
 	agregar_a_paquete_unInt(paquete, &numeroDePagina, sizeof(numeroDePagina));
 	agregar_a_paquete_unInt(paquete, &numeroDeSegmento,sizeof(numeroDeSegmento));//COMENTADO PARA PROBAR MEMORIA Y CPU
 
-	log_info(logger, "Page Fault PID: <%d> - Segmento: <%d> - Pagina: <%d>",
+	log_info(loggerObligatorio, "Page Fault PID: <%d> - Segmento: <%d> - Pagina: <%d>",
 			pcb->idProceso, numeroDeSegmento, numeroDePagina);
 	log_info(logger, "Envio el pcb a kernel por PF");
 

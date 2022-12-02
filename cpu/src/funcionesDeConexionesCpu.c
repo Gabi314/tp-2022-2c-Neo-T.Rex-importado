@@ -60,6 +60,9 @@ int conexionConMemoria(void){
 		listaQueContieneTamanioDePagYEntradas = recibir_lista_enteros(socket_memoria);
 	}
 
+	int a = list_get(listaQueContieneTamanioDePagYEntradas,0);
+	log_info(logger,"%d",a);
+
 	leerTamanioDePaginaYCantidadDeEntradas(listaQueContieneTamanioDePagYEntradas);
 
 	return EXIT_SUCCESS;

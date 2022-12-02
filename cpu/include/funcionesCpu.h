@@ -122,7 +122,7 @@ int escucharInterrupciones();
 
 t_list* inicializarTLB();
 void reiniciarTLB();
-void ejecucion();
+void ejecucion(void*);
 void enviarNroTablaDePaginas(t_list*,int,int,int);
 void enviarDireccionFisica(int,int,int,int);
 void bloqueoPorPageFault(t_pcb*);
