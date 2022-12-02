@@ -75,20 +75,27 @@ int main(int argc, char *argv[]) {
 }
 
 void funcionMain(int argc, char *argv[]) {
-	//Obligatorios
-	logger = log_create("memoria.log", "MEMORIA", 1, LOG_LEVEL_INFO); //OBLIGATORIOS
-	loggerAux = log_create("memoriaAux.log", "MEMORIA", 1, LOG_LEVEL_INFO); //AUX
+	// Chequeo de parametros
+	chequeoCantidadArchivos(argc);
+
+	//Logs obligatorios
+	logger = log_create("memoria.log", "MEMORIA", 1, LOG_LEVEL_INFO);
+	// Logs auxiliares
+	loggerAux = log_create("memoriaAux.log", "MEMORIA", 1, LOG_LEVEL_INFO);
+
+	crearConfiguraciones(argv[1]);
+
 	listaDeMarcos = list_create();
 	listaDeEntradasEnMemoria = list_create();
 	listaTablaDePaginas = list_create();
-	//listaDePaginasEnMemoria = list_create();
-	chequeoCantidadArchivos(argc);
-	crearConfiguraciones(argv[1]);
-	crearSwap();
+
 	inicializarMemoria();
 	inicializarMarcos();
-	//conexionCpu();
-	//Obligatorios
+
+	crearSwap();
+
+	//listaDePaginasEnMemoria = list_create();
+
 	log_info(loggerAux, "Fin de main obligatorio");
 }
 

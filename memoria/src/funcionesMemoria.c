@@ -37,9 +37,9 @@ int posicionActualDeSwap = 0;
 //------------------------- DEFINICION DE FUNCIONES
 int chequeoCantidadArchivos(int argc) {
 	if(argc < 2) {
-		    log_error(loggerAux, "Falta un parametro");
-		    return EXIT_FAILURE;
-		}
+		log_error(loggerAux, "Falta un parametro");
+		return EXIT_FAILURE;
+	}
 	return EXIT_SUCCESS;
 }
 
