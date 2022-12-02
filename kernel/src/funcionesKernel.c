@@ -405,13 +405,13 @@ void asignar_memoria() {
 
 
 		log_info(loggerAux,"llego antes de crear el paquete");
-		t_paquete * paquete = crear_paquete(NRO_TP);
+		t_paquete * paqueteLocal = crear_paquete(NRO_TP);
 		log_info(loggerAux,"llego antes de agregar dos enteros al paquete");
-		agregar_a_paquete_unInt(paquete, &(proceso->idProceso), sizeof(int));
+		agregar_a_paquete_unInt(paqueteLocal, &(proceso->idProceso), sizeof(int));
 		int tamanioTablaSegmentos = list_size(proceso->tablaSegmentos);
-		agregar_a_paquete_unInt(paquete, &tamanioTablaSegmentos, sizeof(int));
+		agregar_a_paquete_unInt(paqueteLocal, &tamanioTablaSegmentos, sizeof(int));
 		log_info(loggerAux,"llego antes de enviar el paquete");
-		enviar_paquete(paquete,socketMemoria);
+		enviar_paquete(paqueteLocal,socketMemoria);
 
 		int cod_op = recibir_operacion(socketMemoria);
 		int numTablaPag = 0;
@@ -475,24 +475,9 @@ void asignar_memoria() {
 
 		free(pcbAux);
 
-		t_paquete * paquete = crear_paquete(NRO_TP);
-		agregar_a_paquete_unInt(paquete, proceso->idProceso, sizeof(int));
-		agregar_a_paquete_unInt(paquete, list_size(proceso->tablaSegmentos), sizeof(int));
-		enviar_paquete(paquete,socketMemoria);
 
-		int numTablaPag;
-		int cod_op = recibir_operacion(socketMemoria);
-		if (cod_op == MEMORIA_A_KERNEL_NUMERO_TABLA_PAGINAS){
-			numTablaPag = recibir_entero(socketMemoria);
-		}
 
-		for(int i=0;i<list_size(proceso->tablaSegmentos);i++ ){
-			entradaTablaSegmento * entrada = malloc(sizeof(*entrada));
-			entrada = list_get(proceso->tablaSegmentos,i); //ver que devuelve
-			entrada->numeroTablaPaginas = numTablaPag+i;
-			list_replace(proceso->tablaSegmentos,i,entrada);
-			//log_info(logger, list_get());
-		}
+
 
 		log_info(logger,"PID: <%d> - Estado Anterior: <NEW> - Estado Actual: <READY>", proceso->idProceso);
 
@@ -608,7 +593,7 @@ void ejecutar(t_pcb* proceso) {
 	}
 
  //	agregarAPaqueteKernelCpu(proceso); //Aca mandamos el proceso a cpu
-	agregar_a_paquete_kernel_cpu(proceso,KERNEL_PCB_A_CPU,conexionCpu);
+	agregar_a_paquete_kernel_cpu(proceso,KERNEL_PCB_A_CPU,conexionCpuDispatch);
 
 	log_info(loggerAux, "[ejecutar]: enviamos el proceso a cpu");
 
@@ -679,7 +664,7 @@ while (1) {
 
 			pthread_cancel(hiloQuantumRR);
 		}
-		cod_op = recibir_operacion(conexionCpu);
+		cod_op = recibir_operacion(conexionCpuDispatch);
 
 
 		if(cod_op == CPU_A_KERNEL_INGRESAR_VALOR_POR_TECLADO){
@@ -714,7 +699,7 @@ while (1) {
 					}
 
 
-		cod_op = recibir_operacion(conexionCpu);
+		cod_op = recibir_operacion(conexionCpuDispatch);
 
 		if(cod_op == CPU_A_KERNEL_MOSTRAR_REGISTRO_POR_PANTALLA){
 			aMandarPantalla->registro = recibir_entero(conexionCpuDispatch);

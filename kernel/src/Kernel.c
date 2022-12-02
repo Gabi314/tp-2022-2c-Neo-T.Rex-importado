@@ -110,7 +110,7 @@ int main(int argc, char *argv[]) {
 	log_destroy(logger);
 
 	log_destroy(loggerAux);
-
+*/
 //------------------------------------------------SEGUNDA PARTE DEL MAIN ----------------------------------------------------------
 
 	pthread_t hilo0;
@@ -180,13 +180,13 @@ void inicializar_listas_y_colas() {
 
 
 
-
+/*
 t_pcb* pruebaDeConexionConConsola() {
 
 log_info(logger,"esperando a la consola");
 int cliente_fd = esperar_cliente(socketServidorKernel, "Consola");
 log_info(logger,"es la consola numero %d",cliente_fd);
-/*
+
 if (recibir_operacion(cliente_fd) == KERNEL_PAQUETE_TAMANIOS_SEGMENTOS) {
 	listaTamanioSegmentos = list_create();
 	listaTamanioSegmentos = recibir_lista_enteros(cliente_fd); //Hacer que reciba paquete vectorDeEnteros// Muy dificil mandar un vector dinamico, la lista la pueden usar como quieran
@@ -195,6 +195,7 @@ if (recibir_operacion(cliente_fd) == KERNEL_PAQUETE_TAMANIOS_SEGMENTOS) {
 	log_info(logger, "El tamanio del primer segmento es: %d",
 			tamanioDelSegmento);
 */
+	/*
 	t_list *listaQueContieneTamSegmento;
 	t_pcb *PCB = malloc(sizeof(t_pcb*));
 
@@ -236,7 +237,7 @@ if (recibir_operacion(cliente_fd) == KERNEL_PAQUETE_TAMANIOS_SEGMENTOS) {
 // CONFIRMAMOS RECEPCION DE INSTRUCCIONES
 			enviar_mensaje("segmentos e instrucciones recibidos pibe", cliente_fd,KERNEL_MENSAJE_CONFIRMACION_RECEPCION_INSTRUCCIONES_SEGMENTOS);
 
-
+*/
 		/*
 			pthread_mutex_lock(&mutexMensajes);
 			//Esto es una prueba
@@ -250,6 +251,7 @@ if (recibir_operacion(cliente_fd) == KERNEL_PAQUETE_TAMANIOS_SEGMENTOS) {
 					KERNEL_MENSAJE_FINALIZAR_CONSOLA);
 			pthread_mutex_unlock(&mutexMensajes);
 */
+	/*
 		} else {
 			log_info(logger, "codigo de operacion incorrecto");
 		}
@@ -319,7 +321,7 @@ if (recibir_operacion(cliente_fd) == KERNEL_PAQUETE_TAMANIOS_SEGMENTOS) {
 
 	return PCB;
 }
-
+*/
 
 //int pruebaDeConexionConCpu(t_pcb * PCB){
 //	log_info(logger,"creamos conexion con un puerto de cpu");

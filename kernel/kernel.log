@@ -3474,3 +3474,19 @@
 [INFO] 22:15:59:491 KERNEL/(3390:3390): Iniciando conexion con consola
 [INFO] 22:19:06:443 KERNEL/(3569:3569): DISPOSITIVOS: DISCO-IMPRESORA
 [INFO] 22:19:06:445 KERNEL/(3569:3569): Iniciando conexion con consola
+[INFO] 04:26:12:088 KERNEL/(107941:107941): servidor kernel inicializado
+[INFO] 04:26:12:089 KERNEL/(107941:107941): configuraciones inicializadas
+[INFO] 04:26:12:089 KERNEL/(107941:107941): listas y colas inicializadas
+[INFO] 04:26:12:089 KERNEL/(107941:107941): semaforos inicializados
+[INFO] 04:26:12:089 KERNEL/(107941:107941): En la lista de dispositivos tenemos los siguientes:
+[INFO] 04:26:12:090 KERNEL/(107941:107941): el dispositivo de posicion 0 se llama DISCO
+[INFO] 04:26:12:090 KERNEL/(107941:107941): el dispositivo de posicion 0 tiene un tiempo de 100
+[INFO] 04:26:12:094 KERNEL/(107941:107941): el dispositivo de posicion 1 se llama IMPRESORA
+[INFO] 04:26:12:094 KERNEL/(107941:107941): el dispositivo de posicion 1 tiene un tiempo de 50000
+[INFO] 04:26:12:095 KERNEL/(107941:107941): DISPOSITIVOS: DISCO-IMPRESORA
+[INFO] 04:26:12:095 KERNEL/(107941:107951): se desperto atender_IO_generico del dispositivo <DISCO> por primera vez 
+[INFO] 04:26:12:095 KERNEL/(107941:107952): se desperto atender_IO_generico del dispositivo <IMPRESORA> por primera vez 
+[INFO] 04:26:12:096 KERNEL/(107941:107950): se desperto readyAExe por primera vez
+[INFO] 04:26:12:097 KERNEL/(107941:107949): se desperto atender_interrupcion_de_ejecucion
+[INFO] 04:26:12:098 KERNEL/(107941:107948): se desperto asignar_memoria por primera vez
+[INFO] 04:26:12:099 KERNEL/(107941:107947): se desperto recibir_consola

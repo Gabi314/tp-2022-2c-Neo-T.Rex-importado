@@ -1137,3 +1137,7 @@
 [INFO] 22:19:28:595 CONSOLA/(14315:14315): Me llego el mensaje Finalizar
 [INFO] 22:03:08:005 CONSOLA/(2946:2946): Config creado
 [INFO] 22:03:08:019 CONSOLA/(2946:2946): Se leyo el archivo correctamente
+[INFO] 04:00:26:061 CONSOLA/(106804:106804): Config creado
+[INFO] 04:00:26:086 CONSOLA/(106804:106804): llego hasta recibir lista dispositivos
+[INFO] 04:00:26:086 CONSOLA/(106804:106804): codigo de operacion incorrecto
+[INFO] 04:00:26:086 CONSOLA/(106804:106804): Se leyo el archivo correctamente
