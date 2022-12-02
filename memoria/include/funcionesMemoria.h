@@ -18,11 +18,13 @@ typedef struct{
 	int uso;
 	int modificado;
 	int posicionEnSwap;
+	int numeroDeSegmento;
 }entradaTablaPaginas;
 
 typedef struct{// capaz usar diccionario
 	t_list* entradas;
 	int pid;
+	int numeroDeSegmento;
 }tablaDePaginas;
 
 typedef struct{
@@ -33,6 +35,7 @@ typedef struct{
 //--------------------------DECLARO VARIABLES
 
 extern t_log* logger;
+extern t_log* loggerAux;
 //Variables globales de config
 extern int tamanioDeMemoria;
 extern int tamanioDePagina;
@@ -68,6 +71,8 @@ extern int clienteKernel;
 extern char* ipMemoria;
 extern char* puertoMemoria;
 
+
+extern int pidActual;
 //-------------------------DECLARO FUNCIONES
 int chequeoCantidadArchivos(int);
 void crearConfiguraciones(char*);
@@ -76,13 +81,13 @@ void crearDirectorio();
 void inicializarMemoria();
 void inicializarEstructuras(int);
 void inicializarMarcos();
-void cargarEntradasATabla(tablaDePaginas*);
+void cargarEntradasATabla(tablaDePaginas*,int);
 
 int posicionDePunteroDelAlgoritmo(int);
 void sacarMarcoAPagina(entradaTablaPaginas*);
 void reemplazarTodosLosUsoACero(t_list*);
-int algoritmoClock(t_list*);
-int algoritmoClockM (t_list*);
+int algoritmoClock(t_list*,entradaTablaPaginas*);
+int algoritmoClockM (t_list*,entradaTablaPaginas*);
 marco* siguienteMarcoLibre();
 marco* buscarMarco(int);
 int indiceDeEntradaAReemplazar(int);
@@ -105,7 +110,7 @@ uint32_t leerElPedido(int, int);
 void crearSwap();
 void escribirEnSwap(entradaTablaPaginas*);
 entradaTablaPaginas* entradaCargadaConMarcoAsignado(int);
-void leerDeSwap(int, int);
+void leerDeSwap(entradaTablaPaginas*,int);
 void suspensionDeProceso(int);
 
 //FUNCIONES DE CONEXIONES
