@@ -133,6 +133,10 @@ int conexionConKernel(void* void_args) {
 				inicializarEstructuras(pidActual);//inicializo estructuras
 
 				break;
+			case KERNEL_MENSAJE_SOLICITUD_CARGAR_PAGINA:
+				recibir_mensaje(clienteKernel);
+
+				break;
 			case KERNEL_A_MEMORIA_PAGE_FAULT:
 				listaQueContieneNumTablaYPagina = recibir_lista_enteros(clienteKernel);
 				numeroTablaDePaginas = (int) list_get(listaQueContieneNumTablaYPagina, 0);

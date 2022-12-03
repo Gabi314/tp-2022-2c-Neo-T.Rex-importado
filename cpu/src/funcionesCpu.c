@@ -54,13 +54,16 @@ void inicializarConfiguraciones(char* unaConfig){
 	puertoDeEscuchaInterrupt = config_get_string_value(config,"PUERTO_ESCUCHA_INTERRUPT");
 
 	sem_init(&pcbRecibido,0,0);
+	pthread_mutex_init(&mutexEjecutar, NULL);
 }
 
 
 instruccion* buscarInstruccionAEjecutar(t_pcb* unPCB){//FETCH CREO QUE ES IGUAL
 	if((unPCB->programCounter)<list_size(unPCB->instrucciones)){
 	instruccion* unaInstruccion = list_get(unPCB->instrucciones,unPCB->programCounter);
-	unPCB->programCounter++;
+	log_info(logger,"Numero de program counter2: %d",unPCB->programCounter);
+	log_info(logger,"Instruccion a ejecutar2 %s",unaInstruccion->identificador);
+	//unPCB->programCounter += 1;
 
 	return unaInstruccion;
 	}
@@ -166,7 +169,7 @@ void ejecutar(instruccion* unaInstruccion,t_pcb* pcb){
 				log_info(logger,"Valor del registro: %u",pcb->registros.AX);
 				//En set el segundo registro es el valor a asignar
 				log_info(logger,"----------------FINALIZA SET----------------\n");
-
+				pcb->programCounter += 1;
 				break;
 			case ADD:
 				log_info(loggerObligatorio,"“PID: <%d> - Ejecutando: <%s> - <%s> - <%s>",
@@ -180,6 +183,7 @@ void ejecutar(instruccion* unaInstruccion,t_pcb* pcb){
 
 				modificarRegistro(registro,primerParametro,pcb);
 				log_info(logger,"----------------FINALIZA ADD----------------\n");
+				pcb->programCounter += 1;
 				break;
 			case MOV_IN:
 				log_info(logger,"----------------EXECUTE MOV_IN----------------");
@@ -193,6 +197,8 @@ void ejecutar(instruccion* unaInstruccion,t_pcb* pcb){
 					marco = buscarDireccionFisica(pcb);
 					if(marco == -1){// Hay PF
 						bloqueoPorPageFault(pcb);
+						log_info(logger,"Numero de program counter EN MOV IN: %d",pcb->programCounter);
+						log_info(logger,"Instruccion a ejecutar EN MOV IN %s",unaInstruccion->identificador);
 						break;
 					}
 					log_info(logger,"No hizo el break por page fault!!!!");
@@ -211,14 +217,20 @@ void ejecutar(instruccion* unaInstruccion,t_pcb* pcb){
 
 					if(cod_op == MEMORIA_A_CPU_NUMERO_LEIDO){// Recibe el valor leido de memoria
 						valorAAlmacenar = recibir_entero(socket_memoria);
+						modificarRegistro(valorAAlmacenar,primerParametro,pcb);
 						log_info(logger,"----------------FINALIZA MOV_IN----------------\n");
 					}
-					modificarRegistro(valorAAlmacenar,primerParametro,pcb); // y se almacena en el registro(primer parametro)
+					 // y se almacena en el registro(primer parametro)
 				}else{
 					log_info(logger,"Error: Segmentation Fault (segmento nro: %d)",numeroDeSegmento);//Enviar este mensaje a kernel y devolver pcb
-				//PROBAAAR!!!!
+					enviar_pcb(pcb, CPU_PCB_A_KERNEL_PCB_POR_FINALIZACION, clienteKernel);
+					pthread_mutex_lock(&mutexEjecutar);
+					ejecutando = false;
+					pthread_mutex_unlock(&mutexEjecutar);
 					log_info(logger,"----------------FINALIZA MOV_IN----------------\n");
 				}
+
+				pcb->programCounter += 1;
 				break;
 			case MOV_OUT:
 				log_info(logger,"----------------EXECUTE MOV_OUT----------------");
@@ -250,7 +262,7 @@ void ejecutar(instruccion* unaInstruccion,t_pcb* pcb){
 					recibir_mensaje(socket_memoria);
 					log_info(logger,"----------------FINALIZA MOV_OUT----------------\n");
 				}
-
+				pcb->programCounter += 1;
 				break;
 			case IO:
 				if(primerParametro != TECLADO || primerParametro != PANTALLA){
@@ -276,12 +288,14 @@ void ejecutar(instruccion* unaInstruccion,t_pcb* pcb){
 						enviar_entero(segundoParametro, clienteKernel, CPU_A_KERNEL_MOSTRAR_REGISTRO_POR_PANTALLA);
 					}
 				}
-
 				log_info(logger,"----------------FINALIZA I/O----------------\n");
+				pcb->programCounter += 1;
 				break;
 			case EXT:
 				log_info(loggerObligatorio,"“PID: <%d> - Ejecutando: <%s>",pcb->idProceso,unaInstruccion->identificador);
+				pthread_mutex_lock(&mutexEjecutar);
 				ejecutando = false;
+				pthread_mutex_unlock(&mutexEjecutar);
 				limpiarEntradasTLB(pcb->idProceso);
 				enviar_pcb(pcb, CPU_PCB_A_KERNEL_PCB_POR_FINALIZACION, clienteKernel);
 				log_info(logger,"----------------FINALIZA EXIT----------------\n");
@@ -289,7 +303,9 @@ void ejecutar(instruccion* unaInstruccion,t_pcb* pcb){
 		}
 	}else{
 		log_info(logger,"Interrupcion!!!");
+		pthread_mutex_lock(&mutexEjecutar);
 		ejecutando = false;
+		pthread_mutex_unlock(&mutexEjecutar);
 		enviar_pcb(pcb, CPU_A_KERNEL_PCB_POR_DESALOJO, clienteKernel);
 		//hayInterrupcion = false; ?
 	}
@@ -436,8 +452,10 @@ void leerTamanioDePaginaYCantidadDeEntradas(t_list* listaQueContieneTamanioDePag
 }
 
 void bloqueoPorPageFault(t_pcb* pcb){
+	pthread_mutex_lock(&mutexEjecutar);
 	ejecutando = false;
-	pcb->programCounter -= 1;
+	pthread_mutex_unlock(&mutexEjecutar);
+	//pcb->programCounter -= 1;
 
 	enviar_pcb(pcb, CPU_A_KERNEL_PCB_PAGE_FAULT,clienteKernel);
 	t_paquete *paquetePageFault = crear_paquete(CPU_A_KERNEL_PAGINA_PF);

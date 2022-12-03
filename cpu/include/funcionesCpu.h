@@ -52,6 +52,8 @@ extern bool hayInterrupcion;
 extern char* algoritmoReemplazoTlb;
 extern int cantidadEntradasTlb;
 
+extern pthread_mutex_t mutexEjecutar;
+
 typedef struct
 {
 	int nroDeProceso;
@@ -130,7 +132,7 @@ void bloqueoPorPageFault(t_pcb*);
 void iterator(instruccion*);
 
 //----------------------------FUNCIONES DE CONEXIONES
-int conexionConKernelDispatch(void);
+void conexionConKernelDispatch();
 int conexionConMemoria(void);
 void enviar_pcb(t_pcb*,int,int);
 

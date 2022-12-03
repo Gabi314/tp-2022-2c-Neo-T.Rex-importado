@@ -233,7 +233,7 @@ void inicializar_registros(t_registros registros) {
 
 void levantar_hilo_dispositivo(t_elem_disp * elemento) {
 	pthread_t hiloDispositivo;
-	int hiloDispositivoCreado = pthread_create(&hiloDispositivo,NULL,(void*) atender_IO_generico,elemento);
+	pthread_create(&hiloDispositivo,NULL,(void*) atender_IO_generico,elemento);
 	pthread_detach(hiloDispositivo);
 
 }
@@ -278,7 +278,7 @@ void recibir_consola(int * servidor) {
 
 		log_info(loggerAux,"recibimos al cliente de socket %d", nuevo_cliente);
 
-		int hiloCreado = pthread_create(&hilo1, NULL,  (void *)atender_consola, &nuevo_cliente);
+		pthread_create(&hilo1, NULL,  (void *)atender_consola, &nuevo_cliente);
 		pthread_detach(hilo1);
 
 		log_info(loggerAux,"levantamos y detacheamos el hilo de la consola %d", nuevo_cliente);
@@ -490,7 +490,7 @@ void readyAExe() {
 
 		log_info(logger, "[readyAExe]: .........se despierta readyAExe ");
 		log_info(logger, "[readyAExe]: a partir de ahora, CPU NO DISPONIBLE! ");
-		t_pcb * procesoAEjecutar = malloc(sizeof(t_pcb));
+		t_pcb * procesoAEjecutar; //= malloc(sizeof(t_pcb));
 		pthread_mutex_lock(&obtenerProceso);
 		procesoAEjecutar = obtenerSiguienteDeReady();
 		pthread_mutex_unlock(&obtenerProceso);
@@ -509,7 +509,7 @@ void readyAExe() {
 
 		if(algoritmoPlanificacion == "RR" || (algoritmoPlanificacion == "Feedback" && procesoAEjecutar->algoritmoActual == RR)){
 
-			int hiloQuantum = pthread_create(&hiloQuantumRR, NULL,(void*) controlar_quantum,NULL);
+			pthread_create(&hiloQuantumRR, NULL,(void*) controlar_quantum,NULL);
 			pthread_detach(hiloQuantumRR);
 		}
 
@@ -520,7 +520,7 @@ void readyAExe() {
 
 t_pcb* obtenerSiguienteDeReady() {
 
-t_pcb * procesoPlanificado = malloc(sizeof(t_pcb));
+t_pcb * procesoPlanificado;  // = malloc(sizeof(t_pcb));
 
 	if (!strcmp(algoritmoPlanificacion, "FIFO")) {
 		procesoPlanificado = obtenerSiguienteFIFO();
@@ -560,30 +560,12 @@ t_pcb* obtenerSiguienteRR() {
 
 
 
-	t_pcb* procesoPlanificado = malloc(sizeof(t_pcb));
+	t_pcb* procesoPlanificado;   //= malloc(sizeof(t_pcb));
 	procesoPlanificado = queue_pop(colaReadyRR);
 
 	log_info(loggerAux, "[obtenerSiguienteFIFO]: PROCESOS EN READY RR: %d \n", queue_size(colaReadyRR));
 
 	return procesoPlanificado;
-}
-
-
-void ejecutar(t_pcb* proceso) {
-
-	if (proceso != NULL) {
-
-		log_info(loggerAux, "[EXEC] Ingresa el proceso de PID: %d",proceso->idProceso);
-
-	} else {
-		log_info(loggerAux, "[EXEC] No se logró encontrar un proceso para ejecutar");
-	}
-
- //	agregarAPaqueteKernelCpu(proceso); //Aca mandamos el proceso a cpu
-	enviar_pcb(proceso,KERNEL_PCB_A_CPU,conexionCpuDispatch);
-
-	log_info(loggerAux, "[ejecutar]: enviamos el proceso a cpu");
-
 }
 
 
@@ -643,7 +625,7 @@ while (1) {
 	case CPU_PCB_A_KERNEL_POR_IO_TECLADO:
 
 
-		t_info_teclado * aMandarTeclado = malloc(sizeof(*aMandarTeclado));
+		t_info_teclado * aMandarTeclado = malloc(sizeof(t_info_teclado));
 		aMandarTeclado->pcb = recibir_pcb(conexionCpuDispatch);
 
 
@@ -665,7 +647,7 @@ while (1) {
 		log_info(logger,"PID: <%d> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>", proceso->idProceso);
 
 		pthread_t hiloAtenderTeclado;
-		int hiloTeclado = pthread_create(&hiloAtenderTeclado, NULL,(void*) atender_IO_teclado,aMandarTeclado);
+		pthread_create(&hiloAtenderTeclado, NULL,(void*) atender_IO_teclado,aMandarTeclado);
 		pthread_detach(hiloAtenderTeclado);
 
 		//free(aMandar.pcb);
@@ -676,7 +658,7 @@ while (1) {
 
 	case CPU_PCB_A_KERNEL_POR_IO_PANTALLA:
 
-		t_info_pantalla * aMandarPantalla = malloc(sizeof(*aMandarPantalla));
+		t_info_pantalla * aMandarPantalla = malloc(sizeof(t_info_pantalla));
 
 	//	pthread_mutex_lock(&mutexPantalla);
 		aMandarPantalla->pcb = recibir_pcb(conexionCpuDispatch);
@@ -700,7 +682,7 @@ while (1) {
 		log_info(logger,"PID: <%d> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>", proceso->idProceso);
 
 		pthread_t hiloPantalla;
-		int hiloPantallaCreado = pthread_create(&hiloPantalla, NULL, &atender_IO_pantalla, aMandarPantalla);
+		pthread_create(&hiloPantalla, NULL, &atender_IO_pantalla, aMandarPantalla);
 		pthread_detach(hiloPantalla);
 
 		break;
@@ -732,28 +714,29 @@ while (1) {
 
 		t_pcb* pcbPF = recibir_pcb(conexionCpuDispatch);
 
-		int operacion = recibir_operacion(conexionCpuInterrupt); //ver si es dispatch o interrupt
+		int operacion = recibir_operacion(conexionCpuDispatch); //ver si es dispatch o interrupt
 		if (operacion != CPU_A_KERNEL_PAGINA_PF){
 			log_info(loggerAux, "codigo de operacion incorrecto");
 		}
 
 		t_list * listaTPyNroPag = list_create();
-		listaTPyNroPag = recibir_lista_enteros(conexionCpuInterrupt);
+		listaTPyNroPag = recibir_lista_enteros(conexionCpuDispatch);
 
-		t_info_pf * aMandarPF = malloc(sizeof(*aMandarPF));
+		t_info_pf * aMandarPF = malloc(sizeof(t_info_pf));
 
 		aMandarPF->pcb = pcbPF;
 		aMandarPF->listaTpYNroPAgina = listaTPyNroPag;
 
-		log_info(logger, "Page Fault PID: <%d> - Segmento: <%d> - Pagina: <%d>", pcbPF->idProceso, list_get(listaTPyNroPag,1), list_get(listaTPyNroPag,0));
+		log_info(logger, "Page Fault PID: <%d> - Segmento: <%d> - Pagina: <%d>",
+				pcbPF->idProceso, list_get(listaTPyNroPag,1), list_get(listaTPyNroPag,0));
 
-		log_info(logger,"PID: <%d> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>", proceso->idProceso);
+		log_info(logger,"PID: <%d> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>", pcbPF->idProceso);
 
 		pthread_t hiloPF;
-		int hiloPageFault = pthread_create(&hiloPF, NULL, &atender_page_fault, aMandarPF);
-		pthread_detach(hiloPageFault);
+		pthread_create(&hiloPF, NULL, &atender_page_fault, aMandarPF);
+		pthread_detach(hiloPF);
 
-		free(aMandarPF);
+		//free(aMandarPF);  DUDOSO
 		break;
 
 	case CPU_PCB_A_KERNEL_PCB_POR_FINALIZACION:
@@ -963,12 +946,14 @@ void atender_page_fault(t_info_pf* infoPF){
 	t_list * listaTPyNroPag = infoPF->listaTpYNroPAgina;
 
 	pcb->estado = BLOCKED; // hace falta un nuevo estado BLOCKED_PF?
-
+	log_info(loggerAux,"Antes mensaje");
 	enviar_mensaje("kernel solicita que se cargue en memoria la pagina correspondiente",socketMemoria, KERNEL_MENSAJE_SOLICITUD_CARGAR_PAGINA);
-
+	log_info(loggerAux,"Antes mensaje");
 	t_paquete * paquete = crear_paquete(KERNEL_A_MEMORIA_PAGE_FAULT);
-			agregar_a_paquete_unInt(paquete, list_get(listaTPyNroPag,0), sizeof(int));
-			agregar_a_paquete_unInt(paquete, list_get(listaTPyNroPag,1), sizeof(int));
+	int numeroTablaPagina = list_get(listaTPyNroPag,0);
+	int numeroDePagina = list_get(listaTPyNroPag,1);
+			agregar_a_paquete_unInt(paquete, &numeroTablaPagina, sizeof(int));
+			agregar_a_paquete_unInt(paquete, &numeroDePagina, sizeof(int));
 			enviar_paquete(paquete,socketMemoria);
 			eliminar_paquete(paquete);
 
@@ -982,20 +967,20 @@ void atender_page_fault(t_info_pf* infoPF){
 	recibir_mensaje(socketMemoria);
 
 	if (!strcmp(algoritmoPlanificacion, "FIFO")) {
-		queue_push(colaReadyFIFO,pcbTeclado);
+		queue_push(colaReadyFIFO,pcb);
 	} else {
 		if (!strcmp(algoritmoPlanificacion, "RR")) {
-			queue_push(colaReadyRR,pcbTeclado);
+			queue_push(colaReadyRR,pcb);
 		} else {
 			if(!strcmp(algoritmoPlanificacion, "Feedback")) {// ver si esta asi en los config
-				queue_push(colaReadyRR,pcbTeclado);
+				queue_push(colaReadyRR,pcb);
 			}else{
 				log_info(loggerAux, "Algoritmo invalido");
 			}
 		}
 	}
 
-	log_info(logger,"PID: <%d> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>", pcbTeclado->idProceso);
+	log_info(logger,"PID: <%d> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>", pcb->idProceso);
 
 	sem_post(&pcbEnReady);
 

@@ -17,26 +17,33 @@ int desplazamiento;
 t_paquete* paquete;
 
 //-----------------------FUNCIONES
-int conexionConKernelDispatch(void){//un hilo
+void conexionConKernelDispatch(){//un hilo
 	static pthread_mutex_t mutexMensajes;// usar
 
 
 	//int salirDelWhile = 0;
 	while (1) {
+		log_info(logger,"Esperando PCB");
 		int cod_op = recibir_operacion(clienteKernel);
 
 		if(cod_op == KERNEL_PCB_A_CPU){
 
 			unPcb = recibir_pcb(clienteKernel);
+			pthread_mutex_lock(&mutexEjecutar);
+			ejecutando = true;
+			pthread_mutex_unlock(&mutexEjecutar);
 			sem_post(&pcbRecibido);
 
-			return EXIT_SUCCESS;
+			//return EXIT_SUCCESS;
 		}else if(cod_op == -1){
 			log_info(logger, "Se desconecto el kernel. Terminando conexion");
-			return EXIT_SUCCESS;
+			sem_t finalizarKernel;
+			sem_init(&finalizarKernel,0,0);
+			sem_wait(&finalizarKernel);
+			//return EXIT_FAILURE;
 		}
 	}
-	return EXIT_SUCCESS;
+	//return EXIT_SUCCESS;
 }
 
 int conexionConMemoria(void){
