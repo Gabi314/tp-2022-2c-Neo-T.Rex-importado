@@ -29,6 +29,9 @@ void conexionConKernelDispatch(){//un hilo
 		if(cod_op == KERNEL_PCB_A_CPU){
 
 			unPcb = recibir_pcb(clienteKernel);
+			pthread_mutex_lock(&mutexInterrupcion);
+			hayInterrupcion = false;
+			pthread_mutex_unlock(&mutexInterrupcion);
 			pthread_mutex_lock(&mutexEjecutar);
 			ejecutando = true;
 			pthread_mutex_unlock(&mutexEjecutar);

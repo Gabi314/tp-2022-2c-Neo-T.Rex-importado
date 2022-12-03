@@ -21,9 +21,7 @@ char* puertoMemoria;
 void* memoria; // espacio de usuario de la memoria
 
 int contadorDeEntradasPorProceso;
-t_list* listaDeMarcos;
-t_list* listaDeEntradasEnMemoria;
-t_list* listaTablaDePaginas;
+
 //CREO QUE NO SE UTILIZA t_list* listaDePaginasEnMemoria;
 
 int posicionDelPuntero;
@@ -394,6 +392,7 @@ void liberarEspacioEnMemoria(tablaDePaginas* unaTablaDePaginas) {
 
 void finalizacionDeProceso(int pid) {
 	tablaDePaginas* unaTablaDePaginas = malloc(sizeof(tablaDePaginas));
+	log_info(loggerAux,"Tamaño lista de tablas de paginas: %d",list_size(listaTablaDePaginas));
 	for(int i = 0; i < list_size(listaTablaDePaginas); i++) {
 	//int nroTablaDePaginas = buscarNroTablaDePaginas(pid);
 	unaTablaDePaginas = list_get(listaTablaDePaginas, i);

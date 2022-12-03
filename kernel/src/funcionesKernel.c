@@ -507,8 +507,7 @@ void readyAExe() {
 
 		log_info(logger,"PID: <%d> - Estado Anterior: <READY> - Estado Actual: <EXE>", procesoAEjecutar->idProceso);
 
-		if(algoritmoPlanificacion == "RR" || (algoritmoPlanificacion == "Feedback" && procesoAEjecutar->algoritmoActual == RR)){
-
+		if(!strcmp(algoritmoPlanificacion,"RR") || (!strcmp(algoritmoPlanificacion,"Feedback") && procesoAEjecutar->algoritmoActual == RR)){
 			pthread_create(&hiloQuantumRR, NULL,(void*) controlar_quantum,NULL);
 			pthread_detach(hiloQuantumRR);
 		}
@@ -580,20 +579,16 @@ while (1) {
 	case CPU_PCB_A_KERNEL_POR_IO:
 		t_pcb * proceso = recibir_pcb(conexionCpuDispatch);
 
-
 		if(!strcmp(algoritmoPlanificacion, "RR") || (!strcmp(algoritmoPlanificacion, "Feedback") && proceso->algoritmoActual == RR)){
 			pthread_cancel(hiloQuantumRR);
 			}
 
-		char * dispositivo;
+		char* dispositivo;
 
-
-		cod_op = recibir_operacion(conexionCpuDispatch);
-		if(cod_op == CPU_DISPOSITIVO_A_KERNEL){
+		int operacionDePcb = recibir_operacion(conexionCpuDispatch);
+		if(operacionDePcb == CPU_DISPOSITIVO_A_KERNEL){
 			dispositivo = recibir_mensaje(conexionCpuDispatch);
 		}
-
-
 
 		bool comparar_nombre_dispositivo( t_elem_disp * elemento){
 			return !strcmp(elemento->dispositivo,dispositivo);
@@ -704,7 +699,7 @@ while (1) {
 
 		log_info(logger,"PID: <%d> - Desalojado por fin de Quantum", pcb->idProceso);
 
-		log_info(logger,"PID: <%d> - Estado Anterior: <EXE> - Estado Actual: <READY>", proceso->idProceso);
+		log_info(logger,"PID: <%d> - Estado Anterior: <EXE> - Estado Actual: <READY>", pcb->idProceso);
 
 		sem_post(&pcbEnReady);
 
@@ -744,7 +739,7 @@ while (1) {
 
 		t_pcb* pcbATerminar = recibir_pcb(conexionCpuDispatch);
 
-		if(algoritmoPlanificacion == "RR" || (algoritmoPlanificacion == "Feedback" && pcbATerminar->algoritmoActual == RR)){
+		if(!strcmp(algoritmoPlanificacion, "RR") || (!strcmp(algoritmoPlanificacion, "Feedback") && pcbATerminar->algoritmoActual == RR)){
 			pthread_cancel(hiloQuantumRR);
 		}
 

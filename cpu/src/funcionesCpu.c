@@ -25,8 +25,9 @@ uint32_t cx;
 uint32_t dx;
 
 bool hayInterrupcion = false;
-static pthread_mutex_t mutexInterrupcion;
+
 pthread_t hiloInterrupciones;
+pthread_mutex_t mutexInterrupcion;
 
 sem_t pcbRecibido;
 
@@ -55,14 +56,13 @@ void inicializarConfiguraciones(char* unaConfig){
 
 	sem_init(&pcbRecibido,0,0);
 	pthread_mutex_init(&mutexEjecutar, NULL);
+	pthread_mutex_init(&mutexInterrupcion, NULL);
 }
 
 
 instruccion* buscarInstruccionAEjecutar(t_pcb* unPCB){//FETCH CREO QUE ES IGUAL
 	if((unPCB->programCounter)<list_size(unPCB->instrucciones)){
 	instruccion* unaInstruccion = list_get(unPCB->instrucciones,unPCB->programCounter);
-	log_info(logger,"Numero de program counter2: %d",unPCB->programCounter);
-	log_info(logger,"Instruccion a ejecutar2 %s",unaInstruccion->identificador);
 	//unPCB->programCounter += 1;
 
 	return unaInstruccion;
@@ -271,14 +271,16 @@ void ejecutar(instruccion* unaInstruccion,t_pcb* pcb){
 				pcb->programCounter += 1;
 				break;
 			case IO:
-				if(primerParametro != TECLADO || primerParametro != PANTALLA){
+				if(primerParametro != TECLADO && primerParametro != PANTALLA){
 					log_info(loggerObligatorio,"“PID: <%d> - Ejecutando: <%s> - <%s> - <%d>",
 							pcb->idProceso, unaInstruccion->identificador,
 							dispositivoIOSegunParametro(primerParametro),
 							segundoParametro);
+					pcb->programCounter += 1;
 					enviar_pcb(pcb, CPU_PCB_A_KERNEL_POR_IO, clienteKernel);//envio pcb por IO general
 
 					enviar_mensaje(dispositivoIOSegunParametro(primerParametro),clienteKernel,CPU_DISPOSITIVO_A_KERNEL);
+
 					enviar_entero(segundoParametro, clienteKernel, CPU_A_KERNEL_UNIDADES_DE_TRABAJO_IO);
 				} else {
 					log_info(loggerObligatorio,"“PID: <%d> - Ejecutando: <%s> - <%s> - <%s>",
@@ -287,15 +289,18 @@ void ejecutar(instruccion* unaInstruccion,t_pcb* pcb){
 							imprimirRegistro(segundoParametro));
 
 					if(primerParametro == TECLADO){
+						pcb->programCounter += 1;
 						enviar_pcb(pcb, CPU_PCB_A_KERNEL_POR_IO_TECLADO, clienteKernel);
 						enviar_entero(segundoParametro, clienteKernel, CPU_A_KERNEL_INGRESAR_VALOR_POR_TECLADO);
 					}else if(primerParametro == PANTALLA){
+						pcb->programCounter += 1;
 						enviar_pcb(pcb, CPU_PCB_A_KERNEL_POR_IO_PANTALLA, clienteKernel);
 						enviar_entero(segundoParametro, clienteKernel, CPU_A_KERNEL_MOSTRAR_REGISTRO_POR_PANTALLA);
 					}
 				}
+				ejecutando = false;
 				log_info(logger,"----------------FINALIZA I/O----------------\n");
-				pcb->programCounter += 1;
+
 				break;
 			case EXT:
 				log_info(loggerObligatorio,"“PID: <%d> - Ejecutando: <%s>",pcb->idProceso,unaInstruccion->identificador);
@@ -318,14 +323,14 @@ void ejecutar(instruccion* unaInstruccion,t_pcb* pcb){
 }
 
 void checkInterrupt(){
-	pthread_mutex_init(&mutexInterrupcion, NULL);
+
 	pthread_create(&hiloInterrupciones, NULL, (void*) escucharInterrupciones,
 			NULL);
 
 	pthread_detach(hiloInterrupciones);
 }
 
-int escucharInterrupciones(){
+void escucharInterrupciones(){
 	log_info(logger, "Cpu escuchando interrupciones");
 		while (1) {
 			int cod_op = recibir_operacion(clienteKernelInterrupt);
@@ -335,13 +340,13 @@ int escucharInterrupciones(){
 				recibir_mensaje(clienteKernelInterrupt);
 				hayInterrupcion = true;
 				pthread_mutex_unlock(&mutexInterrupcion);
-				return EXIT_SUCCESS;
+				//return EXIT_SUCCESS;
 			} else if (cod_op == -1) {
 				log_info(logger, "Se desconecto el kernel. Terminando conexion");
-				return EXIT_SUCCESS;
+				//return EXIT_SUCCESS;
 			}
 		}
-		return EXIT_SUCCESS;
+		//return EXIT_SUCCESS;
 }
 
 bool calculoDireccionLogicaExitoso(int direccionLogica,t_list* listaTablaSegmentos){

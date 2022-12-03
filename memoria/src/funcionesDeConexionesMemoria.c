@@ -106,7 +106,7 @@ int conexionConCpu(void* void_args) {
 }
 
 int conexionConKernel(void* void_args) {
-	int pidActual;
+	//int pidActual;
 
 	// int socket_kernel = iniciar_servidor(IP_MEMORIA,puertoMemoria,"Kernel");
 	log_info(loggerAux, "Memoria lista para recibir a Kernel");
@@ -127,7 +127,7 @@ int conexionConKernel(void* void_args) {
 		switch (cod_op) {
 			case NRO_TP:
 				listaQueContienePidYCantidadSegmentos = recibir_lista_enteros(clienteKernel);
-				pidActual = (int) list_get(listaQueContienePidYCantidadSegmentos,  0);
+				pidActual = (int) list_get(listaQueContienePidYCantidadSegmentos,0);
 				cantidadDeSegmentos = (int) list_get(listaQueContienePidYCantidadSegmentos, 1);
 
 				enviar_entero(contNroTablaDePaginas, clienteKernel, MEMORIA_A_KERNEL_NUMERO_TABLA_PAGINAS);

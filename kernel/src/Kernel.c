@@ -1,7 +1,6 @@
 #include "funcionesKernel.h"
 
 t_list* lista_dispositivos;
-
 t_list *listaTamanioSegmentos;
 
 //t_list* listaDeColasDispositivos;

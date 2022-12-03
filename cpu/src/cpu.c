@@ -51,18 +51,20 @@ int main(int argc, char *argv[]) {
 void ejecucion(void* aa){
 	sem_wait(&pcbRecibido);
 	instruccion* unaInstruccion = malloc(sizeof(instruccion));
-	unaInstruccion = buscarInstruccionAEjecutar(unPcb);
+
 	while (1) {
 		//pthread_mutex_lock(&mutexEjecutar);
 		if(ejecutando){
 			//pthread_mutex_unlock(&mutexEjecutar);
+
+			//log_info(logger,"Dispositivo: %d",unaInstruccion->parametros[0]);
+			unaInstruccion = buscarInstruccionAEjecutar(unPcb);
 			log_info(logger,"Numero de program counter: %d",unPcb->programCounter);
 			log_info(logger,"Instruccion a ejecutar %s",unaInstruccion->identificador);
-			log_info(logger,"Dispositivo: %d",unaInstruccion->parametros[0]);
 			ejecutar(unaInstruccion, unPcb);
-			if(ejecutando){
-				unaInstruccion = buscarInstruccionAEjecutar(unPcb);
-			}
+//			if(ejecutando){
+//				unaInstruccion = buscarInstruccionAEjecutar(unPcb);
+//			}
 		}//else {
 			//pthread_mutex_unlock(&mutexEjecutar);
 		//}

@@ -5,7 +5,7 @@ char** listaDispositivos;
 int main(int argc, char *argv[]) {
 	//pthread_t hiloConexionKernel;
 
-	logger = log_create("./consola.log","CONSOLA",true,LOG_LEVEL_INFO);
+	logger = log_create("./consola.log","CONSOLA",1,LOG_LEVEL_INFO);
 	//Chequeo cantidad de archivos recibidos en el main
 	chequeoCantidadArchivos(argc);
 

@@ -53,6 +53,7 @@ extern char* algoritmoReemplazoTlb;
 extern int cantidadEntradasTlb;
 
 extern pthread_mutex_t mutexEjecutar;
+extern pthread_mutex_t mutexInterrupcion;
 
 typedef struct
 {
@@ -120,7 +121,7 @@ int accederAMemoria(int,int,t_pcb*);
 
 bool haySegFault(int, int,t_list *);
 void checkInterrupt();
-int escucharInterrupciones();
+void escucharInterrupciones();
 
 t_list* inicializarTLB();
 void reiniciarTLB();
