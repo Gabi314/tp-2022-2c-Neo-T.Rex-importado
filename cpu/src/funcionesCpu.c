@@ -343,6 +343,9 @@ void escucharInterrupciones(){
 				//return EXIT_SUCCESS;
 			} else if (cod_op == -1) {
 				log_info(logger, "Se desconecto el kernel. Terminando conexion");
+				sem_t spreenMiCasita;
+				sem_init(&spreenMiCasita,0,0);
+				sem_wait(&spreenMiCasita);
 				//return EXIT_SUCCESS;
 			}
 		}

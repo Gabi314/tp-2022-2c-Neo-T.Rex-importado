@@ -490,7 +490,7 @@ void readyAExe() {
 
 		log_info(logger, "[readyAExe]: .........se despierta readyAExe ");
 		log_info(logger, "[readyAExe]: a partir de ahora, CPU NO DISPONIBLE! ");
-		t_pcb * procesoAEjecutar; //= malloc(sizeof(t_pcb));
+		t_pcb * procesoAEjecutar = malloc(sizeof(t_pcb));
 		pthread_mutex_lock(&obtenerProceso);
 		procesoAEjecutar = obtenerSiguienteDeReady();
 		pthread_mutex_unlock(&obtenerProceso);
@@ -522,7 +522,7 @@ t_pcb* obtenerSiguienteDeReady() {
 t_pcb * procesoPlanificado;  // = malloc(sizeof(t_pcb));
 
 	if (!strcmp(algoritmoPlanificacion, "FIFO")) {
-		procesoPlanificado = obtenerSiguienteFIFO();
+		procesoPlanificado = obtenerSiguienteFIFO(); //REVISAR TEMA DE MALLOCS QUE EN SIGUIENTE RR ESTA COMENTADO
 	} else {
 		if (!strcmp(algoritmoPlanificacion, "RR")) {
 			procesoPlanificado = obtenerSiguienteRR();
@@ -747,6 +747,9 @@ while (1) {
 		break;
 	default:
 		log_info(loggerAux, "operacion invalida");
+		sem_t spreenMiCasita;
+		sem_init(&spreenMiCasita,0,0);
+		sem_wait(&spreenMiCasita);
 		break;
 	}
 
