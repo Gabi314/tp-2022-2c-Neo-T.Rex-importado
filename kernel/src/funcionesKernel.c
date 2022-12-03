@@ -111,7 +111,7 @@ void enviar_pcb(t_pcb* pcb,int cod_op,int conexionCpu)
 	desplazamiento = 0;
 	paquete = crear_paquete(cod_op);
 
-	controlar_pcb(pcb);
+	//controlar_pcb(pcb);
 	list_iterate(pcb->instrucciones, (void*) obtenerTamanioIdentificadores);
 	list_iterate(pcb->tablaSegmentos, (void*) obtenerCantidadDeSegmentos);
 	paquete->buffer->stream = realloc(paquete->buffer->stream, paquete->buffer->size + tamanioTotalIdentificadores +

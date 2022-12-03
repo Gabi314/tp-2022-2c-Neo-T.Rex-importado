@@ -197,8 +197,6 @@ void ejecutar(instruccion* unaInstruccion,t_pcb* pcb){
 					marco = buscarDireccionFisica(pcb);
 					if(marco == -1){// Hay PF
 						bloqueoPorPageFault(pcb);
-						log_info(logger,"Numero de program counter EN MOV IN: %d",pcb->programCounter);
-						log_info(logger,"Instruccion a ejecutar EN MOV IN %s",unaInstruccion->identificador);
 						break;
 					}
 					log_info(logger,"No hizo el break por page fault!!!!");
@@ -207,7 +205,7 @@ void ejecutar(instruccion* unaInstruccion,t_pcb* pcb){
 						,pcb->idProceso
 						,numeroDeSegmento
 						,numeroDePagina
-						,(marco*tamanioDePagina + desplazamiento));
+						,(marco*tamanioDePagina + desplazamientoDePagina));
 
 					enviarDireccionFisica(marco,desplazamientoDePagina,1,-1); //1 valor a leer de memoria y registro -1 porque aca no hay que enviar uno
 
@@ -234,33 +232,41 @@ void ejecutar(instruccion* unaInstruccion,t_pcb* pcb){
 				break;
 			case MOV_OUT:
 				log_info(logger,"----------------EXECUTE MOV_OUT----------------");
-				log_info(loggerObligatorio,"“PID: <%d> - Ejecutando: <%s> - <%d> - <%d>",
+				log_info(loggerObligatorio,"“PID: <%d> - Ejecutando: <%s> - <%d> - <%s>",
 												pcb->idProceso,unaInstruccion->identificador,primerParametro,
-													segundoParametro);
+												imprimirRegistro(segundoParametro));
 				direccionLogica = primerParametro;
 
 				registro = registroAUtilizar(segundoParametro,pcb->registros);//leo el valor del registro primer parametro
 
-				marco = buscarDireccionFisica(pcb);
-				if(marco == -1){// Hay PF
-					bloqueoPorPageFault(pcb);
-					break;
-				}
+				if(calculoDireccionLogicaExitoso(direccionLogica,pcb->tablaSegmentos)){
+					marco = buscarDireccionFisica(pcb);
+					if(marco == -1){// Hay PF
+						bloqueoPorPageFault(pcb);
+						break;
+					}
+					log_info(logger,"No salio!!!!");
+					log_info(loggerObligatorio,
+						"PID: <%d> - Acción: <ESCRIBIR> - Segmento: <%d> - Pagina: <%d> - Dirección Fisica: <%d>"
+						,pcb->idProceso
+						,numeroDeSegmento
+						,numeroDePagina
+						,(marco*tamanioDePagina + desplazamientoDePagina));
+					enviarDireccionFisica(marco,desplazamientoDePagina,0,registro);//con 0 envia la dir fisica para escribir
 
-				log_info(logger,"No salio!!!!");
-				log_info(loggerObligatorio,
-					"PID: <%d> - Acción: <ESCRIBIR> - Segmento: <%d> - Pagina: <%d> - Dirección Fisica: <%d>"
-					,pcb->idProceso
-					,numeroDeSegmento
-					,numeroDePagina
-					,(marco*tamanioDePagina + desplazamiento));
-				enviarDireccionFisica(marco,desplazamientoDePagina,0,registro);//con 0 envia la dir fisica para escribir
+					int cod_op = recibir_operacion(socket_memoria);
 
-				int cod_op = recibir_operacion(socket_memoria);
-
-				if(cod_op == MENSAJE_CPU_MEMORIA){// Recibe que se escribio correctamente el valor en memoria
-					recibir_mensaje(socket_memoria);
-					log_info(logger,"----------------FINALIZA MOV_OUT----------------\n");
+					if(cod_op == MENSAJE_CPU_MEMORIA){// Recibe que se escribio correctamente el valor en memoria
+						recibir_mensaje(socket_memoria);
+						log_info(logger,"----------------FINALIZA MOV_OUT----------------\n");
+					}
+				}else{
+					log_info(logger,"Error: Segmentation Fault (segmento nro: %d)",numeroDeSegmento);//Enviar este mensaje a kernel y devolver pcb
+					enviar_pcb(pcb, CPU_PCB_A_KERNEL_PCB_POR_FINALIZACION, clienteKernel);
+					pthread_mutex_lock(&mutexEjecutar);
+					ejecutando = false;
+					pthread_mutex_unlock(&mutexEjecutar);
+					log_info(logger,"----------------FINALIZA MOV_IN----------------\n");
 				}
 				pcb->programCounter += 1;
 				break;

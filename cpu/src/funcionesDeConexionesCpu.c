@@ -86,7 +86,7 @@ t_pcb* recibir_pcb(int socket_cliente)//ponerla en shared
 	int i = 0;
 	memcpy(&pcb->idProceso, buffer + desplazamiento, sizeof(int));
 	desplazamiento+=sizeof(int);
-
+	log_info(logger,"----------ME LLEGO EL SIGUIENTE PCB-------------");
 	log_info(logger,"PID: %d",pcb->idProceso);
 	memcpy(&contadorInstrucciones, buffer + desplazamiento, sizeof(int));
 	desplazamiento+=sizeof(int);
@@ -203,8 +203,8 @@ void agregarInstruccionesAlPaquete(instruccion* unaInstruccion) {
 	desplazamiento+=longitudId;
 	memcpy(paquete->buffer->stream + desplazamiento, &(unaInstruccion->parametros), sizeof(int[2]));
 	desplazamiento+=sizeof(int[2]);
-	free(unaInstruccion->identificador);
-	free(unaInstruccion);
+	//free(unaInstruccion->identificador);
+	//free(unaInstruccion);
 }
 
 void agregarSegmentosAlPaquete(entradaTablaSegmento* unSegmento){
@@ -235,6 +235,9 @@ void enviarNroTablaDePaginas(t_list* tablaDeSegmentos,int numeroDeSegmento, int 
 
 void enviarDireccionFisica(int marco, int desplazamientoPagina,int leer,int valorDelRegistro){
 	t_paquete* paquete;
+	log_info(logger,"Numero de marco: %d",marco);
+	log_info(logger,"Desplazamiento: %d",desplazamientoPagina);
+
 	if(leer){
 		paquete = crear_paquete(CPU_A_MEMORIA_LEER);
 		agregar_a_paquete_unInt(paquete,&marco,sizeof(marco));
@@ -247,7 +250,7 @@ void enviarDireccionFisica(int marco, int desplazamientoPagina,int leer,int valo
 		log_info(logger,"Le envio a memoria el valor del registro: %d a escribir",valorDelRegistro);
 	}
 
-	log_info(logger,"Le envio a memoria direccion fisica: Marco:%d y Offset: %d",marco,desplazamiento);
+	log_info(logger,"Le envio a memoria direccion fisica: Marco:%d y Offset: %d",marco,desplazamientoPagina);
 	enviar_paquete(paquete,socket_memoria);
 	eliminar_paquete(paquete);
 }

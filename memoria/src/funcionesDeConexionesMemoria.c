@@ -66,6 +66,7 @@ int conexionConCpu(void* void_args) {
 				log_info(loggerAux, "-------------------MOV_IN-------------------");
 
 				uint32_t numeroALeer = leerElPedido(numeroDeMarco, desplazamiento);
+
 				enviar_entero(numeroALeer, clienteCpu, MEMORIA_A_CPU_NUMERO_LEIDO);
 
 				log_info(loggerAux, "Envio a cpu el valor leido: %u", numeroALeer);

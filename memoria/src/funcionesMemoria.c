@@ -472,10 +472,10 @@ void cargarPagina(entradaTablaPaginas* unaEntrada) {
 
 void escribirElPedido(uint32_t datoAEscribir, int marco, int desplazamiento) {
 	usleep(retardoMemoria);
-	int posicionDeDatoAEscribir = marco * tamanioDePagina + desplazamiento;
-	memcpy(&memoria+posicionDeDatoAEscribir, &datoAEscribir, sizeof(uint32_t));
+	int posicion = marco * tamanioDePagina + desplazamiento;
+	memcpy(&memoria+posicion, &datoAEscribir, sizeof(uint32_t));
 
-	log_info(logger, "PID: <%d> - Acción: <ESCRIBIR> - Dirección física: <%d>", pidActual, posicionDeDatoAEscribir);
+	log_info(logger, "PID: <%d> - Acción: <ESCRIBIR> - Dirección física: <%d>", pidActual, posicion);
 
 	entradaTablaPaginas* entradaAEscribir = entradaCargadaConMarcoAsignado(marco);
 	entradaAEscribir->modificado = 1;
