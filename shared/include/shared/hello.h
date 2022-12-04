@@ -170,7 +170,7 @@ void liberar_conexion(int);
 
 char** recibirListaDispositivos(int);
 
-t_pcb* recibir_pcb(int);
+//t_pcb* recibir_pcb(int);
 
 void iteratorMostrarInstrucciones(instruccion* instruccion);
 

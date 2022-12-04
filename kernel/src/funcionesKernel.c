@@ -114,9 +114,15 @@ void enviar_pcb(t_pcb* pcb,int cod_op,int conexionCpu)
 	//controlar_pcb(pcb);
 	list_iterate(pcb->instrucciones, (void*) obtenerTamanioIdentificadores);
 	list_iterate(pcb->tablaSegmentos, (void*) obtenerCantidadDeSegmentos);
-	paquete->buffer->stream = realloc(paquete->buffer->stream, paquete->buffer->size + tamanioTotalIdentificadores +
-										contadorInstrucciones*sizeof(int[2]) + contadorInstrucciones*sizeof(int) +
-											5*sizeof(int)+ sizeof(t_registros) + contadorSegmentos*sizeof(entradaTablaSegmento) + sizeof(int));
+	paquete->buffer->stream = realloc(paquete->buffer->stream,
+			paquete->buffer->size + tamanioTotalIdentificadores
+					+ contadorInstrucciones * sizeof(int[2])
+					+ contadorInstrucciones * sizeof(int)
+					+ 5 * sizeof(int)
+					+ sizeof(t_registros)
+					+ contadorSegmentos * sizeof(entradaTablaSegmento)
+					+ sizeof(t_estado)
+					+ sizeof(t_algoritmo_pcb));
 	memcpy(paquete->buffer->stream + desplazamiento, &(pcb->idProceso), sizeof(int));
 	desplazamiento+=sizeof(int);
 	memcpy(paquete->buffer->stream + desplazamiento, &contadorInstrucciones, sizeof(int));
@@ -130,7 +136,7 @@ void enviar_pcb(t_pcb* pcb,int cod_op,int conexionCpu)
 	desplazamiento+=sizeof(int);
 	list_iterate(pcb->tablaSegmentos, (void*) agregarSegmentosAlPaquete);
 
-	log_info(loggerAux,"cont seg: %d",contadorSegmentos);
+	//log_info(loggerAux,"cont seg: %d",contadorSegmentos);
 	memcpy(paquete->buffer->stream + desplazamiento, &(pcb->socket), sizeof(int));
 	desplazamiento+=sizeof(int);
 	memcpy(paquete->buffer->stream + desplazamiento, &(pcb->estado), sizeof(int));
@@ -520,11 +526,14 @@ void readyAExe() {
 t_pcb* obtenerSiguienteDeReady() {
 
 t_pcb * procesoPlanificado;  // = malloc(sizeof(t_pcb));
+	log_info(loggerAux,"Algoritmo de plani: %s antes de entrar al if",algoritmoPlanificacion);
 
-	if (!strcmp(algoritmoPlanificacion, "FIFO")) {
+	if (!strcmp(algoritmoPlanificacion,"FIFO")) {
+		log_info(loggerAux,"Entra al if por fifo");
 		procesoPlanificado = obtenerSiguienteFIFO(); //REVISAR TEMA DE MALLOCS QUE EN SIGUIENTE RR ESTA COMENTADO
 	} else {
 		if (!strcmp(algoritmoPlanificacion, "RR")) {
+			log_info(loggerAux,"Entra al if por rr");
 			procesoPlanificado = obtenerSiguienteRR();
 		} else {
 			if(!strcmp(algoritmoPlanificacion, "Feedback")){
@@ -1000,7 +1009,7 @@ t_pcb* recibir_pcb(int socket_cliente)//ponerla en shared
 	int i = 0;
 	memcpy(&pcb->idProceso, buffer + desplazamiento, sizeof(int));
 	desplazamiento+=sizeof(int);
-
+	log_info(logger,"----------ME LLEGO EL SIGUIENTE PCB-------------");
 	log_info(loggerAux,"PID: %d",pcb->idProceso);
 	memcpy(&contadorInstrucciones, buffer + desplazamiento, sizeof(int));
 	desplazamiento+=sizeof(int);
@@ -1015,20 +1024,20 @@ t_pcb* recibir_pcb(int socket_cliente)//ponerla en shared
 		memcpy(unaInstruccion->parametros, buffer+desplazamiento, sizeof(int[2]));
 		desplazamiento+=sizeof(int[2]);
 		list_add(pcb -> instrucciones, unaInstruccion);
-		log_info(loggerAux,"Instruccion: %s",unaInstruccion->identificador);
-		log_info(loggerAux,"Primer parametro: %d",unaInstruccion->parametros[0]);
+		//log_info(loggerAux,"Instruccion: %s",unaInstruccion->identificador);
+		//log_info(loggerAux,"Primer parametro: %d",unaInstruccion->parametros[0]);
 		i++;
 	}
 	memcpy(&pcb->programCounter, buffer + desplazamiento, sizeof(int));
 	desplazamiento+=sizeof(int);
-	log_info(loggerAux,"program counter: %d",pcb->programCounter);
+	log_info(loggerAux,"Con program counter: %d",pcb->programCounter);
 	memcpy(&pcb->registros, buffer + desplazamiento, sizeof(t_registros));
 	desplazamiento+=sizeof(t_registros);
-	log_info(loggerAux,"Registro AX: %d y DX: %d",pcb->registros.AX,pcb->registros.DX);
+	//log_info(loggerAux,"Registro AX: %d y DX: %d",pcb->registros.AX,pcb->registros.DX);
 	memcpy(&contadorSegmentos, buffer + desplazamiento, sizeof(int));
 	desplazamiento+=sizeof(int);
 	i=0;
-	log_info(loggerAux,"cont seg: %d",contadorSegmentos);
+	//log_info(loggerAux,"cont seg: %d",contadorSegmentos);
 	while(i < contadorSegmentos){
 		entradaTablaSegmento* unSegmento = malloc(sizeof(entradaTablaSegmento));
 		memcpy(&(unSegmento->numeroSegmento),buffer + desplazamiento, sizeof(int));
@@ -1037,7 +1046,7 @@ t_pcb* recibir_pcb(int socket_cliente)//ponerla en shared
 		desplazamiento+=sizeof(int);
 		memcpy(&(unSegmento->tamanioSegmento),buffer + desplazamiento, sizeof(int));
 		desplazamiento+=sizeof(int);
-		log_info(loggerAux,"Nro: %d, numero tabla paginas %d, tamanio segmento %d",unSegmento->numeroSegmento,unSegmento->numeroTablaPaginas,unSegmento->tamanioSegmento);
+		//log_info(loggerAux,"Nro: %d, numero tabla paginas %d, tamanio segmento %d",unSegmento->numeroSegmento,unSegmento->numeroTablaPaginas,unSegmento->tamanioSegmento);
 		list_add(pcb->tablaSegmentos,unSegmento);
 		i++;
 	}
@@ -1047,7 +1056,7 @@ t_pcb* recibir_pcb(int socket_cliente)//ponerla en shared
 	desplazamiento+=sizeof(t_estado);
 	memcpy(&pcb->algoritmoActual, buffer + desplazamiento, sizeof(t_algoritmo_pcb));
 	desplazamiento+=sizeof(int);
-	log_info(loggerAux,"Estado: %d",pcb->estado);
+	//log_info(loggerAux,"Estado: %d",pcb->estado);
 	free(buffer);
 	return pcb;
 }

@@ -93,13 +93,13 @@ typedef enum
 extern t_log* logger;
 extern t_config* config;
 
-extern t_pcb* unPcb;
+extern t_pcb* pcb;
 extern char** listaDispositivos;
 
 //----------------------------DECLARO FUNCIONES
 int chequeoCantidadArchivos(int);
 void inicializarConfiguraciones(char*);
-t_pcb* recibir_pcb(int);
+void recibir_pcb(int);
 void obtenerTamanioIdentificadores(instruccion*);
 void agregarInstruccionesAlPaquete(instruccion*);
 
@@ -134,8 +134,10 @@ void iterator(instruccion*);
 
 //----------------------------FUNCIONES DE CONEXIONES
 void conexionConKernelDispatch();
-int conexionConMemoria(void);
+void handshakeMemoria();
 void enviar_pcb(t_pcb*,int,int);
+
+void * recibir_buffer_cpu(int*, int);
 
 extern pthread_t hiloInterrupciones;
 extern sem_t pcbRecibido;

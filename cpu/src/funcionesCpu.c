@@ -283,7 +283,7 @@ void ejecutar(instruccion* unaInstruccion,t_pcb* pcb){
 
 					enviar_entero(segundoParametro, clienteKernel, CPU_A_KERNEL_UNIDADES_DE_TRABAJO_IO);
 				} else {
-					log_info(loggerObligatorio,"“PID: <%d> - Ejecutando: <%s> - <%s> - <%s>",
+					log_info(loggerObligatorio,"PID: <%d> - Ejecutando: <%s> - <%s> - <%s>",
 							pcb->idProceso, unaInstruccion->identificador,
 							dispositivoIOSegunParametro(primerParametro),
 							imprimirRegistro(segundoParametro));
@@ -369,7 +369,7 @@ int buscarDireccionFisica(t_pcb* pcb){
 		return accederAMemoria(marco,numeroDeSegmento,pcb);
 	}
 
-	usleep(retardoDeInstruccion);
+	//usleep(retardoDeInstruccion);
 	return marco;
 }
 
@@ -461,8 +461,8 @@ void leerTamanioDePaginaYCantidadDeEntradas(t_list* listaQueContieneTamanioDePag
 	tamanioDePagina = (int) list_get(listaQueContieneTamanioDePagYEntradas,0);
 	entradasPorTabla = (int) list_get(listaQueContieneTamanioDePagYEntradas,1);
 
-	log_info(logger,"tamanio de pagina: %d ",tamanioDePagina);
-	log_info(logger,"entradas por tabla: %d \n",entradasPorTabla);
+	log_info(logger,"tamanio de pagina: %d",tamanioDePagina);
+	log_info(logger,"entradas por tabla: %d",entradasPorTabla);
 }
 
 void bloqueoPorPageFault(t_pcb* pcb){
@@ -470,15 +470,16 @@ void bloqueoPorPageFault(t_pcb* pcb){
 	ejecutando = false;
 	pthread_mutex_unlock(&mutexEjecutar);
 	//pcb->programCounter -= 1;
+	log_info(loggerObligatorio, "Page Fault PID: <%d> - Segmento: <%d> - Pagina: <%d>",
+			pcb->idProceso, numeroDeSegmento, numeroDePagina);
 
 	enviar_pcb(pcb, CPU_A_KERNEL_PCB_PAGE_FAULT,clienteKernel);
 	t_paquete *paquetePageFault = crear_paquete(CPU_A_KERNEL_PAGINA_PF);
 
-	agregar_a_paquete_unInt(paquetePageFault, &numeroDePagina, sizeof(numeroDePagina));
-	agregar_a_paquete_unInt(paquetePageFault, &numeroDeSegmento,sizeof(numeroDeSegmento));//COMENTADO PARA PROBAR MEMORIA Y CPU
+	agregar_a_paquete_unInt(paquetePageFault, &numeroDePagina, sizeof(int));
+	agregar_a_paquete_unInt(paquetePageFault, &numeroDeSegmento,sizeof(int));
 
-	log_info(loggerObligatorio, "Page Fault PID: <%d> - Segmento: <%d> - Pagina: <%d>",
-			pcb->idProceso, numeroDeSegmento, numeroDePagina);
+
 	log_info(logger, "Envio el pcb a kernel por PF");
 
 	enviar_paquete(paquetePageFault, clienteKernel);

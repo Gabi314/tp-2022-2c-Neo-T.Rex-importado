@@ -16,19 +16,20 @@ int contadorSegmentos;
 int desplazamiento;
 t_paquete* paquete;
 
+t_pcb* pcb;
+
 //-----------------------FUNCIONES
+
 void conexionConKernelDispatch(){//un hilo
-	static pthread_mutex_t mutexMensajes;// usar
-
-
+	//static pthread_mutex_t mutexMensajes;// usar
 	//int salirDelWhile = 0;
 	while (1) {
-		log_info(logger,"Esperando PCB");
+		//log_info(logger,"Esperando PCB");
 		int cod_op = recibir_operacion(clienteKernel);
 
 		if(cod_op == KERNEL_PCB_A_CPU){
 
-			unPcb = recibir_pcb(clienteKernel);
+			recibir_pcb(clienteKernel);
 			pthread_mutex_lock(&mutexInterrupcion);
 			hayInterrupcion = false;
 			pthread_mutex_unlock(&mutexInterrupcion);
@@ -49,7 +50,7 @@ void conexionConKernelDispatch(){//un hilo
 	//return EXIT_SUCCESS;
 }
 
-int conexionConMemoria(void){
+void handshakeMemoria(){
 
 	// Creamos una conexión hacia el servidor
     socket_memoria = crear_conexion(ipMemoria, puertoMemoria);
@@ -63,25 +64,22 @@ int conexionConMemoria(void){
 
 	if(cod_op == TAM_PAGINAS_Y_CANT_ENTRADAS){
 		listaQueContieneTamanioDePagYEntradas = recibir_lista_enteros(socket_memoria);
+	}else{
+		log_error(logger, "codigo incorrecto recibido de memoria");
 	}
 
-	int a = list_get(listaQueContieneTamanioDePagYEntradas,0);
-	log_info(logger,"%d",a);
-
 	leerTamanioDePaginaYCantidadDeEntradas(listaQueContieneTamanioDePagYEntradas);
-
-	return EXIT_SUCCESS;
 }
 
 
-t_pcb* recibir_pcb(int socket_cliente)//ponerla en shared
+void recibir_pcb(int socket_cliente)//ponerla en shared
 {
 	int size;
 	int desplazamiento = 0;
 	void * buffer;
 
 	buffer = recibir_buffer(&size, socket_cliente);
-	t_pcb* pcb = malloc(sizeof(t_pcb));
+	pcb = malloc(sizeof(t_pcb));
 	pcb->instrucciones = list_create();
 	pcb->tablaSegmentos = list_create();
 	int contadorInstrucciones = 0;
@@ -104,20 +102,20 @@ t_pcb* recibir_pcb(int socket_cliente)//ponerla en shared
 		memcpy(unaInstruccion->parametros, buffer+desplazamiento, sizeof(int[2]));
 		desplazamiento+=sizeof(int[2]);
 		list_add(pcb -> instrucciones, unaInstruccion);
-		log_info(logger,"Instruccion: %s",unaInstruccion->identificador);
-		log_info(logger,"Primer parametro: %d",unaInstruccion->parametros[0]);
+		//log_info(logger,"Instruccion: %s",unaInstruccion->identificador);
+		//log_info(logger,"Primer parametro: %d",unaInstruccion->parametros[0]);
 		i++;
 	}
 	memcpy(&pcb->programCounter, buffer + desplazamiento, sizeof(int));
 	desplazamiento+=sizeof(int);
-	log_info(logger,"program counter: %d",pcb->programCounter);
+	log_info(logger,"Con program counter: %d",pcb->programCounter);
 	memcpy(&pcb->registros, buffer + desplazamiento, sizeof(t_registros));
 	desplazamiento+=sizeof(t_registros);
-	log_info(logger,"Registro AX: %d y DX: %d",pcb->registros.AX,pcb->registros.DX);
+	//log_info(logger,"Registro AX: %d y DX: %d",pcb->registros.AX,pcb->registros.DX);
 	memcpy(&contadorSegmentos, buffer + desplazamiento, sizeof(int));
 	desplazamiento+=sizeof(int);
 	i=0;
-	log_info(logger,"cont seg: %d",contadorSegmentos);
+	//log_info(logger,"cont seg: %d",contadorSegmentos);
 	while(i < contadorSegmentos){
 		entradaTablaSegmento* unSegmento = malloc(sizeof(entradaTablaSegmento));
 		memcpy(&(unSegmento->numeroSegmento),buffer + desplazamiento, sizeof(int));
@@ -126,7 +124,7 @@ t_pcb* recibir_pcb(int socket_cliente)//ponerla en shared
 		desplazamiento+=sizeof(int);
 		memcpy(&(unSegmento->tamanioSegmento),buffer + desplazamiento, sizeof(int));
 		desplazamiento+=sizeof(int);
-		log_info(logger,"Nro: %d, numero tabla paginas %d, tamanio segmento %d",unSegmento->numeroSegmento,unSegmento->numeroTablaPaginas,unSegmento->tamanioSegmento);
+		//log_info(logger,"Nro: %d, numero tabla paginas %d, tamanio segmento %d",unSegmento->numeroSegmento,unSegmento->numeroTablaPaginas,unSegmento->tamanioSegmento);
 		list_add(pcb->tablaSegmentos,unSegmento);
 		i++;
 	}
@@ -134,11 +132,11 @@ t_pcb* recibir_pcb(int socket_cliente)//ponerla en shared
 	desplazamiento+=sizeof(int);
 	memcpy(&(pcb->estado), buffer + desplazamiento, sizeof(t_estado));
 	desplazamiento+=sizeof(t_estado);
-	memcpy(&(pcb->algoritmoActual), buffer + desplazamiento, sizeof(t_estado));
+	memcpy(&(pcb->algoritmoActual), buffer + desplazamiento, sizeof(t_algoritmo_pcb));
 	desplazamiento+=sizeof(t_algoritmo_pcb);
-	log_info(logger,"Estado: %d",pcb->estado);
+	//log_info(logger,"Estado: %d",pcb->estado);
 	free(buffer);
-	return pcb;
+	//return pcb;
 }
 
 
@@ -160,11 +158,13 @@ void enviar_pcb(t_pcb* pcb,int cod_op,int clienteKernel)
 					+ contadorInstrucciones * sizeof(int) + 5 * sizeof(int)
 					+ sizeof(t_registros)
 					+ contadorSegmentos * sizeof(entradaTablaSegmento)
-					+ sizeof(int));
+					+ sizeof(t_estado)
+					+ sizeof(t_algoritmo_pcb));
 	memcpy(paquete->buffer->stream + desplazamiento, &(pcb->idProceso), sizeof(int));
 	desplazamiento+=sizeof(int);
 	memcpy(paquete->buffer->stream + desplazamiento, &contadorInstrucciones, sizeof(int));
 	desplazamiento+=sizeof(int);
+	log_info(logger,"Pasa el realloc");
 	list_iterate(pcb->instrucciones, (void*) agregarInstruccionesAlPaquete);
 	memcpy(paquete->buffer->stream + desplazamiento, &(pcb->programCounter), sizeof(int));
 	desplazamiento+=sizeof(int);
@@ -173,7 +173,7 @@ void enviar_pcb(t_pcb* pcb,int cod_op,int clienteKernel)
 	memcpy(paquete->buffer->stream + desplazamiento, &contadorSegmentos, sizeof(int));//ver tema contador
 	desplazamiento+=sizeof(int);
 	list_iterate(pcb->tablaSegmentos, (void*) agregarSegmentosAlPaquete);
-	log_info(logger,"cont seg: %d",contadorSegmentos);
+
 	memcpy(paquete->buffer->stream + desplazamiento, &(pcb->socket), sizeof(int));
 	desplazamiento+=sizeof(int);
 	memcpy(paquete->buffer->stream + desplazamiento, &(pcb->estado), sizeof(int));
@@ -184,7 +184,7 @@ void enviar_pcb(t_pcb* pcb,int cod_op,int clienteKernel)
 
 	enviar_paquete(paquete, clienteKernel);
 	eliminar_paquete(paquete);
-	//free(pcb); en realidad se libera al finalizar el proceso
+	free(pcb); //en realidad se libera al finalizar el proceso
 }
 
 void obtenerTamanioIdentificadores(instruccion* unaInstruccion) {
@@ -217,7 +217,7 @@ void agregarSegmentosAlPaquete(entradaTablaSegmento* unSegmento){
 	desplazamiento+=sizeof(int);
 	memcpy(paquete->buffer->stream + desplazamiento, &(unSegmento->tamanioSegmento), sizeof(int));
 	desplazamiento+=sizeof(int);
-	free(unSegmento);
+	//free(unSegmento);
 }
 
 void enviarNroTablaDePaginas(t_list* tablaDeSegmentos,int numeroDeSegmento, int socket_memoria, int numeroDePagina) {

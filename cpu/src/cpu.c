@@ -2,7 +2,7 @@
 
 bool ejecutando;
 char** listaDispositivos;
-t_pcb* unPcb;
+
 pthread_mutex_t mutexEjecutar;
 
 int main(int argc, char *argv[]) {
@@ -17,21 +17,21 @@ int main(int argc, char *argv[]) {
 
 	tlb = inicializarTLB();
 
+	handshakeMemoria();
+
 	int server_dispatch = iniciar_servidor(IP_CPU,puertoDeEscuchaDispatch,"Kernel");
 	log_info(logger,"Cpu lista para recibir a kernel");
 	clienteKernel = esperar_cliente(server_dispatch,"Kernel");
 
-	listaDispositivos = recibirListaDispositivos(clienteKernel);//verificar que los reciba bien
-
 	int server_interrupt = iniciar_servidor(IP_CPU, puertoDeEscuchaInterrupt,"Kernel");
 	clienteKernelInterrupt = esperar_cliente(server_interrupt, "Kernel por interrupt");
+
+	listaDispositivos = recibirListaDispositivos(clienteKernel);//verificar que los reciba bien
 
 	pthread_t hiloRecibirPcb;
 
 	pthread_create(&hiloRecibirPcb, NULL, (void*) conexionConKernelDispatch, NULL);
 	pthread_detach(hiloRecibirPcb);
-
-	conexionConMemoria();
 
 	checkInterrupt();
 
@@ -53,15 +53,13 @@ void ejecucion(void* aa){
 	instruccion* unaInstruccion = malloc(sizeof(instruccion));
 
 	while (1) {
+
 		//pthread_mutex_lock(&mutexEjecutar);
 		if(ejecutando){
 			//pthread_mutex_unlock(&mutexEjecutar);
-
-			//log_info(logger,"Dispositivo: %d",unaInstruccion->parametros[0]);
-			unaInstruccion = buscarInstruccionAEjecutar(unPcb);
-			log_info(logger,"Numero de program counter: %d",unPcb->programCounter);
+			unaInstruccion = buscarInstruccionAEjecutar(pcb);
 			log_info(logger,"Instruccion a ejecutar %s",unaInstruccion->identificador);
-			ejecutar(unaInstruccion, unPcb);
+			ejecutar(unaInstruccion, pcb);
 //			if(ejecutando){
 //				unaInstruccion = buscarInstruccionAEjecutar(unPcb);
 //			}

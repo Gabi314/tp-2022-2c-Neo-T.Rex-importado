@@ -15,6 +15,7 @@ void agregarEntradaATLB(int marco, int pagina, int pid, int numeroDeSegmento){
 	log_info(logger, "<PID: %d> Se agrega la pagina %d perteneciente al segmento %d con marco %d a tlb",
 			pid, pagina, numeroDeSegmento, marco);
 	list_add(tlb,unaEntrada);
+	free(unaEntrada);
 
 	imprimirEntradasTLB();
 }
@@ -96,7 +97,6 @@ void limpiarEntradasTLB(int pid){
 
 void imprimirEntradasTLB(){
 	entradaTLB* unaEntradaTLB = malloc(sizeof(entradaTLB));
-
 	for(int i = 0; i < list_size(tlb); i++){
 		unaEntradaTLB = list_get(tlb,i);
 		log_info(logger,
@@ -107,5 +107,6 @@ void imprimirEntradasTLB(){
 				, unaEntradaTLB->nroDePagina
 				, unaEntradaTLB->nroDeMarco);
 	}
+	free(unaEntradaTLB);
 }
 

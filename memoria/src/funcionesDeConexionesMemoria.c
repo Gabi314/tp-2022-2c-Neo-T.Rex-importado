@@ -237,6 +237,7 @@ int server_escuchar(t_log* logger, char* server_nombre, char* cliente_nombre, in
 			pthread_create(&hilo, NULL, (void*) conexionConCpu, (void*) args);
 		}
         pthread_detach(hilo);
+        //pthread_detach(hiloCpu);
         return 1;
     }
     return 0;
