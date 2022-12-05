@@ -724,7 +724,10 @@ while (1) {
 		}
 
 		t_list * listaTPyNroPag = list_create();
-		listaTPyNroPag = recibir_lista_enteros(conexionCpuDispatch);
+		listaTPyNroPag = recibir_lista_enteros(conexionCpuDispatch); //Nro de la pagina y nro de segmento que esta mal
+
+		log_info(logger,"Numero de tabla de paginas: %d",list_get(listaTPyNroPag,0));
+		log_info(logger,"Numero de paginas: %d",list_get(listaTPyNroPag,1));
 
 		t_info_pf * aMandarPF = malloc(sizeof(t_info_pf));
 
@@ -957,8 +960,19 @@ void atender_page_fault(t_info_pf* infoPF){
 	enviar_mensaje("kernel solicita que se cargue en memoria la pagina correspondiente",socketMemoria, KERNEL_MENSAJE_SOLICITUD_CARGAR_PAGINA);
 	log_info(loggerAux,"Antes mensaje");
 	t_paquete * paquete = crear_paquete(KERNEL_A_MEMORIA_PAGE_FAULT);
-	int numeroTablaPagina = list_get(listaTPyNroPag,0);
-	int numeroDePagina = list_get(listaTPyNroPag,1);
+
+	int numeroDelSegmento = list_get(listaTPyNroPag,1);
+	int numeroTablaPagina;
+	entradaTablaSegmento* unaEntradaSegmento = malloc(sizeof(entradaTablaSegmento));
+
+	for(int i=0;i<list_size(pcb->tablaSegmentos);i++){
+		unaEntradaSegmento = list_get(pcb->tablaSegmentos,i);
+		if(numeroDelSegmento == unaEntradaSegmento->numeroSegmento){
+			numeroTablaPagina = unaEntradaSegmento->numeroTablaPaginas;
+		}
+	}
+
+	int numeroDePagina = list_get(listaTPyNroPag,0);
 			agregar_a_paquete_unInt(paquete, &numeroTablaPagina, sizeof(int));
 			agregar_a_paquete_unInt(paquete, &numeroDePagina, sizeof(int));
 			enviar_paquete(paquete,socketMemoria);

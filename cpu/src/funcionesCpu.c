@@ -126,10 +126,10 @@ char* imprimirRegistro(registros unRegistro){//poner en shared si sirve para ker
 		return "BX";
 	}
 	if(unRegistro == CX){
-		return "DX";
+		return "CX";
 	}
 	if(unRegistro == DX){
-		return "CX";
+		return "DX";
 	}
 	return NULL;
 }
@@ -232,7 +232,7 @@ void ejecutar(instruccion* unaInstruccion,t_pcb* pcb){
 				break;
 			case MOV_OUT:
 				log_info(logger,"----------------EXECUTE MOV_OUT----------------");
-				log_info(loggerObligatorio,"“PID: <%d> - Ejecutando: <%s> - <%d> - <%s>",
+				log_info(loggerObligatorio,"PID: <%d> - Ejecutando: <%s> - <%d> - <%s>",
 												pcb->idProceso,unaInstruccion->identificador,primerParametro,
 												imprimirRegistro(segundoParametro));
 				direccionLogica = primerParametro;
@@ -419,6 +419,7 @@ bool haySegFault(int numeroDeSegmento, int desplazamientoSegmento,t_list * lista
 int accederAMemoria(int marco,int numeroDeSegmento,t_pcb* pcb){
 
 	log_info(logger,"La pagina no se encuentra en tlb, se debera acceder a memoria(tabla de paginas)");
+	log_info(logger,"hasta aca llego en acceder a memoria");
 	enviarNroTablaDePaginas(pcb->tablaSegmentos,numeroDeSegmento,socket_memoria,numeroDePagina);//Envio nroTP y nroDePag(los obtengo con nro de segmento de la tabla de segmentos)
 
 	int seAccedeAMemoria = 1;

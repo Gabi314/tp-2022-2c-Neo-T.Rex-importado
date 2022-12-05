@@ -14,8 +14,21 @@ void agregarEntradaATLB(int marco, int pagina, int pid, int numeroDeSegmento){
 
 	log_info(logger, "<PID: %d> Se agrega la pagina %d perteneciente al segmento %d con marco %d a tlb",
 			pid, pagina, numeroDeSegmento, marco);
+
 	list_add(tlb,unaEntrada);
-	free(unaEntrada);
+
+//	int i=0;
+//
+//	if(i<2){
+		entradaTLB* unaEntradaAux = list_get(tlb,0);
+
+		log_info(logger,"Numero de marco es: %d",unaEntradaAux->nroDeMarco);
+		log_info(logger,"Numero de pagina es: %d",unaEntradaAux->nroDePagina);
+//	}
+//	i++;
+
+//	free(unaEntrada); ANTES CUANDO ESTABA ESTE FREE, EL IMPRIMIR TE TIRABA BASURA, AHORA LO QUE HACE ES TIRA REPETIDAS VECES LA ULTIMA ENTRADA CARGADA
+
 
 	imprimirEntradasTLB();
 }
@@ -96,7 +109,7 @@ void limpiarEntradasTLB(int pid){
 }
 
 void imprimirEntradasTLB(){
-	entradaTLB* unaEntradaTLB = malloc(sizeof(entradaTLB));
+	entradaTLB* unaEntradaTLB; //= malloc(sizeof(entradaTLB));
 	for(int i = 0; i < list_size(tlb); i++){
 		unaEntradaTLB = list_get(tlb,i);
 		log_info(logger,
@@ -107,6 +120,6 @@ void imprimirEntradasTLB(){
 				, unaEntradaTLB->nroDePagina
 				, unaEntradaTLB->nroDeMarco);
 	}
-	free(unaEntradaTLB);
+	//free(unaEntradaTLB);
 }
 

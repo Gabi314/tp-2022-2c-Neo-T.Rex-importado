@@ -143,9 +143,14 @@ int conexionConKernel(void* void_args) {
 				numeroTablaDePaginas = (int) list_get(listaQueContieneNumTablaYPagina, 0);
 				numeroPagina = (int) list_get(listaQueContieneNumTablaYPagina, 1);
 
+				log_info(logger,"Numero de pagina: %d",numeroTablaDePaginas);
+				log_info(logger,"Numero de pagina: %d",numeroPagina);
+				log_info(logger,"Cantidad entradas: %d",entradasPorTabla);
+
 				if(numeroPagina < entradasPorTabla) {
 					tablaDePaginas* unaTablaDePaginas = malloc(sizeof(tablaDePaginas));
 					entradaTablaPaginas* unaEntrada = malloc(sizeof(entradaTablaPaginas));
+					log_info(logger,"Entro aca?");
 					unaTablaDePaginas = list_get(listaTablaDePaginas, numeroTablaDePaginas);
 					unaEntrada = list_get(unaTablaDePaginas->entradas, numeroPagina);
 					cargarPagina(unaEntrada);

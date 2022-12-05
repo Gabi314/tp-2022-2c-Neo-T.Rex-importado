@@ -1,14 +1,14 @@
 #include "funcionesCpu.h"
 
-void agregarEntradaATLB(int marco, int pagina, int pid, int numeroDeSegmento);
+void agregarEntradaATLB(int,int,int,int);
 
-void reemplazarPagina(int pagina,int marco ,int indice, int numeroDeSegmento);
+void reemplazarPagina(int,int,int,int);
 
-void algoritmosDeReemplazoTLB(int pagina,int marco,int pid, int numeroDeSegmento);
+void algoritmosDeReemplazoTLB(int,int,int,int);
 
 t_list* inicializarTLB();
 
-void limpiarEntradasTLB(int pid);
+void limpiarEntradasTLB(int);
 
 void imprimirEntradasTLB();
 
