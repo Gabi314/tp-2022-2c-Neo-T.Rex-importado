@@ -1,5 +1,4 @@
 #include "funcionesCpu.h"
-#include "tlb.h"
 
 //------------------DECLARO VARIABLES
 t_log* logger;
@@ -331,6 +330,8 @@ void checkInterrupt(){
 }
 
 void escucharInterrupciones(){
+	int server_interrupt = iniciar_servidor(IP_CPU, puertoDeEscuchaInterrupt,"Kernel");
+	clienteKernelInterrupt = esperar_cliente(server_interrupt, "Kernel por interrupt");
 	log_info(logger, "Cpu escuchando interrupciones");
 		while (1) {
 			int cod_op = recibir_operacion(clienteKernelInterrupt);
@@ -374,7 +375,7 @@ int buscarDireccionFisica(t_pcb* pcb){
 }
 
 int chequearMarcoEnTLB(int nroDePagina, int nroDeSegmento,int pid){
-	entradaTLB* unaEntradaTLB = malloc(sizeof(entradaTLB));
+	entradaTLB* unaEntradaTLB;
 	int marco = -1;
 
 	for(int i=0;i < list_size(tlb);i++){
@@ -390,11 +391,11 @@ int chequearMarcoEnTLB(int nroDePagina, int nroDeSegmento,int pid){
 					"PID: <%d> - TLB HIT - Segmento: <%d> - Pagina: <%d>", pid,
 					nroDeSegmento, nroDePagina);
 
-			free(unaEntradaTLB);
+			//free(unaEntradaTLB);
 			return marco; // se puede almacenar este valor en una variable y retornarlo fuera del for
 		}
 	}
-	free(unaEntradaTLB);
+	//free(unaEntradaTLB);
 	log_info(loggerObligatorio,
 			"PID: <%d> - TLB MISS - Segmento: <%d> - Pagina: <%d>", pid,
 			nroDeSegmento, nroDePagina);
@@ -424,7 +425,7 @@ int accederAMemoria(int marco,int numeroDeSegmento,t_pcb* pcb){
 
 	int seAccedeAMemoria = 1;
 
-	while (seAccedeAMemoria == 1) {
+	//while (seAccedeAMemoria == 1) {
 		int cod_op = recibir_operacion(socket_memoria);
 
 		switch (cod_op){
@@ -436,7 +437,7 @@ int accederAMemoria(int marco,int numeroDeSegmento,t_pcb* pcb){
 
 				if(list_size(tlb) < cantidadEntradasTlb){
 					agregarEntradaATLB(marco,numeroDePagina,pcb->idProceso,numeroDeSegmento);
-					sleep(1);// Para que espere haya 1 seg de diferencia( a veces pasa que se agregan en el mismo seg y jode los algoritmos)
+					//sleep(1);// Para que espere haya 1 seg de diferencia( a veces pasa que se agregan en el mismo seg y jode los algoritmos)
 				}else{
 					algoritmosDeReemplazoTLB(numeroDePagina,marco,pcb->idProceso,numeroDeSegmento);
 				}
@@ -451,7 +452,7 @@ int accederAMemoria(int marco,int numeroDeSegmento,t_pcb* pcb){
 				seAccedeAMemoria = 0;//salga del while
 				break;
 		}
-	}
+	//}
 
 	return marco;
 }

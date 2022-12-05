@@ -4,6 +4,7 @@
 //--------------------INCLUDES
 
 #include <shared/hello.h>
+#include "tlb.h"
 //--------------PUERTOS
 //Revisar
 #define IP_CPU "127.0.0.1"
@@ -123,7 +124,6 @@ bool haySegFault(int, int,t_list *);
 void checkInterrupt();
 void escucharInterrupciones();
 
-t_list* inicializarTLB();
 void reiniciarTLB();
 void ejecucion(void*);
 void enviarNroTablaDePaginas(t_list*,int,int,int);

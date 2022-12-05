@@ -404,11 +404,8 @@ void asignar_memoria() {
 		t_pcb* proceso = malloc(sizeof(t_pcb));
 		log_info(loggerAux, "[asignar_memoria] :se desperto ");
 
-
-
 		proceso = sacarDeNew();
 		t_pcb* pcbAux= malloc(sizeof(t_pcb)); // malloc?
-
 
 		log_info(loggerAux,"llego antes de crear el paquete");
 		t_paquete * paqueteLocal = crear_paquete(NRO_TP);
@@ -502,16 +499,15 @@ void readyAExe() {
 		pthread_mutex_unlock(&obtenerProceso);
 
 		log_info(loggerAux,
-			"[readyAExe]: Desde readyAExe mandamos al proceso de pid %d a ejecutar  ",
-			procesoAEjecutar->idProceso);
+				"[readyAExe]: Desde readyAExe mandamos al proceso de pid %d a ejecutar  ",
+				procesoAEjecutar->idProceso);
 
-			procesoAEjecutar->estado = EXEC;
-			enviar_pcb(procesoAEjecutar,KERNEL_PCB_A_CPU,conexionCpuDispatch);
-			//free(procesoAEjecutar);
-			log_info(logger, "[readyAExe]: enviamos el proceso a cpu");
-
+		procesoAEjecutar->estado = EXEC;
 
 		log_info(logger,"PID: <%d> - Estado Anterior: <READY> - Estado Actual: <EXE>", procesoAEjecutar->idProceso);
+		enviar_pcb(procesoAEjecutar,KERNEL_PCB_A_CPU,conexionCpuDispatch);
+		//free(procesoAEjecutar);
+		log_info(logger, "[readyAExe]: enviamos el proceso a cpu");
 
 		if(!strcmp(algoritmoPlanificacion,"RR") || (!strcmp(algoritmoPlanificacion,"Feedback") && procesoAEjecutar->algoritmoActual == RR)){
 			pthread_create(&hiloQuantumRR, NULL,(void*) controlar_quantum,NULL);

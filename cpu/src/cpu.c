@@ -1,8 +1,6 @@
 #include "funcionesCpu.h"
 
 bool ejecutando;
-char** listaDispositivos;
-
 pthread_mutex_t mutexEjecutar;
 
 int main(int argc, char *argv[]) {
@@ -15,7 +13,7 @@ int main(int argc, char *argv[]) {
 
 	inicializarConfiguraciones(argv[1]);
 
-	tlb = inicializarTLB();
+	inicializarTLB();
 
 	handshakeMemoria();
 
@@ -23,17 +21,14 @@ int main(int argc, char *argv[]) {
 	log_info(logger,"Cpu lista para recibir a kernel");
 	clienteKernel = esperar_cliente(server_dispatch,"Kernel");
 
-	int server_interrupt = iniciar_servidor(IP_CPU, puertoDeEscuchaInterrupt,"Kernel");
-	clienteKernelInterrupt = esperar_cliente(server_interrupt, "Kernel por interrupt");
+	checkInterrupt();
 
-	listaDispositivos = recibirListaDispositivos(clienteKernel);//verificar que los reciba bien
+
 
 	pthread_t hiloRecibirPcb;
 
 	pthread_create(&hiloRecibirPcb, NULL, (void*) conexionConKernelDispatch, NULL);
 	pthread_detach(hiloRecibirPcb);
-
-	checkInterrupt();
 
 	pthread_t hiloEjecutar;
 	//ejecutando = true;// ver donde poner mejor esto

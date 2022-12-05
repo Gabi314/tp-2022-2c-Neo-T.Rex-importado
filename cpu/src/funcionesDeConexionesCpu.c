@@ -17,12 +17,14 @@ int desplazamiento;
 t_paquete* paquete;
 
 t_pcb* pcb;
+char** listaDispositivos;
 
 //-----------------------FUNCIONES
 
 void conexionConKernelDispatch(){//un hilo
 	//static pthread_mutex_t mutexMensajes;// usar
 	//int salirDelWhile = 0;
+	listaDispositivos = recibirListaDispositivos(clienteKernel);//Primer handshake
 	while (1) {
 		//log_info(logger,"Esperando PCB");
 		int cod_op = recibir_operacion(clienteKernel);
@@ -164,7 +166,6 @@ void enviar_pcb(t_pcb* pcb,int cod_op,int clienteKernel)
 	desplazamiento+=sizeof(int);
 	memcpy(paquete->buffer->stream + desplazamiento, &contadorInstrucciones, sizeof(int));
 	desplazamiento+=sizeof(int);
-	log_info(logger,"Pasa el realloc");
 	list_iterate(pcb->instrucciones, (void*) agregarInstruccionesAlPaquete);
 	memcpy(paquete->buffer->stream + desplazamiento, &(pcb->programCounter), sizeof(int));
 	desplazamiento+=sizeof(int);
@@ -197,7 +198,7 @@ void obtenerCantidadDeSegmentos(entradaTablaSegmento* unSegmento){
 }
 
 void agregarInstruccionesAlPaquete(instruccion* unaInstruccion) {
-	log_info(logger,"Instruccion a enviar %s",unaInstruccion->identificador);
+	//log_info(logger,"Instruccion a enviar %s",unaInstruccion->identificador);
 	void* id = unaInstruccion->identificador;
 	int longitudId = strlen(unaInstruccion->identificador)+1;
 	memcpy(paquete->buffer->stream + desplazamiento, &longitudId, sizeof(int));

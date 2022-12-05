@@ -1,9 +1,12 @@
 #include "tlb.h"
 t_list* tlb;
+//int tamanioEntradaTlb = 0;
+int i = 0;
 
 void agregarEntradaATLB(int marco, int pagina, int pid, int numeroDeSegmento){
 
 	entradaTLB* unaEntrada = malloc(sizeof(entradaTLB));
+	//tamanioEntradaTlb += sizeof(entradaTLB);
 
 	unaEntrada->nroDeMarco = marco;
 	unaEntrada->nroDePagina = pagina;
@@ -12,25 +15,27 @@ void agregarEntradaATLB(int marco, int pagina, int pid, int numeroDeSegmento){
 	unaEntrada->instanteGuardada = time(NULL);
 	unaEntrada->ultimaReferencia = time(NULL);
 
+
 	log_info(logger, "<PID: %d> Se agrega la pagina %d perteneciente al segmento %d con marco %d a tlb",
 			pid, pagina, numeroDeSegmento, marco);
 
-	list_add(tlb,unaEntrada);
+	list_add_in_index(tlb,i,unaEntrada);
+	i++;
 
 //	int i=0;
 //
 //	if(i<2){
-		entradaTLB* unaEntradaAux = list_get(tlb,0);
+		entradaTLB* unaEntradaAux;
+		unaEntradaAux =	list_get(tlb,0);
 
 		log_info(logger,"Numero de marco es: %d",unaEntradaAux->nroDeMarco);
 		log_info(logger,"Numero de pagina es: %d",unaEntradaAux->nroDePagina);
 //	}
 //	i++;
+		imprimirEntradasTLB();
 
-//	free(unaEntrada); ANTES CUANDO ESTABA ESTE FREE, EL IMPRIMIR TE TIRABA BASURA, AHORA LO QUE HACE ES TIRA REPETIDAS VECES LA ULTIMA ENTRADA CARGADA
+	//free(unaEntrada); //ANTES CUANDO ESTABA ESTE FREE, EL IMPRIMIR TE TIRABA BASURA, AHORA LO QUE HACE ES TIRA REPETIDAS VECES LA ULTIMA ENTRADA CARGADA
 
-
-	imprimirEntradasTLB();
 }
 
 void algoritmosDeReemplazoTLB(int pagina,int marco,int pid, int numeroDeSegmento){//probarrrr-----------------------------------
@@ -90,20 +95,19 @@ void reemplazarPagina(int pagina,int marco ,int indice, int numeroDeSegmento){//
 	imprimirEntradasTLB();
 }
 
-t_list* inicializarTLB(){
+void inicializarTLB(){
 
 	tlb = list_create();
-	return tlb;
 }
 
 //Se debe limpiar cuando finalizan el proceso
 void limpiarEntradasTLB(int pid){
-	entradaTLB* unaEntradaTLB = malloc(sizeof(entradaTLB));
+	entradaTLB* unaEntradaTLB;
 
 	for(int i = 0; i<list_size(tlb);i++){
 		unaEntradaTLB = list_get(tlb,i);
 		if(unaEntradaTLB->nroDeProceso == pid){
-			list_remove_and_destroy_element(tlb,i,(void*) unaEntradaTLB);
+			list_remove(tlb, unaEntradaTLB);
 		}
 	}
 }

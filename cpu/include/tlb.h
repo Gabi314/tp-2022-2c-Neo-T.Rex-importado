@@ -6,7 +6,7 @@ void reemplazarPagina(int,int,int,int);
 
 void algoritmosDeReemplazoTLB(int,int,int,int);
 
-t_list* inicializarTLB();
+void inicializarTLB();
 
 void limpiarEntradasTLB(int);
 

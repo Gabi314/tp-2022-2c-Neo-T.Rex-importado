@@ -30,16 +30,16 @@ int conexionConCpu(void* void_args) {
 		int cod_op = recibir_operacion(clienteCpu);
 
 		// Tiempo en acceder a memoria
-		sleep(retardoMemoria/1000);
-
-		log_info(loggerAux, "Accediendo a memoria espere %d segundos\n", retardoMemoria/1000);
+//		sleep(retardoMemoria/1000);
+//
+//		log_info(loggerAux, "Accediendo a memoria espere %d segundos\n", retardoMemoria/1000);
 
 		switch (cod_op) {
-			case MENSAJE_CPU_MEMORIA://mensaje de pedido tam pag y cant entradas
-				recibir_mensaje(clienteCpu);//recibe el pedido de tam_pag y cant_entradas
-				enviarTamanioDePaginaYCantidadDeEntradas(clienteCpu);
-
-				break;
+//			case MENSAJE_CPU_MEMORIA://mensaje de pedido tam pag y cant entradas
+//				recibir_mensaje(clienteCpu);//recibe el pedido de tam_pag y cant_entradas
+//				enviarTamanioDePaginaYCantidadDeEntradas(clienteCpu);
+//
+//				break;
 			case PRIMER_ACCESO://ES OBTENER MARCO
 				listaConTablaDePaginaYPagina = recibir_lista_enteros(clienteCpu);
 				numeroTablaDePaginas = list_get(listaConTablaDePaginaYPagina, 0);
@@ -239,6 +239,12 @@ int server_escuchar(t_log* logger, char* server_nombre, char* cliente_nombre, in
         if (!strcmp(cliente_nombre, "KERNEL")) {
         	pthread_create(&hilo, NULL, (void*) conexionConKernel, (void*) args);
         } else if (!strcmp(cliente_nombre, "CPU")) {
+        	int cod_op = recibir_operacion(cliente_socket);
+
+        	if(cod_op == MENSAJE_CPU_MEMORIA){//mensaje de pedido tam pag y cant entradas
+        		recibir_mensaje(cliente_socket);//recibe el pedido de tam_pag y cant_entradas
+        		enviarTamanioDePaginaYCantidadDeEntradas(cliente_socket);
+        	}
 			pthread_create(&hilo, NULL, (void*) conexionConCpu, (void*) args);
 		}
         pthread_detach(hilo);
