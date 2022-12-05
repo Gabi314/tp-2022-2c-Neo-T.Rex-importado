@@ -1,7 +1,7 @@
 #ifndef FUNCIONES_MEMORIA_H_
 #define FUNCIONES_MEMORIA_H_
 
-#include <shared/hello.h>
+#include <sharedUtils.h>
 
 #include <stdbool.h>
 #include <errno.h>

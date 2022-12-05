@@ -1,7 +1,7 @@
 #ifndef UTILS_H_
 #define UTILS_H_
 
-#include <shared/hello.h>
+#include <sharedUtils.h>
 
 extern t_log* logger;
 extern t_log* loggerAux;

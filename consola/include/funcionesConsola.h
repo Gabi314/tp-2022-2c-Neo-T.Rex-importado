@@ -2,7 +2,7 @@
 #define UTILS_H_
 
 #include <stdbool.h>
-#include <shared/hello.h>
+#include <sharedUtils.h>
 
 typedef enum
 {
