@@ -1,7 +1,7 @@
 # Generated files
 bin/
 obj/
-*.log
+*/*.log
 
 # Eclipse files
 consola/RemoteSystemsTempFiles/
@@ -28,7 +28,6 @@ shared/RemoteSystemsTempFiles/
 shared/.settings/
 shared/.cproject
 shared/.project
-
 
 # CLion files
 .idea/
