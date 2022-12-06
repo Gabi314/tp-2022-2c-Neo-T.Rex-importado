@@ -642,9 +642,9 @@ while (1) {
 
 		
 
-		log_info(logger, "PID: <%d> - Bloqueado por: <TECLADO>", proceso->idProceso);
+		log_info(logger, "PID: <%d> - Bloqueado por: <TECLADO>", aMandarTeclado->pcb->idProceso);
 
-		log_info(logger,"PID: <%d> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>", proceso->idProceso);
+		log_info(logger,"PID: <%d> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>", aMandarTeclado->pcb->idProceso);
 
 		pthread_t hiloAtenderTeclado;
 		pthread_create(&hiloAtenderTeclado, NULL,(void*) atender_IO_teclado,aMandarTeclado);
@@ -677,9 +677,9 @@ while (1) {
 
 	//	pthread_mutex_unlock(&mutexPantalla);
 
-		log_info(logger, "PID: <%d> - Bloqueado por: <PANTALLA>", proceso->idProceso);
+		log_info(logger, "PID: <%d> - Bloqueado por: <PANTALLA>", aMandarPantalla->pcb->idProceso);
 
-		log_info(logger,"PID: <%d> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>", proceso->idProceso);
+		log_info(logger,"PID: <%d> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>", aMandarPantalla->pcb->idProceso);
 
 		pthread_t hiloPantalla;
 		pthread_create(&hiloPantalla, NULL, &atender_IO_pantalla, aMandarPantalla);
