@@ -162,7 +162,7 @@ void ejecutar(instruccion* unaInstruccion,t_pcb* pcb){
 				log_info(loggerObligatorio,"“PID: <%d> - Ejecutando: <%s> - <%s> - <%d>",
 						pcb->idProceso,unaInstruccion->identificador,imprimirRegistro(primerParametro),
 							segundoParametro);
-				usleep(retardoDeInstruccion);
+				usleep(retardoDeInstruccion*1000);
 
 				modificarRegistro((uint32_t) segundoParametro,primerParametro,pcb); //En set el primer parametro es el registro
 				log_info(logger,"Valor del registro: %u",pcb->registros.AX);
@@ -174,7 +174,7 @@ void ejecutar(instruccion* unaInstruccion,t_pcb* pcb){
 				log_info(loggerObligatorio,"“PID: <%d> - Ejecutando: <%s> - <%s> - <%s>",
 								pcb->idProceso,unaInstruccion->identificador,imprimirRegistro(primerParametro),
 									imprimirRegistro(segundoParametro));
-				usleep(retardoDeInstruccion);
+				usleep(retardoDeInstruccion*1000);
 
 				registro = registroAUtilizar(primerParametro,pcb->registros);
 				segundoRegistro = registroAUtilizar(segundoParametro,pcb->registros);

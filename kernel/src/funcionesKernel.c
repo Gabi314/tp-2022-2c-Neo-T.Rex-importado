@@ -920,7 +920,7 @@ void atender_IO_generico(t_elem_disp* elemento){
 
 		log_info(logger," [atender_IO_generico del dispositivo <%s>] : obtuvimos el siguiente PCB  ", elemento->dispositivo);
 
-		controlar_pcb(proceso);
+		//controlar_pcb(proceso);
 
 		if (!strcmp(algoritmoPlanificacion, "FIFO")) {
 			queue_push(colaReadyFIFO,proceso);

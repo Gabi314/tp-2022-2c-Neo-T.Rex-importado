@@ -470,7 +470,7 @@ void cargarPagina(entradaTablaPaginas* unaEntrada) {
 
 
 void escribirElPedido(uint32_t datoAEscribir, int marco, int desplazamiento) {
-	usleep(retardoMemoria);
+	usleep(retardoMemoria*1000);
 	int posicion = marco * tamanioDePagina + desplazamiento;
 	memcpy(&memoria+posicion, &datoAEscribir, sizeof(uint32_t));
 
@@ -493,7 +493,7 @@ entradaTablaPaginas* entradaCargadaConMarcoAsignado(int nroDeMarco) {
 }
 
 uint32_t leerElPedido(int marco, int desplazamiento) {
-	usleep(retardoMemoria);
+	usleep(retardoMemoria*1000);
 	uint32_t datoALeer;
 	int posicion = marco * tamanioDePagina + desplazamiento;
 	memcpy(&datoALeer, &memoria+posicion, sizeof(uint32_t));
@@ -521,7 +521,7 @@ void crearSwap() {
 
 void escribirEnSwap(entradaTablaPaginas* unaEntrada) {
 	int numeroDeMarco = unaEntrada->numeroMarco;
-	usleep(retardoSwap);
+	usleep(retardoSwap*1000);
 	FILE* archivoSwap = fopen(pathSwap, "r+");
 
 	if(unaEntrada->posicionEnSwap == -1) {
@@ -538,12 +538,12 @@ void escribirEnSwap(entradaTablaPaginas* unaEntrada) {
 	}
 	posicionActualDeSwap += tamanioDePagina;
 	fclose(archivoSwap);
-	log_info(logger, "SWAP OUT - PID: <%d> - Marco: <%d> - Page Out: <%d>|<%d", pidActual,
+	log_info(logger, "SWAP OUT - PID: <%d> - Marco: <%d> - Page Out: <%d>|<%d>", pidActual,
 			numeroDeMarco, unaEntrada->numeroDeSegmento, unaEntrada->numeroDeEntrada);
 }
 
 void leerDeSwap(entradaTablaPaginas* unaEntrada, int numeroDeMarcoNuevo) {
-	usleep(retardoSwap);
+	usleep(retardoSwap*1000);
 
 	char* parteDePagina = string_new();
 	FILE* archivoSwap = fopen(pathSwap, "r");

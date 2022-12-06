@@ -182,7 +182,7 @@ void imprimirValorPorPantalla(int cod_op){//Puede estar en un hilo
 
 	valorAImprimir = recibir_entero(conexion);
 
-	usleep(tiempoPantalla);
+	usleep(tiempoPantalla*1000);
 
 	log_info(logger,"Se imprime el valor %d por pantalla a pedido del kernel",valorAImprimir);
 
