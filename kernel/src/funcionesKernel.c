@@ -268,104 +268,87 @@ int get_identificador(){
 	return identificadores_pcb;
 }
 
+void recibir_consola(void* void_args) {
+	t_procesar_conexion_args* args = (t_procesar_conexion_args*) void_args;
+	int cliente_consola = args->fd;
 
+	log_info(logger, "Kernel listo para recibir consolas");
 
-void recibir_consola(int * servidor) {
+	while(1) {
+		pthread_t hilo_consola;
 
-	int servidor_int = *servidor;
-	log_info(logger,"se desperto recibir_consola");
+		log_info(loggerAux, "Esperamos una nueva consola");
 
-	while (1) {
-		pthread_t hilo1;
+		int nueva_consola = esperar_cliente(args->fd, "CONSOLA");
 
-		log_info(loggerAux,"esperamos una nueva consola");
+		log_info(loggerAux, "Recibimos al cliente CONSOLA de socket %d", nueva_consola);
 
-		int nuevo_cliente = esperar_cliente(servidor_int,"Consola");
+		pthread_create(&hilo_consola, NULL, (void*) atender_consola, &nueva_consola);
+		pthread_detach(hilo_consola);
 
-		log_info(loggerAux,"recibimos al cliente de socket %d", nuevo_cliente);
-
-		pthread_create(&hilo1, NULL,  (void *)atender_consola, &nuevo_cliente);
-		pthread_detach(hilo1);
-
-		log_info(loggerAux,"levantamos y detacheamos el hilo de la consola %d", nuevo_cliente);
+		log_info(loggerAux,"Atendemos consola con el hilo %d", nueva_consola);
 	}
-
 }
 
 
-void  atender_consola(int * nuevo_cliente) {
-	t_pcb* PCB = malloc(sizeof(t_pcb));
-	int  nuevo_cliente_int = *nuevo_cliente;
-
+void atender_consola(int* nuevo_cliente) {
+	t_pcb* pcb = malloc(sizeof(t_pcb));
+	int nuevo_cliente_int = *nuevo_cliente;
 
 	log_info(loggerAux,"[atender_consola]recibimos las instrucciones y segmentos del cliente %d!", nuevo_cliente_int);
-
-
-
 	log_info(logger,"[atender_consola]esperando segmentos");
-		int operacion = recibir_operacion(nuevo_cliente_int);
 
+	int operacion = recibir_operacion(nuevo_cliente_int);
 
+	if (operacion == KERNEL_PAQUETE_TAMANIOS_SEGMENTOS) {
+		pcb->tablaSegmentos = list_create();
+		pcb->tablaSegmentos = inicializar_tabla_segmentos(nuevo_cliente_int,operacion); // aca usariamos el recibir_lista_enteros
 
-		if (operacion == KERNEL_PAQUETE_TAMANIOS_SEGMENTOS) {
+		//SE ENVIAN LOS DISPOSITIVOS
+		log_info(logger,"[atender_consola]enviamos los dispositivos");
+		enviar_mensaje(dispositivosIOAplanado, nuevo_cliente_int, KERNEL_MENSAJE_DISPOSITIVOS_IO);
 
-			PCB->tablaSegmentos = list_create();
-			PCB->tablaSegmentos = inicializar_tabla_segmentos(nuevo_cliente_int,operacion); // aca usariamos el recibir_lista_enteros
+		//SE RECIBEN LAS INSTRUCCIONES
+		log_info(logger,"[atender_consola]esperando instrucciones");
+		operacion =	recibir_operacion(nuevo_cliente_int);
+		if (operacion == KERNEL_PAQUETE_INSTRUCCIONES) {
+			listaInstrucciones = list_create();
+			listaInstrucciones = recibir_paquete_instrucciones(nuevo_cliente_int);
 
+			//MOSTRAMOS LAS INSTRUCCIONES
+			log_info(logger, "[atender_consola]me llegaron las instrucciones");
+			list_iterate(listaInstrucciones, (void*) iteratorMostrarInstrucciones);
 
-	//SE ENVIAN LOS DISPOSITIVOS
-			log_info(logger,"[atender_consola]enviamos los dispositivos");
-			enviar_mensaje(dispositivosIOAplanado, nuevo_cliente_int,
-					KERNEL_MENSAJE_DISPOSITIVOS_IO);
+			//METEMOS LAS INSTRUCCIONES EN EL PCB
+			pcb->instrucciones = list_create();
+			pcb->instrucciones = listaInstrucciones;
+			log_info(logger,"[atender_consola]metemos instrucciones en el pcb");
 
-	//SE RECIBEN LAS INSTRUCCIONES
-			log_info(logger,"[atender_consola]esperando instrucciones");
-			operacion =	recibir_operacion(nuevo_cliente_int);
-			if ( operacion == KERNEL_PAQUETE_INSTRUCCIONES) {
-				listaInstrucciones = list_create();
-				listaInstrucciones = recibir_paquete_instrucciones(nuevo_cliente_int);
-
-	//MOSTRAMOS LAS INSTRUCCIONES
-				log_info(logger, "[atender_consola]me llegaron las instrucciones");
-				list_iterate(listaInstrucciones, (void*) iteratorMostrarInstrucciones);
-
-	//METEMOS LAS INSTRUCCIONES EN EL PCB
-
-				PCB->instrucciones = list_create();
-				PCB->instrucciones = listaInstrucciones;
-				log_info(logger,"[atender_consola]metemos instrucciones en el pcb");
-
-	// CONFIRMAMOS RECEPCION DE INSTRUCCIONES
-				enviar_mensaje("[atender_consola]segmentos e instrucciones recibidos pibe", nuevo_cliente_int,KERNEL_MENSAJE_CONFIRMACION_RECEPCION_INSTRUCCIONES_SEGMENTOS);
-
-			} else {
-				log_info(logger, "[atender_consola]codigo de operacion incorrecto %d", operacion);
-			}
-		}else{
+			// CONFIRMAMOS RECEPCION DE INSTRUCCIONES
+			enviar_mensaje("[atender_consola]segmentos e instrucciones recibidos pibe", nuevo_cliente_int,KERNEL_MENSAJE_CONFIRMACION_RECEPCION_INSTRUCCIONES_SEGMENTOS);
+		} else {
 			log_info(logger, "[atender_consola]codigo de operacion incorrecto %d", operacion);
 		}
+	} else {
+		log_info(logger, "[atender_consola]codigo de operacion incorrecto %d", operacion);
+	}
 
-	PCB->idProceso = get_identificador();
-	PCB->programCounter = 0;
-	inicializar_registros(PCB->registros);
-	PCB->socket = nuevo_cliente_int;
-	PCB->estado = NEW;
-	PCB->algoritmoActual = RR;
+	pcb->idProceso = get_identificador();
+	pcb->programCounter = 0;
+	inicializar_registros(pcb->registros);
+	pcb->socket = nuevo_cliente_int;
+	pcb->estado = NEW;
+	pcb->algoritmoActual = RR;
 
-	log_info(loggerAux,"[atender_consola]inicializamos PCB de id_proceso %d", PCB->idProceso);
+	log_info(loggerAux,"[atender_consola]inicializamos PCB de id_proceso %d", pcb->idProceso);
+	log_info(logger,"Se crea el proceso <%d> en NEW", pcb->idProceso);
 
-	log_info(logger,"Se crea el proceso <%d> en NEW", PCB->idProceso);
-
-	agregarANew(PCB);
-
+	agregarANew(pcb);
 
 	log_info(logger,"[atender_consola] despertamos a asignar_memoria()");
 
 	sem_post(&pcbEnNew);
 }
-
-
-
 
 void agregarANew(t_pcb* proceso) {
 
@@ -586,7 +569,7 @@ while (1) {
 
 		if(!strcmp(algoritmoPlanificacion, "RR") || (!strcmp(algoritmoPlanificacion, "Feedback") && proceso->algoritmoActual == RR)){
 			pthread_cancel(hiloQuantumRR);
-			}
+		}
 
 		char* dispositivo;
 
@@ -611,7 +594,6 @@ while (1) {
 			unidadesTrabajo = recibir_entero(conexionCpuDispatch);
 		}
 
-
 		queue_push(elementoLista->cola_UTs,&unidadesTrabajo);
 
 		log_info(logger, "PID: <%d> - Bloqueado por: <%s>" , proceso->idProceso, elementoLista->dispositivo);
@@ -620,10 +602,8 @@ while (1) {
 
 		sem_post(&elementoLista->semaforo);
 
-
 		break;
 	case CPU_PCB_A_KERNEL_POR_IO_TECLADO:
-
 
 		t_info_teclado * aMandarTeclado = malloc(sizeof(t_info_teclado));
 		aMandarTeclado->pcb = recibir_pcb(conexionCpuDispatch);
@@ -635,12 +615,9 @@ while (1) {
 		}
 		cod_op = recibir_operacion(conexionCpuDispatch);
 
-
 		if(cod_op == CPU_A_KERNEL_INGRESAR_VALOR_POR_TECLADO){
 			aMandarTeclado->registro =recibir_entero(conexionCpuDispatch);
 		}
-
-		
 
 		log_info(logger, "PID: <%d> - Bloqueado por: <TECLADO>", proceso->idProceso);
 
@@ -687,10 +664,8 @@ while (1) {
 
 		break;
 
-
 	case CPU_A_KERNEL_PCB_POR_DESALOJO:
 		t_pcb* pcb = recibir_pcb(conexionCpuDispatch);
-
 
 		if (!strcmp(algoritmoPlanificacion, "RR")) {
 			queue_push(colaReadyRR,pcb);
@@ -753,8 +728,9 @@ while (1) {
 
 		terminarEjecucion(pcbATerminar);
 		break;
+
 	default:
-		log_info(loggerAux, "operacion invalida");
+		log_info(loggerAux, "Operacion desconocida | COD-OP:[%d]", cod_op);
 		sem_t spreenMiCasita;
 		sem_init(&spreenMiCasita,0,0);
 		sem_wait(&spreenMiCasita);
@@ -1069,6 +1045,28 @@ t_pcb* recibir_pcb(int socket_cliente)//ponerla en shared
 	//log_info(loggerAux,"Estado: %d",pcb->estado);
 	free(buffer);
 	return pcb;
+}
+
+int server_escuchar(t_log* logger, char* server_nombre, char* cliente_nombre, int server_socket) {
+	// Se conecta un cliente
+	log_info(logger, "Esperando a un cliente Consola");
+    int cliente_socket = esperar_cliente(server_socket, cliente_nombre);
+    //int cliente_socket = esperar_cliente(logger, server_name, server_socket);
+
+    if (cliente_socket != -1) {
+    	// Creo un hilo para atender al cliente conectado
+        pthread_t hilo;
+        t_procesar_conexion_args* args = malloc(sizeof(t_procesar_conexion_args));
+        args->log = logger;
+        args->fd = cliente_socket;
+        args->server_name = server_nombre;
+
+		pthread_create(&hilo, NULL, (void*) recibir_consola, (void*) args);
+        pthread_detach(hilo);
+
+        return 1;
+    }
+    return 0;
 }
 
 

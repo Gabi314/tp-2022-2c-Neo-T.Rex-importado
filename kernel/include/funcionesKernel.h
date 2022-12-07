@@ -49,6 +49,7 @@ t_list* recibir_paquete_instrucciones(int);
 t_list * inicializar_tabla_segmentos(int,int);
 void inicializar_registros(t_registros registros);
 
+void inicializaciones(char*);
 void inicializar_configuraciones(char* unaConfig);
 void inicializar_listas_y_colas();
 void inicializar_lista_dispositivos();
@@ -79,7 +80,7 @@ t_pcb* obtenerSiguienteFIFO();
 t_pcb* obtenerSiguienteRR();
 void ejecutar(t_pcb* proceso);
 
-void recibir_consola(int * servidor) ;
+void recibir_consola(void*);
 void atender_consola(int * nuevo_cliente);
 void asignar_memoria();
 void readyAExe();

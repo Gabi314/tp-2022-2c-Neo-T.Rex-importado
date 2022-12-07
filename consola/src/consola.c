@@ -5,7 +5,7 @@ char** listaDispositivos;
 int main(int argc, char *argv[]) {
 	//pthread_t hiloConexionKernel;
 
-	logger = log_create("./consola.log","CONSOLA",1,LOG_LEVEL_INFO);
+	logger = log_create("./consola.log","CONSOLA", 1, LOG_LEVEL_INFO);
 	//Chequeo cantidad de archivos recibidos en el main
 	chequeoCantidadArchivos(argc);
 
@@ -34,9 +34,9 @@ int main(int argc, char *argv[]) {
 	archivo = recorrerArchivo(contenido,archivo);
 
 	 if (recibir_operacion(conexion) != KERNEL_MENSAJE_CONFIRMACION_RECEPCION_INSTRUCCIONES_SEGMENTOS){
-	                log_info(logger,"codigo de operacion incorrecto");
-	        }
-	        recibir_mensaje(conexion);
+			log_info(logger,"codigo de operacion incorrecto");
+	}
+	recibir_mensaje(conexion);
 
 	atenderPeticionesKernel();
 

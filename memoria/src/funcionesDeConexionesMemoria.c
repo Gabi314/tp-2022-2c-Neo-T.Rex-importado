@@ -225,7 +225,7 @@ void chequeoDeIndice(int indice) {
 
 int server_escuchar(t_log* logger, char* server_nombre, char* cliente_nombre, int server_socket) {
 	// Se conecta un cliente
-	log_info(logger, "Esperando a un cliente (Kernel o CPU)");
+	log_info(logger, "Esperando a un cliente %s", cliente_nombre);
     int cliente_socket = esperar_cliente(server_socket, cliente_nombre);
     //int cliente_socket = esperar_cliente(logger, server_name, server_socket);
 

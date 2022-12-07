@@ -15,52 +15,59 @@ int main(int argc, char *argv[]) {
 //-----------------------------------------------PRIMER PARTE DEL MAIN ------------------------------------------------------------
 
 	logger = log_create("kernel.log", "KERNEL", 1, LOG_LEVEL_INFO);
-
-	loggerAux = log_create("kernelAux.log", "KERNEL", 1, LOG_LEVEL_INFO);
+	loggerAux = log_create("kernelAux.log", "KERNEL-AUX", 1, LOG_LEVEL_DEBUG);
 
 	if(argc < 2) {
-	    log_error(logger,"Falta un parametro");
+	    log_error(logger, "Falta un parametro");
 	    return EXIT_FAILURE;
 	}
 
+	inicializaciones(argv[1]);
 
 	//sem_init(&kernelSinFinalizar,0,0); // puede que lo usemos algunas veces
-
-	// Inicializacion de kernel como servidor
-	socketServidorKernel = iniciar_servidor(IP_KERNEL, PUERTO_KERNEL, "Consola");
-	log_info(logger,"servidor kernel inicializado");
-
-	inicializar_configuraciones(argv[1]);
 
 	// armamos el string de dispositivos que enviamos a consola
 	dispositivosIOAplanado = string_new();
 	aplanarDispositivosIO(dispositivos_io);
 	log_info(logger,"DISPOSITIVOS: %s",dispositivosIOAplanado);
 
+	// Conexiones
 	socketMemoria = crear_conexion(ipMemoria, puertoMemoria);
 	conexionCpuDispatch = crear_conexion(ipCpu, puertoCpuDispatch);
-
-	enviar_mensaje(dispositivosIOAplanado, conexionCpuDispatch,
-						KERNEL_MENSAJE_DISPOSITIVOS_IO);
 	conexionCpuInterrupt = crear_conexion(ipCpu, puertoCpuInterrupt);
+
+	enviar_mensaje(dispositivosIOAplanado, conexionCpuDispatch, KERNEL_MENSAJE_DISPOSITIVOS_IO);
+
+	log_info(loggerAux, "En la lista de dispositivos tenemos los siguientes:");
+	for (int i = 0; i < list_size(listaDeColasDispositivos); i++) {
+		t_elem_disp* aux = malloc(sizeof(t_elem_disp));
+		aux = list_get(listaDeColasDispositivos,i);
+		log_info(loggerAux,"el dispositivo de posicion %d se llama %s", i , aux->dispositivo);
+		log_info(loggerAux,"el dispositivo de posicion %d tiene un tiempo de %d", i, aux->tiempo);
+	}
+
+	// Inicializacion de kernel como servidor
+	socketServidorKernel = iniciar_servidor(IP_KERNEL, PUERTO_KERNEL, "CONSOLA");
+	log_info(logger, "Servidor kernel inicializado");
+
+	pthread_t hilo0;
+	// int cliente_socket = esperar_cliente(socketServidorKernel, "CONSOLA");
+
+	t_procesar_conexion_args* args = malloc(sizeof(t_procesar_conexion_args));
+	args->log = logger;
+	args->fd = socketServidorKernel;
+	args->server_name = "KERNEL";
+
+	pthread_create(&hilo0, NULL, (void*) recibir_consola, (void*) args);
+	pthread_detach(hilo0);
+
+	/*
+	while(1) {
+		server_escuchar(loggerAux, "KERNEL", "CONSOLA", socketServidorKernel);
+	}
+	*/
+
 	// Inicializaciones de estructuras de datos
-
-	log_info(logger,"configuraciones inicializadas");
-	inicializar_listas_y_colas();
-	log_info(logger,"listas y colas inicializadas");
-	identificadores_pcb = 0;
-	inicializar_semaforos();
-	log_info(logger,"semaforos inicializados");
-	log_info(logger, "En la lista de dispositivos tenemos los siguientes:");
-		for (int i = 0; i < list_size(listaDeColasDispositivos); i++) {
-			t_elem_disp* aux = malloc(sizeof(t_elem_disp));
-			aux = list_get(listaDeColasDispositivos,i);
-			log_info(logger,"el dispositivo de posicion %d se llama %s", i , aux->dispositivo);
-			log_info(logger,"el dispositivo de posicion %d tiene un tiempo de %d", i, aux->tiempo);
-				}
-
-
-
 
 // ------------------------------------------------- PRUEBAS DE GABI DE CONEXIONES -----------------------------------------------------
 /*
@@ -116,14 +123,11 @@ int main(int argc, char *argv[]) {
 */
 //------------------------------------------------SEGUNDA PARTE DEL MAIN ----------------------------------------------------------
 
-	pthread_t hilo0;
 	pthread_t hiloAdmin[3];
 	int hiloAdminCreado[3];
 
 
 	//conexiones
-
-
 
 	int hiloCreado = pthread_create(&hilo0, NULL,&recibir_consola,&socketServidorKernel);
 	pthread_detach(hilo0);
@@ -152,9 +156,9 @@ int main(int argc, char *argv[]) {
 
 }
 
-void inicializar_configuraciones(char* unaConfig){
-	t_config* config = config_create(unaConfig);
-	if(config  == NULL){
+void inicializar_configuraciones(char* una_config){
+	t_config* config = config_create(una_config);
+	if(config == NULL){
 		printf("Error leyendo archivo de configuración. \n");
 	}
 
@@ -177,10 +181,7 @@ void inicializar_listas_y_colas() {
 	colaNew = queue_create();
 	colaReadyFIFO = queue_create();
 	colaReadyRR = queue_create();
-
-
 }
-
 
 
 /*
@@ -374,19 +375,15 @@ void inicializar_lista_dispositivos() {
 	}
 }
 
-void aplanarDispositivosIO(char** dispositivos_io){
-
-	for(int i = 0; i < string_array_size(dispositivos_io); i++){
+void aplanarDispositivosIO(char** dispositivos_io) {
+	for(int i = 0; i < string_array_size(dispositivos_io); i++) {
 		string_append(&dispositivosIOAplanado,dispositivos_io[i]);
 
-		if(i < string_array_size(dispositivos_io)-1){
-			string_append(&dispositivosIOAplanado,"-");
+		if(i < string_array_size(dispositivos_io)-1) {
+			string_append(&dispositivosIOAplanado, "-");
 		}
-
 	}
-
 }
-
 
 void inicializar_semaforos(){
 	/*
@@ -422,6 +419,17 @@ void inicializar_semaforos(){
 	pthread_mutex_init(&primerPushColaReady,NULL);
 	pthread_mutex_init(&mutexPantalla,NULL);
 	pthread_mutex_init(&mutexTeclado,NULL);
+}
+
+void inicializaciones(char* una_config) {
+	inicializar_configuraciones(una_config);
+	log_info(logger, "Configuraciones inicializadas");
+	inicializar_listas_y_colas();
+	log_info(logger, "Listas y colas inicializadas");
+	inicializar_semaforos();
+	log_info(logger, "Semaforos inicializados");
+
+	identificadores_pcb = 0;
 }
 
 

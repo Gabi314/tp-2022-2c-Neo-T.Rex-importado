@@ -141,8 +141,7 @@ int esperar_cliente(int socket_servidor, char* cliente) {
 }
 
 
-int crear_conexion(char *ip, char* puerto)
-{
+int crear_conexion(char* ip, char* puerto) {
 	struct addrinfo hints;
 	struct addrinfo *server_info;
 

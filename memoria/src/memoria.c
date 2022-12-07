@@ -35,7 +35,7 @@ void funcionMain(int argc, char *argv[]) {
 	//Logs obligatorios
 	logger = log_create("memoria.log", "MEMORIA", 1, LOG_LEVEL_INFO);
 	// Logs auxiliares
-	loggerAux = log_create("memoriaAux.log", "MEMORIA", 1, LOG_LEVEL_INFO);
+	loggerAux = log_create("memoriaAux.log", "MEMORIA-AUX", 1, LOG_LEVEL_DEBUG);
 
 	crearConfiguraciones(argv[1]);
 
