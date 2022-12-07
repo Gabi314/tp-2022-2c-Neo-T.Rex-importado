@@ -107,7 +107,7 @@ void limpiarEntradasTLB(int pid){
 	for(int i = 0; i<list_size(tlb);i++){
 		unaEntradaTLB = list_get(tlb,i);
 		if(unaEntradaTLB->nroDeProceso == pid){
-			list_remove(tlb, unaEntradaTLB);
+			list_remove(tlb,i);
 		}
 	}
 }

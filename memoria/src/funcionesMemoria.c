@@ -126,9 +126,21 @@ void reemplazarTodosLosUsoACero(t_list* listaDeEntradasEnMemoria) {
 	}
 }
 
+int punteroAUtilizar(int pid){
+	entradaListaPunteros* unaEntrada;
+	for(int i=0;i<list_size(listaDePunterosYPids);i++){
+		unaEntrada = list_get(listaDePunterosYPids,i);
+		if(unaEntrada->pid == pid){
+			return unaEntrada->posicionDelPuntero;
+		}
+	}
+}
+
 //FUNCIONES DE LOS 2 ALGORITMOS --> TENER EN CUENTA QUE PASO LA LISTA DE ENTRADAS
-int algoritmoClock(t_list* listaDeEntradasEnMemoria, entradaTablaPaginas* entradaACargar) {
+int algoritmoClock(t_list* listaDeEntradasEnMemoria, entradaTablaPaginas* entradaACargar,int pid) {
 	entradaTablaPaginas* unaEntrada = malloc(sizeof(entradaTablaPaginas));
+
+	posicionDelPuntero = punteroAUtilizar(pid);
 
 	for(int i = 0; i < list_size(listaDeEntradasEnMemoria); i++) {
 		if(i == 0) {
@@ -198,7 +210,7 @@ int posicionDePunteroDelAlgoritmo(int i) {
 	}
 }
 
-int algoritmoClockM (t_list* listaDeEntradasEnMemoria,entradaTablaPaginas* entradaACargar) {
+int algoritmoClockM (t_list* listaDeEntradasEnMemoria, entradaTablaPaginas* entradaACargar,int pid){
 	entradaTablaPaginas* unaEntrada = malloc(sizeof(entradaTablaPaginas));
 
 	for(int i = 0; i < list_size(listaDeEntradasEnMemoria); i++) {
@@ -378,7 +390,6 @@ void liberarEspacioEnMemoria(tablaDePaginas* unaTablaDePaginas) {
 			marcoAsignado->marcoLibre = 0;
 		}
 		if(unaEntrada->presencia == 1 && unaEntrada->modificado == 1) {
-			//NO SE QUE TAN UTIL PUEDE SER ESCRIBIR EN SWAP CUANDO SE LIBERA LA MEMORIA PORQUE EN ESTE TP NO HAY SUSPENSION DE PROCESO
 			escribirEnSwap(unaEntrada);
 
 			sacarMarcoAPagina(unaEntrada);
@@ -387,14 +398,12 @@ void liberarEspacioEnMemoria(tablaDePaginas* unaTablaDePaginas) {
 		}
 	}
 	list_clean(listaDeEntradasEnMemoria);
-	contadorDeMarcosPorProceso = 0;
+	//contadorDeMarcosPorProceso = 0;
 }
 
 void finalizacionDeProceso(int pid) {
 	tablaDePaginas* unaTablaDePaginas = malloc(sizeof(tablaDePaginas));
-	log_info(loggerAux,"Tamaño lista de tablas de paginas: %d",list_size(listaTablaDePaginas));
 	for(int i = 0; i < list_size(listaTablaDePaginas); i++) {
-	//int nroTablaDePaginas = buscarNroTablaDePaginas(pid);
 	unaTablaDePaginas = list_get(listaTablaDePaginas, i);
 		if(unaTablaDePaginas->pid == pid) {
 			liberarEspacioEnMemoria(unaTablaDePaginas);
@@ -402,49 +411,47 @@ void finalizacionDeProceso(int pid) {
 	}
 }
 
-//void suspensionDeProceso(int pid){
-//	int nroTablaDePaginas = buscarNroTablaDePaginas(pid);
-//	tablaDePaginas* unaTablaDePaginas = malloc(sizeof(tablaDePaginas));
-//	unaTablaDePaginas = list_get(listaTablaDePaginas,nroTablaDePaginas);
-//	liberarEspacioEnMemoria(unaTablaDePaginas);
-//
-//}
-//
-//int buscarNroTablaDePaginas(int pid){
-//	tablaDePaginas* unaTablaDe1erNivel = malloc(sizeof(tablaDePaginas));
-//
-//	for(int i=0;i < list_size(listaTablaDePaginas);i++){
-//
-//		unaTablaDe1erNivel = list_get(listaTablaDePaginas,i);
-//
-//		if(unaTablaDe1erNivel->pid == pid){
-//			return i;
-//		}
-//	}
-////	return 4;//Puse 4 para que no me confunda si retorno 0
-////	free(unaTablaDe1erNivel);
-//}
+void chequeoCantidadMarcosProceso(int pid){
+	tablaDePaginas* unaTablaDePaginas;
+	entradaTablaPaginas* unaEntrada;
+	//int contadorMarcosProceso;
+	for(int i = 0;i<list_size(listaTablaDePaginas);i++){
 
+		unaTablaDePaginas = list_get(listaTablaDePaginas,i);
 
-//Funcion de cargar una pagina, por ahora la hago global y en 1 proceso porque no se como funciona
-void cargarPagina(entradaTablaPaginas* unaEntrada) {
+		if(unaTablaDePaginas->pid == pid){
+
+			for(int j=0;j<list_size(unaTablaDePaginas->entradas);j++){
+
+				unaEntrada = list_get(unaTablaDePaginas->entradas,j);
+				if(unaEntrada->presencia == 1){
+					contadorDeMarcosPorProceso++;
+				}
+			}
+		}
+	}
+} //REVISAR listaDeEntradasEnMemoria
+
+void cargarPagina(entradaTablaPaginas* unaEntrada,int pid) {
 	if(unaEntrada->presencia == 0) {
 		marco* marcoAAsignar;
 		//int numeroMarcoPrevio = unaEntrada->numeroMarco;
 
+		chequeoCantidadMarcosProceso(pid);
 		//Caso en el que se puede asignar un marco a un proceso de manera libre
 		if(contadorDeMarcosPorProceso < marcosPorProceso && (list_size(listaDeEntradasEnMemoria) <= (tamanioDeMemoria/tamanioDePagina))) {
 			marcoAAsignar = siguienteMarcoLibre();
 			modificarPaginaACargar(unaEntrada, marcoAAsignar->numeroDeMarco);
 			list_add(listaDeEntradasEnMemoria, unaEntrada);
-			contadorDeMarcosPorProceso++; // ANALIZAR CONTADOR POR MULTIPROCESAMIENTO
+			//contadorDeMarcosPorProceso++;
 			if(unaEntrada->modificado == 1) {
 				leerDeSwap(unaEntrada, unaEntrada->numeroMarco);
 				unaEntrada->modificado = 0;
 			}
+			chequeoCantidadMarcosProceso(pid);
 			log_info(loggerAux, "La cantidad de marcos asignados a este proceso es: %d", contadorDeMarcosPorProceso);
 			//Caso en el que ya el proceso tiene maxima cantidad de marcos por proceso y hay que desalojar 1
-		} else if(strcmp(algoritmoDeReemplazo, "CLOCK") == 0) {
+		}else if(strcmp(algoritmoDeReemplazo, "CLOCK") == 0) {
 				int marcoAAsignar = algoritmoClock(listaDeEntradasEnMemoria, unaEntrada);
 				modificarPaginaACargar(unaEntrada, marcoAAsignar);
 				int posicionAReemplazar = indiceDeEntradaAReemplazar(marcoAAsignar);
@@ -503,6 +510,16 @@ uint32_t leerElPedido(int marco, int desplazamiento) {
 	}
 }
 
+uint32_t leerEnSwap(int marco, int desplazamiento) {
+	usleep(retardoMemoria*1000);
+	uint32_t datoALeer;
+	int posicion = marco * tamanioDePagina + desplazamiento;
+	memcpy(&datoALeer, &memoria+posicion, sizeof(uint32_t));
+	if(datoALeer != 0) {
+		return datoALeer;
+	}
+}
+
 void crearSwap() {
 	//char* nombrePathCompleto = nombreArchivoProceso(pid);
 	remove(pathSwap);
@@ -532,7 +549,7 @@ void escribirEnSwap(entradaTablaPaginas* unaEntrada) {
 		fseek(archivoSwap, unaEntrada->posicionEnSwap, SEEK_SET);
 		fseek(archivoSwap, i*4, SEEK_CUR);
 
-		uint32_t datoAEscribir = leerElPedido(numeroDeMarco, i*sizeof(uint32_t));
+		uint32_t datoAEscribir = leerEnSwap(numeroDeMarco, i*sizeof(uint32_t));
 		char* datoAEscribirEnChar = string_itoa((uint32_t) datoAEscribir);
 		fputs(datoAEscribirEnChar,archivoSwap);
 	}

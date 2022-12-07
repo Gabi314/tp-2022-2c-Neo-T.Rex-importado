@@ -153,7 +153,7 @@ int conexionConKernel(void* void_args) {
 					log_info(logger,"Entro aca?");
 					unaTablaDePaginas = list_get(listaTablaDePaginas, numeroTablaDePaginas);
 					unaEntrada = list_get(unaTablaDePaginas->entradas, numeroPagina);
-					cargarPagina(unaEntrada);
+					cargarPagina(unaEntrada,unaTablaDePaginas->pid);
 
 					log_info(logger, "PID: <%d> - Página: <%d> - Marco: <%d>", pidActual, unaEntrada->numeroDeEntrada, unaEntrada->numeroMarco);
 

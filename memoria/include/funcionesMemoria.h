@@ -19,7 +19,13 @@ typedef struct {
 	int modificado;
 	int posicionEnSwap;
 	int numeroDeSegmento;
+	int pid;
 } entradaTablaPaginas;
+
+typedef struct{
+	int pid;
+	int posicionDelPuntero;
+}entradaListaPunteros;
 
 typedef struct {// capaz usar diccionario
 	t_list* entradas;
@@ -53,6 +59,8 @@ extern t_list* listaDeMarcos;
 extern t_list* listaDeEntradasEnMemoria;
 extern t_list* listaTablaDePaginas;
 extern t_list* listaDePaginasEnMemoria;
+
+extern t_list* listaDePunterosYPids;
 extern int posicionDelPuntero;
 extern int contadorDeMarcosPorProceso;
 extern int cantidadDeSegmentos;
@@ -87,15 +95,15 @@ void cargarEntradasATabla(tablaDePaginas*,int);
 int posicionDePunteroDelAlgoritmo(int);
 void sacarMarcoAPagina(entradaTablaPaginas*);
 void reemplazarTodosLosUsoACero(t_list*);
-int algoritmoClock(t_list*,entradaTablaPaginas*);
-int algoritmoClockM (t_list*,entradaTablaPaginas*);
+int algoritmoClock(t_list*,entradaTablaPaginas*,int);
+int algoritmoClockM (t_list*,entradaTablaPaginas*,int);
 marco* siguienteMarcoLibre();
 marco* buscarMarco(int);
 int indiceDeEntradaAReemplazar(int);
 void finalizacionDeProceso(int);
 int buscarNroTablaDePaginas(int);
 void modificarPaginaACargar(entradaTablaPaginas*, int);
-void cargarPagina(entradaTablaPaginas*);
+void cargarPagina(entradaTablaPaginas*,int);
 void liberarEspacioEnMemoria(tablaDePaginas*);
 
 void enviarTamanioDePaginaYCantidadDeEntradas(int);
@@ -106,6 +114,7 @@ extern int clienteCpu;
 void escribirElPedido(uint32_t,int, int);
 entradaTablaPaginas* entradaCargadaConMarcoAsignado(int);
 uint32_t leerElPedido(int, int);
+uint32_t leerEnSwap(int,int);
 
 void crearSwap();
 void escribirEnSwap(entradaTablaPaginas*);

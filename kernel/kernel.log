@@ -1313,3 +1313,894 @@
 [INFO] 20:31:08:846 KERNEL/(4846:4858): [readyAExe]: finaliza
 [INFO] 20:31:08:853 KERNEL/(4846:4857): ----------ME LLEGO EL SIGUIENTE PCB-------------
 [INFO] 20:31:08:856 KERNEL/(4846:4857): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <TERMINATED>
+[INFO] 14:26:21:780 KERNEL/(2349:2349): servidor kernel inicializado
+[INFO] 14:26:21:780 KERNEL/(2349:2349): DISPOSITIVOS: DISCO-IMPRESORA
+[INFO] 14:26:21:781 KERNEL/(2349:2349): configuraciones inicializadas
+[INFO] 14:26:21:781 KERNEL/(2349:2349): listas y colas inicializadas
+[INFO] 14:26:21:781 KERNEL/(2349:2349): semaforos inicializados
+[INFO] 14:26:21:781 KERNEL/(2349:2349): En la lista de dispositivos tenemos los siguientes:
+[INFO] 14:26:21:781 KERNEL/(2349:2349): el dispositivo de posicion 0 se llama DISCO
+[INFO] 14:26:21:781 KERNEL/(2349:2349): el dispositivo de posicion 0 tiene un tiempo de 50
+[INFO] 14:26:21:782 KERNEL/(2349:2349): el dispositivo de posicion 1 se llama IMPRESORA
+[INFO] 14:26:21:782 KERNEL/(2349:2349): el dispositivo de posicion 1 tiene un tiempo de 100
+[INFO] 14:26:21:787 KERNEL/(2349:2359): se desperto asignar_memoria por primera vez
+[INFO] 14:26:21:788 KERNEL/(2349:2360): se desperto atender_interrupcion_de_ejecucion
+[INFO] 14:26:21:788 KERNEL/(2349:2361): se desperto readyAExe por primera vez
+[INFO] 14:26:21:788 KERNEL/(2349:2362): se desperto atender_IO_generico del dispositivo <DISCO> por primera vez 
+[INFO] 14:26:21:788 KERNEL/(2349:2363): se desperto atender_IO_generico del dispositivo <IMPRESORA> por primera vez 
+[INFO] 14:26:21:788 KERNEL/(2349:2358): se desperto recibir_consola
+[INFO] 14:26:26:533 KERNEL/(2349:2358): Se conecto el Consola
+[INFO] 14:26:26:533 KERNEL/(2349:2420): [atender_consola]esperando segmentos
+[INFO] 14:26:26:533 KERNEL/(2349:2420): tamanios de segmentos recibidos
+[INFO] 14:26:26:533 KERNEL/(2349:2420): el tamanio es 1024
+[INFO] 14:26:26:533 KERNEL/(2349:2420): [atender_consola]enviamos los dispositivos
+[INFO] 14:26:26:533 KERNEL/(2349:2420): [atender_consola]esperando instrucciones
+[INFO] 14:26:26:533 KERNEL/(2349:2420): [atender_consola]me llegaron las instrucciones
+[INFO] 14:26:26:533 KERNEL/(2349:2420): SET param1: 0 param2: 1
+[INFO] 14:26:26:534 KERNEL/(2349:2420): MOV_OUT param1: 0 param2: 0
+[INFO] 14:26:26:534 KERNEL/(2349:2420): MOV_OUT param1: 128 param2: 0
+[INFO] 14:26:26:534 KERNEL/(2349:2420): MOV_OUT param1: 256 param2: 0
+[INFO] 14:26:26:534 KERNEL/(2349:2420): MOV_OUT param1: 384 param2: 0
+[INFO] 14:26:26:534 KERNEL/(2349:2420): SET param1: 1 param2: 2
+[INFO] 14:26:26:534 KERNEL/(2349:2420): SET param1: 2 param2: 3
+[INFO] 14:26:26:534 KERNEL/(2349:2420): MOV_OUT param1: 4 param2: 2
+[INFO] 14:26:26:534 KERNEL/(2349:2420): MOV_OUT param1: 132 param2: 2
+[INFO] 14:26:26:534 KERNEL/(2349:2420): MOV_OUT param1: 260 param2: 2
+[INFO] 14:26:26:534 KERNEL/(2349:2420): MOV_OUT param1: 388 param2: 2
+[INFO] 14:26:26:534 KERNEL/(2349:2420): SET param1: 3 param2: 4
+[INFO] 14:26:26:534 KERNEL/(2349:2420): I/O param1: 2 param2: 2
+[INFO] 14:26:26:534 KERNEL/(2349:2420): ADD param1: 0 param2: 1
+[INFO] 14:26:26:534 KERNEL/(2349:2420): ADD param1: 0 param2: 2
+[INFO] 14:26:26:534 KERNEL/(2349:2420): ADD param1: 0 param2: 3
+[INFO] 14:26:26:534 KERNEL/(2349:2420): ADD param1: 0 param2: 1
+[INFO] 14:26:26:534 KERNEL/(2349:2420): ADD param1: 0 param2: 2
+[INFO] 14:26:26:534 KERNEL/(2349:2420): ADD param1: 0 param2: 3
+[INFO] 14:26:26:534 KERNEL/(2349:2420): I/O param1: 2 param2: 2
+[INFO] 14:26:26:534 KERNEL/(2349:2420): ADD param1: 0 param2: 1
+[INFO] 14:26:26:534 KERNEL/(2349:2420): ADD param1: 0 param2: 2
+[INFO] 14:26:26:534 KERNEL/(2349:2420): ADD param1: 0 param2: 3
+[INFO] 14:26:26:534 KERNEL/(2349:2420): I/O param1: 3 param2: 2
+[INFO] 14:26:26:534 KERNEL/(2349:2420): SET param1: 0 param2: 228
+[INFO] 14:26:26:534 KERNEL/(2349:2420): MOV_OUT param1: 0 param2: 0
+[INFO] 14:26:26:534 KERNEL/(2349:2420): MOV_OUT param1: 128 param2: 0
+[INFO] 14:26:26:534 KERNEL/(2349:2420): MOV_OUT param1: 256 param2: 0
+[INFO] 14:26:26:534 KERNEL/(2349:2420): MOV_OUT param1: 384 param2: 0
+[INFO] 14:26:26:534 KERNEL/(2349:2420): MOV_IN param1: 1 param2: 0
+[INFO] 14:26:26:534 KERNEL/(2349:2420): MOV_IN param1: 3 param2: 384
+[INFO] 14:26:26:534 KERNEL/(2349:2420): MOV_IN param1: 2 param2: 128
+[INFO] 14:26:26:534 KERNEL/(2349:2420): ADD param1: 0 param2: 1
+[INFO] 14:26:26:534 KERNEL/(2349:2420): ADD param1: 0 param2: 2
+[INFO] 14:26:26:534 KERNEL/(2349:2420): ADD param1: 0 param2: 3
+[INFO] 14:26:26:534 KERNEL/(2349:2420): I/O param1: 0 param2: 0
+[INFO] 14:26:26:534 KERNEL/(2349:2420): EXIT param1: 0 param2: 0
+[INFO] 14:26:26:534 KERNEL/(2349:2420): [atender_consola]metemos instrucciones en el pcb
+[INFO] 14:26:26:538 KERNEL/(2349:2420): Se crea el proceso <1> en NEW
+[INFO] 14:26:26:538 KERNEL/(2349:2420): [atender_consola] despertamos a asignar_memoria()
+[INFO] 14:26:26:538 KERNEL/(2349:2359): el tamanio de la cola de new es 0
+[INFO] 14:26:26:539 KERNEL/(2349:2359): [recibir_entero]: se recibio el numero 0
+[INFO] 14:26:26:539 KERNEL/(2349:2359): Cola Ready <FIFO>: [<LISTA DE PIDS>]
+[INFO] 14:26:26:539 KERNEL/(2349:2359): 1
+[INFO] 14:26:26:539 KERNEL/(2349:2359): PID: <1> - Estado Anterior: <NEW> - Estado Actual: <READY>
+[INFO] 14:26:26:539 KERNEL/(2349:2361): [readyAExe]: .........se despierta readyAExe 
+[INFO] 14:26:26:539 KERNEL/(2349:2361): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 14:26:26:539 KERNEL/(2349:2361): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 14:26:26:539 KERNEL/(2349:2361): [readyAExe]: enviamos el proceso a cpu
+[INFO] 14:26:26:540 KERNEL/(2349:2361): [readyAExe]: finaliza
+[INFO] 14:26:26:569 KERNEL/(2349:2360): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 14:26:26:570 KERNEL/(2349:2360): Numero de tabla de paginas: 0
+[INFO] 14:26:26:570 KERNEL/(2349:2360): Numero de paginas: 0
+[INFO] 14:26:26:570 KERNEL/(2349:2360): Page Fault PID: <1> - Segmento: <0> - Pagina: <0>
+[INFO] 14:26:26:570 KERNEL/(2349:2360): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 14:26:26:618 KERNEL/(2349:2421): Me llego el mensaje Se ha cargado la pagina correctamente
+[INFO] 14:26:26:618 KERNEL/(2349:2421): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 14:26:26:619 KERNEL/(2349:2361): [readyAExe]: .........se despierta readyAExe 
+[INFO] 14:26:26:619 KERNEL/(2349:2361): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 14:26:26:619 KERNEL/(2349:2361): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 14:26:26:619 KERNEL/(2349:2361): [readyAExe]: enviamos el proceso a cpu
+[INFO] 14:26:26:619 KERNEL/(2349:2361): [readyAExe]: finaliza
+[INFO] 14:26:26:878 KERNEL/(2349:2360): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 14:26:26:879 KERNEL/(2349:2360): Numero de tabla de paginas: 2
+[INFO] 14:26:26:879 KERNEL/(2349:2360): Numero de paginas: 0
+[INFO] 14:26:26:879 KERNEL/(2349:2360): Page Fault PID: <1> - Segmento: <0> - Pagina: <2>
+[INFO] 14:26:26:879 KERNEL/(2349:2360): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 14:26:26:940 KERNEL/(2349:2422): Me llego el mensaje Se ha cargado la pagina correctamente
+[INFO] 14:26:26:941 KERNEL/(2349:2422): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 14:26:26:941 KERNEL/(2349:2361): [readyAExe]: .........se despierta readyAExe 
+[INFO] 14:26:26:941 KERNEL/(2349:2361): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 14:26:26:941 KERNEL/(2349:2361): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 14:26:26:941 KERNEL/(2349:2361): [readyAExe]: enviamos el proceso a cpu
+[INFO] 14:26:26:941 KERNEL/(2349:2361): [readyAExe]: finaliza
+[INFO] 14:26:27:200 KERNEL/(2349:2360): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 14:26:27:202 KERNEL/(2349:2360): Numero de tabla de paginas: 4
+[INFO] 14:26:27:202 KERNEL/(2349:2360): Numero de paginas: 0
+[INFO] 14:26:27:202 KERNEL/(2349:2360): Page Fault PID: <1> - Segmento: <0> - Pagina: <4>
+[INFO] 14:26:27:202 KERNEL/(2349:2360): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 14:26:27:247 KERNEL/(2349:2423): Me llego el mensaje Se ha cargado la pagina correctamente
+[INFO] 14:26:27:247 KERNEL/(2349:2423): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 14:26:27:247 KERNEL/(2349:2361): [readyAExe]: .........se despierta readyAExe 
+[INFO] 14:26:27:247 KERNEL/(2349:2361): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 14:26:27:247 KERNEL/(2349:2361): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 14:26:27:247 KERNEL/(2349:2361): [readyAExe]: enviamos el proceso a cpu
+[INFO] 14:26:27:247 KERNEL/(2349:2361): [readyAExe]: finaliza
+[INFO] 14:26:27:507 KERNEL/(2349:2360): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 14:26:27:507 KERNEL/(2349:2360): Numero de tabla de paginas: 6
+[INFO] 14:26:27:507 KERNEL/(2349:2360): Numero de paginas: 0
+[INFO] 14:26:27:507 KERNEL/(2349:2360): Page Fault PID: <1> - Segmento: <0> - Pagina: <6>
+[INFO] 14:26:27:507 KERNEL/(2349:2360): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 14:26:27:560 KERNEL/(2349:2424): Me llego el mensaje Se ha cargado la pagina correctamente
+[INFO] 14:26:27:560 KERNEL/(2349:2424): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 14:26:27:560 KERNEL/(2349:2361): [readyAExe]: .........se despierta readyAExe 
+[INFO] 14:26:27:560 KERNEL/(2349:2361): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 14:26:27:560 KERNEL/(2349:2361): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 14:26:27:560 KERNEL/(2349:2361): [readyAExe]: enviamos el proceso a cpu
+[INFO] 14:26:27:560 KERNEL/(2349:2361): [readyAExe]: finaliza
+[INFO] 14:26:28:893 KERNEL/(2349:2360): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 14:26:28:893 KERNEL/(2349:2360): Me llego el mensaje DISCO
+[INFO] 14:26:28:893 KERNEL/(2349:2360): [recibir_entero]: se recibio el numero 2
+[INFO] 14:26:28:893 KERNEL/(2349:2360): PID: <1> - Bloqueado por: <DISCO>
+[INFO] 14:26:28:893 KERNEL/(2349:2360): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 14:26:28:893 KERNEL/(2349:2362):  [atender_IO_generico del dispositivo <DISCO>] : se desperto 
+[INFO] 14:26:28:893 KERNEL/(2349:2362):  [atender_IO_generico del dispositivo <DISCO>] : el tiempo de dispositivo es 50 y las unidades de trabajo obtenidas de la cola son 2 
+[INFO] 14:26:28:893 KERNEL/(2349:2362):  [atender_IO_generico del dispositivo <DISCO>] : simulando tiempo de bloqueo  
+[INFO] 14:26:28:993 KERNEL/(2349:2362):  [atender_IO_generico del dispositivo <DISCO>] : obtuvimos el siguiente PCB  
+[INFO] 14:26:28:997 KERNEL/(2349:2362): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 14:26:28:997 KERNEL/(2349:2361): [readyAExe]: .........se despierta readyAExe 
+[INFO] 14:26:28:997 KERNEL/(2349:2361): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 14:26:28:997 KERNEL/(2349:2361): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 14:26:28:997 KERNEL/(2349:2361): [readyAExe]: enviamos el proceso a cpu
+[INFO] 14:26:28:997 KERNEL/(2349:2361): [readyAExe]: finaliza
+[INFO] 14:26:29:152 KERNEL/(2349:2360): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 14:26:29:153 KERNEL/(2349:2360): Me llego el mensaje DISCO
+[INFO] 14:26:29:153 KERNEL/(2349:2360): [recibir_entero]: se recibio el numero 2
+[INFO] 14:26:29:153 KERNEL/(2349:2360): PID: <1> - Bloqueado por: <DISCO>
+[INFO] 14:26:29:153 KERNEL/(2349:2360): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 14:26:29:153 KERNEL/(2349:2362):  [atender_IO_generico del dispositivo <DISCO>] : se desperto 
+[INFO] 14:26:29:153 KERNEL/(2349:2362):  [atender_IO_generico del dispositivo <DISCO>] : el tiempo de dispositivo es 50 y las unidades de trabajo obtenidas de la cola son 2 
+[INFO] 14:26:29:153 KERNEL/(2349:2362):  [atender_IO_generico del dispositivo <DISCO>] : simulando tiempo de bloqueo  
+[INFO] 14:26:29:253 KERNEL/(2349:2362):  [atender_IO_generico del dispositivo <DISCO>] : obtuvimos el siguiente PCB  
+[INFO] 14:26:29:255 KERNEL/(2349:2362): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 14:26:29:255 KERNEL/(2349:2361): [readyAExe]: .........se despierta readyAExe 
+[INFO] 14:26:29:255 KERNEL/(2349:2361): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 14:26:29:255 KERNEL/(2349:2361): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 14:26:29:255 KERNEL/(2349:2361): [readyAExe]: enviamos el proceso a cpu
+[INFO] 14:26:29:255 KERNEL/(2349:2361): [readyAExe]: finaliza
+[INFO] 14:26:29:338 KERNEL/(2349:2360): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 14:26:29:339 KERNEL/(2349:2360): Me llego el mensaje IMPRESORA
+[INFO] 14:26:29:339 KERNEL/(2349:2360): [recibir_entero]: se recibio el numero 2
+[INFO] 14:26:29:339 KERNEL/(2349:2360): PID: <1> - Bloqueado por: <IMPRESORA>
+[INFO] 14:26:29:339 KERNEL/(2349:2360): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 14:26:29:339 KERNEL/(2349:2363):  [atender_IO_generico del dispositivo <IMPRESORA>] : se desperto 
+[INFO] 14:26:29:339 KERNEL/(2349:2363):  [atender_IO_generico del dispositivo <IMPRESORA>] : el tiempo de dispositivo es 100 y las unidades de trabajo obtenidas de la cola son 2 
+[INFO] 14:26:29:339 KERNEL/(2349:2363):  [atender_IO_generico del dispositivo <IMPRESORA>] : simulando tiempo de bloqueo  
+[INFO] 14:26:29:540 KERNEL/(2349:2363):  [atender_IO_generico del dispositivo <IMPRESORA>] : obtuvimos el siguiente PCB  
+[INFO] 14:26:29:541 KERNEL/(2349:2363): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 14:26:29:541 KERNEL/(2349:2361): [readyAExe]: .........se despierta readyAExe 
+[INFO] 14:26:29:541 KERNEL/(2349:2361): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 14:26:29:541 KERNEL/(2349:2361): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 14:26:29:541 KERNEL/(2349:2361): [readyAExe]: enviamos el proceso a cpu
+[INFO] 14:26:29:541 KERNEL/(2349:2361): [readyAExe]: finaliza
+[INFO] 14:26:31:531 KERNEL/(2349:2360): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 14:26:31:531 KERNEL/(2349:2360): [recibir_entero]: se recibio el numero 0
+[INFO] 14:26:31:531 KERNEL/(2349:2360): PID: <1> - Bloqueado por: <PANTALLA>
+[INFO] 14:26:31:531 KERNEL/(2349:2360): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 14:26:32:040 KERNEL/(2349:2425): Me llego el mensaje Se imprimio el valor del registro
+[INFO] 14:26:32:040 KERNEL/(2349:2425): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 14:26:32:040 KERNEL/(2349:2361): [readyAExe]: .........se despierta readyAExe 
+[INFO] 14:26:32:040 KERNEL/(2349:2361): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 14:26:32:040 KERNEL/(2349:2361): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 14:26:32:040 KERNEL/(2349:2361): [readyAExe]: enviamos el proceso a cpu
+[INFO] 14:26:32:040 KERNEL/(2349:2361): [readyAExe]: finaliza
+[INFO] 14:27:56:645 KERNEL/(2621:2621): servidor kernel inicializado
+[INFO] 14:27:56:646 KERNEL/(2621:2621): DISPOSITIVOS: DISCO-IMPRESORA
+[INFO] 14:27:56:646 KERNEL/(2621:2621): configuraciones inicializadas
+[INFO] 14:27:56:646 KERNEL/(2621:2621): listas y colas inicializadas
+[INFO] 14:27:56:646 KERNEL/(2621:2621): semaforos inicializados
+[INFO] 14:27:56:646 KERNEL/(2621:2621): En la lista de dispositivos tenemos los siguientes:
+[INFO] 14:27:56:646 KERNEL/(2621:2621): el dispositivo de posicion 0 se llama DISCO
+[INFO] 14:27:56:646 KERNEL/(2621:2621): el dispositivo de posicion 0 tiene un tiempo de 50
+[INFO] 14:27:56:646 KERNEL/(2621:2621): el dispositivo de posicion 1 se llama IMPRESORA
+[INFO] 14:27:56:646 KERNEL/(2621:2621): el dispositivo de posicion 1 tiene un tiempo de 100
+[INFO] 14:27:56:646 KERNEL/(2621:2632): se desperto atender_interrupcion_de_ejecucion
+[INFO] 14:27:56:647 KERNEL/(2621:2633): se desperto readyAExe por primera vez
+[INFO] 14:27:56:647 KERNEL/(2621:2634): se desperto atender_IO_generico del dispositivo <DISCO> por primera vez 
+[INFO] 14:27:56:647 KERNEL/(2621:2635): se desperto atender_IO_generico del dispositivo <IMPRESORA> por primera vez 
+[INFO] 14:27:56:647 KERNEL/(2621:2631): se desperto asignar_memoria por primera vez
+[INFO] 14:27:56:647 KERNEL/(2621:2630): se desperto recibir_consola
+[INFO] 14:27:59:587 KERNEL/(2621:2630): Se conecto el Consola
+[INFO] 14:27:59:592 KERNEL/(2621:2678): [atender_consola]esperando segmentos
+[INFO] 14:27:59:592 KERNEL/(2621:2678): tamanios de segmentos recibidos
+[INFO] 14:27:59:592 KERNEL/(2621:2678): el tamanio es 1024
+[INFO] 14:27:59:592 KERNEL/(2621:2678): [atender_consola]enviamos los dispositivos
+[INFO] 14:27:59:593 KERNEL/(2621:2678): [atender_consola]esperando instrucciones
+[INFO] 14:27:59:593 KERNEL/(2621:2678): [atender_consola]me llegaron las instrucciones
+[INFO] 14:27:59:593 KERNEL/(2621:2678): SET param1: 0 param2: 1
+[INFO] 14:27:59:593 KERNEL/(2621:2678): MOV_OUT param1: 0 param2: 0
+[INFO] 14:27:59:593 KERNEL/(2621:2678): MOV_OUT param1: 128 param2: 0
+[INFO] 14:27:59:593 KERNEL/(2621:2678): MOV_OUT param1: 256 param2: 0
+[INFO] 14:27:59:593 KERNEL/(2621:2678): MOV_OUT param1: 384 param2: 0
+[INFO] 14:27:59:593 KERNEL/(2621:2678): SET param1: 1 param2: 2
+[INFO] 14:27:59:593 KERNEL/(2621:2678): SET param1: 2 param2: 3
+[INFO] 14:27:59:593 KERNEL/(2621:2678): MOV_OUT param1: 4 param2: 2
+[INFO] 14:27:59:593 KERNEL/(2621:2678): MOV_OUT param1: 132 param2: 2
+[INFO] 14:27:59:593 KERNEL/(2621:2678): MOV_OUT param1: 260 param2: 2
+[INFO] 14:27:59:593 KERNEL/(2621:2678): MOV_OUT param1: 388 param2: 2
+[INFO] 14:27:59:593 KERNEL/(2621:2678): SET param1: 3 param2: 4
+[INFO] 14:27:59:593 KERNEL/(2621:2678): I/O param1: 2 param2: 2
+[INFO] 14:27:59:593 KERNEL/(2621:2678): ADD param1: 0 param2: 1
+[INFO] 14:27:59:593 KERNEL/(2621:2678): ADD param1: 0 param2: 2
+[INFO] 14:27:59:593 KERNEL/(2621:2678): ADD param1: 0 param2: 3
+[INFO] 14:27:59:593 KERNEL/(2621:2678): ADD param1: 0 param2: 1
+[INFO] 14:27:59:593 KERNEL/(2621:2678): ADD param1: 0 param2: 2
+[INFO] 14:27:59:593 KERNEL/(2621:2678): ADD param1: 0 param2: 3
+[INFO] 14:27:59:593 KERNEL/(2621:2678): I/O param1: 2 param2: 2
+[INFO] 14:27:59:593 KERNEL/(2621:2678): ADD param1: 0 param2: 1
+[INFO] 14:27:59:593 KERNEL/(2621:2678): ADD param1: 0 param2: 2
+[INFO] 14:27:59:593 KERNEL/(2621:2678): ADD param1: 0 param2: 3
+[INFO] 14:27:59:593 KERNEL/(2621:2678): I/O param1: 3 param2: 2
+[INFO] 14:27:59:594 KERNEL/(2621:2678): SET param1: 0 param2: 228
+[INFO] 14:27:59:594 KERNEL/(2621:2678): MOV_OUT param1: 0 param2: 0
+[INFO] 14:27:59:594 KERNEL/(2621:2678): MOV_OUT param1: 128 param2: 0
+[INFO] 14:27:59:594 KERNEL/(2621:2678): MOV_OUT param1: 256 param2: 0
+[INFO] 14:27:59:594 KERNEL/(2621:2678): MOV_OUT param1: 384 param2: 0
+[INFO] 14:27:59:594 KERNEL/(2621:2678): MOV_IN param1: 1 param2: 0
+[INFO] 14:27:59:594 KERNEL/(2621:2678): MOV_IN param1: 3 param2: 384
+[INFO] 14:27:59:594 KERNEL/(2621:2678): MOV_IN param1: 2 param2: 128
+[INFO] 14:27:59:594 KERNEL/(2621:2678): ADD param1: 0 param2: 1
+[INFO] 14:27:59:594 KERNEL/(2621:2678): ADD param1: 0 param2: 2
+[INFO] 14:27:59:594 KERNEL/(2621:2678): ADD param1: 0 param2: 3
+[INFO] 14:27:59:594 KERNEL/(2621:2678): I/O param1: 0 param2: 0
+[INFO] 14:27:59:594 KERNEL/(2621:2678): EXIT param1: 0 param2: 0
+[INFO] 14:27:59:594 KERNEL/(2621:2678): [atender_consola]metemos instrucciones en el pcb
+[INFO] 14:27:59:594 KERNEL/(2621:2678): Se crea el proceso <1> en NEW
+[INFO] 14:27:59:594 KERNEL/(2621:2678): [atender_consola] despertamos a asignar_memoria()
+[INFO] 14:27:59:594 KERNEL/(2621:2631): el tamanio de la cola de new es 0
+[INFO] 14:27:59:594 KERNEL/(2621:2631): [recibir_entero]: se recibio el numero 0
+[INFO] 14:27:59:595 KERNEL/(2621:2631): Cola Ready <FIFO>: [<LISTA DE PIDS>]
+[INFO] 14:27:59:595 KERNEL/(2621:2631): 1
+[INFO] 14:27:59:595 KERNEL/(2621:2631): PID: <1> - Estado Anterior: <NEW> - Estado Actual: <READY>
+[INFO] 14:27:59:595 KERNEL/(2621:2633): [readyAExe]: .........se despierta readyAExe 
+[INFO] 14:27:59:595 KERNEL/(2621:2633): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 14:27:59:595 KERNEL/(2621:2633): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 14:27:59:595 KERNEL/(2621:2633): [readyAExe]: enviamos el proceso a cpu
+[INFO] 14:27:59:595 KERNEL/(2621:2633): [readyAExe]: finaliza
+[INFO] 14:27:59:621 KERNEL/(2621:2632): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 14:27:59:623 KERNEL/(2621:2632): Numero de tabla de paginas: 0
+[INFO] 14:27:59:623 KERNEL/(2621:2632): Numero de paginas: 0
+[INFO] 14:27:59:623 KERNEL/(2621:2632): Page Fault PID: <1> - Segmento: <0> - Pagina: <0>
+[INFO] 14:27:59:623 KERNEL/(2621:2632): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 14:27:59:675 KERNEL/(2621:2679): Me llego el mensaje Se ha cargado la pagina correctamente
+[INFO] 14:27:59:675 KERNEL/(2621:2679): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 14:27:59:675 KERNEL/(2621:2633): [readyAExe]: .........se despierta readyAExe 
+[INFO] 14:27:59:675 KERNEL/(2621:2633): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 14:27:59:675 KERNEL/(2621:2633): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 14:27:59:675 KERNEL/(2621:2633): [readyAExe]: enviamos el proceso a cpu
+[INFO] 14:27:59:675 KERNEL/(2621:2633): [readyAExe]: finaliza
+[INFO] 14:27:59:936 KERNEL/(2621:2632): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 14:27:59:939 KERNEL/(2621:2632): Numero de tabla de paginas: 2
+[INFO] 14:27:59:939 KERNEL/(2621:2632): Numero de paginas: 0
+[INFO] 14:27:59:939 KERNEL/(2621:2632): Page Fault PID: <1> - Segmento: <0> - Pagina: <2>
+[INFO] 14:27:59:939 KERNEL/(2621:2632): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 14:27:59:991 KERNEL/(2621:2680): Me llego el mensaje Se ha cargado la pagina correctamente
+[INFO] 14:27:59:991 KERNEL/(2621:2680): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 14:27:59:991 KERNEL/(2621:2633): [readyAExe]: .........se despierta readyAExe 
+[INFO] 14:27:59:991 KERNEL/(2621:2633): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 14:27:59:991 KERNEL/(2621:2633): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 14:27:59:991 KERNEL/(2621:2633): [readyAExe]: enviamos el proceso a cpu
+[INFO] 14:27:59:992 KERNEL/(2621:2633): [readyAExe]: finaliza
+[INFO] 14:28:00:250 KERNEL/(2621:2632): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 14:28:00:254 KERNEL/(2621:2632): Numero de tabla de paginas: 4
+[INFO] 14:28:00:254 KERNEL/(2621:2632): Numero de paginas: 0
+[INFO] 14:28:00:254 KERNEL/(2621:2632): Page Fault PID: <1> - Segmento: <0> - Pagina: <4>
+[INFO] 14:28:00:254 KERNEL/(2621:2632): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 14:28:00:303 KERNEL/(2621:2682): Me llego el mensaje Se ha cargado la pagina correctamente
+[INFO] 14:28:00:303 KERNEL/(2621:2682): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 14:28:00:303 KERNEL/(2621:2633): [readyAExe]: .........se despierta readyAExe 
+[INFO] 14:28:00:303 KERNEL/(2621:2633): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 14:28:00:303 KERNEL/(2621:2633): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 14:28:00:303 KERNEL/(2621:2633): [readyAExe]: enviamos el proceso a cpu
+[INFO] 14:28:00:303 KERNEL/(2621:2633): [readyAExe]: finaliza
+[INFO] 14:28:00:567 KERNEL/(2621:2632): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 14:28:00:567 KERNEL/(2621:2632): Numero de tabla de paginas: 6
+[INFO] 14:28:00:567 KERNEL/(2621:2632): Numero de paginas: 0
+[INFO] 14:28:00:567 KERNEL/(2621:2632): Page Fault PID: <1> - Segmento: <0> - Pagina: <6>
+[INFO] 14:28:00:567 KERNEL/(2621:2632): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 14:28:00:616 KERNEL/(2621:2683): Me llego el mensaje Se ha cargado la pagina correctamente
+[INFO] 14:28:00:616 KERNEL/(2621:2683): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 14:28:00:616 KERNEL/(2621:2633): [readyAExe]: .........se despierta readyAExe 
+[INFO] 14:28:00:617 KERNEL/(2621:2633): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 14:28:00:617 KERNEL/(2621:2633): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 14:28:00:617 KERNEL/(2621:2633): [readyAExe]: enviamos el proceso a cpu
+[INFO] 14:28:00:617 KERNEL/(2621:2633): [readyAExe]: finaliza
+[INFO] 14:28:01:948 KERNEL/(2621:2632): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 14:28:01:949 KERNEL/(2621:2632): Me llego el mensaje DISCO
+[INFO] 14:28:01:949 KERNEL/(2621:2632): [recibir_entero]: se recibio el numero 2
+[INFO] 14:28:01:949 KERNEL/(2621:2632): PID: <1> - Bloqueado por: <DISCO>
+[INFO] 14:28:01:949 KERNEL/(2621:2632): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 14:28:01:949 KERNEL/(2621:2634):  [atender_IO_generico del dispositivo <DISCO>] : se desperto 
+[INFO] 14:28:01:949 KERNEL/(2621:2634):  [atender_IO_generico del dispositivo <DISCO>] : el tiempo de dispositivo es 50 y las unidades de trabajo obtenidas de la cola son 2 
+[INFO] 14:28:01:949 KERNEL/(2621:2634):  [atender_IO_generico del dispositivo <DISCO>] : simulando tiempo de bloqueo  
+[INFO] 14:28:02:050 KERNEL/(2621:2634):  [atender_IO_generico del dispositivo <DISCO>] : obtuvimos el siguiente PCB  
+[INFO] 14:28:02:050 KERNEL/(2621:2634): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 14:28:02:051 KERNEL/(2621:2633): [readyAExe]: .........se despierta readyAExe 
+[INFO] 14:28:02:051 KERNEL/(2621:2633): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 14:28:02:051 KERNEL/(2621:2633): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 14:28:02:051 KERNEL/(2621:2633): [readyAExe]: enviamos el proceso a cpu
+[INFO] 14:28:02:051 KERNEL/(2621:2633): [readyAExe]: finaliza
+[INFO] 14:28:02:212 KERNEL/(2621:2632): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 14:28:02:212 KERNEL/(2621:2632): Me llego el mensaje DISCO
+[INFO] 14:28:02:212 KERNEL/(2621:2632): [recibir_entero]: se recibio el numero 2
+[INFO] 14:28:02:212 KERNEL/(2621:2632): PID: <1> - Bloqueado por: <DISCO>
+[INFO] 14:28:02:212 KERNEL/(2621:2632): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 14:28:02:212 KERNEL/(2621:2634):  [atender_IO_generico del dispositivo <DISCO>] : se desperto 
+[INFO] 14:28:02:212 KERNEL/(2621:2634):  [atender_IO_generico del dispositivo <DISCO>] : el tiempo de dispositivo es 50 y las unidades de trabajo obtenidas de la cola son 2 
+[INFO] 14:28:02:212 KERNEL/(2621:2634):  [atender_IO_generico del dispositivo <DISCO>] : simulando tiempo de bloqueo  
+[INFO] 14:28:02:312 KERNEL/(2621:2634):  [atender_IO_generico del dispositivo <DISCO>] : obtuvimos el siguiente PCB  
+[INFO] 14:28:02:312 KERNEL/(2621:2634): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 14:28:02:312 KERNEL/(2621:2633): [readyAExe]: .........se despierta readyAExe 
+[INFO] 14:28:02:312 KERNEL/(2621:2633): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 14:28:02:312 KERNEL/(2621:2633): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 14:28:02:312 KERNEL/(2621:2633): [readyAExe]: enviamos el proceso a cpu
+[INFO] 14:28:02:313 KERNEL/(2621:2633): [readyAExe]: finaliza
+[INFO] 14:28:02:398 KERNEL/(2621:2632): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 14:28:02:398 KERNEL/(2621:2632): Me llego el mensaje IMPRESORA
+[INFO] 14:28:02:398 KERNEL/(2621:2632): [recibir_entero]: se recibio el numero 2
+[INFO] 14:28:02:399 KERNEL/(2621:2632): PID: <1> - Bloqueado por: <IMPRESORA>
+[INFO] 14:28:02:399 KERNEL/(2621:2632): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 14:28:02:399 KERNEL/(2621:2635):  [atender_IO_generico del dispositivo <IMPRESORA>] : se desperto 
+[INFO] 14:28:02:399 KERNEL/(2621:2635):  [atender_IO_generico del dispositivo <IMPRESORA>] : el tiempo de dispositivo es 100 y las unidades de trabajo obtenidas de la cola son 2 
+[INFO] 14:28:02:399 KERNEL/(2621:2635):  [atender_IO_generico del dispositivo <IMPRESORA>] : simulando tiempo de bloqueo  
+[INFO] 14:28:02:599 KERNEL/(2621:2635):  [atender_IO_generico del dispositivo <IMPRESORA>] : obtuvimos el siguiente PCB  
+[INFO] 14:28:02:599 KERNEL/(2621:2635): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 14:28:02:599 KERNEL/(2621:2633): [readyAExe]: .........se despierta readyAExe 
+[INFO] 14:28:02:599 KERNEL/(2621:2633): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 14:28:02:599 KERNEL/(2621:2633): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 14:28:02:599 KERNEL/(2621:2633): [readyAExe]: enviamos el proceso a cpu
+[INFO] 14:28:02:600 KERNEL/(2621:2633): [readyAExe]: finaliza
+[INFO] 14:28:04:586 KERNEL/(2621:2632): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 14:28:04:586 KERNEL/(2621:2632): [recibir_entero]: se recibio el numero 0
+[INFO] 14:28:04:586 KERNEL/(2621:2632): PID: <1> - Bloqueado por: <PANTALLA>
+[INFO] 14:28:04:586 KERNEL/(2621:2632): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 14:28:05:099 KERNEL/(2621:2684): Me llego el mensaje Se imprimio el valor del registro
+[INFO] 14:28:05:099 KERNEL/(2621:2684): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 14:28:05:099 KERNEL/(2621:2633): [readyAExe]: .........se despierta readyAExe 
+[INFO] 14:28:05:099 KERNEL/(2621:2633): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 14:28:05:099 KERNEL/(2621:2633): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 14:28:05:099 KERNEL/(2621:2633): [readyAExe]: enviamos el proceso a cpu
+[INFO] 14:28:05:099 KERNEL/(2621:2633): [readyAExe]: finaliza
+[INFO] 14:28:05:100 KERNEL/(2621:2632): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 14:28:05:101 KERNEL/(2621:2632): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <TERMINATED>
+[INFO] 14:37:55:580 KERNEL/(3664:3664): servidor kernel inicializado
+[INFO] 14:37:55:581 KERNEL/(3664:3664): DISPOSITIVOS: DISCO-IMPRESORA
+[INFO] 14:37:55:581 KERNEL/(3664:3664): configuraciones inicializadas
+[INFO] 14:37:55:582 KERNEL/(3664:3664): listas y colas inicializadas
+[INFO] 14:37:55:582 KERNEL/(3664:3664): semaforos inicializados
+[INFO] 14:37:55:582 KERNEL/(3664:3664): En la lista de dispositivos tenemos los siguientes:
+[INFO] 14:37:55:582 KERNEL/(3664:3664): el dispositivo de posicion 0 se llama DISCO
+[INFO] 14:37:55:583 KERNEL/(3664:3664): el dispositivo de posicion 0 tiene un tiempo de 50
+[INFO] 14:37:55:583 KERNEL/(3664:3664): el dispositivo de posicion 1 se llama IMPRESORA
+[INFO] 14:37:55:584 KERNEL/(3664:3664): el dispositivo de posicion 1 tiene un tiempo de 100
+[INFO] 14:37:55:589 KERNEL/(3664:3674): se desperto recibir_consola
+[INFO] 14:37:55:589 KERNEL/(3664:3675): se desperto asignar_memoria por primera vez
+[INFO] 14:37:55:589 KERNEL/(3664:3676): se desperto atender_interrupcion_de_ejecucion
+[INFO] 14:37:55:589 KERNEL/(3664:3677): se desperto readyAExe por primera vez
+[INFO] 14:37:55:589 KERNEL/(3664:3678): se desperto atender_IO_generico del dispositivo <DISCO> por primera vez 
+[INFO] 14:37:55:589 KERNEL/(3664:3679): se desperto atender_IO_generico del dispositivo <IMPRESORA> por primera vez 
+[INFO] 14:37:58:428 KERNEL/(3664:3674): Se conecto el Consola
+[INFO] 14:37:58:430 KERNEL/(3664:3723): [atender_consola]esperando segmentos
+[INFO] 14:37:58:430 KERNEL/(3664:3723): tamanios de segmentos recibidos
+[INFO] 14:37:58:430 KERNEL/(3664:3723): el tamanio es 1024
+[INFO] 14:37:58:430 KERNEL/(3664:3723): [atender_consola]enviamos los dispositivos
+[INFO] 14:37:58:431 KERNEL/(3664:3723): [atender_consola]esperando instrucciones
+[INFO] 14:37:58:431 KERNEL/(3664:3723): [atender_consola]me llegaron las instrucciones
+[INFO] 14:37:58:431 KERNEL/(3664:3723): SET param1: 0 param2: 1
+[INFO] 14:37:58:431 KERNEL/(3664:3723): MOV_OUT param1: 0 param2: 0
+[INFO] 14:37:58:431 KERNEL/(3664:3723): MOV_OUT param1: 128 param2: 0
+[INFO] 14:37:58:431 KERNEL/(3664:3723): MOV_OUT param1: 256 param2: 0
+[INFO] 14:37:58:431 KERNEL/(3664:3723): MOV_OUT param1: 384 param2: 0
+[INFO] 14:37:58:431 KERNEL/(3664:3723): SET param1: 1 param2: 2
+[INFO] 14:37:58:431 KERNEL/(3664:3723): SET param1: 2 param2: 3
+[INFO] 14:37:58:431 KERNEL/(3664:3723): MOV_OUT param1: 4 param2: 2
+[INFO] 14:37:58:431 KERNEL/(3664:3723): MOV_OUT param1: 132 param2: 2
+[INFO] 14:37:58:431 KERNEL/(3664:3723): MOV_OUT param1: 260 param2: 2
+[INFO] 14:37:58:431 KERNEL/(3664:3723): MOV_OUT param1: 388 param2: 2
+[INFO] 14:37:58:431 KERNEL/(3664:3723): SET param1: 3 param2: 4
+[INFO] 14:37:58:432 KERNEL/(3664:3723): I/O param1: 2 param2: 2
+[INFO] 14:37:58:432 KERNEL/(3664:3723): ADD param1: 0 param2: 1
+[INFO] 14:37:58:432 KERNEL/(3664:3723): ADD param1: 0 param2: 2
+[INFO] 14:37:58:432 KERNEL/(3664:3723): ADD param1: 0 param2: 3
+[INFO] 14:37:58:433 KERNEL/(3664:3723): ADD param1: 0 param2: 1
+[INFO] 14:37:58:433 KERNEL/(3664:3723): ADD param1: 0 param2: 2
+[INFO] 14:37:58:433 KERNEL/(3664:3723): ADD param1: 0 param2: 3
+[INFO] 14:37:58:433 KERNEL/(3664:3723): I/O param1: 2 param2: 2
+[INFO] 14:37:58:434 KERNEL/(3664:3723): ADD param1: 0 param2: 1
+[INFO] 14:37:58:434 KERNEL/(3664:3723): ADD param1: 0 param2: 2
+[INFO] 14:37:58:434 KERNEL/(3664:3723): ADD param1: 0 param2: 3
+[INFO] 14:37:58:434 KERNEL/(3664:3723): I/O param1: 3 param2: 2
+[INFO] 14:37:58:434 KERNEL/(3664:3723): SET param1: 0 param2: 228
+[INFO] 14:37:58:434 KERNEL/(3664:3723): MOV_OUT param1: 0 param2: 0
+[INFO] 14:37:58:434 KERNEL/(3664:3723): MOV_OUT param1: 128 param2: 0
+[INFO] 14:37:58:434 KERNEL/(3664:3723): MOV_OUT param1: 256 param2: 0
+[INFO] 14:37:58:435 KERNEL/(3664:3723): MOV_OUT param1: 384 param2: 0
+[INFO] 14:37:58:435 KERNEL/(3664:3723): MOV_IN param1: 1 param2: 0
+[INFO] 14:37:58:435 KERNEL/(3664:3723): MOV_IN param1: 3 param2: 384
+[INFO] 14:37:58:435 KERNEL/(3664:3723): MOV_IN param1: 2 param2: 128
+[INFO] 14:37:58:435 KERNEL/(3664:3723): ADD param1: 0 param2: 1
+[INFO] 14:37:58:435 KERNEL/(3664:3723): ADD param1: 0 param2: 2
+[INFO] 14:37:58:435 KERNEL/(3664:3723): ADD param1: 0 param2: 3
+[INFO] 14:37:58:435 KERNEL/(3664:3723): I/O param1: 0 param2: 0
+[INFO] 14:37:58:435 KERNEL/(3664:3723): EXIT param1: 0 param2: 0
+[INFO] 14:37:58:435 KERNEL/(3664:3723): [atender_consola]metemos instrucciones en el pcb
+[INFO] 14:37:58:437 KERNEL/(3664:3723): Se crea el proceso <1> en NEW
+[INFO] 14:37:58:439 KERNEL/(3664:3723): [atender_consola] despertamos a asignar_memoria()
+[INFO] 14:37:58:439 KERNEL/(3664:3675): el tamanio de la cola de new es 0
+[INFO] 14:37:58:439 KERNEL/(3664:3675): [recibir_entero]: se recibio el numero 0
+[INFO] 14:37:58:439 KERNEL/(3664:3675): Cola Ready <FIFO>: [<LISTA DE PIDS>]
+[INFO] 14:37:58:439 KERNEL/(3664:3675): 1
+[INFO] 14:37:58:439 KERNEL/(3664:3675): PID: <1> - Estado Anterior: <NEW> - Estado Actual: <READY>
+[INFO] 14:37:58:439 KERNEL/(3664:3677): [readyAExe]: .........se despierta readyAExe 
+[INFO] 14:37:58:439 KERNEL/(3664:3677): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 14:37:58:439 KERNEL/(3664:3677): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 14:37:58:439 KERNEL/(3664:3677): [readyAExe]: enviamos el proceso a cpu
+[INFO] 14:37:58:439 KERNEL/(3664:3677): [readyAExe]: finaliza
+[INFO] 14:37:58:466 KERNEL/(3664:3676): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 14:37:58:470 KERNEL/(3664:3676): Numero de tabla de paginas: 0
+[INFO] 14:37:58:470 KERNEL/(3664:3676): Numero de paginas: 0
+[INFO] 14:37:58:470 KERNEL/(3664:3676): Page Fault PID: <1> - Segmento: <0> - Pagina: <0>
+[INFO] 14:37:58:470 KERNEL/(3664:3676): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 14:37:58:518 KERNEL/(3664:3724): Me llego el mensaje Se ha cargado la pagina correctamente
+[INFO] 14:37:58:518 KERNEL/(3664:3724): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 14:37:58:518 KERNEL/(3664:3677): [readyAExe]: .........se despierta readyAExe 
+[INFO] 14:37:58:518 KERNEL/(3664:3677): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 14:37:58:518 KERNEL/(3664:3677): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 14:37:58:519 KERNEL/(3664:3677): [readyAExe]: enviamos el proceso a cpu
+[INFO] 14:37:58:519 KERNEL/(3664:3677): [readyAExe]: finaliza
+[INFO] 14:37:58:776 KERNEL/(3664:3676): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 14:37:58:779 KERNEL/(3664:3676): Numero de tabla de paginas: 2
+[INFO] 14:37:58:779 KERNEL/(3664:3676): Numero de paginas: 0
+[INFO] 14:37:58:779 KERNEL/(3664:3676): Page Fault PID: <1> - Segmento: <0> - Pagina: <2>
+[INFO] 14:37:58:779 KERNEL/(3664:3676): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 14:37:58:834 KERNEL/(3664:3725): Me llego el mensaje Se ha cargado la pagina correctamente
+[INFO] 14:37:58:835 KERNEL/(3664:3725): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 14:37:58:835 KERNEL/(3664:3677): [readyAExe]: .........se despierta readyAExe 
+[INFO] 14:37:58:835 KERNEL/(3664:3677): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 14:37:58:835 KERNEL/(3664:3677): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 14:37:58:835 KERNEL/(3664:3677): [readyAExe]: enviamos el proceso a cpu
+[INFO] 14:37:58:835 KERNEL/(3664:3677): [readyAExe]: finaliza
+[INFO] 14:37:59:088 KERNEL/(3664:3676): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 14:37:59:090 KERNEL/(3664:3676): Numero de tabla de paginas: 4
+[INFO] 14:37:59:090 KERNEL/(3664:3676): Numero de paginas: 0
+[INFO] 14:37:59:090 KERNEL/(3664:3676): Page Fault PID: <1> - Segmento: <0> - Pagina: <4>
+[INFO] 14:37:59:090 KERNEL/(3664:3676): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 14:37:59:142 KERNEL/(3664:3726): Me llego el mensaje Se ha cargado la pagina correctamente
+[INFO] 14:37:59:142 KERNEL/(3664:3726): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 14:37:59:142 KERNEL/(3664:3677): [readyAExe]: .........se despierta readyAExe 
+[INFO] 14:37:59:142 KERNEL/(3664:3677): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 14:37:59:143 KERNEL/(3664:3677): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 14:37:59:143 KERNEL/(3664:3677): [readyAExe]: enviamos el proceso a cpu
+[INFO] 14:37:59:143 KERNEL/(3664:3677): [readyAExe]: finaliza
+[INFO] 14:37:59:406 KERNEL/(3664:3676): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 14:37:59:409 KERNEL/(3664:3676): Numero de tabla de paginas: 6
+[INFO] 14:37:59:409 KERNEL/(3664:3676): Numero de paginas: 0
+[INFO] 14:37:59:409 KERNEL/(3664:3676): Page Fault PID: <1> - Segmento: <0> - Pagina: <6>
+[INFO] 14:37:59:409 KERNEL/(3664:3676): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 14:37:59:459 KERNEL/(3664:3727): Me llego el mensaje Se ha cargado la pagina correctamente
+[INFO] 14:37:59:459 KERNEL/(3664:3727): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 14:37:59:459 KERNEL/(3664:3677): [readyAExe]: .........se despierta readyAExe 
+[INFO] 14:37:59:459 KERNEL/(3664:3677): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 14:37:59:459 KERNEL/(3664:3677): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 14:37:59:459 KERNEL/(3664:3677): [readyAExe]: enviamos el proceso a cpu
+[INFO] 14:37:59:459 KERNEL/(3664:3677): [readyAExe]: finaliza
+[INFO] 14:38:00:792 KERNEL/(3664:3676): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 14:38:00:792 KERNEL/(3664:3676): Me llego el mensaje DISCO
+[INFO] 14:38:00:792 KERNEL/(3664:3676): [recibir_entero]: se recibio el numero 2
+[INFO] 14:38:00:792 KERNEL/(3664:3676): PID: <1> - Bloqueado por: <DISCO>
+[INFO] 14:38:00:792 KERNEL/(3664:3676): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 14:38:00:792 KERNEL/(3664:3678):  [atender_IO_generico del dispositivo <DISCO>] : se desperto 
+[INFO] 14:38:00:792 KERNEL/(3664:3678):  [atender_IO_generico del dispositivo <DISCO>] : el tiempo de dispositivo es 50 y las unidades de trabajo obtenidas de la cola son 2 
+[INFO] 14:38:00:792 KERNEL/(3664:3678):  [atender_IO_generico del dispositivo <DISCO>] : simulando tiempo de bloqueo  
+[INFO] 14:38:00:893 KERNEL/(3664:3678):  [atender_IO_generico del dispositivo <DISCO>] : obtuvimos el siguiente PCB  
+[INFO] 14:38:00:895 KERNEL/(3664:3678): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 14:38:00:895 KERNEL/(3664:3677): [readyAExe]: .........se despierta readyAExe 
+[INFO] 14:38:00:895 KERNEL/(3664:3677): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 14:38:00:895 KERNEL/(3664:3677): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 14:38:00:895 KERNEL/(3664:3677): [readyAExe]: enviamos el proceso a cpu
+[INFO] 14:38:00:895 KERNEL/(3664:3677): [readyAExe]: finaliza
+[INFO] 14:38:01:055 KERNEL/(3664:3676): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 14:38:01:055 KERNEL/(3664:3676): Me llego el mensaje DISCO
+[INFO] 14:38:01:055 KERNEL/(3664:3676): [recibir_entero]: se recibio el numero 2
+[INFO] 14:38:01:055 KERNEL/(3664:3676): PID: <1> - Bloqueado por: <DISCO>
+[INFO] 14:38:01:055 KERNEL/(3664:3676): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 14:38:01:055 KERNEL/(3664:3678):  [atender_IO_generico del dispositivo <DISCO>] : se desperto 
+[INFO] 14:38:01:055 KERNEL/(3664:3678):  [atender_IO_generico del dispositivo <DISCO>] : el tiempo de dispositivo es 50 y las unidades de trabajo obtenidas de la cola son 2 
+[INFO] 14:38:01:055 KERNEL/(3664:3678):  [atender_IO_generico del dispositivo <DISCO>] : simulando tiempo de bloqueo  
+[INFO] 14:38:01:157 KERNEL/(3664:3678):  [atender_IO_generico del dispositivo <DISCO>] : obtuvimos el siguiente PCB  
+[INFO] 14:38:01:157 KERNEL/(3664:3678): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 14:38:01:157 KERNEL/(3664:3677): [readyAExe]: .........se despierta readyAExe 
+[INFO] 14:38:01:157 KERNEL/(3664:3677): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 14:38:01:158 KERNEL/(3664:3677): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 14:38:01:158 KERNEL/(3664:3677): [readyAExe]: enviamos el proceso a cpu
+[INFO] 14:38:01:158 KERNEL/(3664:3677): [readyAExe]: finaliza
+[INFO] 14:38:01:235 KERNEL/(3664:3676): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 14:38:01:235 KERNEL/(3664:3676): Me llego el mensaje IMPRESORA
+[INFO] 14:38:01:235 KERNEL/(3664:3676): [recibir_entero]: se recibio el numero 2
+[INFO] 14:38:01:235 KERNEL/(3664:3676): PID: <1> - Bloqueado por: <IMPRESORA>
+[INFO] 14:38:01:236 KERNEL/(3664:3676): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 14:38:01:238 KERNEL/(3664:3679):  [atender_IO_generico del dispositivo <IMPRESORA>] : se desperto 
+[INFO] 14:38:01:238 KERNEL/(3664:3679):  [atender_IO_generico del dispositivo <IMPRESORA>] : el tiempo de dispositivo es 100 y las unidades de trabajo obtenidas de la cola son 2 
+[INFO] 14:38:01:238 KERNEL/(3664:3679):  [atender_IO_generico del dispositivo <IMPRESORA>] : simulando tiempo de bloqueo  
+[INFO] 14:38:01:438 KERNEL/(3664:3679):  [atender_IO_generico del dispositivo <IMPRESORA>] : obtuvimos el siguiente PCB  
+[INFO] 14:38:01:439 KERNEL/(3664:3679): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 14:38:01:439 KERNEL/(3664:3677): [readyAExe]: .........se despierta readyAExe 
+[INFO] 14:38:01:439 KERNEL/(3664:3677): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 14:38:01:439 KERNEL/(3664:3677): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 14:38:01:439 KERNEL/(3664:3677): [readyAExe]: enviamos el proceso a cpu
+[INFO] 14:38:01:439 KERNEL/(3664:3677): [readyAExe]: finaliza
+[INFO] 14:38:03:427 KERNEL/(3664:3676): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 14:38:03:427 KERNEL/(3664:3676): [recibir_entero]: se recibio el numero 0
+[INFO] 14:38:03:427 KERNEL/(3664:3676): PID: <1> - Bloqueado por: <PANTALLA>
+[INFO] 14:38:03:427 KERNEL/(3664:3676): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 14:38:03:939 KERNEL/(3664:3728): Me llego el mensaje Se imprimio el valor del registro
+[INFO] 14:38:03:939 KERNEL/(3664:3728): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 14:38:03:940 KERNEL/(3664:3677): [readyAExe]: .........se despierta readyAExe 
+[INFO] 14:38:03:940 KERNEL/(3664:3677): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 14:38:03:940 KERNEL/(3664:3677): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 14:38:03:940 KERNEL/(3664:3677): [readyAExe]: enviamos el proceso a cpu
+[INFO] 14:38:03:940 KERNEL/(3664:3677): [readyAExe]: finaliza
+[INFO] 14:44:25:165 KERNEL/(8483:8483): servidor kernel inicializado
+[INFO] 14:44:25:168 KERNEL/(8483:8483): DISPOSITIVOS: DISCO-IMPRESORA
+[INFO] 14:44:25:169 KERNEL/(8483:8483): configuraciones inicializadas
+[INFO] 14:44:25:169 KERNEL/(8483:8483): listas y colas inicializadas
+[INFO] 14:44:25:169 KERNEL/(8483:8483): semaforos inicializados
+[INFO] 14:44:25:169 KERNEL/(8483:8483): En la lista de dispositivos tenemos los siguientes:
+[INFO] 14:44:25:169 KERNEL/(8483:8483): el dispositivo de posicion 0 se llama DISCO
+[INFO] 14:44:25:169 KERNEL/(8483:8483): el dispositivo de posicion 0 tiene un tiempo de 50
+[INFO] 14:44:25:169 KERNEL/(8483:8483): el dispositivo de posicion 1 se llama IMPRESORA
+[INFO] 14:44:25:169 KERNEL/(8483:8483): el dispositivo de posicion 1 tiene un tiempo de 100
+[INFO] 14:44:25:177 KERNEL/(8483:8493): se desperto asignar_memoria por primera vez
+[INFO] 14:44:25:177 KERNEL/(8483:8495): se desperto readyAExe por primera vez
+[INFO] 14:44:25:177 KERNEL/(8483:8494): se desperto atender_interrupcion_de_ejecucion
+[INFO] 14:44:25:177 KERNEL/(8483:8497): se desperto atender_IO_generico del dispositivo <IMPRESORA> por primera vez 
+[INFO] 14:44:25:177 KERNEL/(8483:8496): se desperto atender_IO_generico del dispositivo <DISCO> por primera vez 
+[INFO] 14:44:25:177 KERNEL/(8483:8492): se desperto recibir_consola
+[INFO] 14:44:27:442 KERNEL/(8483:8492): Se conecto el Consola
+[INFO] 14:44:27:446 KERNEL/(8483:8541): [atender_consola]esperando segmentos
+[INFO] 14:44:27:446 KERNEL/(8483:8541): tamanios de segmentos recibidos
+[INFO] 14:44:27:446 KERNEL/(8483:8541): el tamanio es 1024
+[INFO] 14:44:27:446 KERNEL/(8483:8541): [atender_consola]enviamos los dispositivos
+[INFO] 14:44:27:447 KERNEL/(8483:8541): [atender_consola]esperando instrucciones
+[INFO] 14:44:27:447 KERNEL/(8483:8541): [atender_consola]me llegaron las instrucciones
+[INFO] 14:44:27:447 KERNEL/(8483:8541): SET param1: 0 param2: 1
+[INFO] 14:44:27:448 KERNEL/(8483:8541): MOV_OUT param1: 0 param2: 0
+[INFO] 14:44:27:448 KERNEL/(8483:8541): MOV_OUT param1: 128 param2: 0
+[INFO] 14:44:27:448 KERNEL/(8483:8541): MOV_OUT param1: 256 param2: 0
+[INFO] 14:44:27:448 KERNEL/(8483:8541): MOV_OUT param1: 384 param2: 0
+[INFO] 14:44:27:448 KERNEL/(8483:8541): SET param1: 1 param2: 2
+[INFO] 14:44:27:448 KERNEL/(8483:8541): SET param1: 2 param2: 3
+[INFO] 14:44:27:448 KERNEL/(8483:8541): MOV_OUT param1: 4 param2: 2
+[INFO] 14:44:27:448 KERNEL/(8483:8541): MOV_OUT param1: 132 param2: 2
+[INFO] 14:44:27:448 KERNEL/(8483:8541): MOV_OUT param1: 260 param2: 2
+[INFO] 14:44:27:448 KERNEL/(8483:8541): MOV_OUT param1: 388 param2: 2
+[INFO] 14:44:27:448 KERNEL/(8483:8541): SET param1: 3 param2: 4
+[INFO] 14:44:27:448 KERNEL/(8483:8541): I/O param1: 2 param2: 2
+[INFO] 14:44:27:448 KERNEL/(8483:8541): ADD param1: 0 param2: 1
+[INFO] 14:44:27:448 KERNEL/(8483:8541): ADD param1: 0 param2: 2
+[INFO] 14:44:27:448 KERNEL/(8483:8541): ADD param1: 0 param2: 3
+[INFO] 14:44:27:448 KERNEL/(8483:8541): ADD param1: 0 param2: 1
+[INFO] 14:44:27:448 KERNEL/(8483:8541): ADD param1: 0 param2: 2
+[INFO] 14:44:27:448 KERNEL/(8483:8541): ADD param1: 0 param2: 3
+[INFO] 14:44:27:448 KERNEL/(8483:8541): I/O param1: 2 param2: 2
+[INFO] 14:44:27:448 KERNEL/(8483:8541): ADD param1: 0 param2: 1
+[INFO] 14:44:27:448 KERNEL/(8483:8541): ADD param1: 0 param2: 2
+[INFO] 14:44:27:448 KERNEL/(8483:8541): ADD param1: 0 param2: 3
+[INFO] 14:44:27:448 KERNEL/(8483:8541): I/O param1: 3 param2: 2
+[INFO] 14:44:27:448 KERNEL/(8483:8541): SET param1: 0 param2: 228
+[INFO] 14:44:27:448 KERNEL/(8483:8541): MOV_OUT param1: 0 param2: 0
+[INFO] 14:44:27:448 KERNEL/(8483:8541): MOV_OUT param1: 128 param2: 0
+[INFO] 14:44:27:448 KERNEL/(8483:8541): MOV_OUT param1: 256 param2: 0
+[INFO] 14:44:27:449 KERNEL/(8483:8541): MOV_OUT param1: 384 param2: 0
+[INFO] 14:44:27:449 KERNEL/(8483:8541): MOV_IN param1: 1 param2: 0
+[INFO] 14:44:27:449 KERNEL/(8483:8541): MOV_IN param1: 3 param2: 384
+[INFO] 14:44:27:449 KERNEL/(8483:8541): MOV_IN param1: 2 param2: 128
+[INFO] 14:44:27:449 KERNEL/(8483:8541): ADD param1: 0 param2: 1
+[INFO] 14:44:27:449 KERNEL/(8483:8541): ADD param1: 0 param2: 2
+[INFO] 14:44:27:449 KERNEL/(8483:8541): ADD param1: 0 param2: 3
+[INFO] 14:44:27:449 KERNEL/(8483:8541): I/O param1: 0 param2: 0
+[INFO] 14:44:27:449 KERNEL/(8483:8541): EXIT param1: 0 param2: 0
+[INFO] 14:44:27:449 KERNEL/(8483:8541): [atender_consola]metemos instrucciones en el pcb
+[INFO] 14:44:27:449 KERNEL/(8483:8541): Se crea el proceso <1> en NEW
+[INFO] 14:44:27:449 KERNEL/(8483:8541): [atender_consola] despertamos a asignar_memoria()
+[INFO] 14:44:27:449 KERNEL/(8483:8493): el tamanio de la cola de new es 0
+[INFO] 14:44:27:449 KERNEL/(8483:8493): [recibir_entero]: se recibio el numero 0
+[INFO] 14:44:27:449 KERNEL/(8483:8493): Cola Ready <FIFO>: [<LISTA DE PIDS>]
+[INFO] 14:44:27:449 KERNEL/(8483:8493): 1
+[INFO] 14:44:27:449 KERNEL/(8483:8493): PID: <1> - Estado Anterior: <NEW> - Estado Actual: <READY>
+[INFO] 14:44:27:449 KERNEL/(8483:8495): [readyAExe]: .........se despierta readyAExe 
+[INFO] 14:44:27:449 KERNEL/(8483:8495): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 14:44:27:449 KERNEL/(8483:8495): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 14:44:27:450 KERNEL/(8483:8495): [readyAExe]: enviamos el proceso a cpu
+[INFO] 14:44:27:450 KERNEL/(8483:8495): [readyAExe]: finaliza
+[INFO] 14:44:27:477 KERNEL/(8483:8494): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 14:44:27:479 KERNEL/(8483:8494): Numero de tabla de paginas: 0
+[INFO] 14:44:27:479 KERNEL/(8483:8494): Numero de paginas: 0
+[INFO] 14:44:27:479 KERNEL/(8483:8494): Page Fault PID: <1> - Segmento: <0> - Pagina: <0>
+[INFO] 14:44:27:479 KERNEL/(8483:8494): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 14:44:27:538 KERNEL/(8483:8542): Me llego el mensaje Se ha cargado la pagina correctamente
+[INFO] 14:44:27:538 KERNEL/(8483:8542): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 14:44:27:538 KERNEL/(8483:8495): [readyAExe]: .........se despierta readyAExe 
+[INFO] 14:44:27:538 KERNEL/(8483:8495): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 14:44:27:538 KERNEL/(8483:8495): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 14:44:27:538 KERNEL/(8483:8495): [readyAExe]: enviamos el proceso a cpu
+[INFO] 14:44:27:538 KERNEL/(8483:8495): [readyAExe]: finaliza
+[INFO] 14:44:27:794 KERNEL/(8483:8494): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 14:44:27:795 KERNEL/(8483:8494): Numero de tabla de paginas: 2
+[INFO] 14:44:27:795 KERNEL/(8483:8494): Numero de paginas: 0
+[INFO] 14:44:27:795 KERNEL/(8483:8494): Page Fault PID: <1> - Segmento: <0> - Pagina: <2>
+[INFO] 14:44:27:795 KERNEL/(8483:8494): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 14:44:27:846 KERNEL/(8483:8543): Me llego el mensaje Se ha cargado la pagina correctamente
+[INFO] 14:44:27:846 KERNEL/(8483:8543): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 14:44:27:846 KERNEL/(8483:8495): [readyAExe]: .........se despierta readyAExe 
+[INFO] 14:44:27:846 KERNEL/(8483:8495): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 14:44:27:847 KERNEL/(8483:8495): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 14:44:27:847 KERNEL/(8483:8495): [readyAExe]: enviamos el proceso a cpu
+[INFO] 14:44:27:847 KERNEL/(8483:8495): [readyAExe]: finaliza
+[INFO] 14:44:28:100 KERNEL/(8483:8494): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 14:44:28:102 KERNEL/(8483:8494): Numero de tabla de paginas: 4
+[INFO] 14:44:28:103 KERNEL/(8483:8494): Numero de paginas: 0
+[INFO] 14:44:28:103 KERNEL/(8483:8494): Page Fault PID: <1> - Segmento: <0> - Pagina: <4>
+[INFO] 14:44:28:103 KERNEL/(8483:8494): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 14:44:28:155 KERNEL/(8483:8544): Me llego el mensaje Se ha cargado la pagina correctamente
+[INFO] 14:44:28:155 KERNEL/(8483:8544): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 14:44:28:155 KERNEL/(8483:8495): [readyAExe]: .........se despierta readyAExe 
+[INFO] 14:44:28:155 KERNEL/(8483:8495): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 14:44:28:155 KERNEL/(8483:8495): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 14:44:28:155 KERNEL/(8483:8495): [readyAExe]: enviamos el proceso a cpu
+[INFO] 14:44:28:155 KERNEL/(8483:8495): [readyAExe]: finaliza
+[INFO] 14:44:28:414 KERNEL/(8483:8494): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 14:44:28:418 KERNEL/(8483:8494): Numero de tabla de paginas: 6
+[INFO] 14:44:28:418 KERNEL/(8483:8494): Numero de paginas: 0
+[INFO] 14:44:28:418 KERNEL/(8483:8494): Page Fault PID: <1> - Segmento: <0> - Pagina: <6>
+[INFO] 14:44:28:418 KERNEL/(8483:8494): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 14:44:28:466 KERNEL/(8483:8545): Me llego el mensaje Se ha cargado la pagina correctamente
+[INFO] 14:44:28:466 KERNEL/(8483:8545): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 14:44:28:466 KERNEL/(8483:8495): [readyAExe]: .........se despierta readyAExe 
+[INFO] 14:44:28:466 KERNEL/(8483:8495): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 14:44:28:466 KERNEL/(8483:8495): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 14:44:28:466 KERNEL/(8483:8495): [readyAExe]: enviamos el proceso a cpu
+[INFO] 14:44:28:467 KERNEL/(8483:8495): [readyAExe]: finaliza
+[INFO] 14:44:29:803 KERNEL/(8483:8494): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 14:44:29:804 KERNEL/(8483:8494): Me llego el mensaje DISCO
+[INFO] 14:44:29:804 KERNEL/(8483:8494): [recibir_entero]: se recibio el numero 2
+[INFO] 14:44:29:804 KERNEL/(8483:8494): PID: <1> - Bloqueado por: <DISCO>
+[INFO] 14:44:29:804 KERNEL/(8483:8494): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 14:44:29:804 KERNEL/(8483:8496):  [atender_IO_generico del dispositivo <DISCO>] : se desperto 
+[INFO] 14:44:29:804 KERNEL/(8483:8496):  [atender_IO_generico del dispositivo <DISCO>] : el tiempo de dispositivo es 50 y las unidades de trabajo obtenidas de la cola son 2 
+[INFO] 14:44:29:804 KERNEL/(8483:8496):  [atender_IO_generico del dispositivo <DISCO>] : simulando tiempo de bloqueo  
+[INFO] 14:44:29:904 KERNEL/(8483:8496):  [atender_IO_generico del dispositivo <DISCO>] : obtuvimos el siguiente PCB  
+[INFO] 14:44:29:904 KERNEL/(8483:8496): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 14:44:29:904 KERNEL/(8483:8495): [readyAExe]: .........se despierta readyAExe 
+[INFO] 14:44:29:904 KERNEL/(8483:8495): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 14:44:29:905 KERNEL/(8483:8495): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 14:44:29:905 KERNEL/(8483:8495): [readyAExe]: enviamos el proceso a cpu
+[INFO] 14:44:29:905 KERNEL/(8483:8495): [readyAExe]: finaliza
+[INFO] 14:44:30:059 KERNEL/(8483:8494): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 14:44:30:059 KERNEL/(8483:8494): Me llego el mensaje DISCO
+[INFO] 14:44:30:059 KERNEL/(8483:8494): [recibir_entero]: se recibio el numero 2
+[INFO] 14:44:30:059 KERNEL/(8483:8494): PID: <1> - Bloqueado por: <DISCO>
+[INFO] 14:44:30:059 KERNEL/(8483:8494): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 14:44:30:059 KERNEL/(8483:8496):  [atender_IO_generico del dispositivo <DISCO>] : se desperto 
+[INFO] 14:44:30:059 KERNEL/(8483:8496):  [atender_IO_generico del dispositivo <DISCO>] : el tiempo de dispositivo es 50 y las unidades de trabajo obtenidas de la cola son 2 
+[INFO] 14:44:30:059 KERNEL/(8483:8496):  [atender_IO_generico del dispositivo <DISCO>] : simulando tiempo de bloqueo  
+[INFO] 14:44:30:160 KERNEL/(8483:8496):  [atender_IO_generico del dispositivo <DISCO>] : obtuvimos el siguiente PCB  
+[INFO] 14:44:30:160 KERNEL/(8483:8496): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 14:44:30:160 KERNEL/(8483:8495): [readyAExe]: .........se despierta readyAExe 
+[INFO] 14:44:30:160 KERNEL/(8483:8495): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 14:44:30:160 KERNEL/(8483:8495): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 14:44:30:160 KERNEL/(8483:8495): [readyAExe]: enviamos el proceso a cpu
+[INFO] 14:44:30:161 KERNEL/(8483:8495): [readyAExe]: finaliza
+[INFO] 14:44:30:245 KERNEL/(8483:8494): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 14:44:30:245 KERNEL/(8483:8494): Me llego el mensaje IMPRESORA
+[INFO] 14:44:30:245 KERNEL/(8483:8494): [recibir_entero]: se recibio el numero 2
+[INFO] 14:44:30:245 KERNEL/(8483:8494): PID: <1> - Bloqueado por: <IMPRESORA>
+[INFO] 14:44:30:245 KERNEL/(8483:8494): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 14:44:30:245 KERNEL/(8483:8497):  [atender_IO_generico del dispositivo <IMPRESORA>] : se desperto 
+[INFO] 14:44:30:245 KERNEL/(8483:8497):  [atender_IO_generico del dispositivo <IMPRESORA>] : el tiempo de dispositivo es 100 y las unidades de trabajo obtenidas de la cola son 2 
+[INFO] 14:44:30:245 KERNEL/(8483:8497):  [atender_IO_generico del dispositivo <IMPRESORA>] : simulando tiempo de bloqueo  
+[INFO] 14:44:30:445 KERNEL/(8483:8497):  [atender_IO_generico del dispositivo <IMPRESORA>] : obtuvimos el siguiente PCB  
+[INFO] 14:44:30:445 KERNEL/(8483:8497): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 14:44:30:445 KERNEL/(8483:8495): [readyAExe]: .........se despierta readyAExe 
+[INFO] 14:44:30:445 KERNEL/(8483:8495): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 14:44:30:445 KERNEL/(8483:8495): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 14:44:30:445 KERNEL/(8483:8495): [readyAExe]: enviamos el proceso a cpu
+[INFO] 14:44:30:446 KERNEL/(8483:8495): [readyAExe]: finaliza
+[INFO] 14:44:32:439 KERNEL/(8483:8494): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 14:44:32:439 KERNEL/(8483:8494): [recibir_entero]: se recibio el numero 0
+[INFO] 14:44:32:439 KERNEL/(8483:8494): PID: <1> - Bloqueado por: <PANTALLA>
+[INFO] 14:44:32:439 KERNEL/(8483:8494): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 14:44:32:948 KERNEL/(8483:8547): Me llego el mensaje Se imprimio el valor del registro
+[INFO] 14:44:32:948 KERNEL/(8483:8547): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 14:44:32:948 KERNEL/(8483:8495): [readyAExe]: .........se despierta readyAExe 
+[INFO] 14:44:32:948 KERNEL/(8483:8495): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 14:44:32:948 KERNEL/(8483:8495): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 14:44:32:948 KERNEL/(8483:8495): [readyAExe]: enviamos el proceso a cpu
+[INFO] 14:44:32:948 KERNEL/(8483:8495): [readyAExe]: finaliza
+[INFO] 14:44:32:948 KERNEL/(8483:8494): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 14:44:32:949 KERNEL/(8483:8494): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <TERMINATED>
+[INFO] 14:52:12:372 KERNEL/(9245:9245): servidor kernel inicializado
+[INFO] 14:52:12:385 KERNEL/(9245:9245): DISPOSITIVOS: DISCO-IMPRESORA
+[INFO] 14:52:12:385 KERNEL/(9245:9245): configuraciones inicializadas
+[INFO] 14:52:12:385 KERNEL/(9245:9245): listas y colas inicializadas
+[INFO] 14:52:12:385 KERNEL/(9245:9245): semaforos inicializados
+[INFO] 14:52:12:385 KERNEL/(9245:9245): En la lista de dispositivos tenemos los siguientes:
+[INFO] 14:52:12:385 KERNEL/(9245:9245): el dispositivo de posicion 0 se llama DISCO
+[INFO] 14:52:12:385 KERNEL/(9245:9245): el dispositivo de posicion 0 tiene un tiempo de 50
+[INFO] 14:52:12:385 KERNEL/(9245:9245): el dispositivo de posicion 1 se llama IMPRESORA
+[INFO] 14:52:12:385 KERNEL/(9245:9245): el dispositivo de posicion 1 tiene un tiempo de 100
+[INFO] 14:52:12:385 KERNEL/(9245:9255): se desperto asignar_memoria por primera vez
+[INFO] 14:52:12:386 KERNEL/(9245:9256): se desperto atender_interrupcion_de_ejecucion
+[INFO] 14:52:12:386 KERNEL/(9245:9257): se desperto readyAExe por primera vez
+[INFO] 14:52:12:386 KERNEL/(9245:9258): se desperto atender_IO_generico del dispositivo <DISCO> por primera vez 
+[INFO] 14:52:12:386 KERNEL/(9245:9259): se desperto atender_IO_generico del dispositivo <IMPRESORA> por primera vez 
+[INFO] 14:52:12:386 KERNEL/(9245:9254): se desperto recibir_consola
+[INFO] 14:52:14:576 KERNEL/(9245:9254): Se conecto el Consola
+[INFO] 14:52:14:577 KERNEL/(9245:9303): [atender_consola]esperando segmentos
+[INFO] 14:52:14:577 KERNEL/(9245:9303): tamanios de segmentos recibidos
+[INFO] 14:52:14:577 KERNEL/(9245:9303): el tamanio es 1024
+[INFO] 14:52:14:577 KERNEL/(9245:9303): [atender_consola]enviamos los dispositivos
+[INFO] 14:52:14:577 KERNEL/(9245:9303): [atender_consola]esperando instrucciones
+[INFO] 14:52:14:577 KERNEL/(9245:9303): [atender_consola]me llegaron las instrucciones
+[INFO] 14:52:14:577 KERNEL/(9245:9303): SET param1: 0 param2: 1
+[INFO] 14:52:14:577 KERNEL/(9245:9303): MOV_OUT param1: 0 param2: 0
+[INFO] 14:52:14:577 KERNEL/(9245:9303): MOV_OUT param1: 128 param2: 0
+[INFO] 14:52:14:577 KERNEL/(9245:9303): MOV_OUT param1: 256 param2: 0
+[INFO] 14:52:14:577 KERNEL/(9245:9303): MOV_OUT param1: 384 param2: 0
+[INFO] 14:52:14:577 KERNEL/(9245:9303): SET param1: 1 param2: 2
+[INFO] 14:52:14:577 KERNEL/(9245:9303): SET param1: 2 param2: 3
+[INFO] 14:52:14:577 KERNEL/(9245:9303): MOV_OUT param1: 4 param2: 2
+[INFO] 14:52:14:577 KERNEL/(9245:9303): MOV_OUT param1: 132 param2: 2
+[INFO] 14:52:14:577 KERNEL/(9245:9303): MOV_OUT param1: 260 param2: 2
+[INFO] 14:52:14:577 KERNEL/(9245:9303): MOV_OUT param1: 388 param2: 2
+[INFO] 14:52:14:577 KERNEL/(9245:9303): SET param1: 3 param2: 4
+[INFO] 14:52:14:577 KERNEL/(9245:9303): I/O param1: 2 param2: 2
+[INFO] 14:52:14:577 KERNEL/(9245:9303): ADD param1: 0 param2: 1
+[INFO] 14:52:14:577 KERNEL/(9245:9303): ADD param1: 0 param2: 2
+[INFO] 14:52:14:577 KERNEL/(9245:9303): ADD param1: 0 param2: 3
+[INFO] 14:52:14:577 KERNEL/(9245:9303): ADD param1: 0 param2: 1
+[INFO] 14:52:14:577 KERNEL/(9245:9303): ADD param1: 0 param2: 2
+[INFO] 14:52:14:577 KERNEL/(9245:9303): ADD param1: 0 param2: 3
+[INFO] 14:52:14:577 KERNEL/(9245:9303): I/O param1: 2 param2: 2
+[INFO] 14:52:14:577 KERNEL/(9245:9303): ADD param1: 0 param2: 1
+[INFO] 14:52:14:577 KERNEL/(9245:9303): ADD param1: 0 param2: 2
+[INFO] 14:52:14:577 KERNEL/(9245:9303): ADD param1: 0 param2: 3
+[INFO] 14:52:14:577 KERNEL/(9245:9303): I/O param1: 3 param2: 2
+[INFO] 14:52:14:577 KERNEL/(9245:9303): SET param1: 0 param2: 228
+[INFO] 14:52:14:577 KERNEL/(9245:9303): MOV_OUT param1: 0 param2: 0
+[INFO] 14:52:14:581 KERNEL/(9245:9303): MOV_OUT param1: 128 param2: 0
+[INFO] 14:52:14:581 KERNEL/(9245:9303): MOV_OUT param1: 256 param2: 0
+[INFO] 14:52:14:581 KERNEL/(9245:9303): MOV_OUT param1: 384 param2: 0
+[INFO] 14:52:14:581 KERNEL/(9245:9303): MOV_IN param1: 1 param2: 0
+[INFO] 14:52:14:581 KERNEL/(9245:9303): MOV_IN param1: 3 param2: 384
+[INFO] 14:52:14:581 KERNEL/(9245:9303): MOV_IN param1: 2 param2: 128
+[INFO] 14:52:14:581 KERNEL/(9245:9303): ADD param1: 0 param2: 1
+[INFO] 14:52:14:581 KERNEL/(9245:9303): ADD param1: 0 param2: 2
+[INFO] 14:52:14:581 KERNEL/(9245:9303): ADD param1: 0 param2: 3
+[INFO] 14:52:14:581 KERNEL/(9245:9303): I/O param1: 0 param2: 0
+[INFO] 14:52:14:581 KERNEL/(9245:9303): EXIT param1: 0 param2: 0
+[INFO] 14:52:14:581 KERNEL/(9245:9303): [atender_consola]metemos instrucciones en el pcb
+[INFO] 14:52:14:582 KERNEL/(9245:9303): Se crea el proceso <1> en NEW
+[INFO] 14:52:14:582 KERNEL/(9245:9303): [atender_consola] despertamos a asignar_memoria()
+[INFO] 14:52:14:582 KERNEL/(9245:9255): el tamanio de la cola de new es 0
+[INFO] 14:52:14:582 KERNEL/(9245:9255): [recibir_entero]: se recibio el numero 0
+[INFO] 14:52:14:582 KERNEL/(9245:9255): Cola Ready <FIFO>: [<LISTA DE PIDS>]
+[INFO] 14:52:14:582 KERNEL/(9245:9255): 1
+[INFO] 14:52:14:582 KERNEL/(9245:9255): PID: <1> - Estado Anterior: <NEW> - Estado Actual: <READY>
+[INFO] 14:52:14:582 KERNEL/(9245:9257): [readyAExe]: .........se despierta readyAExe 
+[INFO] 14:52:14:582 KERNEL/(9245:9257): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 14:52:14:582 KERNEL/(9245:9257): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 14:52:14:582 KERNEL/(9245:9257): [readyAExe]: enviamos el proceso a cpu
+[INFO] 14:52:14:582 KERNEL/(9245:9257): [readyAExe]: finaliza
+[INFO] 14:52:14:609 KERNEL/(9245:9256): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 14:52:14:615 KERNEL/(9245:9256): Numero de tabla de paginas: 0
+[INFO] 14:52:14:615 KERNEL/(9245:9256): Numero de paginas: 0
+[INFO] 14:52:14:615 KERNEL/(9245:9256): Page Fault PID: <1> - Segmento: <0> - Pagina: <0>
+[INFO] 14:52:14:615 KERNEL/(9245:9256): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 14:52:14:659 KERNEL/(9245:9304): Me llego el mensaje Se ha cargado la pagina correctamente
+[INFO] 14:52:14:659 KERNEL/(9245:9304): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 14:52:14:659 KERNEL/(9245:9257): [readyAExe]: .........se despierta readyAExe 
+[INFO] 14:52:14:659 KERNEL/(9245:9257): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 14:52:14:659 KERNEL/(9245:9257): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 14:52:14:659 KERNEL/(9245:9257): [readyAExe]: enviamos el proceso a cpu
+[INFO] 14:52:14:659 KERNEL/(9245:9257): [readyAExe]: finaliza
+[INFO] 14:52:14:914 KERNEL/(9245:9256): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 14:52:14:914 KERNEL/(9245:9256): Numero de tabla de paginas: 2
+[INFO] 14:52:14:915 KERNEL/(9245:9256): Numero de paginas: 0
+[INFO] 14:52:14:915 KERNEL/(9245:9256): Page Fault PID: <1> - Segmento: <0> - Pagina: <2>
+[INFO] 14:52:14:915 KERNEL/(9245:9256): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 14:52:14:963 KERNEL/(9245:9305): Me llego el mensaje Se ha cargado la pagina correctamente
+[INFO] 14:52:14:963 KERNEL/(9245:9305): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 14:52:14:963 KERNEL/(9245:9257): [readyAExe]: .........se despierta readyAExe 
+[INFO] 14:52:14:963 KERNEL/(9245:9257): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 14:52:14:963 KERNEL/(9245:9257): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 14:52:14:963 KERNEL/(9245:9257): [readyAExe]: enviamos el proceso a cpu
+[INFO] 14:52:14:963 KERNEL/(9245:9257): [readyAExe]: finaliza
+[INFO] 14:52:15:221 KERNEL/(9245:9256): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 14:52:15:226 KERNEL/(9245:9256): Numero de tabla de paginas: 4
+[INFO] 14:52:15:226 KERNEL/(9245:9256): Numero de paginas: 0
+[INFO] 14:52:15:227 KERNEL/(9245:9256): Page Fault PID: <1> - Segmento: <0> - Pagina: <4>
+[INFO] 14:52:15:227 KERNEL/(9245:9256): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 14:52:15:272 KERNEL/(9245:9306): Me llego el mensaje Se ha cargado la pagina correctamente
+[INFO] 14:52:15:272 KERNEL/(9245:9306): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 14:52:15:272 KERNEL/(9245:9257): [readyAExe]: .........se despierta readyAExe 
+[INFO] 14:52:15:272 KERNEL/(9245:9257): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 14:52:15:272 KERNEL/(9245:9257): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 14:52:15:272 KERNEL/(9245:9257): [readyAExe]: enviamos el proceso a cpu
+[INFO] 14:52:15:272 KERNEL/(9245:9257): [readyAExe]: finaliza
+[INFO] 14:52:15:532 KERNEL/(9245:9256): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 14:52:15:534 KERNEL/(9245:9256): Numero de tabla de paginas: 6
+[INFO] 14:52:15:534 KERNEL/(9245:9256): Numero de paginas: 0
+[INFO] 14:52:15:534 KERNEL/(9245:9256): Page Fault PID: <1> - Segmento: <0> - Pagina: <6>
+[INFO] 14:52:15:534 KERNEL/(9245:9256): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 14:52:15:583 KERNEL/(9245:9307): Me llego el mensaje Se ha cargado la pagina correctamente
+[INFO] 14:52:15:583 KERNEL/(9245:9307): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 14:52:15:583 KERNEL/(9245:9257): [readyAExe]: .........se despierta readyAExe 
+[INFO] 14:52:15:583 KERNEL/(9245:9257): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 14:52:15:583 KERNEL/(9245:9257): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 14:52:15:583 KERNEL/(9245:9257): [readyAExe]: enviamos el proceso a cpu
+[INFO] 14:52:15:583 KERNEL/(9245:9257): [readyAExe]: finaliza
+[INFO] 14:52:16:925 KERNEL/(9245:9256): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 14:52:16:926 KERNEL/(9245:9256): Me llego el mensaje DISCO
+[INFO] 14:52:16:926 KERNEL/(9245:9256): [recibir_entero]: se recibio el numero 2
+[INFO] 14:52:16:926 KERNEL/(9245:9256): PID: <1> - Bloqueado por: <DISCO>
+[INFO] 14:52:16:926 KERNEL/(9245:9256): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 14:52:16:926 KERNEL/(9245:9258):  [atender_IO_generico del dispositivo <DISCO>] : se desperto 
+[INFO] 14:52:16:926 KERNEL/(9245:9258):  [atender_IO_generico del dispositivo <DISCO>] : el tiempo de dispositivo es 50 y las unidades de trabajo obtenidas de la cola son 2 
+[INFO] 14:52:16:926 KERNEL/(9245:9258):  [atender_IO_generico del dispositivo <DISCO>] : simulando tiempo de bloqueo  
+[INFO] 14:52:17:026 KERNEL/(9245:9258):  [atender_IO_generico del dispositivo <DISCO>] : obtuvimos el siguiente PCB  
+[INFO] 14:52:17:026 KERNEL/(9245:9258): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 14:52:17:026 KERNEL/(9245:9257): [readyAExe]: .........se despierta readyAExe 
+[INFO] 14:52:17:026 KERNEL/(9245:9257): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 14:52:17:026 KERNEL/(9245:9257): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 14:52:17:027 KERNEL/(9245:9257): [readyAExe]: enviamos el proceso a cpu
+[INFO] 14:52:17:027 KERNEL/(9245:9257): [readyAExe]: finaliza
+[INFO] 14:52:17:187 KERNEL/(9245:9256): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 14:52:17:187 KERNEL/(9245:9256): Me llego el mensaje DISCO
+[INFO] 14:52:17:187 KERNEL/(9245:9256): [recibir_entero]: se recibio el numero 2
+[INFO] 14:52:17:187 KERNEL/(9245:9256): PID: <1> - Bloqueado por: <DISCO>
+[INFO] 14:52:17:190 KERNEL/(9245:9256): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 14:52:17:192 KERNEL/(9245:9258):  [atender_IO_generico del dispositivo <DISCO>] : se desperto 
+[INFO] 14:52:17:192 KERNEL/(9245:9258):  [atender_IO_generico del dispositivo <DISCO>] : el tiempo de dispositivo es 50 y las unidades de trabajo obtenidas de la cola son 2 
+[INFO] 14:52:17:192 KERNEL/(9245:9258):  [atender_IO_generico del dispositivo <DISCO>] : simulando tiempo de bloqueo  
+[INFO] 14:52:17:292 KERNEL/(9245:9258):  [atender_IO_generico del dispositivo <DISCO>] : obtuvimos el siguiente PCB  
+[INFO] 14:52:17:295 KERNEL/(9245:9258): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 14:52:17:295 KERNEL/(9245:9257): [readyAExe]: .........se despierta readyAExe 
+[INFO] 14:52:17:295 KERNEL/(9245:9257): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 14:52:17:295 KERNEL/(9245:9257): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 14:52:17:296 KERNEL/(9245:9257): [readyAExe]: enviamos el proceso a cpu
+[INFO] 14:52:17:296 KERNEL/(9245:9257): [readyAExe]: finaliza
+[INFO] 14:52:17:375 KERNEL/(9245:9256): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 14:52:17:375 KERNEL/(9245:9256): Me llego el mensaje IMPRESORA
+[INFO] 14:52:17:375 KERNEL/(9245:9256): [recibir_entero]: se recibio el numero 2
+[INFO] 14:52:17:375 KERNEL/(9245:9256): PID: <1> - Bloqueado por: <IMPRESORA>
+[INFO] 14:52:17:375 KERNEL/(9245:9256): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 14:52:17:375 KERNEL/(9245:9259):  [atender_IO_generico del dispositivo <IMPRESORA>] : se desperto 
+[INFO] 14:52:17:375 KERNEL/(9245:9259):  [atender_IO_generico del dispositivo <IMPRESORA>] : el tiempo de dispositivo es 100 y las unidades de trabajo obtenidas de la cola son 2 
+[INFO] 14:52:17:375 KERNEL/(9245:9259):  [atender_IO_generico del dispositivo <IMPRESORA>] : simulando tiempo de bloqueo  
+[INFO] 14:52:17:575 KERNEL/(9245:9259):  [atender_IO_generico del dispositivo <IMPRESORA>] : obtuvimos el siguiente PCB  
+[INFO] 14:52:17:576 KERNEL/(9245:9259): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 14:52:17:576 KERNEL/(9245:9257): [readyAExe]: .........se despierta readyAExe 
+[INFO] 14:52:17:576 KERNEL/(9245:9257): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 14:52:17:576 KERNEL/(9245:9257): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 14:52:17:576 KERNEL/(9245:9257): [readyAExe]: enviamos el proceso a cpu
+[INFO] 14:52:17:576 KERNEL/(9245:9257): [readyAExe]: finaliza
+[INFO] 14:52:19:564 KERNEL/(9245:9256): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 14:52:19:564 KERNEL/(9245:9256): [recibir_entero]: se recibio el numero 0
+[INFO] 14:52:19:564 KERNEL/(9245:9256): PID: <1> - Bloqueado por: <PANTALLA>
+[INFO] 14:52:19:564 KERNEL/(9245:9256): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 14:52:20:072 KERNEL/(9245:9308): Me llego el mensaje Se imprimio el valor del registro
+[INFO] 14:52:20:072 KERNEL/(9245:9308): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 14:52:20:072 KERNEL/(9245:9257): [readyAExe]: .........se despierta readyAExe 
+[INFO] 14:52:20:072 KERNEL/(9245:9257): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 14:52:20:072 KERNEL/(9245:9257): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 14:52:20:072 KERNEL/(9245:9257): [readyAExe]: enviamos el proceso a cpu
+[INFO] 14:52:20:073 KERNEL/(9245:9257): [readyAExe]: finaliza
+[INFO] 14:52:20:073 KERNEL/(9245:9256): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 14:52:20:074 KERNEL/(9245:9256): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <TERMINATED>

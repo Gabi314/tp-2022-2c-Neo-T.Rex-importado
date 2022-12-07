@@ -4,7 +4,7 @@ int memoria_fd;
 t_list* listaDeMarcos;
 t_list* listaDeEntradasEnMemoria;
 t_list* listaTablaDePaginas;
-
+t_list* listaDePunterosYPids;
 
 int main(int argc, char *argv[]) {
 
@@ -42,6 +42,7 @@ void funcionMain(int argc, char *argv[]) {
 	listaDeMarcos = list_create();
 	listaDeEntradasEnMemoria = list_create();
 	listaTablaDePaginas = list_create();
+	listaDePunterosYPids = list_create();
 
 	inicializarMemoria();
 	inicializarMarcos();
