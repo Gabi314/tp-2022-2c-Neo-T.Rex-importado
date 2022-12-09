@@ -142,6 +142,7 @@ int algoritmoClock(t_list* listaDeEntradasEnMemoria, entradaTablaPaginas* entrad
 
 	posicionDelPuntero = punteroAUtilizar(pid);
 
+	// 0 < listaDeEntradasEnMemoria < CANTIDAD_MARCOS_POR_PROCESO
 	for(int i = 0; i < list_size(listaDeEntradasEnMemoria); i++) {
 		if(i == 0) {
 			posicionDelPuntero = posicionDePunteroDelAlgoritmo(0);
@@ -414,7 +415,7 @@ void finalizacionDeProceso(int pid) {
 void chequeoCantidadMarcosProceso(int pid){
 	tablaDePaginas* unaTablaDePaginas;
 	entradaTablaPaginas* unaEntrada;
-	//int contadorMarcosProceso;
+	contadorDeMarcosPorProceso = 0;
 	for(int i = 0;i<list_size(listaTablaDePaginas);i++){
 
 		unaTablaDePaginas = list_get(listaTablaDePaginas,i);
@@ -448,14 +449,16 @@ void cargarPagina(entradaTablaPaginas* unaEntrada,int pid) {
 				leerDeSwap(unaEntrada, unaEntrada->numeroMarco);
 				unaEntrada->modificado = 0;
 			}
+			// Temporal
 			chequeoCantidadMarcosProceso(pid);
 			log_info(loggerAux, "La cantidad de marcos asignados a este proceso es: %d", contadorDeMarcosPorProceso);
+			// Hasta aca
 			//Caso en el que ya el proceso tiene maxima cantidad de marcos por proceso y hay que desalojar 1
 		}else if(strcmp(algoritmoDeReemplazo, "CLOCK") == 0) {
 				int marcoAAsignar = algoritmoClock(listaDeEntradasEnMemoria, unaEntrada);
-				modificarPaginaACargar(unaEntrada, marcoAAsignar);
-				int posicionAReemplazar = indiceDeEntradaAReemplazar(marcoAAsignar);
-				list_replace(listaDeEntradasEnMemoria, posicionAReemplazar, unaEntrada);
+				//modificarPaginaACargar(unaEntrada, marcoAAsignar);
+				//int posicionAReemplazar = indiceDeEntradaAReemplazar(marcoAAsignar);
+				//list_replace(listaDeEntradasEnMemoria, posicionAReemplazar, unaEntrada);
 
 				if(unaEntrada->modificado == 1) {
 					leerDeSwap(unaEntrada, unaEntrada->numeroMarco);
@@ -463,9 +466,9 @@ void cargarPagina(entradaTablaPaginas* unaEntrada,int pid) {
 				}
 		} else if(strcmp(algoritmoDeReemplazo, "CLOCK-M") == 0) {
 			int marcoAAsignar = algoritmoClockM(listaDeEntradasEnMemoria, unaEntrada);
-			modificarPaginaACargar(unaEntrada, marcoAAsignar);
-			int posicionAReemplazar = indiceDeEntradaAReemplazar(marcoAAsignar);
-			list_replace(listaDeEntradasEnMemoria, posicionAReemplazar, unaEntrada);
+			//modificarPaginaACargar(unaEntrada, marcoAAsignar);
+			//int posicionAReemplazar = indiceDeEntradaAReemplazar(marcoAAsignar);
+			//list_replace(listaDeEntradasEnMemoria, posicionAReemplazar, unaEntrada);
 
 			if(unaEntrada->modificado == 1) {
 				leerDeSwap(unaEntrada,unaEntrada->numeroMarco);
@@ -580,6 +583,234 @@ void leerDeSwap(entradaTablaPaginas* unaEntrada, int numeroDeMarcoNuevo) {
 	fclose(archivoSwap);
 	log_info(logger, "SWAP IN - PID: <%d> - Marco: <%d> - Page In: <%d>|<%d", pidActual,
 			numeroDeMarcoNuevo, unaEntrada->numeroDeSegmento, unaEntrada->numeroDeEntrada);
+}
+
+/**************************************** ALGORITMOS DE SUSTITUCION **********************************************/
+
+uint32_t sustitucion_paginas(uint32_t numero_tabla_primer_nivel, uint32_t numero_pagina, size_t pid) {
+	t_lista_circular* frames_proceso = obtener_lista_circular_del_proceso(pid);
+
+	if (strcmp("CLOCK", algoritmoDeReemplazo)==0) {
+		return algoritmo_clock(frames_proceso, numero_tabla_primer_nivel, numero_pagina);
+	}
+	else if (strcmp("CLOCK-M", algoritmoDeReemplazo)==0) {
+		return algoritmo_clock_modificado(frames_proceso, numero_tabla_primer_nivel, numero_pagina);
+	}
+	log_info(loggerAux, "Algoritmo de reemplazo invalido");
+	return -1;
+}
+
+/*
+ * Cambios necesarios:
+ *
+ * En cargarPagina agregar el parametro frames_proceso (busqueda de la lista de entradas cargadas por proceso)
+ *
+ */
+// uint32_t algoritmo_clock(t_lista_circular* frames_proceso, uint32_t numero_tabla_primer_nivel, uint32_t numero_pagina) {
+uint32_t algoritmo_clock(t_lista_circular* frames_proceso, entradaTablaPaginas* entrada_tabla_paginas) {
+	// Variables auxiliares
+	t_frame_lista_circular* frame_puntero = malloc(sizeof(t_frame_lista_circular));
+
+	uint hay_victima = 0;
+
+	while(hay_victima == 0) {
+		// Al implementar un puntero_algoritmo que se va desplazando dentro de la propia lista circular
+		// 		lo reemplazamos por eso
+		frame_puntero = frames_proceso->puntero_algoritmo;
+
+		hay_victima = es_victima_clock(frame_puntero->info);
+
+		if (hay_victima) {
+			//entrada_tabla_paginas_victima = obtener_entrada_tabla_de_paginas(numero_tabla_de_paginas, frame_puntero->info);
+			actualizar_registros(entrada_tabla_paginas, frame_puntero->info);
+		} else {
+			frame_puntero->info->uso = 0;
+		}
+		frames_proceso->puntero_algoritmo = frames_proceso->puntero_algoritmo->sgte;
+	}
+	return frame_puntero->info->numeroMarco;
+}
+
+uint32_t algoritmo_clock_modificado(t_lista_circular* frames_proceso, uint32_t numero_tabla_primer_nivel, uint32_t numero_pagina) {
+	t_registro_segundo_nivel* registro_segundo_nivel = obtener_registro_segundo_nivel(numero_tabla_primer_nivel, numero_pagina);
+
+	// Variables auxiliares
+	t_frame_lista_circular* frame_puntero = malloc(sizeof(t_frame_lista_circular));
+	t_registro_segundo_nivel* registro_segundo_nivel_victima = malloc(sizeof(t_registro_segundo_nivel));;
+	t_registro_segundo_nivel* registro_segundo_nivel_actualizado = malloc(sizeof(t_registro_segundo_nivel));
+
+	uint hay_victima_um = 0;
+	uint hay_victima_u = 0;
+	uint busquedas_um = 0;
+	uint busquedas_u = 0;
+
+	while (hay_victima_um == 0 && hay_victima_u == 0) {
+
+		busquedas_um = 0;
+		busquedas_u = 0;
+
+		// Primeras iteraciones en busqueda de una pagina con U=0 && M=0
+		// No se actualiza ningun bit
+		while (hay_victima_um == 0 && busquedas_um < marcos_por_proceso) {
+
+			busquedas_um++;
+
+			frame_puntero = frames_proceso->puntero_algoritmo;
+
+			hay_victima_um = es_victima_clock_modificado_um(frame_puntero->info);
+
+			if (hay_victima_um) {
+				registro_segundo_nivel_victima = obtener_registro_segundo_nivel(numero_tabla_primer_nivel, frame_puntero->info->numero_pagina);
+
+				actualizar_registros(registro_segundo_nivel, registro_segundo_nivel_victima, frame_puntero->info->numero_frame);
+
+				frame_puntero->info->numero_pagina = numero_pagina;
+				frame_puntero->info->uso = 1;
+
+				frames_proceso->puntero_algoritmo = frames_proceso->puntero_algoritmo->sgte;
+				break;
+			}
+
+			frames_proceso->puntero_algoritmo = frames_proceso->puntero_algoritmo->sgte;
+		}
+
+		// Si no hay victima de u=0 y m=0
+		if (hay_victima_um == 0) {
+
+			// Segundas iteraciones en busqueda de una pagina con U=0 && M=1
+			// Se actualiza el bit de uso
+			while (hay_victima_u == 0 && busquedas_u < marcos_por_proceso) {
+
+				busquedas_u++;
+
+				frame_puntero = frames_proceso->puntero_algoritmo;
+
+				hay_victima_u = es_victima_clock_modificado_u(frame_puntero->info);
+
+				if (hay_victima_u) {
+					registro_segundo_nivel_victima = obtener_registro_segundo_nivel(numero_tabla_primer_nivel, frame_puntero->info->numero_pagina);
+
+					actualizar_registros(registro_segundo_nivel, registro_segundo_nivel_victima, frame_puntero->info->numero_frame);
+
+					frame_puntero->info->numero_pagina = numero_pagina;
+					frame_puntero->info->uso = 1;
+
+					frames_proceso->puntero_algoritmo = frames_proceso->puntero_algoritmo->sgte;
+					break;
+				} else {
+					registro_segundo_nivel_actualizado = obtener_registro_segundo_nivel(numero_tabla_primer_nivel, frame_puntero->info->numero_pagina);
+					registro_segundo_nivel_actualizado->uso = 0;
+					frame_puntero->info->uso = 0;
+					frames_proceso->puntero_algoritmo = frames_proceso->puntero_algoritmo->sgte;
+				}
+			}
+		}
+	}
+	return frame_puntero->info->numero_frame;
+}
+
+/**************************************** FUNCIONES AUXILIARES ALGORITMOS **********************************************/
+uint es_victima_clock(entradaTablaPaginas* entrada) {
+	return entrada->presencia == 1 && entrada->uso == 0;
+}
+
+uint es_victima_clock_modificado_um(entradaTablaPaginas* entrada) {
+	return entrada->presencia == 1 && entrada->uso == 0 && entrada->modificado == 0;
+}
+
+uint es_victima_clock_modificado_u(entradaTablaPaginas* entrada) {
+	return entrada->presencia == 1 && entrada->uso == 0 && entrada->modificado == 1;
+}
+
+void actualizar_registros(entradaTablaPaginas* entrada, entradaTablaPaginas* entrada_victima) {
+	// Limpieza de registro victima
+	entrada_victima->presencia = 0;
+	entrada_victima->uso = 0;
+	// Revisar esto!!!
+	// Lo actualizamos cuando venga la proxima vez que la carguemos
+	/*
+	if (entrada_victima->modificado == 1) {
+		// Actualizar pagina en swap
+		entrada_victima->modificado = 0;
+	}
+	*/
+
+	// Carga de pagina solicitada
+	// Le asigno el frame que fue desocupado y elegido como victima
+	entrada->numeroMarco = entrada_victima->numeroMarco;
+	entrada->uso = 1;
+	entrada->presencia = 1;
+}
+
+int es_lista_circular_del_proceso(size_t pid, t_lista_circular* lista_circular) {
+	return lista_circular->pid == pid;
+}
+
+t_lista_circular* obtener_lista_circular_del_proceso(size_t pid) {
+	bool _es_lista_circular_del_proceso(void* elemento) {
+		return es_lista_circular_del_proceso(pid, (t_lista_circular*) elemento);
+	}
+	return list_find(lista_frames_procesos, _es_lista_circular_del_proceso);
+}
+
+t_frame_lista_circular* obtener_elemento_lista_circular(t_lista_circular* lista, uint32_t numero_pagina) {
+	int actualizacion_ok = 0;
+	t_frame_lista_circular* frame_elemento_aux = lista->inicio;
+	while (actualizacion_ok == 0) {
+		if (frame_elemento_aux->info->numero_pagina == numero_pagina) {
+			actualizacion_ok = 1;
+		} else {
+			frame_elemento_aux = frame_elemento_aux->sgte;
+		}
+	}
+	return frame_elemento_aux;
+}
+
+/* No lo usamos
+entradaTablaPaginas* obtener_entrada_tabla_de_paginas(uint32_t nro_tabla_paginas, entradaTablaPaginas* entrada) {
+	pthread_mutex_lock(&mutex_lista_tablas_de_paginas);
+	tablaDePaginas* tabla_paginas = list_get(listaTablaDePaginas, nro_tabla_paginas);
+	pthread_mutex_unlock(&mutex_lista_tablas_de_paginas);
+
+	return list_get(tabla_paginas->entradas, numero_pagina);
+}
+*/
+
+/**************************************** FUNCIONES AUXILIARES LISTA CIRCULAR **********************************************/
+
+t_lista_circular* list_create_circular() {
+	t_lista_circular* lista = malloc(sizeof(t_lista_circular));;
+    lista->inicio = NULL;
+    lista->fin = NULL;
+    lista->tamanio = 0;
+    lista->puntero_algoritmo = NULL;
+    return lista;
+}
+
+void insertar_lista_circular_vacia(t_lista_circular* lista, t_frame* frame) {
+	t_frame_lista_circular* elemento_nuevo = malloc(sizeof(t_frame_lista_circular));
+	elemento_nuevo->info = frame;
+	elemento_nuevo->sgte = elemento_nuevo;
+	lista->inicio = elemento_nuevo;
+	lista->inicio->sgte = elemento_nuevo;
+	lista->fin = elemento_nuevo;
+	lista->tamanio=1;
+	lista->puntero_algoritmo = elemento_nuevo;
+	return;
+}
+
+void insertar_lista_circular(t_lista_circular* lista, t_frame* frame) {
+	if (lista->tamanio == 0) {
+		insertar_lista_circular_vacia(lista, frame);
+	}
+	else {
+        t_frame_lista_circular *elemento_nuevo = malloc(sizeof(t_frame_lista_circular));
+        elemento_nuevo->info = frame;
+        elemento_nuevo->sgte = lista->inicio;
+        lista->fin->sgte = elemento_nuevo;
+        lista->fin = elemento_nuevo;
+        lista->tamanio++;
+    }
 }
 
 
