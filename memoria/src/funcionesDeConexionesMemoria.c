@@ -29,17 +29,8 @@ int conexionConCpu(void* void_args) {
 		pthread_mutex_lock(&mutexMemoriaData);
 		int cod_op = recibir_operacion(clienteCpu);
 
-		// Tiempo en acceder a memoria
-//		sleep(retardoMemoria/1000);
-//
-//		log_info(loggerAux, "Accediendo a memoria espere %d segundos\n", retardoMemoria/1000);
-
 		switch (cod_op) {
-//			case MENSAJE_CPU_MEMORIA://mensaje de pedido tam pag y cant entradas
-//				recibir_mensaje(clienteCpu);//recibe el pedido de tam_pag y cant_entradas
-//				enviarTamanioDePaginaYCantidadDeEntradas(clienteCpu);
-//
-//				break;
+
 			case PRIMER_ACCESO://ES OBTENER MARCO
 				listaConTablaDePaginaYPagina = recibir_lista_enteros(clienteCpu);
 				numeroTablaDePaginas = list_get(listaConTablaDePaginaYPagina, 0);
@@ -80,11 +71,12 @@ int conexionConCpu(void* void_args) {
 				desplazamiento = (int) list_get(listaQueContieneDireccionFisca, 1);
 
 				uint32_t valorAEscribir = (uint32_t) list_get(listaQueContieneDireccionFisca, 2);
+				int pidDeOperacion = (int) list_get(listaQueContieneDireccionFisca, 3);
 
 				log_info(loggerAux, "-------------------MOV_OUT-------------------");
-				log_info(loggerAux, "Me llego el valor a escribir: %u",valorAEscribir);
+				log_info(loggerAux, "Me llego el valor a escribir: %u del proceso %d",valorAEscribir,pidDeOperacion);
 
-				escribirElPedido((uint32_t) valorAEscribir, numeroDeMarco, desplazamiento);
+				escribirElPedido((uint32_t) valorAEscribir, numeroDeMarco, desplazamiento, pidDeOperacion);
 
 				log_info(loggerAux,"-------------------MOV_OUT-------------------\n");
 

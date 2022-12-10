@@ -23,8 +23,6 @@ int main(int argc, char *argv[]) {
 
 	checkInterrupt();
 
-
-
 	pthread_t hiloRecibirPcb;
 
 	pthread_create(&hiloRecibirPcb, NULL, (void*) conexionConKernelDispatch, NULL);

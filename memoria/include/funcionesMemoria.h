@@ -118,8 +118,9 @@ void liberarEspacioEnMemoria(tablaDePaginas*);
 
 void enviarTamanioDePaginaYCantidadDeEntradas(int);
 
-void escribirElPedido(uint32_t,int, int);
-entradaTablaPaginas* entradaCargadaConMarcoAsignado(int);
+void escribirElPedido(uint32_t,int, int,int);
+t_frame_lista_circular* obtener_elemento_lista_circular_por_marco(t_lista_circular*, uint32_t);
+void actualizarBitModificadoEntrada(int,int);
 uint32_t leerElPedido(int, int);
 uint32_t leerEnSwap(int,int);
 
@@ -138,12 +139,13 @@ int server_escuchar(t_log*, char*, char*, int);
 void list_create_circular(int);
 void insertar_lista_circular_vacia(t_lista_circular*, entradaTablaPaginas*);
 void insertar_lista_circular(t_lista_circular*, entradaTablaPaginas*);
-t_lista_circular* obtener_lista_circular_del_proceso(size_t);
+t_lista_circular* obtener_lista_circular_del_proceso(int);
 uint es_victima_clock(entradaTablaPaginas*);
 uint es_victima_clock_modificado_um(entradaTablaPaginas*);
 uint es_victima_clock_modificado_u(entradaTablaPaginas*);
 void algoritmo_clock(t_lista_circular*, entradaTablaPaginas*);
 void algoritmo_clock_modificado(t_lista_circular*, entradaTablaPaginas*);
 uint32_t sustitucion_paginas(entradaTablaPaginas*, size_t);
+void actualizar_registros(entradaTablaPaginas*, entradaTablaPaginas*);
 
 #endif /* FUNCIONES_MEMORIA_H_*/

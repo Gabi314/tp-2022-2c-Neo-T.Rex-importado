@@ -254,6 +254,7 @@ void enviarDireccionFisica(int marco, int desplazamientoPagina,int leer,int valo
 		agregar_a_paquete_unInt(paquete,&marco,sizeof(marco));
 		agregar_a_paquete_unInt(paquete,&desplazamientoPagina,sizeof(desplazamientoPagina));
 		agregar_a_paquete_unInt(paquete,&valorDelRegistro,sizeof(valorDelRegistro));
+		agregar_a_paquete_unInt(paquete,&pcb->idProceso, sizeof(int));
 		log_info(logger,"Le envio a memoria el valor del registro: %d a escribir",valorDelRegistro);
 	}
 

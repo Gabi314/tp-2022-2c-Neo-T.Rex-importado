@@ -201,36 +201,28 @@ void cargarPagina(entradaTablaPaginas* unaEntrada,int pid) {
 }
 
 
-void escribirElPedido(uint32_t datoAEscribir, int marco, int desplazamiento) {
+void escribirElPedido(uint32_t datoAEscribir, int marco, int desplazamiento, int pidDeOperacion) {
 	usleep(retardoMemoria*1000);
 	int posicion = marco * tamanioDePagina + desplazamiento;
 	memcpy(&memoria+posicion, &datoAEscribir, sizeof(uint32_t));
 
-	log_info(logger, "PID: <%d> - Acción: <ESCRIBIR> - Dirección física: <%d>", pidActual, posicion);
+	log_info(logger, "PID: <%d> - Acción: <ESCRIBIR> - Dirección física: <%d>", pidDeOperacion, posicion);
 
-	entradaTablaPaginas* entradaAEscribir = entradaCargadaConMarcoAsignado(marco);
-	entradaAEscribir->modificado = 1;
+	actualizarBitModificadoEntrada(marco,pidDeOperacion);
 
-	//enviar_mensaje("Se escribio el valor correctamente",clienteCpu);
 }
 
 //ESTA DEBERIA RECORRER LA LISTACIRCULAR Y DEVOLVER LA ENTRADA CARGADA CON ESE MARCO
-entradaTablaPaginas* entradaCargadaConMarcoAsignado(int nroDeMarco) {
+void actualizarBitModificadoEntrada(int nroDeMarco, int pidDeOperacion) {
 	t_lista_circular* frames_proceso;
 	entradaTablaPaginas* entradaAEscribir;
-	for(int i=0;i<list_size(lista_frames_procesos);i++){
-		//PROBLEMA
-		frames_proceso = obtener_lista_circular_del_proceso(i);
 
-		for(int j=0;i<frames_proceso->tamanio;j++){
-			entradaAEscribir = frames_proceso->puntero_algoritmo->info;
-			if(entradaAEscribir->numeroMarco == nroDeMarco){
-				return entradaAEscribir;
-			}else {
-				frames_proceso->puntero_algoritmo = frames_proceso->puntero_algoritmo->sgte;
-			}
-		}
-	}
+	frames_proceso = obtener_lista_circular_del_proceso(pidDeOperacion);
+
+	t_frame_lista_circular* elementoAEscribir = obtener_elemento_lista_circular_por_marco(frames_proceso,nroDeMarco);
+
+	elementoAEscribir->info->modificado =  1;
+
 }
 
 uint32_t leerElPedido(int marco, int desplazamiento) {
@@ -468,16 +460,18 @@ void actualizar_registros(entradaTablaPaginas* entrada, entradaTablaPaginas* ent
 	entrada->presencia = 1;
 }
 
-int es_lista_circular_del_proceso(size_t pid, t_lista_circular* lista_circular) {
+int es_lista_circular_del_proceso(int pid, t_lista_circular* lista_circular) {
 	return lista_circular->pid == pid;
 }
 
-t_lista_circular* obtener_lista_circular_del_proceso(size_t pid) {
+t_lista_circular* obtener_lista_circular_del_proceso(int pid) {
 	bool _es_lista_circular_del_proceso(void* elemento) {
 		return es_lista_circular_del_proceso(pid, (t_lista_circular*) elemento);
 	}
 	return list_find(lista_frames_procesos, _es_lista_circular_del_proceso);
 }
+
+
 
 t_frame_lista_circular* obtener_elemento_lista_circular(t_lista_circular* lista, uint32_t numero_pagina) {
 	int actualizacion_ok = 0;
@@ -540,6 +534,19 @@ void insertar_lista_circular(t_lista_circular* lista, entradaTablaPaginas* entra
         lista->fin = elemento_nuevo;
         lista->tamanio++;
     }
+}
+
+t_frame_lista_circular* obtener_elemento_lista_circular_por_marco(t_lista_circular* lista, uint32_t numeroMarco) {
+	int actualizacion_ok = 0;
+	t_frame_lista_circular* frame_elemento_aux = lista->inicio;
+	while (actualizacion_ok == 0) {
+		if (frame_elemento_aux->info->numeroMarco == numeroMarco) {
+			actualizacion_ok = 1;
+		} else {
+			frame_elemento_aux = frame_elemento_aux->sgte;
+		}
+	}
+	return frame_elemento_aux;
 }
 
 
