@@ -22,24 +22,19 @@ typedef struct {
 	int numeroDeSegmento;
 } entradaTablaPaginas;
 
-typedef struct{
-	int pid;
-	int posicionDelPuntero;
-} entradaListaPunteros;
-
-typedef struct {// capaz usar diccionario
+typedef struct {
 	t_list* entradas;
 	int pid;
 	int numeroDeSegmento;
 } tablaDePaginas;
 
 typedef struct {
-	int numeroDeMarco;//Hacer lista de marcos, el indice en la lista es el numero de marco, la cantidad de marcos es
-	int marcoLibre;// tam memoria/tam pagina
+	int numeroDeMarco;
+	int marcoLibre;
 } marco;
 
 /* *** STRUCTS ALGORITMOS SUSTITUCION *** */
-
+/*
 typedef struct {
 	uint32_t numero_frame;
 	uint32_t numero_pagina;
@@ -47,7 +42,7 @@ typedef struct {
 	uint modificado;
 	uint presencia;
 } t_frame;
-
+*/
 typedef struct t_frame_lista_circular {
 	//t_frame* info;
 	entradaTablaPaginas* info;
@@ -79,15 +74,10 @@ extern int tamanioSwap;
 
 //Variables a utilizar
 extern void* memoria; // espacio de usuario de la memoria
-extern int contadorDeEntradasPorProceso;
 extern t_list* listaDeMarcos;
-extern t_list* listaDeEntradasEnMemoria;
 extern t_list* listaTablaDePaginas;
-extern t_list* listaDePaginasEnMemoria;
+extern t_list* lista_frames_procesos;
 
-extern t_list* listaDePunterosYPids;
-extern int posicionDelPuntero;
-extern int contadorDeMarcosPorProceso;
 extern int cantidadDeSegmentos;
 
 extern int flagDeEntradasPorTabla;
@@ -118,17 +108,11 @@ void inicializarEstructuras(int);
 void inicializarMarcos();
 void cargarEntradasATabla(tablaDePaginas*,int);
 
-int posicionDePunteroDelAlgoritmo(int);
 void sacarMarcoAPagina(entradaTablaPaginas*);
-void reemplazarTodosLosUsoACero(t_list*);
-int algoritmoClock(t_list*,entradaTablaPaginas*,int);
-int algoritmoClockM (t_list*,entradaTablaPaginas*,int);
 marco* siguienteMarcoLibre();
 marco* buscarMarco(int);
-int indiceDeEntradaAReemplazar(int);
 void finalizacionDeProceso(int);
-int buscarNroTablaDePaginas(int);
-void modificarPaginaACargar(entradaTablaPaginas*, int);
+void modificarPaginaACargar(entradaTablaPaginas*,marco*);
 void cargarPagina(entradaTablaPaginas*,int);
 void liberarEspacioEnMemoria(tablaDePaginas*);
 
@@ -141,9 +125,7 @@ uint32_t leerEnSwap(int,int);
 
 void crearSwap();
 void escribirEnSwap(entradaTablaPaginas*);
-entradaTablaPaginas* entradaCargadaConMarcoAsignado(int);
 void leerDeSwap(entradaTablaPaginas*,int);
-void suspensionDeProceso(int);
 
 /* *** FUNCIONES DE CONEXIONES *** */
 int conexionConCpu(void*);
@@ -153,13 +135,15 @@ void chequeoDeIndice(int);
 int server_escuchar(t_log*, char*, char*, int);
 
 /* *** FUNCIONES DE ALGORITMOS *** */
-t_lista_circular* list_create_circular();
-void insertar_lista_circular_vacia(t_lista_circular*, t_frame*);
-void insertar_lista_circular(t_lista_circular*, t_frame*);
-uint es_victima_clock(t_frame*);
-uint es_victima_clock_modificado_um(t_frame*);
-uint es_victima_clock_modificado_u(t_frame*);
-uint32_t algoritmo_clock(t_lista_circular*, uint32_t, uint32_t);
-uint32_t algoritmo_clock_modificado(t_lista_circular*, uint32_t, uint32_t);
+void list_create_circular(int);
+void insertar_lista_circular_vacia(t_lista_circular*, entradaTablaPaginas*);
+void insertar_lista_circular(t_lista_circular*, entradaTablaPaginas*);
+t_lista_circular* obtener_lista_circular_del_proceso(size_t);
+uint es_victima_clock(entradaTablaPaginas*);
+uint es_victima_clock_modificado_um(entradaTablaPaginas*);
+uint es_victima_clock_modificado_u(entradaTablaPaginas*);
+void algoritmo_clock(t_lista_circular*, entradaTablaPaginas*);
+void algoritmo_clock_modificado(t_lista_circular*, entradaTablaPaginas*);
+uint32_t sustitucion_paginas(entradaTablaPaginas*, size_t);
 
 #endif /* FUNCIONES_MEMORIA_H_*/

@@ -130,6 +130,7 @@ int conexionConKernel(void* void_args) {
 				pidActual = (int) list_get(listaQueContienePidYCantidadSegmentos,0);
 				cantidadDeSegmentos = (int) list_get(listaQueContienePidYCantidadSegmentos, 1);
 
+				list_create_circular(pidActual);
 				enviar_entero(contNroTablaDePaginas, clienteKernel, MEMORIA_A_KERNEL_NUMERO_TABLA_PAGINAS);
 				inicializarEstructuras(pidActual);//inicializo estructuras
 
@@ -143,16 +144,13 @@ int conexionConKernel(void* void_args) {
 				numeroTablaDePaginas = (int) list_get(listaQueContieneNumTablaYPagina, 0);
 				numeroPagina = (int) list_get(listaQueContieneNumTablaYPagina, 1);
 
-				log_info(logger,"Numero de pagina: %d",numeroTablaDePaginas);
-				log_info(logger,"Numero de pagina: %d",numeroPagina);
-				log_info(logger,"Cantidad entradas: %d",entradasPorTabla);
-
 				if(numeroPagina < entradasPorTabla) {
 					tablaDePaginas* unaTablaDePaginas = malloc(sizeof(tablaDePaginas));
 					entradaTablaPaginas* unaEntrada = malloc(sizeof(entradaTablaPaginas));
-					log_info(logger,"Entro aca?");
+
 					unaTablaDePaginas = list_get(listaTablaDePaginas, numeroTablaDePaginas);
 					unaEntrada = list_get(unaTablaDePaginas->entradas, numeroPagina);
+
 					cargarPagina(unaEntrada,unaTablaDePaginas->pid);
 
 					log_info(logger, "PID: <%d> - Página: <%d> - Marco: <%d>", pidActual, unaEntrada->numeroDeEntrada, unaEntrada->numeroMarco);
@@ -224,6 +222,7 @@ void chequeoDeIndice(int indice) {
 }
 
 int server_escuchar(t_log* logger, char* server_nombre, char* cliente_nombre, int server_socket) {
+	static pthread_mutex_t mutexPrimerHandshake;
 	// Se conecta un cliente
 	log_info(logger, "Esperando a un cliente (Kernel o CPU)");
     int cliente_socket = esperar_cliente(server_socket, cliente_nombre);
@@ -239,12 +238,15 @@ int server_escuchar(t_log* logger, char* server_nombre, char* cliente_nombre, in
         if (!strcmp(cliente_nombre, "KERNEL")) {
         	pthread_create(&hilo, NULL, (void*) conexionConKernel, (void*) args);
         } else if (!strcmp(cliente_nombre, "CPU")) {
+        	pthread_mutex_lock(&mutexPrimerHandshake);
         	int cod_op = recibir_operacion(cliente_socket);
 
         	if(cod_op == MENSAJE_CPU_MEMORIA){//mensaje de pedido tam pag y cant entradas
         		recibir_mensaje(cliente_socket);//recibe el pedido de tam_pag y cant_entradas
         		enviarTamanioDePaginaYCantidadDeEntradas(cliente_socket);
         	}
+        	pthread_mutex_unlock(&mutexPrimerHandshake);
+
 			pthread_create(&hilo, NULL, (void*) conexionConCpu, (void*) args);
 		}
         pthread_detach(hilo);

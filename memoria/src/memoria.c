@@ -2,9 +2,8 @@
 
 int memoria_fd;
 t_list* listaDeMarcos;
-t_list* listaDeEntradasEnMemoria;
 t_list* listaTablaDePaginas;
-t_list* listaDePunterosYPids;
+t_list* lista_frames_procesos;
 
 int main(int argc, char *argv[]) {
 
@@ -40,16 +39,14 @@ void funcionMain(int argc, char *argv[]) {
 	crearConfiguraciones(argv[1]);
 
 	listaDeMarcos = list_create();
-	listaDeEntradasEnMemoria = list_create();
 	listaTablaDePaginas = list_create();
-	listaDePunterosYPids = list_create();
+	lista_frames_procesos = list_create();
 
 	inicializarMemoria();
 	inicializarMarcos();
 
 	crearSwap();
 
-	//listaDePaginasEnMemoria = list_create();
 
 	log_info(loggerAux, "Fin de main obligatorio");
 }
