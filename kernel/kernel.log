@@ -17543,3 +17543,805 @@
 [INFO] 18:57:38:685 KERNEL/(5201:5214): [readyAExe]: finaliza
 [INFO] 18:57:38:685 KERNEL/(5201:5213): ----------ME LLEGO EL SIGUIENTE PCB-------------
 [INFO] 18:57:38:689 KERNEL/(5201:5213): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <TERMINATED>
+[INFO] 23:04:37:236 KERNEL/(6171:6171): servidor kernel inicializado
+[INFO] 23:04:37:241 KERNEL/(6171:6171): DISPOSITIVOS: DISCO-IMPRESORA
+[INFO] 23:04:37:241 KERNEL/(6171:6171): configuraciones inicializadas
+[INFO] 23:04:37:241 KERNEL/(6171:6171): listas y colas inicializadas
+[INFO] 23:04:37:241 KERNEL/(6171:6171): semaforos inicializados
+[INFO] 23:04:37:241 KERNEL/(6171:6171): En la lista de dispositivos tenemos los siguientes:
+[INFO] 23:04:37:241 KERNEL/(6171:6171): el dispositivo de posicion 0 se llama DISCO
+[INFO] 23:04:37:241 KERNEL/(6171:6171): el dispositivo de posicion 0 tiene un tiempo de 50
+[INFO] 23:04:37:241 KERNEL/(6171:6171): el dispositivo de posicion 1 se llama IMPRESORA
+[INFO] 23:04:37:241 KERNEL/(6171:6171): el dispositivo de posicion 1 tiene un tiempo de 100
+[INFO] 23:04:37:242 KERNEL/(6171:6181): se desperto atender_IO_generico del dispositivo <IMPRESORA> por primera vez 
+[INFO] 23:04:37:242 KERNEL/(6171:6180): se desperto atender_IO_generico del dispositivo <DISCO> por primera vez 
+[INFO] 23:04:37:242 KERNEL/(6171:6179): se desperto readyAExe por primera vez
+[INFO] 23:04:37:242 KERNEL/(6171:6178): se desperto atender_interrupcion_de_ejecucion
+[INFO] 23:04:37:248 KERNEL/(6171:6177): se desperto asignar_memoria por primera vez
+[INFO] 23:04:37:249 KERNEL/(6171:6176): se desperto recibir_consola
+[INFO] 23:06:21:966 KERNEL/(6478:6478): servidor kernel inicializado
+[INFO] 23:06:21:966 KERNEL/(6478:6478): DISPOSITIVOS: DISCO-IMPRESORA
+[INFO] 23:06:21:986 KERNEL/(6478:6478): configuraciones inicializadas
+[INFO] 23:06:21:987 KERNEL/(6478:6478): listas y colas inicializadas
+[INFO] 23:06:21:987 KERNEL/(6478:6478): semaforos inicializados
+[INFO] 23:06:21:987 KERNEL/(6478:6478): En la lista de dispositivos tenemos los siguientes:
+[INFO] 23:06:21:987 KERNEL/(6478:6478): el dispositivo de posicion 0 se llama DISCO
+[INFO] 23:06:21:987 KERNEL/(6478:6478): el dispositivo de posicion 0 tiene un tiempo de 1000
+[INFO] 23:06:21:987 KERNEL/(6478:6478): el dispositivo de posicion 1 se llama IMPRESORA
+[INFO] 23:06:21:988 KERNEL/(6478:6478): el dispositivo de posicion 1 tiene un tiempo de 5000
+[INFO] 23:06:21:989 KERNEL/(6478:6487): se desperto recibir_consola
+[INFO] 23:06:21:989 KERNEL/(6478:6488): se desperto asignar_memoria por primera vez
+[INFO] 23:06:21:989 KERNEL/(6478:6489): se desperto atender_interrupcion_de_ejecucion
+[INFO] 23:06:21:989 KERNEL/(6478:6490): se desperto readyAExe por primera vez
+[INFO] 23:06:21:989 KERNEL/(6478:6491): se desperto atender_IO_generico del dispositivo <DISCO> por primera vez 
+[INFO] 23:06:21:989 KERNEL/(6478:6492): se desperto atender_IO_generico del dispositivo <IMPRESORA> por primera vez 
+[INFO] 23:07:33:780 KERNEL/(6478:6487): Se conecto el Consola
+[INFO] 23:07:33:782 KERNEL/(6478:6641): [atender_consola]esperando segmentos
+[INFO] 23:07:33:782 KERNEL/(6478:6641): tamanios de segmentos recibidos
+[INFO] 23:07:33:782 KERNEL/(6478:6641): el tamanio es 64
+[INFO] 23:07:33:782 KERNEL/(6478:6641): el tamanio es 96
+[INFO] 23:07:33:782 KERNEL/(6478:6641): el tamanio es 128
+[INFO] 23:07:33:782 KERNEL/(6478:6641): el tamanio es 32
+[INFO] 23:07:33:782 KERNEL/(6478:6641): [atender_consola]enviamos los dispositivos
+[INFO] 23:07:33:782 KERNEL/(6478:6641): [atender_consola]esperando instrucciones
+[INFO] 23:07:33:783 KERNEL/(6478:6641): [atender_consola]me llegaron las instrucciones
+[INFO] 23:07:33:783 KERNEL/(6478:6641): SET param1: 0 param2: 228
+[INFO] 23:07:33:783 KERNEL/(6478:6641): MOV_OUT param1: 0 param2: 0
+[INFO] 23:07:33:783 KERNEL/(6478:6641): MOV_OUT param1: 128 param2: 0
+[INFO] 23:07:33:783 KERNEL/(6478:6641): MOV_OUT param1: 256 param2: 0
+[INFO] 23:07:33:783 KERNEL/(6478:6641): MOV_OUT param1: 384 param2: 0
+[INFO] 23:07:33:783 KERNEL/(6478:6641): MOV_IN param1: 1 param2: 0
+[INFO] 23:07:33:783 KERNEL/(6478:6641): MOV_IN param1: 3 param2: 384
+[INFO] 23:07:33:783 KERNEL/(6478:6641): MOV_IN param1: 2 param2: 128
+[INFO] 23:07:33:783 KERNEL/(6478:6641): ADD param1: 0 param2: 1
+[INFO] 23:07:33:785 KERNEL/(6478:6641): ADD param1: 0 param2: 2
+[INFO] 23:07:33:785 KERNEL/(6478:6641): ADD param1: 0 param2: 3
+[INFO] 23:07:33:785 KERNEL/(6478:6641): I/O param1: 0 param2: 0
+[INFO] 23:07:33:785 KERNEL/(6478:6641): EXIT param1: 0 param2: 0
+[INFO] 23:07:33:785 KERNEL/(6478:6641): [atender_consola]metemos instrucciones en el pcb
+[INFO] 23:07:33:786 KERNEL/(6478:6641): Se crea el proceso <1> en NEW
+[INFO] 23:07:33:786 KERNEL/(6478:6641): [atender_consola] despertamos a asignar_memoria()
+[INFO] 23:07:33:786 KERNEL/(6478:6488): el tamanio de la cola de new es 0
+[INFO] 23:07:33:789 KERNEL/(6478:6488): [recibir_entero]: se recibio el numero 0
+[INFO] 23:07:33:789 KERNEL/(6478:6488): Cola Ready <FIFO>: [<LISTA DE PIDS>]
+[INFO] 23:07:33:789 KERNEL/(6478:6488): 1
+[INFO] 23:07:33:789 KERNEL/(6478:6488): PID: <1> - Estado Anterior: <NEW> - Estado Actual: <READY>
+[INFO] 23:07:33:789 KERNEL/(6478:6490): [readyAExe]: .........se despierta readyAExe 
+[INFO] 23:07:33:789 KERNEL/(6478:6490): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 23:07:33:789 KERNEL/(6478:6490): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 23:07:33:789 KERNEL/(6478:6490): [readyAExe]: enviamos el proceso a cpu
+[INFO] 23:07:33:791 KERNEL/(6478:6490): [readyAExe]: finaliza
+[INFO] 23:07:34:802 KERNEL/(6478:6489): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 23:07:34:811 KERNEL/(6478:6489): Numero de tabla de paginas: 0
+[INFO] 23:07:34:811 KERNEL/(6478:6489): Numero de paginas: 0
+[INFO] 23:07:34:811 KERNEL/(6478:6489): Page Fault PID: <1> - Segmento: <0> - Pagina: <0>
+[INFO] 23:07:34:811 KERNEL/(6478:6489): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 23:07:34:865 KERNEL/(6478:6642): Me llego el mensaje Se ha cargado la pagina correctamente
+[INFO] 23:07:34:865 KERNEL/(6478:6642): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 23:07:34:865 KERNEL/(6478:6490): [readyAExe]: .........se despierta readyAExe 
+[INFO] 23:07:34:865 KERNEL/(6478:6490): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 23:07:34:865 KERNEL/(6478:6490): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 23:07:34:865 KERNEL/(6478:6490): [readyAExe]: enviamos el proceso a cpu
+[INFO] 23:07:34:869 KERNEL/(6478:6490): [readyAExe]: finaliza
+[INFO] 23:07:35:875 KERNEL/(6478:6489): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 23:07:35:883 KERNEL/(6478:6489): Numero de tabla de paginas: 0
+[INFO] 23:07:35:883 KERNEL/(6478:6489): Numero de paginas: 1
+[INFO] 23:07:35:883 KERNEL/(6478:6489): Page Fault PID: <1> - Segmento: <1> - Pagina: <0>
+[INFO] 23:07:35:883 KERNEL/(6478:6489): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 23:07:35:937 KERNEL/(6478:6643): Me llego el mensaje Se ha cargado la pagina correctamente
+[INFO] 23:07:35:937 KERNEL/(6478:6643): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 23:07:35:937 KERNEL/(6478:6490): [readyAExe]: .........se despierta readyAExe 
+[INFO] 23:07:35:937 KERNEL/(6478:6490): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 23:07:35:937 KERNEL/(6478:6490): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 23:07:35:937 KERNEL/(6478:6490): [readyAExe]: enviamos el proceso a cpu
+[INFO] 23:07:35:937 KERNEL/(6478:6490): [readyAExe]: finaliza
+[INFO] 23:07:36:981 KERNEL/(6478:6489): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 23:07:36:987 KERNEL/(6478:6489): Numero de tabla de paginas: 0
+[INFO] 23:07:36:988 KERNEL/(6478:6489): Numero de paginas: 2
+[INFO] 23:07:36:988 KERNEL/(6478:6489): Page Fault PID: <1> - Segmento: <2> - Pagina: <0>
+[INFO] 23:07:36:988 KERNEL/(6478:6489): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 23:07:37:038 KERNEL/(6478:6644): Me llego el mensaje Se ha cargado la pagina correctamente
+[INFO] 23:07:37:038 KERNEL/(6478:6644): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 23:07:37:038 KERNEL/(6478:6490): [readyAExe]: .........se despierta readyAExe 
+[INFO] 23:07:37:038 KERNEL/(6478:6490): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 23:07:37:039 KERNEL/(6478:6490): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 23:07:37:039 KERNEL/(6478:6490): [readyAExe]: enviamos el proceso a cpu
+[INFO] 23:07:37:039 KERNEL/(6478:6490): [readyAExe]: finaliza
+[INFO] 23:07:38:086 KERNEL/(6478:6489): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 23:07:38:103 KERNEL/(6478:6489): Numero de tabla de paginas: 0
+[INFO] 23:07:38:104 KERNEL/(6478:6489): Numero de paginas: 3
+[INFO] 23:07:38:104 KERNEL/(6478:6489): Page Fault PID: <1> - Segmento: <3> - Pagina: <0>
+[INFO] 23:07:38:104 KERNEL/(6478:6489): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 23:07:38:148 KERNEL/(6478:6645): Me llego el mensaje Se ha cargado la pagina correctamente
+[INFO] 23:07:38:148 KERNEL/(6478:6645): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 23:07:38:148 KERNEL/(6478:6490): [readyAExe]: .........se despierta readyAExe 
+[INFO] 23:07:38:148 KERNEL/(6478:6490): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 23:07:38:148 KERNEL/(6478:6490): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 23:07:38:148 KERNEL/(6478:6490): [readyAExe]: enviamos el proceso a cpu
+[INFO] 23:07:38:149 KERNEL/(6478:6490): [readyAExe]: finaliza
+[INFO] 23:07:39:213 KERNEL/(6478:6489): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 23:07:39:223 KERNEL/(6478:6489): Numero de tabla de paginas: 0
+[INFO] 23:07:39:223 KERNEL/(6478:6489): Numero de paginas: 0
+[INFO] 23:07:39:223 KERNEL/(6478:6489): Page Fault PID: <1> - Segmento: <0> - Pagina: <0>
+[INFO] 23:07:39:223 KERNEL/(6478:6489): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 23:09:30:335 KERNEL/(6478:6646): Me llego el mensaje qá~ð
+[INFO] 23:09:30:335 KERNEL/(6478:6646): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 23:09:30:335 KERNEL/(6478:6490): [readyAExe]: .........se despierta readyAExe 
+[INFO] 23:09:30:335 KERNEL/(6478:6490): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 23:09:30:335 KERNEL/(6478:6490): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 23:09:30:335 KERNEL/(6478:6490): [readyAExe]: enviamos el proceso a cpu
+[INFO] 23:09:30:335 KERNEL/(6478:6490): [readyAExe]: finaliza
+[INFO] 23:09:30:354 KERNEL/(6478:6489): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 23:09:30:354 KERNEL/(6478:6489): Numero de tabla de paginas: 0
+[INFO] 23:09:30:354 KERNEL/(6478:6489): Numero de paginas: 0
+[INFO] 23:09:30:357 KERNEL/(6478:6489): Page Fault PID: <1> - Segmento: <0> - Pagina: <0>
+[INFO] 23:09:30:357 KERNEL/(6478:6489): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 23:09:30:368 KERNEL/(6478:6676): Me llego el mensaje ñÛ~ð
+[INFO] 23:09:30:368 KERNEL/(6478:6676): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 23:09:30:368 KERNEL/(6478:6490): [readyAExe]: .........se despierta readyAExe 
+[INFO] 23:09:30:368 KERNEL/(6478:6490): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 23:09:30:368 KERNEL/(6478:6490): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 23:09:30:368 KERNEL/(6478:6490): [readyAExe]: enviamos el proceso a cpu
+[INFO] 23:09:30:368 KERNEL/(6478:6490): [readyAExe]: finaliza
+[INFO] 23:09:30:377 KERNEL/(6478:6489): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 23:09:30:416 KERNEL/(6478:6489): Numero de tabla de paginas: 0
+[INFO] 23:09:30:416 KERNEL/(6478:6489): Numero de paginas: 0
+[INFO] 23:09:30:416 KERNEL/(6478:6489): Page Fault PID: <1> - Segmento: <0> - Pagina: <0>
+[INFO] 23:09:30:416 KERNEL/(6478:6489): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 23:09:30:423 KERNEL/(6478:6677): Me llego el mensaje ‘Û~ð
+[INFO] 23:09:30:424 KERNEL/(6478:6677): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 23:09:30:425 KERNEL/(6478:6490): [readyAExe]: .........se despierta readyAExe 
+[INFO] 23:09:30:425 KERNEL/(6478:6490): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 23:09:30:425 KERNEL/(6478:6490): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 23:09:30:425 KERNEL/(6478:6490): [readyAExe]: enviamos el proceso a cpu
+[INFO] 23:09:30:425 KERNEL/(6478:6490): [readyAExe]: finaliza
+[INFO] 23:09:30:446 KERNEL/(6478:6489): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 23:09:30:486 KERNEL/(6478:6489): Numero de tabla de paginas: 0
+[INFO] 23:09:30:486 KERNEL/(6478:6489): Numero de paginas: 0
+[INFO] 23:09:30:486 KERNEL/(6478:6489): Page Fault PID: <1> - Segmento: <0> - Pagina: <0>
+[INFO] 23:09:30:486 KERNEL/(6478:6489): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 23:09:30:488 KERNEL/(6478:6678): Me llego el mensaje 1Û~ð
+[INFO] 23:09:30:488 KERNEL/(6478:6678): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 23:09:30:488 KERNEL/(6478:6490): [readyAExe]: .........se despierta readyAExe 
+[INFO] 23:09:30:488 KERNEL/(6478:6490): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 23:09:30:488 KERNEL/(6478:6490): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 23:09:30:488 KERNEL/(6478:6490): [readyAExe]: enviamos el proceso a cpu
+[INFO] 23:09:30:489 KERNEL/(6478:6490): [readyAExe]: finaliza
+[INFO] 23:09:30:504 KERNEL/(6478:6489): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 23:09:30:552 KERNEL/(6478:6489): Numero de tabla de paginas: 0
+[INFO] 23:09:30:552 KERNEL/(6478:6489): Numero de paginas: 0
+[INFO] 23:09:30:552 KERNEL/(6478:6489): Page Fault PID: <1> - Segmento: <0> - Pagina: <0>
+[INFO] 23:09:30:552 KERNEL/(6478:6489): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 23:09:30:560 KERNEL/(6478:6679): Me llego el mensaje ÑÚ~ð
+[INFO] 23:09:30:560 KERNEL/(6478:6679): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 23:09:30:560 KERNEL/(6478:6490): [readyAExe]: .........se despierta readyAExe 
+[INFO] 23:09:30:560 KERNEL/(6478:6490): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 23:09:30:560 KERNEL/(6478:6490): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 23:09:30:560 KERNEL/(6478:6490): [readyAExe]: enviamos el proceso a cpu
+[INFO] 23:09:30:560 KERNEL/(6478:6490): [readyAExe]: finaliza
+[INFO] 23:09:30:561 KERNEL/(6478:6489): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 23:09:30:608 KERNEL/(6478:6489): Numero de tabla de paginas: 0
+[INFO] 23:09:30:608 KERNEL/(6478:6489): Numero de paginas: 0
+[INFO] 23:09:30:608 KERNEL/(6478:6489): Page Fault PID: <1> - Segmento: <0> - Pagina: <0>
+[INFO] 23:09:30:608 KERNEL/(6478:6489): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 23:09:30:611 KERNEL/(6478:6680): Me llego el mensaje qÚ~ð
+[INFO] 23:09:30:611 KERNEL/(6478:6680): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 23:09:30:611 KERNEL/(6478:6490): [readyAExe]: .........se despierta readyAExe 
+[INFO] 23:09:30:611 KERNEL/(6478:6490): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 23:09:30:611 KERNEL/(6478:6490): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 23:09:30:611 KERNEL/(6478:6490): [readyAExe]: enviamos el proceso a cpu
+[INFO] 23:09:30:611 KERNEL/(6478:6490): [readyAExe]: finaliza
+[INFO] 23:09:30:617 KERNEL/(6478:6489): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 23:09:30:651 KERNEL/(6478:6489): Numero de tabla de paginas: 0
+[INFO] 23:09:30:651 KERNEL/(6478:6489): Numero de paginas: 0
+[INFO] 23:09:30:652 KERNEL/(6478:6489): Page Fault PID: <1> - Segmento: <0> - Pagina: <0>
+[INFO] 23:09:30:652 KERNEL/(6478:6489): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 23:09:30:657 KERNEL/(6478:6681): Me llego el mensaje Ú~ð
+[INFO] 23:09:30:657 KERNEL/(6478:6681): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 23:09:30:657 KERNEL/(6478:6490): [readyAExe]: .........se despierta readyAExe 
+[INFO] 23:09:30:657 KERNEL/(6478:6490): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 23:09:30:657 KERNEL/(6478:6490): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 23:09:30:657 KERNEL/(6478:6490): [readyAExe]: enviamos el proceso a cpu
+[INFO] 23:09:30:657 KERNEL/(6478:6490): [readyAExe]: finaliza
+[INFO] 23:09:30:660 KERNEL/(6478:6489): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 23:09:30:695 KERNEL/(6478:6489): Numero de tabla de paginas: 0
+[INFO] 23:09:30:695 KERNEL/(6478:6489): Numero de paginas: 0
+[INFO] 23:09:30:695 KERNEL/(6478:6489): Page Fault PID: <1> - Segmento: <0> - Pagina: <0>
+[INFO] 23:09:30:696 KERNEL/(6478:6489): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 23:09:30:699 KERNEL/(6478:6682): Me llego el mensaje ±Ù~ð
+[INFO] 23:09:30:700 KERNEL/(6478:6682): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 23:09:30:700 KERNEL/(6478:6490): [readyAExe]: .........se despierta readyAExe 
+[INFO] 23:09:30:700 KERNEL/(6478:6490): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 23:09:30:700 KERNEL/(6478:6490): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 23:09:30:700 KERNEL/(6478:6490): [readyAExe]: enviamos el proceso a cpu
+[INFO] 23:09:30:700 KERNEL/(6478:6490): [readyAExe]: finaliza
+[INFO] 23:09:30:703 KERNEL/(6478:6489): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 23:09:30:742 KERNEL/(6478:6489): Numero de tabla de paginas: 0
+[INFO] 23:09:30:743 KERNEL/(6478:6489): Numero de paginas: 0
+[INFO] 23:09:30:743 KERNEL/(6478:6489): Page Fault PID: <1> - Segmento: <0> - Pagina: <0>
+[INFO] 23:09:30:743 KERNEL/(6478:6489): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 23:09:30:747 KERNEL/(6478:6683): Me llego el mensaje QÙ~ð
+[INFO] 23:09:30:747 KERNEL/(6478:6683): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 23:09:30:747 KERNEL/(6478:6490): [readyAExe]: .........se despierta readyAExe 
+[INFO] 23:09:30:747 KERNEL/(6478:6490): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 23:09:30:747 KERNEL/(6478:6490): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 23:09:30:747 KERNEL/(6478:6490): [readyAExe]: enviamos el proceso a cpu
+[INFO] 23:09:30:748 KERNEL/(6478:6490): [readyAExe]: finaliza
+[INFO] 23:09:30:756 KERNEL/(6478:6489): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 23:09:30:796 KERNEL/(6478:6489): Numero de tabla de paginas: 0
+[INFO] 23:09:30:797 KERNEL/(6478:6489): Numero de paginas: 0
+[INFO] 23:09:30:797 KERNEL/(6478:6489): Page Fault PID: <1> - Segmento: <0> - Pagina: <0>
+[INFO] 23:09:30:798 KERNEL/(6478:6489): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 23:09:30:804 KERNEL/(6478:6684): Me llego el mensaje ñØ~ð
+[INFO] 23:09:30:805 KERNEL/(6478:6684): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 23:09:30:805 KERNEL/(6478:6490): [readyAExe]: .........se despierta readyAExe 
+[INFO] 23:09:30:805 KERNEL/(6478:6490): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 23:09:30:805 KERNEL/(6478:6490): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 23:09:30:805 KERNEL/(6478:6490): [readyAExe]: enviamos el proceso a cpu
+[INFO] 23:09:30:806 KERNEL/(6478:6490): [readyAExe]: finaliza
+[INFO] 23:09:30:826 KERNEL/(6478:6489): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 23:09:30:867 KERNEL/(6478:6489): Numero de tabla de paginas: 0
+[INFO] 23:09:30:867 KERNEL/(6478:6489): Numero de paginas: 0
+[INFO] 23:09:30:868 KERNEL/(6478:6489): Page Fault PID: <1> - Segmento: <0> - Pagina: <0>
+[INFO] 23:09:30:868 KERNEL/(6478:6489): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 23:09:30:870 KERNEL/(6478:6685): Me llego el mensaje ‘Ø~ð
+[INFO] 23:09:30:874 KERNEL/(6478:6685): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 23:09:30:874 KERNEL/(6478:6490): [readyAExe]: .........se despierta readyAExe 
+[INFO] 23:09:30:874 KERNEL/(6478:6490): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 23:09:30:874 KERNEL/(6478:6490): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 23:09:30:874 KERNEL/(6478:6490): [readyAExe]: enviamos el proceso a cpu
+[INFO] 23:09:30:874 KERNEL/(6478:6490): [readyAExe]: finaliza
+[INFO] 23:09:30:889 KERNEL/(6478:6489): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 23:09:30:931 KERNEL/(6478:6489): Numero de tabla de paginas: 0
+[INFO] 23:09:30:932 KERNEL/(6478:6489): Numero de paginas: 0
+[INFO] 23:09:30:932 KERNEL/(6478:6489): Page Fault PID: <1> - Segmento: <0> - Pagina: <0>
+[INFO] 23:09:30:932 KERNEL/(6478:6489): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 23:09:30:942 KERNEL/(6478:6686): Me llego el mensaje ‘Ø~ð
+[INFO] 23:09:30:942 KERNEL/(6478:6686): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 23:09:30:942 KERNEL/(6478:6490): [readyAExe]: .........se despierta readyAExe 
+[INFO] 23:09:30:942 KERNEL/(6478:6490): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 23:09:30:942 KERNEL/(6478:6490): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 23:09:30:942 KERNEL/(6478:6490): [readyAExe]: enviamos el proceso a cpu
+[INFO] 23:09:30:943 KERNEL/(6478:6490): [readyAExe]: finaliza
+[INFO] 23:09:30:956 KERNEL/(6478:6489): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 23:09:30:996 KERNEL/(6478:6489): Numero de tabla de paginas: 0
+[INFO] 23:09:30:997 KERNEL/(6478:6489): Numero de paginas: 0
+[INFO] 23:09:30:997 KERNEL/(6478:6489): Page Fault PID: <1> - Segmento: <0> - Pagina: <0>
+[INFO] 23:09:30:997 KERNEL/(6478:6489): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 23:09:31:007 KERNEL/(6478:6687): Me llego el mensaje ’Ø~ð
+[INFO] 23:09:31:008 KERNEL/(6478:6687): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 23:09:31:008 KERNEL/(6478:6490): [readyAExe]: .........se despierta readyAExe 
+[INFO] 23:09:31:008 KERNEL/(6478:6490): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 23:09:31:008 KERNEL/(6478:6490): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 23:09:31:008 KERNEL/(6478:6490): [readyAExe]: enviamos el proceso a cpu
+[INFO] 23:09:31:010 KERNEL/(6478:6490): [readyAExe]: finaliza
+[INFO] 23:09:31:023 KERNEL/(6478:6489): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 23:09:31:071 KERNEL/(6478:6489): Numero de tabla de paginas: 0
+[INFO] 23:09:31:071 KERNEL/(6478:6489): Numero de paginas: 0
+[INFO] 23:09:31:071 KERNEL/(6478:6489): Page Fault PID: <1> - Segmento: <0> - Pagina: <0>
+[INFO] 23:09:31:071 KERNEL/(6478:6489): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 23:09:31:088 KERNEL/(6478:6688): Me llego el mensaje “Ø~ð
+[INFO] 23:09:31:088 KERNEL/(6478:6688): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 23:09:31:088 KERNEL/(6478:6490): [readyAExe]: .........se despierta readyAExe 
+[INFO] 23:09:31:088 KERNEL/(6478:6490): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 23:09:31:088 KERNEL/(6478:6490): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 23:09:31:088 KERNEL/(6478:6490): [readyAExe]: enviamos el proceso a cpu
+[INFO] 23:09:31:088 KERNEL/(6478:6490): [readyAExe]: finaliza
+[INFO] 23:09:31:109 KERNEL/(6478:6489): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 23:09:31:156 KERNEL/(6478:6489): Numero de tabla de paginas: 0
+[INFO] 23:09:31:156 KERNEL/(6478:6489): Numero de paginas: 0
+[INFO] 23:09:31:156 KERNEL/(6478:6489): Page Fault PID: <1> - Segmento: <0> - Pagina: <0>
+[INFO] 23:09:31:156 KERNEL/(6478:6489): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 23:09:31:169 KERNEL/(6478:6689): Me llego el mensaje “Ø~ð
+[INFO] 23:09:31:169 KERNEL/(6478:6689): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 23:09:31:169 KERNEL/(6478:6490): [readyAExe]: .........se despierta readyAExe 
+[INFO] 23:09:31:169 KERNEL/(6478:6490): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 23:09:31:169 KERNEL/(6478:6490): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 23:09:31:169 KERNEL/(6478:6490): [readyAExe]: enviamos el proceso a cpu
+[INFO] 23:09:31:169 KERNEL/(6478:6490): [readyAExe]: finaliza
+[INFO] 23:09:31:180 KERNEL/(6478:6489): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 23:09:31:232 KERNEL/(6478:6489): Numero de tabla de paginas: 0
+[INFO] 23:09:31:232 KERNEL/(6478:6489): Numero de paginas: 0
+[INFO] 23:09:31:232 KERNEL/(6478:6489): Page Fault PID: <1> - Segmento: <0> - Pagina: <0>
+[INFO] 23:09:31:232 KERNEL/(6478:6489): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 23:09:31:234 KERNEL/(6478:6690): Me llego el mensaje “Ø~ð
+[INFO] 23:09:31:244 KERNEL/(6478:6690): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 23:09:31:244 KERNEL/(6478:6490): [readyAExe]: .........se despierta readyAExe 
+[INFO] 23:09:31:244 KERNEL/(6478:6490): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 23:09:31:244 KERNEL/(6478:6490): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 23:09:31:244 KERNEL/(6478:6490): [readyAExe]: enviamos el proceso a cpu
+[INFO] 23:09:31:245 KERNEL/(6478:6490): [readyAExe]: finaliza
+[INFO] 23:09:31:250 KERNEL/(6478:6489): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 23:09:31:289 KERNEL/(6478:6489): Numero de tabla de paginas: 0
+[INFO] 23:09:31:291 KERNEL/(6478:6489): Numero de paginas: 0
+[INFO] 23:09:31:291 KERNEL/(6478:6489): Page Fault PID: <1> - Segmento: <0> - Pagina: <0>
+[INFO] 23:09:31:291 KERNEL/(6478:6489): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 23:09:31:296 KERNEL/(6478:6691): Me llego el mensaje “Ø~ð
+[INFO] 23:09:31:297 KERNEL/(6478:6691): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 23:09:31:297 KERNEL/(6478:6490): [readyAExe]: .........se despierta readyAExe 
+[INFO] 23:09:31:297 KERNEL/(6478:6490): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 23:09:31:297 KERNEL/(6478:6490): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 23:09:31:297 KERNEL/(6478:6490): [readyAExe]: enviamos el proceso a cpu
+[INFO] 23:09:31:297 KERNEL/(6478:6490): [readyAExe]: finaliza
+[INFO] 23:09:31:315 KERNEL/(6478:6489): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 23:09:31:351 KERNEL/(6478:6489): Numero de tabla de paginas: 0
+[INFO] 23:09:31:352 KERNEL/(6478:6489): Numero de paginas: 0
+[INFO] 23:09:31:352 KERNEL/(6478:6489): Page Fault PID: <1> - Segmento: <0> - Pagina: <0>
+[INFO] 23:09:31:352 KERNEL/(6478:6489): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 23:09:31:361 KERNEL/(6478:6692): Me llego el mensaje “Ø~ð
+[INFO] 23:09:31:361 KERNEL/(6478:6692): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 23:09:31:361 KERNEL/(6478:6490): [readyAExe]: .........se despierta readyAExe 
+[INFO] 23:09:31:361 KERNEL/(6478:6490): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 23:09:31:361 KERNEL/(6478:6490): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 23:09:31:361 KERNEL/(6478:6490): [readyAExe]: enviamos el proceso a cpu
+[INFO] 23:09:31:361 KERNEL/(6478:6490): [readyAExe]: finaliza
+[INFO] 23:09:31:372 KERNEL/(6478:6489): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 23:09:31:415 KERNEL/(6478:6489): Numero de tabla de paginas: 0
+[INFO] 23:09:31:415 KERNEL/(6478:6489): Numero de paginas: 0
+[INFO] 23:09:31:415 KERNEL/(6478:6489): Page Fault PID: <1> - Segmento: <0> - Pagina: <0>
+[INFO] 23:09:31:416 KERNEL/(6478:6489): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 23:09:31:419 KERNEL/(6478:6693): Me llego el mensaje “Ø~ð
+[INFO] 23:09:31:419 KERNEL/(6478:6693): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 23:09:31:419 KERNEL/(6478:6490): [readyAExe]: .........se despierta readyAExe 
+[INFO] 23:09:31:419 KERNEL/(6478:6490): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 23:09:31:420 KERNEL/(6478:6490): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 23:09:31:420 KERNEL/(6478:6490): [readyAExe]: enviamos el proceso a cpu
+[INFO] 23:09:31:420 KERNEL/(6478:6490): [readyAExe]: finaliza
+[INFO] 23:09:31:448 KERNEL/(6478:6489): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 23:09:31:491 KERNEL/(6478:6489): Numero de tabla de paginas: 0
+[INFO] 23:09:31:491 KERNEL/(6478:6489): Numero de paginas: 0
+[INFO] 23:09:31:491 KERNEL/(6478:6489): Page Fault PID: <1> - Segmento: <0> - Pagina: <0>
+[INFO] 23:09:31:491 KERNEL/(6478:6489): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 23:09:31:494 KERNEL/(6478:6694): Me llego el mensaje “Ø~ð
+[INFO] 23:09:31:494 KERNEL/(6478:6694): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 23:09:31:494 KERNEL/(6478:6490): [readyAExe]: .........se despierta readyAExe 
+[INFO] 23:09:31:494 KERNEL/(6478:6490): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 23:09:31:494 KERNEL/(6478:6490): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 23:09:31:494 KERNEL/(6478:6490): [readyAExe]: enviamos el proceso a cpu
+[INFO] 23:09:31:495 KERNEL/(6478:6490): [readyAExe]: finaliza
+[INFO] 23:09:31:512 KERNEL/(6478:6489): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 23:09:31:555 KERNEL/(6478:6489): Numero de tabla de paginas: 0
+[INFO] 23:09:31:555 KERNEL/(6478:6489): Numero de paginas: 0
+[INFO] 23:09:31:555 KERNEL/(6478:6489): Page Fault PID: <1> - Segmento: <0> - Pagina: <0>
+[INFO] 23:09:31:555 KERNEL/(6478:6489): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 23:09:31:557 KERNEL/(6478:6695): Me llego el mensaje “Ø~ð
+[INFO] 23:09:31:557 KERNEL/(6478:6695): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 23:09:31:557 KERNEL/(6478:6490): [readyAExe]: .........se despierta readyAExe 
+[INFO] 23:09:31:557 KERNEL/(6478:6490): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 23:09:31:558 KERNEL/(6478:6490): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 23:09:31:558 KERNEL/(6478:6490): [readyAExe]: enviamos el proceso a cpu
+[INFO] 23:09:31:558 KERNEL/(6478:6490): [readyAExe]: finaliza
+[INFO] 23:09:31:560 KERNEL/(6478:6489): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 23:09:31:609 KERNEL/(6478:6489): Numero de tabla de paginas: 0
+[INFO] 23:09:31:610 KERNEL/(6478:6489): Numero de paginas: 0
+[INFO] 23:09:31:611 KERNEL/(6478:6489): Page Fault PID: <1> - Segmento: <0> - Pagina: <0>
+[INFO] 23:09:31:611 KERNEL/(6478:6489): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 23:09:31:613 KERNEL/(6478:6696): Me llego el mensaje “Ø~ð
+[INFO] 23:09:31:613 KERNEL/(6478:6696): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 23:09:31:614 KERNEL/(6478:6490): [readyAExe]: .........se despierta readyAExe 
+[INFO] 23:09:31:614 KERNEL/(6478:6490): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 23:09:31:614 KERNEL/(6478:6490): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 23:09:31:614 KERNEL/(6478:6490): [readyAExe]: enviamos el proceso a cpu
+[INFO] 23:09:31:614 KERNEL/(6478:6490): [readyAExe]: finaliza
+[INFO] 23:09:31:630 KERNEL/(6478:6489): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 23:09:31:674 KERNEL/(6478:6489): Numero de tabla de paginas: 0
+[INFO] 23:09:31:674 KERNEL/(6478:6489): Numero de paginas: 0
+[INFO] 23:09:31:674 KERNEL/(6478:6489): Page Fault PID: <1> - Segmento: <0> - Pagina: <0>
+[INFO] 23:09:31:674 KERNEL/(6478:6489): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 23:09:31:677 KERNEL/(6478:6697): Me llego el mensaje “Ø~ð
+[INFO] 23:09:31:677 KERNEL/(6478:6697): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 23:09:31:677 KERNEL/(6478:6490): [readyAExe]: .........se despierta readyAExe 
+[INFO] 23:09:31:677 KERNEL/(6478:6490): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 23:09:31:677 KERNEL/(6478:6490): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 23:09:31:677 KERNEL/(6478:6490): [readyAExe]: enviamos el proceso a cpu
+[INFO] 23:09:31:677 KERNEL/(6478:6490): [readyAExe]: finaliza
+[INFO] 23:09:31:689 KERNEL/(6478:6489): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 23:09:31:738 KERNEL/(6478:6489): Numero de tabla de paginas: 0
+[INFO] 23:09:31:739 KERNEL/(6478:6489): Numero de paginas: 0
+[INFO] 23:09:31:739 KERNEL/(6478:6489): Page Fault PID: <1> - Segmento: <0> - Pagina: <0>
+[INFO] 23:09:31:739 KERNEL/(6478:6489): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 23:09:31:742 KERNEL/(6478:6698): Me llego el mensaje “Ø~ð
+[INFO] 23:09:31:742 KERNEL/(6478:6698): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 23:09:31:742 KERNEL/(6478:6490): [readyAExe]: .........se despierta readyAExe 
+[INFO] 23:09:31:742 KERNEL/(6478:6490): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 23:09:31:743 KERNEL/(6478:6490): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 23:09:31:743 KERNEL/(6478:6490): [readyAExe]: enviamos el proceso a cpu
+[INFO] 23:09:31:743 KERNEL/(6478:6490): [readyAExe]: finaliza
+[INFO] 23:09:31:777 KERNEL/(6478:6489): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 23:09:31:823 KERNEL/(6478:6489): Numero de tabla de paginas: 0
+[INFO] 23:09:31:823 KERNEL/(6478:6489): Numero de paginas: 0
+[INFO] 23:09:31:823 KERNEL/(6478:6489): Page Fault PID: <1> - Segmento: <0> - Pagina: <0>
+[INFO] 23:09:31:823 KERNEL/(6478:6489): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 23:09:31:827 KERNEL/(6478:6699): Me llego el mensaje “Ø~ð
+[INFO] 23:09:31:828 KERNEL/(6478:6699): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 23:09:31:828 KERNEL/(6478:6490): [readyAExe]: .........se despierta readyAExe 
+[INFO] 23:09:31:828 KERNEL/(6478:6490): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 23:09:31:828 KERNEL/(6478:6490): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 23:09:31:828 KERNEL/(6478:6490): [readyAExe]: enviamos el proceso a cpu
+[INFO] 23:09:31:828 KERNEL/(6478:6490): [readyAExe]: finaliza
+[INFO] 23:09:31:863 KERNEL/(6478:6489): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 23:09:31:908 KERNEL/(6478:6489): Numero de tabla de paginas: 0
+[INFO] 23:09:31:908 KERNEL/(6478:6489): Numero de paginas: 0
+[INFO] 23:09:31:908 KERNEL/(6478:6489): Page Fault PID: <1> - Segmento: <0> - Pagina: <0>
+[INFO] 23:09:31:908 KERNEL/(6478:6489): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 23:09:31:910 KERNEL/(6478:6700): Me llego el mensaje “Ø~ð
+[INFO] 23:09:31:910 KERNEL/(6478:6700): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 23:09:31:911 KERNEL/(6478:6490): [readyAExe]: .........se despierta readyAExe 
+[INFO] 23:09:31:911 KERNEL/(6478:6490): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 23:09:31:911 KERNEL/(6478:6490): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 23:09:31:911 KERNEL/(6478:6490): [readyAExe]: enviamos el proceso a cpu
+[INFO] 23:09:31:911 KERNEL/(6478:6490): [readyAExe]: finaliza
+[INFO] 23:09:31:925 KERNEL/(6478:6489): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 23:09:31:973 KERNEL/(6478:6489): Numero de tabla de paginas: 0
+[INFO] 23:09:31:973 KERNEL/(6478:6489): Numero de paginas: 0
+[INFO] 23:09:31:974 KERNEL/(6478:6489): Page Fault PID: <1> - Segmento: <0> - Pagina: <0>
+[INFO] 23:09:31:974 KERNEL/(6478:6489): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 23:09:31:979 KERNEL/(6478:6701): Me llego el mensaje “Ø~ð
+[INFO] 23:09:31:979 KERNEL/(6478:6701): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 23:09:31:979 KERNEL/(6478:6490): [readyAExe]: .........se despierta readyAExe 
+[INFO] 23:09:31:980 KERNEL/(6478:6490): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 23:09:31:980 KERNEL/(6478:6490): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 23:09:31:980 KERNEL/(6478:6490): [readyAExe]: enviamos el proceso a cpu
+[INFO] 23:09:31:980 KERNEL/(6478:6490): [readyAExe]: finaliza
+[INFO] 23:09:31:990 KERNEL/(6478:6489): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 23:11:37:305 KERNEL/(7161:7161): servidor kernel inicializado
+[INFO] 23:11:37:306 KERNEL/(7161:7161): DISPOSITIVOS: DISCO-IMPRESORA
+[INFO] 23:11:37:333 KERNEL/(7161:7161): configuraciones inicializadas
+[INFO] 23:11:37:341 KERNEL/(7161:7161): listas y colas inicializadas
+[INFO] 23:11:37:341 KERNEL/(7161:7161): semaforos inicializados
+[INFO] 23:11:37:342 KERNEL/(7161:7161): En la lista de dispositivos tenemos los siguientes:
+[INFO] 23:11:37:342 KERNEL/(7161:7161): el dispositivo de posicion 0 se llama DISCO
+[INFO] 23:11:37:342 KERNEL/(7161:7161): el dispositivo de posicion 0 tiene un tiempo de 1000
+[INFO] 23:11:37:342 KERNEL/(7161:7161): el dispositivo de posicion 1 se llama IMPRESORA
+[INFO] 23:11:37:342 KERNEL/(7161:7161): el dispositivo de posicion 1 tiene un tiempo de 5000
+[INFO] 23:11:37:343 KERNEL/(7161:7172): se desperto recibir_consola
+[INFO] 23:11:37:343 KERNEL/(7161:7173): se desperto asignar_memoria por primera vez
+[INFO] 23:11:37:343 KERNEL/(7161:7174): se desperto atender_interrupcion_de_ejecucion
+[INFO] 23:11:37:343 KERNEL/(7161:7175): se desperto readyAExe por primera vez
+[INFO] 23:11:37:343 KERNEL/(7161:7176): se desperto atender_IO_generico del dispositivo <DISCO> por primera vez 
+[INFO] 23:11:37:343 KERNEL/(7161:7177): se desperto atender_IO_generico del dispositivo <IMPRESORA> por primera vez 
+[INFO] 23:11:45:886 KERNEL/(7161:7172): Se conecto el Consola
+[INFO] 23:11:45:886 KERNEL/(7161:7221): [atender_consola]esperando segmentos
+[INFO] 23:11:45:886 KERNEL/(7161:7221): tamanios de segmentos recibidos
+[INFO] 23:11:45:886 KERNEL/(7161:7221): el tamanio es 64
+[INFO] 23:11:45:886 KERNEL/(7161:7221): el tamanio es 96
+[INFO] 23:11:45:886 KERNEL/(7161:7221): el tamanio es 128
+[INFO] 23:11:45:886 KERNEL/(7161:7221): el tamanio es 32
+[INFO] 23:11:45:886 KERNEL/(7161:7221): [atender_consola]enviamos los dispositivos
+[INFO] 23:11:45:886 KERNEL/(7161:7221): [atender_consola]esperando instrucciones
+[INFO] 23:11:45:886 KERNEL/(7161:7221): [atender_consola]me llegaron las instrucciones
+[INFO] 23:11:45:886 KERNEL/(7161:7221): SET param1: 0 param2: 228
+[INFO] 23:11:45:886 KERNEL/(7161:7221): MOV_OUT param1: 0 param2: 0
+[INFO] 23:11:45:886 KERNEL/(7161:7221): MOV_OUT param1: 128 param2: 0
+[INFO] 23:11:45:886 KERNEL/(7161:7221): MOV_OUT param1: 256 param2: 0
+[INFO] 23:11:45:886 KERNEL/(7161:7221): MOV_OUT param1: 384 param2: 0
+[INFO] 23:11:45:886 KERNEL/(7161:7221): MOV_IN param1: 1 param2: 0
+[INFO] 23:11:45:886 KERNEL/(7161:7221): MOV_IN param1: 3 param2: 384
+[INFO] 23:11:45:887 KERNEL/(7161:7221): MOV_IN param1: 2 param2: 128
+[INFO] 23:11:45:887 KERNEL/(7161:7221): ADD param1: 0 param2: 1
+[INFO] 23:11:45:887 KERNEL/(7161:7221): ADD param1: 0 param2: 2
+[INFO] 23:11:45:887 KERNEL/(7161:7221): ADD param1: 0 param2: 3
+[INFO] 23:11:45:887 KERNEL/(7161:7221): I/O param1: 0 param2: 0
+[INFO] 23:11:45:887 KERNEL/(7161:7221): EXIT param1: 0 param2: 0
+[INFO] 23:11:45:887 KERNEL/(7161:7221): [atender_consola]metemos instrucciones en el pcb
+[INFO] 23:11:45:887 KERNEL/(7161:7221): Se crea el proceso <1> en NEW
+[INFO] 23:11:45:887 KERNEL/(7161:7221): [atender_consola] despertamos a asignar_memoria()
+[INFO] 23:11:45:887 KERNEL/(7161:7173): el tamanio de la cola de new es 0
+[INFO] 23:11:45:887 KERNEL/(7161:7173): [recibir_entero]: se recibio el numero 0
+[INFO] 23:11:45:887 KERNEL/(7161:7173): Cola Ready <FIFO>: [<LISTA DE PIDS>]
+[INFO] 23:11:45:887 KERNEL/(7161:7173): 1
+[INFO] 23:11:45:887 KERNEL/(7161:7173): PID: <1> - Estado Anterior: <NEW> - Estado Actual: <READY>
+[INFO] 23:11:45:887 KERNEL/(7161:7175): [readyAExe]: .........se despierta readyAExe 
+[INFO] 23:11:45:887 KERNEL/(7161:7175): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 23:11:45:887 KERNEL/(7161:7175): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 23:11:45:887 KERNEL/(7161:7175): [readyAExe]: enviamos el proceso a cpu
+[INFO] 23:11:45:887 KERNEL/(7161:7175): [readyAExe]: finaliza
+[INFO] 23:11:46:910 KERNEL/(7161:7174): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 23:11:46:931 KERNEL/(7161:7174): Numero de tabla de paginas: 0
+[INFO] 23:11:46:931 KERNEL/(7161:7174): Numero de paginas: 0
+[INFO] 23:11:46:931 KERNEL/(7161:7174): Page Fault PID: <1> - Segmento: <0> - Pagina: <0>
+[INFO] 23:11:46:931 KERNEL/(7161:7174): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 23:11:47:008 KERNEL/(7161:7222): Me llego el mensaje Se ha cargado la pagina correctamente
+[INFO] 23:11:47:009 KERNEL/(7161:7222): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 23:11:47:009 KERNEL/(7161:7175): [readyAExe]: .........se despierta readyAExe 
+[INFO] 23:11:47:009 KERNEL/(7161:7175): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 23:11:47:009 KERNEL/(7161:7175): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 23:11:47:009 KERNEL/(7161:7175): [readyAExe]: enviamos el proceso a cpu
+[INFO] 23:11:47:009 KERNEL/(7161:7175): [readyAExe]: finaliza
+[INFO] 23:11:56:625 KERNEL/(7161:7174): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 23:11:56:658 KERNEL/(7161:7174): Numero de tabla de paginas: 0
+[INFO] 23:11:56:658 KERNEL/(7161:7174): Numero de paginas: 1
+[INFO] 23:11:56:658 KERNEL/(7161:7174): Page Fault PID: <1> - Segmento: <1> - Pagina: <0>
+[INFO] 23:11:56:658 KERNEL/(7161:7174): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 23:11:56:714 KERNEL/(7161:7226): Me llego el mensaje Se ha cargado la pagina correctamente
+[INFO] 23:11:56:715 KERNEL/(7161:7226): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 23:11:56:715 KERNEL/(7161:7175): [readyAExe]: .........se despierta readyAExe 
+[INFO] 23:11:56:715 KERNEL/(7161:7175): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 23:11:56:715 KERNEL/(7161:7175): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 23:11:56:715 KERNEL/(7161:7175): [readyAExe]: enviamos el proceso a cpu
+[INFO] 23:11:56:716 KERNEL/(7161:7175): [readyAExe]: finaliza
+[INFO] 23:11:57:849 KERNEL/(7161:7174): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 23:11:57:872 KERNEL/(7161:7174): Numero de tabla de paginas: 0
+[INFO] 23:11:57:872 KERNEL/(7161:7174): Numero de paginas: 2
+[INFO] 23:11:57:872 KERNEL/(7161:7174): Page Fault PID: <1> - Segmento: <2> - Pagina: <0>
+[INFO] 23:11:57:872 KERNEL/(7161:7174): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 23:12:08:169 KERNEL/(7161:7228): Me llego el mensaje Se ha cargado la pagina correctamente
+[INFO] 23:12:08:169 KERNEL/(7161:7228): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 23:12:08:169 KERNEL/(7161:7175): [readyAExe]: .........se despierta readyAExe 
+[INFO] 23:12:08:169 KERNEL/(7161:7175): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 23:12:08:171 KERNEL/(7161:7175): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 23:12:08:171 KERNEL/(7161:7175): [readyAExe]: enviamos el proceso a cpu
+[INFO] 23:12:08:172 KERNEL/(7161:7175): [readyAExe]: finaliza
+[INFO] 23:12:09:293 KERNEL/(7161:7174): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 23:12:09:315 KERNEL/(7161:7174): Numero de tabla de paginas: 0
+[INFO] 23:12:09:315 KERNEL/(7161:7174): Numero de paginas: 3
+[INFO] 23:12:09:315 KERNEL/(7161:7174): Page Fault PID: <1> - Segmento: <3> - Pagina: <0>
+[INFO] 23:12:09:315 KERNEL/(7161:7174): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 23:12:30:941 KERNEL/(7161:7232): Me llego el mensaje Se ha cargado la pagina correctamente
+[INFO] 23:12:30:942 KERNEL/(7161:7232): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 23:12:30:942 KERNEL/(7161:7175): [readyAExe]: .........se despierta readyAExe 
+[INFO] 23:12:30:942 KERNEL/(7161:7175): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 23:12:30:942 KERNEL/(7161:7175): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 23:12:30:942 KERNEL/(7161:7175): [readyAExe]: enviamos el proceso a cpu
+[INFO] 23:12:30:943 KERNEL/(7161:7175): [readyAExe]: finaliza
+[INFO] 23:12:32:035 KERNEL/(7161:7174): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 23:12:32:056 KERNEL/(7161:7174): Numero de tabla de paginas: 0
+[INFO] 23:12:32:056 KERNEL/(7161:7174): Numero de paginas: 0
+[INFO] 23:12:32:056 KERNEL/(7161:7174): Page Fault PID: <1> - Segmento: <0> - Pagina: <0>
+[INFO] 23:12:32:056 KERNEL/(7161:7174): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 23:26:51:576 KERNEL/(7161:7235): Me llego el mensaje 1Ø_
+[INFO] 23:26:51:576 KERNEL/(7161:7235): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 23:26:51:576 KERNEL/(7161:7175): [readyAExe]: .........se despierta readyAExe 
+[INFO] 23:26:51:576 KERNEL/(7161:7175): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 23:26:51:576 KERNEL/(7161:7175): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 23:26:51:576 KERNEL/(7161:7175): [readyAExe]: enviamos el proceso a cpu
+[INFO] 23:26:51:577 KERNEL/(7161:7175): [readyAExe]: finaliza
+[INFO] 23:26:51:605 KERNEL/(7161:7174): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 23:26:51:605 KERNEL/(7161:7174): Numero de tabla de paginas: 0
+[INFO] 23:26:51:605 KERNEL/(7161:7174): Numero de paginas: 0
+[INFO] 23:26:51:606 KERNEL/(7161:7174): Page Fault PID: <1> - Segmento: <0> - Pagina: <0>
+[INFO] 23:26:51:606 KERNEL/(7161:7174): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 23:26:51:617 KERNEL/(7161:7594): Me llego el mensaje ‘Ù_
+[INFO] 23:26:51:617 KERNEL/(7161:7594): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 23:26:51:617 KERNEL/(7161:7175): [readyAExe]: .........se despierta readyAExe 
+[INFO] 23:26:51:617 KERNEL/(7161:7175): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 23:26:51:617 KERNEL/(7161:7175): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 23:26:51:617 KERNEL/(7161:7175): [readyAExe]: enviamos el proceso a cpu
+[INFO] 23:26:51:618 KERNEL/(7161:7175): [readyAExe]: finaliza
+[INFO] 23:26:51:648 KERNEL/(7161:7174): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 23:26:51:701 KERNEL/(7161:7174): Numero de tabla de paginas: 0
+[INFO] 23:26:51:701 KERNEL/(7161:7174): Numero de paginas: 0
+[INFO] 23:26:51:701 KERNEL/(7161:7174): Page Fault PID: <1> - Segmento: <0> - Pagina: <0>
+[INFO] 23:26:51:701 KERNEL/(7161:7174): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 23:26:51:715 KERNEL/(7161:7595): Me llego el mensaje ‘Ù_
+[INFO] 23:26:51:715 KERNEL/(7161:7595): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 23:26:51:715 KERNEL/(7161:7175): [readyAExe]: .........se despierta readyAExe 
+[INFO] 23:26:51:715 KERNEL/(7161:7175): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 23:26:51:715 KERNEL/(7161:7175): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 23:26:51:715 KERNEL/(7161:7175): [readyAExe]: enviamos el proceso a cpu
+[INFO] 23:26:51:715 KERNEL/(7161:7175): [readyAExe]: finaliza
+[INFO] 23:26:51:753 KERNEL/(7161:7174): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 23:26:51:797 KERNEL/(7161:7174): Numero de tabla de paginas: 0
+[INFO] 23:26:51:798 KERNEL/(7161:7174): Numero de paginas: 0
+[INFO] 23:26:51:798 KERNEL/(7161:7174): Page Fault PID: <1> - Segmento: <0> - Pagina: <0>
+[INFO] 23:26:51:798 KERNEL/(7161:7174): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 23:26:51:800 KERNEL/(7161:7596): Me llego el mensaje ‘Ù_
+[INFO] 23:26:51:800 KERNEL/(7161:7596): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 23:26:51:800 KERNEL/(7161:7175): [readyAExe]: .........se despierta readyAExe 
+[INFO] 23:26:51:800 KERNEL/(7161:7175): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 23:26:51:800 KERNEL/(7161:7175): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 23:26:51:800 KERNEL/(7161:7175): [readyAExe]: enviamos el proceso a cpu
+[INFO] 23:26:51:801 KERNEL/(7161:7175): [readyAExe]: finaliza
+[INFO] 23:26:51:822 KERNEL/(7161:7174): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 23:26:51:868 KERNEL/(7161:7174): Numero de tabla de paginas: 0
+[INFO] 23:26:51:869 KERNEL/(7161:7174): Numero de paginas: 0
+[INFO] 23:26:51:869 KERNEL/(7161:7174): Page Fault PID: <1> - Segmento: <0> - Pagina: <0>
+[INFO] 23:26:51:869 KERNEL/(7161:7174): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 23:26:51:885 KERNEL/(7161:7597): Me llego el mensaje ’Ù_
+[INFO] 23:26:51:885 KERNEL/(7161:7597): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 23:26:51:885 KERNEL/(7161:7175): [readyAExe]: .........se despierta readyAExe 
+[INFO] 23:26:51:885 KERNEL/(7161:7175): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 23:26:51:885 KERNEL/(7161:7175): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 23:26:51:885 KERNEL/(7161:7175): [readyAExe]: enviamos el proceso a cpu
+[INFO] 23:26:51:885 KERNEL/(7161:7175): [readyAExe]: finaliza
+[INFO] 23:26:51:906 KERNEL/(7161:7174): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 23:26:51:947 KERNEL/(7161:7174): Numero de tabla de paginas: 0
+[INFO] 23:26:51:948 KERNEL/(7161:7174): Numero de paginas: 0
+[INFO] 23:26:51:954 KERNEL/(7161:7174): Page Fault PID: <1> - Segmento: <0> - Pagina: <0>
+[INFO] 23:26:51:954 KERNEL/(7161:7174): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 23:26:51:969 KERNEL/(7161:7598): Me llego el mensaje ’Ù_
+[INFO] 23:26:51:969 KERNEL/(7161:7598): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 23:26:51:969 KERNEL/(7161:7175): [readyAExe]: .........se despierta readyAExe 
+[INFO] 23:26:51:969 KERNEL/(7161:7175): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 23:26:51:970 KERNEL/(7161:7175): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 23:26:51:970 KERNEL/(7161:7175): [readyAExe]: enviamos el proceso a cpu
+[INFO] 23:26:51:971 KERNEL/(7161:7175): [readyAExe]: finaliza
+[INFO] 23:26:51:992 KERNEL/(7161:7174): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 23:26:52:036 KERNEL/(7161:7174): Numero de tabla de paginas: 0
+[INFO] 23:26:52:036 KERNEL/(7161:7174): Numero de paginas: 0
+[INFO] 23:26:52:036 KERNEL/(7161:7174): Page Fault PID: <1> - Segmento: <0> - Pagina: <0>
+[INFO] 23:26:52:036 KERNEL/(7161:7174): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 23:26:52:039 KERNEL/(7161:7599): Me llego el mensaje ’Ù_
+[INFO] 23:26:52:039 KERNEL/(7161:7599): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 23:26:52:039 KERNEL/(7161:7175): [readyAExe]: .........se despierta readyAExe 
+[INFO] 23:26:52:039 KERNEL/(7161:7175): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 23:26:52:039 KERNEL/(7161:7175): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 23:26:52:039 KERNEL/(7161:7175): [readyAExe]: enviamos el proceso a cpu
+[INFO] 23:26:52:040 KERNEL/(7161:7175): [readyAExe]: finaliza
+[INFO] 23:26:52:066 KERNEL/(7161:7174): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 23:26:52:107 KERNEL/(7161:7174): Numero de tabla de paginas: 0
+[INFO] 23:26:52:110 KERNEL/(7161:7174): Numero de paginas: 0
+[INFO] 23:26:52:110 KERNEL/(7161:7174): Page Fault PID: <1> - Segmento: <0> - Pagina: <0>
+[INFO] 23:26:52:110 KERNEL/(7161:7174): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 23:26:52:119 KERNEL/(7161:7600): Me llego el mensaje ’Ù_
+[INFO] 23:26:52:119 KERNEL/(7161:7600): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 23:26:52:119 KERNEL/(7161:7175): [readyAExe]: .........se despierta readyAExe 
+[INFO] 23:26:52:119 KERNEL/(7161:7175): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 23:26:52:120 KERNEL/(7161:7175): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 23:26:52:120 KERNEL/(7161:7175): [readyAExe]: enviamos el proceso a cpu
+[INFO] 23:26:52:121 KERNEL/(7161:7175): [readyAExe]: finaliza
+[INFO] 23:26:52:125 KERNEL/(7161:7174): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 23:26:52:173 KERNEL/(7161:7174): Numero de tabla de paginas: 0
+[INFO] 23:26:52:173 KERNEL/(7161:7174): Numero de paginas: 0
+[INFO] 23:26:52:173 KERNEL/(7161:7174): Page Fault PID: <1> - Segmento: <0> - Pagina: <0>
+[INFO] 23:26:52:173 KERNEL/(7161:7174): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 23:26:52:177 KERNEL/(7161:7602): Me llego el mensaje ’Ù_
+[INFO] 23:26:52:177 KERNEL/(7161:7602): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 23:26:52:177 KERNEL/(7161:7175): [readyAExe]: .........se despierta readyAExe 
+[INFO] 23:26:52:177 KERNEL/(7161:7175): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 23:26:52:177 KERNEL/(7161:7175): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 23:26:52:177 KERNEL/(7161:7175): [readyAExe]: enviamos el proceso a cpu
+[INFO] 23:26:52:178 KERNEL/(7161:7175): [readyAExe]: finaliza
+[INFO] 23:26:52:184 KERNEL/(7161:7174): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 23:26:52:228 KERNEL/(7161:7174): Numero de tabla de paginas: 0
+[INFO] 23:26:52:228 KERNEL/(7161:7174): Numero de paginas: 0
+[INFO] 23:26:52:228 KERNEL/(7161:7174): Page Fault PID: <1> - Segmento: <0> - Pagina: <0>
+[INFO] 23:26:52:228 KERNEL/(7161:7174): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 23:26:52:238 KERNEL/(7161:7603): Me llego el mensaje ’Ù_
+[INFO] 23:26:52:238 KERNEL/(7161:7603): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 23:26:52:238 KERNEL/(7161:7175): [readyAExe]: .........se despierta readyAExe 
+[INFO] 23:26:52:238 KERNEL/(7161:7175): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 23:26:52:238 KERNEL/(7161:7175): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 23:26:52:238 KERNEL/(7161:7175): [readyAExe]: enviamos el proceso a cpu
+[INFO] 23:26:52:239 KERNEL/(7161:7175): [readyAExe]: finaliza
+[INFO] 23:26:52:260 KERNEL/(7161:7174): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 23:26:52:304 KERNEL/(7161:7174): Numero de tabla de paginas: 0
+[INFO] 23:26:52:305 KERNEL/(7161:7174): Numero de paginas: 0
+[INFO] 23:26:52:305 KERNEL/(7161:7174): Page Fault PID: <1> - Segmento: <0> - Pagina: <0>
+[INFO] 23:26:52:305 KERNEL/(7161:7174): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 23:26:52:318 KERNEL/(7161:7604): Me llego el mensaje ’Ù_
+[INFO] 23:26:52:318 KERNEL/(7161:7604): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 23:26:52:318 KERNEL/(7161:7175): [readyAExe]: .........se despierta readyAExe 
+[INFO] 23:26:52:318 KERNEL/(7161:7175): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 23:26:52:318 KERNEL/(7161:7175): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 23:26:52:318 KERNEL/(7161:7175): [readyAExe]: enviamos el proceso a cpu
+[INFO] 23:26:52:318 KERNEL/(7161:7175): [readyAExe]: finaliza
+[INFO] 23:26:52:320 KERNEL/(7161:7174): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 23:26:52:365 KERNEL/(7161:7174): Numero de tabla de paginas: 0
+[INFO] 23:26:52:367 KERNEL/(7161:7174): Numero de paginas: 0
+[INFO] 23:26:52:367 KERNEL/(7161:7174): Page Fault PID: <1> - Segmento: <0> - Pagina: <0>
+[INFO] 23:26:52:367 KERNEL/(7161:7174): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 23:26:52:379 KERNEL/(7161:7605): Me llego el mensaje ’Ù_
+[INFO] 23:26:52:379 KERNEL/(7161:7605): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 23:26:52:379 KERNEL/(7161:7175): [readyAExe]: .........se despierta readyAExe 
+[INFO] 23:26:52:379 KERNEL/(7161:7175): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 23:26:52:379 KERNEL/(7161:7175): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 23:26:52:379 KERNEL/(7161:7175): [readyAExe]: enviamos el proceso a cpu
+[INFO] 23:26:52:379 KERNEL/(7161:7175): [readyAExe]: finaliza
+[INFO] 23:26:52:406 KERNEL/(7161:7174): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 23:26:52:451 KERNEL/(7161:7174): Numero de tabla de paginas: 0
+[INFO] 23:26:52:451 KERNEL/(7161:7174): Numero de paginas: 0
+[INFO] 23:26:52:451 KERNEL/(7161:7174): Page Fault PID: <1> - Segmento: <0> - Pagina: <0>
+[INFO] 23:26:52:452 KERNEL/(7161:7174): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 23:26:52:456 KERNEL/(7161:7606): Me llego el mensaje ’Ù_
+[INFO] 23:26:52:456 KERNEL/(7161:7606): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 23:26:52:458 KERNEL/(7161:7175): [readyAExe]: .........se despierta readyAExe 
+[INFO] 23:26:52:458 KERNEL/(7161:7175): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 23:26:52:458 KERNEL/(7161:7175): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 23:26:52:458 KERNEL/(7161:7175): [readyAExe]: enviamos el proceso a cpu
+[INFO] 23:26:52:458 KERNEL/(7161:7175): [readyAExe]: finaliza
+[INFO] 23:28:19:071 KERNEL/(8017:8017): servidor kernel inicializado
+[INFO] 23:28:19:072 KERNEL/(8017:8017): DISPOSITIVOS: DISCO-IMPRESORA
+[INFO] 23:28:19:098 KERNEL/(8017:8017): configuraciones inicializadas
+[INFO] 23:28:19:098 KERNEL/(8017:8017): listas y colas inicializadas
+[INFO] 23:28:19:098 KERNEL/(8017:8017): semaforos inicializados
+[INFO] 23:28:19:098 KERNEL/(8017:8017): En la lista de dispositivos tenemos los siguientes:
+[INFO] 23:28:19:098 KERNEL/(8017:8017): el dispositivo de posicion 0 se llama DISCO
+[INFO] 23:28:19:098 KERNEL/(8017:8017): el dispositivo de posicion 0 tiene un tiempo de 1000
+[INFO] 23:28:19:098 KERNEL/(8017:8017): el dispositivo de posicion 1 se llama IMPRESORA
+[INFO] 23:28:19:098 KERNEL/(8017:8017): el dispositivo de posicion 1 tiene un tiempo de 5000
+[INFO] 23:28:19:140 KERNEL/(8017:8027): se desperto recibir_consola
+[INFO] 23:28:19:140 KERNEL/(8017:8028): se desperto asignar_memoria por primera vez
+[INFO] 23:28:19:140 KERNEL/(8017:8029): se desperto atender_interrupcion_de_ejecucion
+[INFO] 23:28:19:140 KERNEL/(8017:8030): se desperto readyAExe por primera vez
+[INFO] 23:28:19:140 KERNEL/(8017:8031): se desperto atender_IO_generico del dispositivo <DISCO> por primera vez 
+[INFO] 23:28:19:140 KERNEL/(8017:8032): se desperto atender_IO_generico del dispositivo <IMPRESORA> por primera vez 
+[INFO] 23:28:31:595 KERNEL/(8017:8027): Se conecto el Consola
+[INFO] 23:28:31:599 KERNEL/(8017:8080): [atender_consola]esperando segmentos
+[INFO] 23:28:31:599 KERNEL/(8017:8080): tamanios de segmentos recibidos
+[INFO] 23:28:31:600 KERNEL/(8017:8080): el tamanio es 64
+[INFO] 23:28:31:600 KERNEL/(8017:8080): el tamanio es 96
+[INFO] 23:28:31:600 KERNEL/(8017:8080): el tamanio es 128
+[INFO] 23:28:31:600 KERNEL/(8017:8080): el tamanio es 32
+[INFO] 23:28:31:600 KERNEL/(8017:8080): [atender_consola]enviamos los dispositivos
+[INFO] 23:28:31:600 KERNEL/(8017:8080): [atender_consola]esperando instrucciones
+[INFO] 23:28:31:600 KERNEL/(8017:8080): [atender_consola]me llegaron las instrucciones
+[INFO] 23:28:31:600 KERNEL/(8017:8080): SET param1: 0 param2: 228
+[INFO] 23:28:31:600 KERNEL/(8017:8080): MOV_OUT param1: 0 param2: 0
+[INFO] 23:28:31:601 KERNEL/(8017:8080): MOV_OUT param1: 128 param2: 0
+[INFO] 23:28:31:601 KERNEL/(8017:8080): MOV_OUT param1: 256 param2: 0
+[INFO] 23:28:31:601 KERNEL/(8017:8080): MOV_OUT param1: 384 param2: 0
+[INFO] 23:28:31:601 KERNEL/(8017:8080): MOV_IN param1: 1 param2: 0
+[INFO] 23:28:31:601 KERNEL/(8017:8080): MOV_IN param1: 3 param2: 384
+[INFO] 23:28:31:601 KERNEL/(8017:8080): MOV_IN param1: 2 param2: 128
+[INFO] 23:28:31:601 KERNEL/(8017:8080): ADD param1: 0 param2: 1
+[INFO] 23:28:31:601 KERNEL/(8017:8080): ADD param1: 0 param2: 2
+[INFO] 23:28:31:601 KERNEL/(8017:8080): ADD param1: 0 param2: 3
+[INFO] 23:28:31:601 KERNEL/(8017:8080): I/O param1: 0 param2: 0
+[INFO] 23:28:31:601 KERNEL/(8017:8080): EXIT param1: 0 param2: 0
+[INFO] 23:28:31:601 KERNEL/(8017:8080): [atender_consola]metemos instrucciones en el pcb
+[INFO] 23:28:31:601 KERNEL/(8017:8080): Se crea el proceso <1> en NEW
+[INFO] 23:28:31:602 KERNEL/(8017:8080): [atender_consola] despertamos a asignar_memoria()
+[INFO] 23:28:31:602 KERNEL/(8017:8028): el tamanio de la cola de new es 0
+[INFO] 23:28:31:611 KERNEL/(8017:8028): [recibir_entero]: se recibio el numero 0
+[INFO] 23:28:31:611 KERNEL/(8017:8028): Cola Ready <FIFO>: [<LISTA DE PIDS>]
+[INFO] 23:28:31:611 KERNEL/(8017:8028): 1
+[INFO] 23:28:31:611 KERNEL/(8017:8028): PID: <1> - Estado Anterior: <NEW> - Estado Actual: <READY>
+[INFO] 23:28:31:611 KERNEL/(8017:8030): [readyAExe]: .........se despierta readyAExe 
+[INFO] 23:28:31:611 KERNEL/(8017:8030): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 23:28:31:611 KERNEL/(8017:8030): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 23:28:31:611 KERNEL/(8017:8030): [readyAExe]: enviamos el proceso a cpu
+[INFO] 23:28:31:612 KERNEL/(8017:8030): [readyAExe]: finaliza
+[INFO] 23:28:32:621 KERNEL/(8017:8029): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 23:28:32:639 KERNEL/(8017:8029): Numero de tabla de paginas: 0
+[INFO] 23:28:32:639 KERNEL/(8017:8029): Numero de paginas: 0
+[INFO] 23:28:32:639 KERNEL/(8017:8029): Page Fault PID: <1> - Segmento: <0> - Pagina: <0>
+[INFO] 23:28:32:640 KERNEL/(8017:8029): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 23:29:02:177 KERNEL/(8017:8081): Me llego el mensaje Se ha cargado la pagina correctamente
+[INFO] 23:29:02:177 KERNEL/(8017:8081): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 23:29:02:177 KERNEL/(8017:8030): [readyAExe]: .........se despierta readyAExe 
+[INFO] 23:29:02:177 KERNEL/(8017:8030): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 23:29:02:177 KERNEL/(8017:8030): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 23:29:02:177 KERNEL/(8017:8030): [readyAExe]: enviamos el proceso a cpu
+[INFO] 23:29:02:178 KERNEL/(8017:8030): [readyAExe]: finaliza
+[INFO] 23:29:03:259 KERNEL/(8017:8029): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 23:29:03:280 KERNEL/(8017:8029): Numero de tabla de paginas: 0
+[INFO] 23:29:03:280 KERNEL/(8017:8029): Numero de paginas: 1
+[INFO] 23:29:03:280 KERNEL/(8017:8029): Page Fault PID: <1> - Segmento: <1> - Pagina: <0>
+[INFO] 23:29:03:280 KERNEL/(8017:8029): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 23:29:16:383 KERNEL/(8017:8091): Me llego el mensaje Se ha cargado la pagina correctamente
+[INFO] 23:29:16:384 KERNEL/(8017:8091): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 23:29:16:384 KERNEL/(8017:8030): [readyAExe]: .........se despierta readyAExe 
+[INFO] 23:29:16:384 KERNEL/(8017:8030): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 23:29:16:384 KERNEL/(8017:8030): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 23:29:16:384 KERNEL/(8017:8030): [readyAExe]: enviamos el proceso a cpu
+[INFO] 23:29:16:385 KERNEL/(8017:8030): [readyAExe]: finaliza
+[INFO] 23:29:17:467 KERNEL/(8017:8029): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 23:29:17:468 KERNEL/(8017:8029): Numero de tabla de paginas: 0
+[INFO] 23:29:17:468 KERNEL/(8017:8029): Numero de paginas: 2
+[INFO] 23:29:17:468 KERNEL/(8017:8029): Page Fault PID: <1> - Segmento: <2> - Pagina: <0>
+[INFO] 23:29:17:468 KERNEL/(8017:8029): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 23:29:50:289 KERNEL/(8017:8102): Me llego el mensaje Se ha cargado la pagina correctamente
+[INFO] 23:29:50:292 KERNEL/(8017:8102): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 23:29:50:292 KERNEL/(8017:8030): [readyAExe]: .........se despierta readyAExe 
+[INFO] 23:29:50:292 KERNEL/(8017:8030): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 23:29:50:292 KERNEL/(8017:8030): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 23:29:50:292 KERNEL/(8017:8030): [readyAExe]: enviamos el proceso a cpu
+[INFO] 23:29:50:299 KERNEL/(8017:8030): [readyAExe]: finaliza
+[INFO] 23:29:51:407 KERNEL/(8017:8029): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 23:29:51:409 KERNEL/(8017:8029): Numero de tabla de paginas: 0
+[INFO] 23:29:51:409 KERNEL/(8017:8029): Numero de paginas: 3
+[INFO] 23:29:51:409 KERNEL/(8017:8029): Page Fault PID: <1> - Segmento: <3> - Pagina: <0>
+[INFO] 23:29:51:409 KERNEL/(8017:8029): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
+[INFO] 23:30:03:532 KERNEL/(8017:8118): Me llego el mensaje Se ha cargado la pagina correctamente
+[INFO] 23:30:03:534 KERNEL/(8017:8118): PID: <1> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>
+[INFO] 23:30:03:534 KERNEL/(8017:8030): [readyAExe]: .........se despierta readyAExe 
+[INFO] 23:30:03:534 KERNEL/(8017:8030): [readyAExe]: a partir de ahora, CPU NO DISPONIBLE! 
+[INFO] 23:30:03:534 KERNEL/(8017:8030): PID: <1> - Estado Anterior: <READY> - Estado Actual: <EXE>
+[INFO] 23:30:03:534 KERNEL/(8017:8030): [readyAExe]: enviamos el proceso a cpu
+[INFO] 23:30:03:534 KERNEL/(8017:8030): [readyAExe]: finaliza
+[INFO] 23:30:04:627 KERNEL/(8017:8029): ----------ME LLEGO EL SIGUIENTE PCB-------------
+[INFO] 23:30:04:627 KERNEL/(8017:8029): Numero de tabla de paginas: 0
+[INFO] 23:30:04:627 KERNEL/(8017:8029): Numero de paginas: 0
+[INFO] 23:30:04:627 KERNEL/(8017:8029): Page Fault PID: <1> - Segmento: <0> - Pagina: <0>
+[INFO] 23:30:04:627 KERNEL/(8017:8029): PID: <1> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>
