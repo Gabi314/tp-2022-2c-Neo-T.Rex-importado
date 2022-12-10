@@ -137,17 +137,25 @@ int conexionConKernel(void* void_args) {
 				numeroPagina = (int) list_get(listaQueContieneNumTablaYPagina, 1);
 
 				if(numeroPagina < entradasPorTabla) {
-					tablaDePaginas* unaTablaDePaginas = malloc(sizeof(tablaDePaginas));
-					entradaTablaPaginas* unaEntrada = malloc(sizeof(entradaTablaPaginas));
+					log_info(logger, "Entro al if");
+
+					tablaDePaginas* unaTablaDePaginas; //= malloc(sizeof(tablaDePaginas));
+					entradaTablaPaginas* unaEntrada; // = malloc(sizeof(entradaTablaPaginas));
 
 					unaTablaDePaginas = list_get(listaTablaDePaginas, numeroTablaDePaginas);
 					unaEntrada = list_get(unaTablaDePaginas->entradas, numeroPagina);
 
+					log_info(logger, "Antes cargar pagina");
+
 					cargarPagina(unaEntrada,unaTablaDePaginas->pid);
+
+					log_info(logger, "Despues cargar pagina");
 
 					log_info(logger, "PID: <%d> - Página: <%d> - Marco: <%d>", pidActual, unaEntrada->numeroDeEntrada, unaEntrada->numeroMarco);
 
 					enviar_mensaje("Se ha cargado la pagina correctamente", clienteKernel, KERNEL_MENSAJE_CONFIRMACION_PF);
+				} else {
+					log_info(logger, "No entro al if");
 				}
 
 				break;
@@ -222,13 +230,14 @@ int server_escuchar(t_log* logger, char* server_nombre, char* cliente_nombre, in
 
     if (cliente_socket != -1) {
     	// Creo un hilo para atender al cliente conectado
-        pthread_t hilo;
         t_procesar_conexion_args* args = malloc(sizeof(t_procesar_conexion_args));
         args->log = logger;
         args->fd = cliente_socket;
         args->server_name = server_nombre;
         if (!strcmp(cliente_nombre, "KERNEL")) {
-        	pthread_create(&hilo, NULL, (void*) conexionConKernel, (void*) args);
+        	pthread_t hilo_kernel;
+        	pthread_create(&hilo_kernel, NULL, (void*) conexionConKernel, (void*) args);
+        	pthread_detach(hilo_kernel);
         } else if (!strcmp(cliente_nombre, "CPU")) {
         	pthread_mutex_lock(&mutexPrimerHandshake);
         	int cod_op = recibir_operacion(cliente_socket);
@@ -239,9 +248,10 @@ int server_escuchar(t_log* logger, char* server_nombre, char* cliente_nombre, in
         	}
         	pthread_mutex_unlock(&mutexPrimerHandshake);
 
-			pthread_create(&hilo, NULL, (void*) conexionConCpu, (void*) args);
+        	pthread_t hilo_cpu;
+			pthread_create(&hilo_cpu, NULL, (void*) conexionConCpu, (void*) args);
+			pthread_detach(hilo_cpu);
 		}
-        pthread_detach(hilo);
         //pthread_detach(hiloCpu);
         return 1;
     } else {

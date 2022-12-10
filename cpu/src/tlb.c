@@ -15,7 +15,6 @@ void agregarEntradaATLB(int marco, int pagina, int pid, int numeroDeSegmento){
 	unaEntrada->instanteGuardada = time(NULL);
 	unaEntrada->ultimaReferencia = time(NULL);
 
-
 	log_info(logger, "<PID: %d> Se agrega la pagina %d perteneciente al segmento %d con marco %d a tlb",
 			pid, pagina, numeroDeSegmento, marco);
 

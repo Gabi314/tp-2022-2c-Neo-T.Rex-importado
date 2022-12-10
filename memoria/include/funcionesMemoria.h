@@ -145,7 +145,7 @@ uint es_victima_clock_modificado_um(entradaTablaPaginas*);
 uint es_victima_clock_modificado_u(entradaTablaPaginas*);
 void algoritmo_clock(t_lista_circular*, entradaTablaPaginas*);
 void algoritmo_clock_modificado(t_lista_circular*, entradaTablaPaginas*);
-uint32_t sustitucion_paginas(entradaTablaPaginas*, size_t);
+void sustitucion_paginas(entradaTablaPaginas*, int);
 void actualizar_registros(entradaTablaPaginas*, entradaTablaPaginas*);
 
 #endif /* FUNCIONES_MEMORIA_H_*/

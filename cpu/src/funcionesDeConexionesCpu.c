@@ -53,7 +53,7 @@ void conexionConKernelDispatch(){//un hilo
 }
 
 void handshakeMemoria(){
-
+	static pthread_mutex_t mutexPrimerHandshake;
 	// Creamos una conexión hacia el servidor
     socket_memoria = crear_conexion(ipMemoria, puertoMemoria);
 	log_info(logger,"Hola memoria, soy cpu");
@@ -62,6 +62,7 @@ void handshakeMemoria(){
 
 	t_list* listaQueContieneTamanioDePagYEntradas = list_create();
 
+	pthread_mutex_lock(&mutexPrimerHandshake);
 	int cod_op = recibir_operacion(socket_memoria);
 
 	if(cod_op == TAM_PAGINAS_Y_CANT_ENTRADAS){
@@ -69,6 +70,7 @@ void handshakeMemoria(){
 	}else{
 		log_error(logger, "codigo incorrecto recibido de memoria");
 	}
+	pthread_mutex_unlock(&mutexPrimerHandshake);
 
 	leerTamanioDePaginaYCantidadDeEntradas(listaQueContieneTamanioDePagYEntradas);
 }

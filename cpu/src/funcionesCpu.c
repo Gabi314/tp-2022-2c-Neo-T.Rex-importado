@@ -378,6 +378,9 @@ int chequearMarcoEnTLB(int nroDePagina, int nroDeSegmento,int pid){
 	entradaTLB* unaEntradaTLB;
 	int marco = -1;
 
+	if (cantidadEntradasTlb == 0) {
+		return marco;
+	}
 	for(int i=0;i < list_size(tlb);i++){
 		unaEntradaTLB = list_get(tlb,i);
 
@@ -435,11 +438,13 @@ int accederAMemoria(int marco,int numeroDeSegmento,t_pcb* pcb){
 
 				log_info(logger,"Me llego el marco que es %d",marco);
 
-				if(list_size(tlb) < cantidadEntradasTlb){
-					agregarEntradaATLB(marco,numeroDePagina,pcb->idProceso,numeroDeSegmento);
-					//sleep(1);// Para que espere haya 1 seg de diferencia( a veces pasa que se agregan en el mismo seg y jode los algoritmos)
-				}else{
-					algoritmosDeReemplazoTLB(numeroDePagina,marco,pcb->idProceso,numeroDeSegmento);
+				if (cantidadEntradasTlb > 0) {
+					if(list_size(tlb) < cantidadEntradasTlb){
+						agregarEntradaATLB(marco,numeroDePagina,pcb->idProceso,numeroDeSegmento);
+						//sleep(1);// Para que espere haya 1 seg de diferencia( a veces pasa que se agregan en el mismo seg y jode los algoritmos)
+					}else{
+						algoritmosDeReemplazoTLB(numeroDePagina,marco,pcb->idProceso,numeroDeSegmento);
+					}
 				}
 				seAccedeAMemoria = 0;//salga del while
 				break;

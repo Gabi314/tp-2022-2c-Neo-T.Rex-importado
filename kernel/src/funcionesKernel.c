@@ -952,9 +952,7 @@ void atender_page_fault(t_info_pf* infoPF){
 	t_list * listaTPyNroPag = infoPF->listaTpYNroPAgina;
 
 	pcb->estado = BLOCKED; // hace falta un nuevo estado BLOCKED_PF?
-	log_info(loggerAux,"Antes mensaje");
 	enviar_mensaje("kernel solicita que se cargue en memoria la pagina correspondiente",socketMemoria, KERNEL_MENSAJE_SOLICITUD_CARGAR_PAGINA);
-	log_info(loggerAux,"Antes mensaje");
 	t_paquete * paquete = crear_paquete(KERNEL_A_MEMORIA_PAGE_FAULT);
 
 	int numeroDelSegmento = list_get(listaTPyNroPag,1);
@@ -969,10 +967,10 @@ void atender_page_fault(t_info_pf* infoPF){
 	}
 
 	int numeroDePagina = list_get(listaTPyNroPag,0);
-			agregar_a_paquete_unInt(paquete, &numeroTablaPagina, sizeof(int));
-			agregar_a_paquete_unInt(paquete, &numeroDePagina, sizeof(int));
-			enviar_paquete(paquete,socketMemoria);
-			eliminar_paquete(paquete);
+	agregar_a_paquete_unInt(paquete, &numeroTablaPagina, sizeof(int));
+	agregar_a_paquete_unInt(paquete, &numeroDePagina, sizeof(int));
+	enviar_paquete(paquete,socketMemoria);
+	eliminar_paquete(paquete);
 
 
 	int codigo = recibir_operacion(socketMemoria);
