@@ -154,6 +154,7 @@ int conexionConKernel(void* void_args) {
 					log_info(logger, "PID: <%d> - Página: <%d> - Marco: <%d>", pidActual, unaEntrada->numeroDeEntrada, unaEntrada->numeroMarco);
 
 					enviar_mensaje("Se ha cargado la pagina correctamente", clienteKernel, KERNEL_MENSAJE_CONFIRMACION_PF);
+
 				} else {
 					log_info(logger, "No entro al if");
 				}

@@ -35,6 +35,7 @@ typedef struct {
 
 /* *** STRUCTS ALGORITMOS SUSTITUCION *** */
 
+/*
 typedef struct {
 	uint32_t numero_frame;
 	uint32_t numero_pagina;
@@ -43,10 +44,11 @@ typedef struct {
 	uint modificado;
 	uint presencia;
 } t_frame;
+*/
 
 typedef struct t_frame_lista_circular {
-	t_frame* info;
-	//entradaTablaPaginas* info;
+	//t_frame* info;
+	entradaTablaPaginas* info;
 	struct t_frame_lista_circular* sgte;
 } t_frame_lista_circular;
 
