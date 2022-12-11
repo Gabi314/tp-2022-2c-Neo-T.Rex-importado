@@ -34,18 +34,19 @@ typedef struct {
 } marco;
 
 /* *** STRUCTS ALGORITMOS SUSTITUCION *** */
-/*
+
 typedef struct {
 	uint32_t numero_frame;
 	uint32_t numero_pagina;
+	uint32_t numero_segmento;
 	uint uso;
 	uint modificado;
 	uint presencia;
 } t_frame;
-*/
+
 typedef struct t_frame_lista_circular {
-	//t_frame* info;
-	entradaTablaPaginas* info;
+	t_frame* info;
+	//entradaTablaPaginas* info;
 	struct t_frame_lista_circular* sgte;
 } t_frame_lista_circular;
 
@@ -54,7 +55,7 @@ typedef struct {
 	t_frame_lista_circular* fin;
 	int tamanio;
 	t_frame_lista_circular* puntero_algoritmo;
-	size_t pid;
+	int pid;
 } t_lista_circular;
 
 /* *** VARIABLES *** */

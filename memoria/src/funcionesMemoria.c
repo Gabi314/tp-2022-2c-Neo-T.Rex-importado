@@ -348,9 +348,20 @@ void algoritmo_clock(t_lista_circular* frames_proceso, entradaTablaPaginas* entr
 		hay_victima = es_victima_clock(frame_puntero->info);
 
 		if (hay_victima) {
-			//entrada_tabla_paginas_victima = obtener_entrada_tabla_de_paginas(numero_tabla_de_paginas, frame_puntero->info);
-			actualizar_registros(entrada_tabla_paginas, frame_puntero->info);
+			// TODO: Falta buscar la entrada de tabla de paginas victima para actualizar su bit de presencia y uso
+			// Para eso necesito numero de pagina, numero de segmento, etc etc.
+			//entradaTablaPaginas* entrada_tabla_paginas_victima = obtener_entrada_tabla_de_paginas(numero_tabla_de_paginas, frame_puntero->info);
+
+			// Actualizo los registros REALES
+			//actualizar_registros(entrada_tabla_paginas, entrada_tabla_paginas_victima);
+
+			// Actualizo las estructuras auxiliares
+			frame_puntero->info->numero_frame = entrada_tabla_paginas->numeroMarco;
+			frame_puntero->info->numero_pagina = entrada_tabla_paginas->numeroDeEntrada;
+			frame_puntero->info->numero_segmento = entrada_tabla_paginas->numeroDeSegmento;
+			frame_puntero->info->uso = 1;
 		} else {
+			entrada_tabla_paginas->uso = 0;
 			frame_puntero->info->uso = 0;
 		}
 		frames_proceso->puntero_algoritmo = frames_proceso->puntero_algoritmo->sgte;
@@ -488,7 +499,7 @@ t_frame_lista_circular* obtener_elemento_lista_circular(t_lista_circular* lista,
 	int actualizacion_ok = 0;
 	t_frame_lista_circular* frame_elemento_aux = lista->inicio;
 	while (actualizacion_ok == 0) {
-		if (frame_elemento_aux->info->numeroDeEntrada == numero_pagina) {
+		if (frame_elemento_aux->info->numero_pagina == numero_pagina) {
 			actualizacion_ok = 1;
 		} else {
 			frame_elemento_aux = frame_elemento_aux->sgte;
@@ -521,7 +532,7 @@ void list_create_circular(int pid) {
     //return lista; ANTES ERA DE TIPO LISTA PERO NO ME DEBERIA DEVOLVER, PORQUE HACE TODO ACA
 }
 
-void insertar_lista_circular_vacia(t_lista_circular* lista, entradaTablaPaginas* entrada) {
+void insertar_lista_circular_vacia(t_lista_circular* lista, t_frame* entrada) {
 	t_frame_lista_circular* elemento_nuevo = malloc(sizeof(t_frame_lista_circular));
 	elemento_nuevo->info = entrada;
 	elemento_nuevo->sgte = elemento_nuevo;
@@ -534,12 +545,19 @@ void insertar_lista_circular_vacia(t_lista_circular* lista, entradaTablaPaginas*
 }
 
 void insertar_lista_circular(t_lista_circular* lista, entradaTablaPaginas* entrada) {
+	t_frame* frame = malloc(sizeof(t_frame));
+	frame->numero_frame = entrada->numeroMarco;
+	frame->numero_pagina = entrada->numeroDeEntrada;
+	frame->numero_segmento = entrada->numeroDeSegmento;
+	frame->presencia = entrada->presencia;
+	frame->uso = entrada->uso;
+	//frame->modificado = entrada->modificado;
 	if (lista->tamanio == 0) {
-		insertar_lista_circular_vacia(lista, entrada);
+		insertar_lista_circular_vacia(lista, frame);
 	}
 	else {
         t_frame_lista_circular *elemento_nuevo = malloc(sizeof(t_frame_lista_circular));
-        elemento_nuevo->info = entrada;
+        elemento_nuevo->info = frame;
         elemento_nuevo->sgte = lista->inicio;
         lista->fin->sgte = elemento_nuevo;
         lista->fin = elemento_nuevo;
@@ -547,11 +565,11 @@ void insertar_lista_circular(t_lista_circular* lista, entradaTablaPaginas* entra
     }
 }
 
-t_frame_lista_circular* obtener_elemento_lista_circular_por_marco(t_lista_circular* lista, uint32_t numeroMarco) {
+t_frame_lista_circular* obtener_elemento_lista_circular_por_marco(t_lista_circular* lista, uint32_t numero_frame) {
 	int actualizacion_ok = 0;
 	t_frame_lista_circular* frame_elemento_aux = lista->inicio;
 	while (actualizacion_ok == 0) {
-		if (frame_elemento_aux->info->numeroMarco == numeroMarco) {
+		if (frame_elemento_aux->info->numero_frame == numero_frame) {
 			actualizacion_ok = 1;
 		} else {
 			frame_elemento_aux = frame_elemento_aux->sgte;
