@@ -355,7 +355,7 @@ void escucharInterrupciones(){
 
 bool calculoDireccionLogicaExitoso(int direccionLogica,t_list* listaTablaSegmentos){
 	tamanioMaximoDeSegmento = entradasPorTabla * tamanioDePagina;
-	numeroDeSegmento = floor(direccionLogica / tamanioMaximoDeSegmento);
+	numeroDeSegmento = floor(direccionLogica / tamanioMaximoDeSegmento);//256
 	desplazamientoDeSegmento = direccionLogica % tamanioMaximoDeSegmento;
 	numeroDePagina = floor(desplazamientoDeSegmento  / tamanioDePagina);
 	desplazamientoDePagina = desplazamientoDeSegmento % tamanioDePagina;

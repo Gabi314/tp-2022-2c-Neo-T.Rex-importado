@@ -61,10 +61,10 @@ int conexionConCpu(void* void_args) {
 				log_info(loggerAux, "-------------------MOV_IN-------------------");
 
 				uint32_t numeroALeer = leerElPedido(numeroDeMarco, desplazamiento);
+				log_info(loggerAux, "Envio a cpu el valor leido: %u", numeroALeer);
 
 				enviar_entero(numeroALeer, clienteCpu, MEMORIA_A_CPU_NUMERO_LEIDO);
 
-				log_info(loggerAux, "Envio a cpu el valor leido: %u", numeroALeer);
 				log_info(loggerAux, "-------------------MOV_IN-------------------\n");
 
 				break;
@@ -207,13 +207,14 @@ int marcoSegunIndice(int numeroTablaDePaginas, int numeroDePagina) {
 	if(flagDeEntradasPorTabla == 1) {
 		log_info(logger,"Despues del if flag de entrada");
 
-		int tamanio = list_size(listaTablaDePaginas);
+		//int tamanio = list_size(listaTablaDePaginas);
 
-		log_info(logger,"tamanio lista tablasDePaginas %d",tamanio);
+		//log_info(logger,"tamanio lista tablasDePaginas %d",tamanio);
 
 		unaTablaDePaginas = list_get(listaTablaDePaginas, numeroTablaDePaginas);
-
+		log_info(logger,"Despues del if flag de entrada");
 		unaEntradaTablaDePaginas = list_get(unaTablaDePaginas->entradas, numeroDePagina);
+		log_info(logger,"Despues del if flag de entrada");
 
 		log_info(logger,"Despues de los list get");
 
@@ -254,12 +255,12 @@ int server_escuchar(t_log* logger, char* server_nombre, char* cliente_nombre, in
         } else if (!strcmp(cliente_nombre, "CPU")) {
         	pthread_mutex_lock(&mutexPrimerHandshake);
         	int cod_op = recibir_operacion(cliente_socket);
-
+        	pthread_mutex_unlock(&mutexPrimerHandshake);
         	if(cod_op == MENSAJE_CPU_MEMORIA){//mensaje de pedido tam pag y cant entradas
         		recibir_mensaje(cliente_socket);//recibe el pedido de tam_pag y cant_entradas
         		enviarTamanioDePaginaYCantidadDeEntradas(cliente_socket);
         	}
-        	pthread_mutex_unlock(&mutexPrimerHandshake);
+
 			pthread_create(&hilo_general, NULL, (void*) conexionConCpu, (void*) args);
 		}
         pthread_detach(hilo_general);
