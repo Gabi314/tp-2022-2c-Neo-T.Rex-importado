@@ -285,27 +285,17 @@ void escribirEnSwap(entradaTablaPaginas* unaEntrada) {
 		unaEntrada->posicionEnSwap = posicionActualDeSwap;
 		posicionActualDeSwap += tamanioDePagina;
 	}
-
-	//for(int i=0; i < (tamanioDePagina/sizeof(uint32_t)); i++) {
 	void* paginaACargar = obtenerPaginaDesdeEspacioUsuario(numeroDeMarco);
 
-	uint32_t datoALeer;
-	memcpy(&datoALeer,paginaACargar, sizeof(uint32_t));
-	log_info(loggerAux,"Parte de la pagina a llevar a swap: %u",datoALeer);
+//	uint32_t datoALeer;
+//	memcpy(&datoALeer,paginaACargar, sizeof(uint32_t));
+//	log_info(loggerAux,"Parte de la pagina a llevar a swap: %u",datoALeer);
 
-	memcpy(&archivoSwap+unaEntrada->posicionEnSwap,paginaACargar,tamanioDePagina);
-
-	//fseek(archivoSwap, unaEntrada->posicionEnSwap, SEEK_SET);
-
-		//fseek(archivoSwap, i*4, SEEK_CUR);
-		//uint32_t datoAEscribir = leerEnSwap(numeroDeMarco, i*sizeof(uint32_t));
-		//log_info(loggerAux,"Parte de la pagina a escribir en swap: %u",datoAEscribir);
-		//char* datoAEscribirEnChar = string_itoa((uint32_t) datoAEscribir);
-
-	//fputs(paginaACargar,archivoSwap);
-	//}
+	fseek(archivoSwap, unaEntrada->posicionEnSwap, SEEK_SET);
+	fwrite((char*)paginaACargar,tamanioDePagina,1,archivoSwap);
 
 	fclose(archivoSwap);
+
 	log_info(logger, "SWAP OUT - PID: <%d> - Marco: <%d> - Page Out: <%d>|<%d>", pidActual,
 			numeroDeMarco, unaEntrada->numeroDeSegmento, unaEntrada->numeroDeEntrada);
 }
@@ -321,38 +311,21 @@ void* obtenerPaginaDesdeSwap(int posicionEnSwap,FILE* archivoSwap) {
 void leerDeSwap(entradaTablaPaginas* unaEntrada, int numeroDeMarcoNuevo) {
 	//usleep(retardoSwap*1000);
 	usleep(retardoSwap*100);
-	//char* parteDePagina;
-	FILE* archivoSwap = fopen(pathSwap, "r");
-//	int posicionDeLaPaginaALeer = posicionDePagEnSwap;
-	fseek(archivoSwap, unaEntrada->posicionEnSwap, SEEK_SET);
-//	fgets(parteDePagina, sizeof(uint32_t)+1, archivoSwap);
-//	uint32_t parteDePaginaEnInt = atoi(parteDePagina);
-//	log_info(loggerAux,"Parte de la pagina a traer de swap: %u",parteDePaginaEnInt);
-//	fseek(archivoSwap, unaEntrada->posicionEnSwap, SEEK_SET);
 
 	void* pagina = malloc(tamanioDePagina);
-	memcpy(pagina,&archivoSwap, tamanioDePagina);
 
-	uint32_t datoALeer;
-	memcpy(&datoALeer,pagina, sizeof(uint32_t));
-	log_info(loggerAux,"Parte de la pagina a traer de swap: %u",datoALeer);
+	FILE* archivoSwap = fopen(pathSwap, "r");
+	fseek(archivoSwap, unaEntrada->posicionEnSwap, SEEK_SET);
 
-	//void* paginaATraerDesdeSwap = obtenerPaginaDesdeSwap(unaEntrada->posicionEnSwap,archivoSwap);
+	fread(pagina,tamanioDePagina,1,archivoSwap);
+
+//	uint32_t datoALeer;
+//	memcpy(&datoALeer,pagina, sizeof(uint32_t));
+//	log_info(loggerAux,"Parte de la pagina a traer de swap: %u",datoALeer);
+
 	int posicion = numeroDeMarcoNuevo * tamanioDePagina;
 	memcpy((memoria+posicion),pagina,tamanioDePagina);
 
-//	for(int i = 0; i < (tamanioDePagina/sizeof(uint32_t)); i++) {
-//		fseek(archivoSwap, unaEntrada->posicionEnSwap, SEEK_SET);
-//		fseek(archivoSwap, i*4, SEEK_CUR);
-//
-//		fgets(parteDePagina, sizeof(uint32_t)+1, archivoSwap);
-//
-//		uint32_t parteDePaginaEnInt = atoi(parteDePagina);
-//
-//		log_info(loggerAux,"Parte de la pagina a traer de swap: %u",parteDePaginaEnInt);
-//
-//		memcpy((memoria+(tamanioDePagina*numeroDeMarcoNuevo)+i*sizeof(uint32_t)), &parteDePaginaEnInt, sizeof(uint32_t));
-//	}
 	fclose(archivoSwap);
 	log_info(logger, "SWAP IN - PID: <%d> - Marco: <%d> - Page In: <%d>|<%d>", pidActual,
 			numeroDeMarcoNuevo, unaEntrada->numeroDeSegmento, unaEntrada->numeroDeEntrada);
@@ -597,8 +570,35 @@ t_frame_lista_circular* obtener_elemento_lista_circular_por_marco(t_lista_circul
 }
 
 
+//FUNCIONES QUE SAQUE DE:
+//LEER DE SWAP
+
+//	for(int i = 0; i < (tamanioDePagina/sizeof(uint32_t)); i++) {
+//		fseek(archivoSwap, unaEntrada->posicionEnSwap, SEEK_SET);
+//		fseek(archivoSwap, i*4, SEEK_CUR);
+//
+//		fgets(parteDePagina, sizeof(uint32_t)+1, archivoSwap);
+//
+//		uint32_t parteDePaginaEnInt = atoi(parteDePagina);
+//
+//		log_info(loggerAux,"Parte de la pagina a traer de swap: %u",parteDePaginaEnInt);
+//
+//		memcpy((memoria+(tamanioDePagina*numeroDeMarcoNuevo)+i*sizeof(uint32_t)), &parteDePaginaEnInt, sizeof(uint32_t));
+//	}
 
 
+
+//ESCRIBIR EN SWAP
+//memcpy(archivoSwap+unaEntrada->posicionEnSwap,paginaACargar,tamanioDePagina);
+//fseek(archivoSwap, unaEntrada->posicionEnSwap, SEEK_SET);
+
+	//fseek(archivoSwap, i*4, SEEK_CUR);
+	//uint32_t datoAEscribir = leerEnSwap(numeroDeMarco, i*sizeof(uint32_t));
+	//log_info(loggerAux,"Parte de la pagina a escribir en swap: %u",datoAEscribir);
+	//char* datoAEscribirEnChar = string_itoa((uint32_t) datoAEscribir);
+
+//fputs(paginaACargar,archivoSwap);
+//}
 
 
 

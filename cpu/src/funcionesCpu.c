@@ -354,13 +354,28 @@ void escucharInterrupciones(){
 }
 
 bool calculoDireccionLogicaExitoso(int direccionLogica,t_list* listaTablaSegmentos){
-	tamanioMaximoDeSegmento = entradasPorTabla * tamanioDePagina;
-	numeroDeSegmento = floor(direccionLogica / tamanioMaximoDeSegmento);//256
-	desplazamientoDeSegmento = direccionLogica % tamanioMaximoDeSegmento;
-	numeroDePagina = floor(desplazamientoDeSegmento  / tamanioDePagina);
+	tamanioMaximoDeSegmento = entradasPorTabla * tamanioDePagina;//128
+	numeroDeSegmento = floor(direccionLogica / tamanioMaximoDeSegmento);//128
+	desplazamientoDeSegmento = direccionLogica % tamanioMaximoDeSegmento;//120
+	numeroDePagina = floor(desplazamientoDeSegmento  / tamanioDePagina);//1
 	desplazamientoDePagina = desplazamientoDeSegmento % tamanioDePagina;
 
 	return !haySegFault(numeroDeSegmento,desplazamientoDeSegmento,listaTablaSegmentos);
+}
+
+bool haySegFault(int numeroDeSegmento, int desplazamientoSegmento,t_list * listaDeTablaSegmentos){
+	entradaTablaSegmento* unaEntradaDeTabla;
+	for(int i = 0; i< list_size(listaDeTablaSegmentos);i++){
+		unaEntradaDeTabla = list_get(listaDeTablaSegmentos,i);
+
+		if(numeroDeSegmento == unaEntradaDeTabla->numeroSegmento){
+			if(desplazamientoSegmento > unaEntradaDeTabla->tamanioSegmento){
+				return true;//hay SF->>>>> devolverse el proceso al Kernel para que este lo finalice con motivo de Error: Segmentation Fault
+			}
+		}
+	}
+
+	return false;
 }
 
 int buscarDireccionFisica(t_pcb* pcb){
@@ -405,19 +420,7 @@ int chequearMarcoEnTLB(int nroDePagina, int nroDeSegmento,int pid){
 	return marco;
 }
 
-bool haySegFault(int numeroDeSegmento, int desplazamientoSegmento,t_list * listaDeTablaSegmentos){
-	entradaTablaSegmento* unaEntradaDeTabla;
-	for(int i; i< list_size(listaDeTablaSegmentos);i++){
-		unaEntradaDeTabla = list_get(listaDeTablaSegmentos,i);
-		if(numeroDeSegmento == unaEntradaDeTabla->numeroSegmento){
-			if(desplazamientoSegmento > unaEntradaDeTabla->tamanioSegmento){
-				return true;//hay SF->>>>> devolverse el proceso al Kernel para que este lo finalice con motivo de Error: Segmentation Fault
-			}
-		}
-	}
 
-	return false;
-}
 
 
 int accederAMemoria(int marco,int numeroDeSegmento,t_pcb* pcb){

@@ -255,12 +255,12 @@ int server_escuchar(t_log* logger, char* server_nombre, char* cliente_nombre, in
         } else if (!strcmp(cliente_nombre, "CPU")) {
         	pthread_mutex_lock(&mutexPrimerHandshake);
         	int cod_op = recibir_operacion(cliente_socket);
-        	pthread_mutex_unlock(&mutexPrimerHandshake);
+
         	if(cod_op == MENSAJE_CPU_MEMORIA){//mensaje de pedido tam pag y cant entradas
         		recibir_mensaje(cliente_socket);//recibe el pedido de tam_pag y cant_entradas
         		enviarTamanioDePaginaYCantidadDeEntradas(cliente_socket);
         	}
-
+        	pthread_mutex_unlock(&mutexPrimerHandshake);
 			pthread_create(&hilo_general, NULL, (void*) conexionConCpu, (void*) args);
 		}
         pthread_detach(hilo_general);
