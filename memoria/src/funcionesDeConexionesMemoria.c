@@ -26,19 +26,23 @@ int conexionConCpu(void* void_args) {
 	t_list* listaQueContieneDirFisica1YDirFisica2 = list_create();
 
 	while(1) {
-		pthread_mutex_lock(&mutexMemoriaData);
+//		pthread_mutex_lock(&mutexMemoriaData);
 		int cod_op = recibir_operacion(clienteCpu);
+		log_info(logger,"cod op: %d",cod_op);
 
 		switch (cod_op) {
 
 			case PRIMER_ACCESO://ES OBTENER MARCO
 				listaConTablaDePaginaYPagina = recibir_lista_enteros(clienteCpu);
+
 				numeroTablaDePaginas = list_get(listaConTablaDePaginaYPagina, 0);
 				numeroDeLaPagina = list_get(listaConTablaDePaginaYPagina, 1);
 
 				//log_info(loggerAux,"Me llego  la entrada de segundo nivel %d",entradaTabla2doNivel);
-
+				log_info(logger,"Numero tabla de paginas: %d",numeroTablaDePaginas);
+				log_info(logger,"Numero de la pagina: %d",numeroDeLaPagina);
 				numeroDeMarco =  marcoSegunIndice(numeroTablaDePaginas, numeroDeLaPagina);
+
 				if(numeroDeMarco == -1) {
 					enviar_mensaje("La pagina no esta en memoria", clienteCpu, MEMORIA_A_CPU_PAGE_FAULT);
 				} else {
@@ -92,7 +96,7 @@ int conexionConCpu(void* void_args) {
 
 				break;
 		}
-		pthread_mutex_unlock(&mutexMemoriaData);
+		//pthread_mutex_unlock(&mutexMemoriaData);
 	}
 	return EXIT_SUCCESS;
 }
@@ -195,16 +199,23 @@ void enviarTamanioDePaginaYCantidadDeEntradas(int socket_cliente) {
 }
 
 int marcoSegunIndice(int numeroTablaDePaginas, int numeroDePagina) {
-	tablaDePaginas* unaTablaDePaginas = malloc(sizeof(tablaDePaginas));
-	entradaTablaPaginas* unaEntradaTablaDePaginas = malloc(sizeof(entradaTablaPaginas));
+	tablaDePaginas* unaTablaDePaginas; //= malloc(sizeof(tablaDePaginas));
+	entradaTablaPaginas* unaEntradaTablaDePaginas; //= malloc(sizeof(entradaTablaPaginas));
 
 	chequeoDeIndice(numeroDePagina);
-
+	log_info(logger,"Antes del if flag de entrada");
 	if(flagDeEntradasPorTabla == 1) {
-		//int posicionDeLaTablaBuscada = buscarNroTablaDe2doNivel(numeroTabla2doNivel);
+		log_info(logger,"Despues del if flag de entrada");
+
+		int tamanio = list_size(listaTablaDePaginas);
+
+		log_info(logger,"tamanio lista tablasDePaginas %d",tamanio);
+
 		unaTablaDePaginas = list_get(listaTablaDePaginas, numeroTablaDePaginas);
 
-		unaEntradaTablaDePaginas = list_get(unaTablaDePaginas->entradas, numeroDePagina);// ya con esto puedo recuperar el marco
+		unaEntradaTablaDePaginas = list_get(unaTablaDePaginas->entradas, numeroDePagina);
+
+		log_info(logger,"Despues de los list get");
 
 		flagDeEntradasPorTabla = 0;
 
@@ -230,15 +241,16 @@ int server_escuchar(t_log* logger, char* server_nombre, char* cliente_nombre, in
     //int cliente_socket = esperar_cliente(logger, server_name, server_socket);
 
     if (cliente_socket != -1) {
+    	 pthread_t hilo_general;
     	// Creo un hilo para atender al cliente conectado
         t_procesar_conexion_args* args = malloc(sizeof(t_procesar_conexion_args));
         args->log = logger;
         args->fd = cliente_socket;
         args->server_name = server_nombre;
         if (!strcmp(cliente_nombre, "KERNEL")) {
-        	pthread_t hilo_kernel;
-        	pthread_create(&hilo_kernel, NULL, (void*) conexionConKernel, (void*) args);
-        	pthread_detach(hilo_kernel);
+
+        	pthread_create(&hilo_general, NULL, (void*) conexionConKernel, (void*) args);
+
         } else if (!strcmp(cliente_nombre, "CPU")) {
         	pthread_mutex_lock(&mutexPrimerHandshake);
         	int cod_op = recibir_operacion(cliente_socket);
@@ -248,12 +260,9 @@ int server_escuchar(t_log* logger, char* server_nombre, char* cliente_nombre, in
         		enviarTamanioDePaginaYCantidadDeEntradas(cliente_socket);
         	}
         	pthread_mutex_unlock(&mutexPrimerHandshake);
-
-        	pthread_t hilo_cpu;
-			pthread_create(&hilo_cpu, NULL, (void*) conexionConCpu, (void*) args);
-			pthread_detach(hilo_cpu);
+			pthread_create(&hilo_general, NULL, (void*) conexionConCpu, (void*) args);
 		}
-        //pthread_detach(hiloCpu);
+        pthread_detach(hilo_general);
         return 1;
     } else {
     	log_info(loggerAux,"Socket incorrecto");

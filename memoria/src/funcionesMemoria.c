@@ -131,7 +131,7 @@ void modificarPaginaACargar(entradaTablaPaginas* unaEntrada, marco* marcoAASigna
 }
 
 marco* buscarMarco(int nroDeMarco) {
-	marco* unMarco = malloc(sizeof(marco));
+	marco* unMarco; //= malloc(sizeof(marco));
 
 	for(int i=0; i < list_size(listaDeMarcos); i++) {
 		unMarco = list_get(listaDeMarcos, i);
@@ -139,7 +139,7 @@ marco* buscarMarco(int nroDeMarco) {
 			return unMarco;
 		}
 	}
-	free(unMarco);
+	//free(unMarco);
 }
 
 void liberarEspacioEnMemoria(tablaDePaginas* unaTablaDePaginas) {
@@ -190,6 +190,7 @@ void cargarPagina(entradaTablaPaginas* unaEntrada,int pid) {
 			log_info(logger, "Antes de insertar circular");
 			insertar_lista_circular(frames_proceso,unaEntrada);
 			log_info(logger, "Despues insertar circular");
+
 			if(unaEntrada->modificado == 1) {
 				leerDeSwap(unaEntrada, unaEntrada->numeroMarco);
 				unaEntrada->modificado = 0;
@@ -272,7 +273,8 @@ void crearSwap() {
 
 void escribirEnSwap(entradaTablaPaginas* unaEntrada) {
 	int numeroDeMarco = unaEntrada->numeroMarco;
-	usleep(retardoSwap*1000);
+	//usleep(retardoSwap*1000);
+	usleep(retardoSwap*100);
 	FILE* archivoSwap = fopen(pathSwap, "r+");
 
 	if(unaEntrada->posicionEnSwap == -1) {
@@ -294,7 +296,9 @@ void escribirEnSwap(entradaTablaPaginas* unaEntrada) {
 }
 
 void leerDeSwap(entradaTablaPaginas* unaEntrada, int numeroDeMarcoNuevo) {
-	usleep(retardoSwap*1000);
+	//usleep(retardoSwap*1000);
+
+	usleep(retardoSwap*100);
 
 	char* parteDePagina = string_new();
 	FILE* archivoSwap = fopen(pathSwap, "r");
@@ -309,10 +313,12 @@ void leerDeSwap(entradaTablaPaginas* unaEntrada, int numeroDeMarcoNuevo) {
 
 		uint32_t parteDePaginaEnInt = atoi(parteDePagina);
 
+		log_info(loggerAux,"Parte de la pagina: %u",parteDePaginaEnInt);
+
 		memcpy(&memoria+(tamanioDePagina*numeroDeMarcoNuevo)+i*sizeof(uint32_t), &parteDePaginaEnInt, sizeof(uint32_t));
 	}
 	fclose(archivoSwap);
-	log_info(logger, "SWAP IN - PID: <%d> - Marco: <%d> - Page In: <%d>|<%d", pidActual,
+	log_info(logger, "SWAP IN - PID: <%d> - Marco: <%d> - Page In: <%d>|<%d>", pidActual,
 			numeroDeMarcoNuevo, unaEntrada->numeroDeSegmento, unaEntrada->numeroDeEntrada);
 }
 
@@ -350,6 +356,9 @@ void algoritmo_clock(t_lista_circular* frames_proceso, entradaTablaPaginas* entr
 		if (hay_victima) {
 			entrada_tabla_paginas_victima = frame_puntero->info;
 			// Actualizo los registros REALES
+			if(entrada_tabla_paginas_victima->modificado == 1){
+				escribirEnSwap(entrada_tabla_paginas_victima);
+			}
 			actualizar_registros(entrada_tabla_paginas, frame_puntero->info);
 			frame_puntero->info = entrada_tabla_paginas;
 

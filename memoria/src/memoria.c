@@ -12,12 +12,12 @@ int main(int argc, char *argv[]) {
 	//OBLIGATORIO
 
 	memoria_fd = iniciar_servidor(IP_MEMORIA, puertoMemoria, "MEMORIA");
+	while(1){
 	// Escucho a cliente CPU
 	server_escuchar(loggerAux, "MEMORIA", "CPU", memoria_fd);
 	// Escucho a cliente Kernel
 	server_escuchar(loggerAux, "MEMORIA", "KERNEL", memoria_fd);
-
-	while(1);
+	}
 
 //PROBAR ENTRADAS CON BIT DE MODIFICADO VARIADO
 
