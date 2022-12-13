@@ -10,7 +10,7 @@ CDEBUG=-g -Wall -DDEBUG
 CRELEASE=-O3 -Wall -DNDEBUG
 
 # Arguments when executing with start, memcheck or helgrind
-ARGS=/home/utnso/tp-2022-2c-Neo-T.Rex/kernel/configs/memoria_1.config
+ARGS=/home/utnso/tp-2022-2c-Neo-T.Rex/kernel/configs/tlb_prueba.config
 
 
 # Valgrind flags

@@ -159,21 +159,18 @@ int crear_conexion(char *ip, char* puerto)
 								server_info->ai_protocol);
 
 	// Fallo al crear el socket
-	if (socket_cliente == -1) {
-		// Pasar logger correspondiente por parametro
-		//log_error(logger, "Hubo un error al crear el socket del servidor");
-		return 0;
-	}
+//	if (socket_cliente == -1) {
+//		// Pasar logger correspondiente por parametro
+//		//log_error(logger, "Hubo un error al crear el socket del servidor");
+//		return 0;
+//	}
 
 	// Conectar el socket...
 	// Error al conectar
 	if(connect(socket_cliente, server_info->ai_addr, server_info->ai_addrlen) == -1) {
-		//log_error(logger, "Error al conectar al servidor);
+		log_error(logger, "Error al conectar al servidor");
 		freeaddrinfo(server_info);
-		return 0;
-	} else {
-		// Conexion exitosa
-		//log_info(logger, "Cliente conectado");
+		return -1;
 	}
 
 	freeaddrinfo(server_info);

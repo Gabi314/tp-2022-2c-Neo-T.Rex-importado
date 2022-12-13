@@ -53,16 +53,19 @@ void conexionConKernelDispatch(){//un hilo
 }
 
 void handshakeMemoria(){
-	static pthread_mutex_t mutexPrimerHandshake;
+	pthread_mutex_t mutexPrimerHandshake;
+	pthread_mutex_t mutexPrimerHandshake2;
 	// Creamos una conexión hacia el servidor
+	pthread_mutex_lock(&mutexPrimerHandshake);
     socket_memoria = crear_conexion(ipMemoria, puertoMemoria);
+	pthread_mutex_unlock(&mutexPrimerHandshake);
 	log_info(logger,"Hola memoria, soy cpu");
 
-	enviar_mensaje("Dame el tamanio de pag y entradas por tabla",socket_memoria,MENSAJE_CPU_MEMORIA);//MENSAJE_PEDIDO_CPU
+	enviar_mensaje("Dame el tamanio de pag y entradas por tabla",socket_memoria,MENSAJE_CPU_MEMORIA);
 
 	t_list* listaQueContieneTamanioDePagYEntradas = list_create();
 
-	pthread_mutex_lock(&mutexPrimerHandshake);
+
 	int cod_op = recibir_operacion(socket_memoria);
 
 	if(cod_op == TAM_PAGINAS_Y_CANT_ENTRADAS){
@@ -70,7 +73,7 @@ void handshakeMemoria(){
 	}else{
 		log_error(logger, "codigo incorrecto recibido de memoria");
 	}
-	pthread_mutex_unlock(&mutexPrimerHandshake);
+
 
 	leerTamanioDePaginaYCantidadDeEntradas(listaQueContieneTamanioDePagYEntradas);
 }

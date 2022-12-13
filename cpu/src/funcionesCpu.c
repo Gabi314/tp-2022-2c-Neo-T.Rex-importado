@@ -224,7 +224,7 @@ void ejecutar(instruccion* unaInstruccion,t_pcb* pcb){
 					pthread_mutex_lock(&mutexEjecutar);
 					ejecutando = false;
 					pthread_mutex_unlock(&mutexEjecutar);
-					log_info(logger,"----------------FINALIZA MOV_IN----------------\n");
+					log_info(logger,"----------------FINALIZA MOV_IN POR SEG FAULT----------------\n");
 				}
 
 				pcb->programCounter += 1;
@@ -265,7 +265,7 @@ void ejecutar(instruccion* unaInstruccion,t_pcb* pcb){
 					pthread_mutex_lock(&mutexEjecutar);
 					ejecutando = false;
 					pthread_mutex_unlock(&mutexEjecutar);
-					log_info(logger,"----------------FINALIZA MOV_IN----------------\n");
+					log_info(logger,"----------------FINALIZA MOV_OUT POR SEG FAULT----------------\n");
 				}
 				pcb->programCounter += 1;
 				break;
@@ -354,10 +354,10 @@ void escucharInterrupciones(){
 }
 
 bool calculoDireccionLogicaExitoso(int direccionLogica,t_list* listaTablaSegmentos){
-	tamanioMaximoDeSegmento = entradasPorTabla * tamanioDePagina;//128
-	numeroDeSegmento = floor(direccionLogica / tamanioMaximoDeSegmento);//128
-	desplazamientoDeSegmento = direccionLogica % tamanioMaximoDeSegmento;//120
-	numeroDePagina = floor(desplazamientoDeSegmento  / tamanioDePagina);//1
+	tamanioMaximoDeSegmento = entradasPorTabla * tamanioDePagina;//256
+	numeroDeSegmento = floor(direccionLogica / tamanioMaximoDeSegmento);//0
+	desplazamientoDeSegmento = direccionLogica % tamanioMaximoDeSegmento;//64
+	numeroDePagina = floor(desplazamientoDeSegmento  / tamanioDePagina);
 	desplazamientoDePagina = desplazamientoDeSegmento % tamanioDePagina;
 
 	return !haySegFault(numeroDeSegmento,desplazamientoDeSegmento,listaTablaSegmentos);
@@ -369,7 +369,7 @@ bool haySegFault(int numeroDeSegmento, int desplazamientoSegmento,t_list * lista
 		unaEntradaDeTabla = list_get(listaDeTablaSegmentos,i);
 
 		if(numeroDeSegmento == unaEntradaDeTabla->numeroSegmento){
-			if(desplazamientoSegmento > unaEntradaDeTabla->tamanioSegmento){
+			if(desplazamientoSegmento >= unaEntradaDeTabla->tamanioSegmento){
 				return true;//hay SF->>>>> devolverse el proceso al Kernel para que este lo finalice con motivo de Error: Segmentation Fault
 			}
 		}
