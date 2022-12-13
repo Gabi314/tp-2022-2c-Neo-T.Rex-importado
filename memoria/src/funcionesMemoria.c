@@ -376,11 +376,9 @@ void algoritmo_clock(t_lista_circular* frames_proceso, entradaTablaPaginas* entr
 
 //uint32_t algoritmo_clock_modificado(t_lista_circular* frames_proceso, entradaTablaPaginas* entrada_tabla_paginas) {//CREO QUE NO ES NECESARIO DEVOLVER NADA DE ACA
 void algoritmo_clock_modificado(t_lista_circular* frames_proceso, entradaTablaPaginas* entrada_tabla_paginas) {
-	//t_registro_segundo_nivel* registro_segundo_nivel = obtener_registro_segundo_nivel(numero_tabla_primer_nivel, numero_pagina);
 	// Variables auxiliares
 	t_frame_lista_circular* frame_puntero = malloc(sizeof(t_frame_lista_circular));
-	//t_registro_segundo_nivel* registro_segundo_nivel_victima = malloc(sizeof(t_registro_segundo_nivel));;
-	//t_registro_segundo_nivel* registro_segundo_nivel_actualizado = malloc(sizeof(t_registro_segundo_nivel));
+	entradaTablaPaginas* entrada_tabla_paginas_victima;
 
 	uint hay_victima_um = 0;
 	uint hay_victima_u = 0;
@@ -403,12 +401,15 @@ void algoritmo_clock_modificado(t_lista_circular* frames_proceso, entradaTablaPa
 			hay_victima_um = es_victima_clock_modificado_um(frame_puntero->info);
 
 			if (hay_victima_um) {
-			//	registro_segundo_nivel_victima = obtener_registro_segundo_nivel(numero_tabla_primer_nivel, frame_puntero->info->numero_pagina);
+				entrada_tabla_paginas_victima = frame_puntero->info;
+
+				// Actualizo los registros REALES
+				if(entrada_tabla_paginas_victima->modificado == 1){
+					escribirEnSwap(entrada_tabla_paginas_victima);
+				}
 
 				actualizar_registros(entrada_tabla_paginas, frame_puntero->info);
-
-			//	frame_puntero->info->numero_pagina = numero_pagina;
-				//frame_puntero->info->uso = 1;
+				frame_puntero->info = entrada_tabla_paginas;
 
 				frames_proceso->puntero_algoritmo = frames_proceso->puntero_algoritmo->sgte;
 				break;
@@ -431,19 +432,19 @@ void algoritmo_clock_modificado(t_lista_circular* frames_proceso, entradaTablaPa
 				hay_victima_u = es_victima_clock_modificado_u(frame_puntero->info);
 
 				if (hay_victima_u) {
-					//registro_segundo_nivel_victima = obtener_registro_segundo_nivel(numero_tabla_primer_nivel, frame_puntero->info->numero_pagina);
+					entrada_tabla_paginas_victima = frame_puntero->info;
+
+					// Actualizo los registros REALES
+					if(entrada_tabla_paginas_victima->modificado == 1){
+						escribirEnSwap(entrada_tabla_paginas_victima);
+					}
 
 					actualizar_registros(entrada_tabla_paginas, frame_puntero->info);
-
-					//frame_puntero->info->numero_pagina = numero_pagina;
-					//frame_puntero->info->uso = 1;
+					frame_puntero->info = entrada_tabla_paginas;
 
 					frames_proceso->puntero_algoritmo = frames_proceso->puntero_algoritmo->sgte;
 					break;
 				} else {
-					//registro_segundo_nivel_actualizado = obtener_registro_segundo_nivel(numero_tabla_primer_nivel, frame_puntero->info->numero_pagina);
-					//registro_segundo_nivel_actualizado->uso = 0;
-
 					//CREO QUE ESTO ES CUANDO ESTA TERMINANDO EL ALGORITMO QUE PONE EN 0 LOS USOS
 					frame_puntero->info->uso = 0;
 					frames_proceso->puntero_algoritmo = frames_proceso->puntero_algoritmo->sgte;

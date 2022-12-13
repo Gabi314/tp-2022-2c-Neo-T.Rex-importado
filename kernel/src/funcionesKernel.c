@@ -437,7 +437,7 @@ void asignar_memoria() {
 				}
 
 		log_info(loggerAux,"llego antes del push a cola de ready");
-			pthread_mutex_lock(&primerPushColaReady);
+			//pthread_mutex_lock(&primerPushColaReady);
 		
 
 		if (!strcmp(algoritmoPlanificacion, "FIFO")) {
