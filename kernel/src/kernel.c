@@ -410,6 +410,7 @@ void inicializar_semaforos(){
 	pthread_mutex_init(&mutexIO,NULL);
 	pthread_mutex_init(&bloqueandoProceso,NULL);
 	*/
+	sem_init(&pruebaIOGen,0,0);
 
 	sem_init(&pcbEnNew,0,0);
 	sem_init(&pcbEnReady,0,0);

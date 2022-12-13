@@ -106,6 +106,8 @@ extern int quantum_rr;
 
 extern sem_t kernelSinFinalizar;
 
+extern sem_t pruebaIOGen;
+
 extern int conexionCpuDispatch;
 extern int conexionCpuInterrupt;
 extern int socketMemoria;

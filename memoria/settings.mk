@@ -10,7 +10,7 @@ CDEBUG=-g -Wall -DDEBUG
 CRELEASE=-O3 -Wall -DNDEBUG
 
 # Arguments when executing with start, memcheck or helgrind
-ARGS=/home/utnso/tp-2022-2c-Neo-T.Rex/memoria/configs/tlb_prueba.config
+ARGS=/home/utnso/tp-2022-2c-Neo-T.Rex/memoria/configs/plani_base.config
 
 # Valgrind flags
 MEMCHECK_FLAGS=--track-origins=yes --log-file="memcheck.log"

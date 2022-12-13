@@ -53,6 +53,7 @@ t_list* listaDeColasDispositivos;
 
 pthread_t hiloQuantumRR;
 
+sem_t pruebaIOGen;
 
 sem_t kernelSinFinalizar;
 sem_t gradoDeMultiprogramacion;
@@ -618,6 +619,7 @@ while (1) {
 
 		log_info(logger,"PID: <%d> - Estado Anterior: <EXE> - Estado Actual: <BLOCKED>", proceso->idProceso);
 
+		//sem_post(&pruebaIOGen);
 		sem_post(&elementoLista->semaforo);
 
 
@@ -904,6 +906,7 @@ void atender_IO_generico(t_elem_disp* elemento){
 	log_info(logger,"se desperto atender_IO_generico del dispositivo <%s> por primera vez ", elemento->dispositivo);
 
 	while(1) {
+		//sem_wait(&pruebaIOGen);
 		sem_wait(&elemento->semaforo);
 		log_info(logger," [atender_IO_generico del dispositivo <%s>] : se desperto ", elemento->dispositivo);
 
