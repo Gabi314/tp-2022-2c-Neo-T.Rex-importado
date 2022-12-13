@@ -28,7 +28,6 @@ int conexionConCpu(void* void_args) {
 	while(1) {
 //		pthread_mutex_lock(&mutexMemoriaData);
 		int cod_op = recibir_operacion(clienteCpu);
-		log_info(logger,"cod op: %d",cod_op);
 
 		switch (cod_op) {
 
@@ -38,9 +37,6 @@ int conexionConCpu(void* void_args) {
 				numeroTablaDePaginas = list_get(listaConTablaDePaginaYPagina, 0);
 				numeroDeLaPagina = list_get(listaConTablaDePaginaYPagina, 1);
 
-				//log_info(loggerAux,"Me llego  la entrada de segundo nivel %d",entradaTabla2doNivel);
-				log_info(logger,"Numero tabla de paginas: %d",numeroTablaDePaginas);
-				log_info(logger,"Numero de la pagina: %d",numeroDeLaPagina);
 				numeroDeMarco =  marcoSegunIndice(numeroTablaDePaginas, numeroDeLaPagina);
 
 				if(numeroDeMarco == -1) {
@@ -141,26 +137,20 @@ int conexionConKernel(void* void_args) {
 				numeroPagina = (int) list_get(listaQueContieneNumTablaYPagina, 1);
 
 				if(numeroPagina < entradasPorTabla) {
-					log_info(logger, "Entro al if");
-
 					tablaDePaginas* unaTablaDePaginas; //= malloc(sizeof(tablaDePaginas));
 					entradaTablaPaginas* unaEntrada; // = malloc(sizeof(entradaTablaPaginas));
 
 					unaTablaDePaginas = list_get(listaTablaDePaginas, numeroTablaDePaginas);
 					unaEntrada = list_get(unaTablaDePaginas->entradas, numeroPagina);
 
-					log_info(logger, "Antes cargar pagina");
-
 					cargarPagina(unaEntrada,unaTablaDePaginas->pid);
-
-					log_info(logger, "Despues cargar pagina");
 
 					log_info(logger, "PID: <%d> - Página: <%d> - Marco: <%d>", pidActual, unaEntrada->numeroDeEntrada, unaEntrada->numeroMarco);
 
 					enviar_mensaje("Se ha cargado la pagina correctamente", clienteKernel, KERNEL_MENSAJE_CONFIRMACION_PF);
 
 				} else {
-					log_info(logger, "No entro al if");
+					log_warning(loggerAux, "El numero de pagina es mayor a la cantidad de entradas");
 				}
 
 				break;
@@ -189,7 +179,7 @@ int conexionConKernel(void* void_args) {
 
 void enviarTamanioDePaginaYCantidadDeEntradas(int socket_cliente) {
 	t_paquete* paquete = crear_paquete(TAM_PAGINAS_Y_CANT_ENTRADAS);
-	log_info(loggerAux, "Envio el tamanio de pag y cant entradas");
+	log_info(loggerAux, "Envio el tamanio de pag %d y cant entradas %d",tamanioDePagina,entradasPorTabla);
 
 	agregar_a_paquete_unInt(paquete, &tamanioDePagina, sizeof(tamanioDePagina));
 	agregar_a_paquete_unInt(paquete, &entradasPorTabla, sizeof(entradasPorTabla));
@@ -203,20 +193,10 @@ int marcoSegunIndice(int numeroTablaDePaginas, int numeroDePagina) {
 	entradaTablaPaginas* unaEntradaTablaDePaginas; //= malloc(sizeof(entradaTablaPaginas));
 
 	chequeoDeIndice(numeroDePagina);
-	log_info(logger,"Antes del if flag de entrada");
 	if(flagDeEntradasPorTabla == 1) {
-		log_info(logger,"Despues del if flag de entrada");
-
-		//int tamanio = list_size(listaTablaDePaginas);
-
-		//log_info(logger,"tamanio lista tablasDePaginas %d",tamanio);
 
 		unaTablaDePaginas = list_get(listaTablaDePaginas, numeroTablaDePaginas);
-		log_info(logger,"Despues del if flag de entrada");
 		unaEntradaTablaDePaginas = list_get(unaTablaDePaginas->entradas, numeroDePagina);
-		log_info(logger,"Despues del if flag de entrada");
-
-		log_info(logger,"Despues de los list get");
 
 		flagDeEntradasPorTabla = 0;
 
@@ -266,7 +246,7 @@ int server_escuchar(t_log* logger, char* server_nombre, char* cliente_nombre, in
         pthread_detach(hilo_general);
         return 1;
     } else {
-    	log_info(loggerAux,"Socket incorrecto");
+    	log_info(logger,"Socket incorrecto");
     }
     return 0;
 }

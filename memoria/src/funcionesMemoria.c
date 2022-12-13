@@ -181,34 +181,27 @@ void finalizacionDeProceso(int pid) {
 
 void cargarPagina(entradaTablaPaginas* unaEntrada,int pid) {
 	if(unaEntrada->presencia == 0) {
-		log_info(logger, "Primer instruccion dentro del if");
 		marco* marcoAAsignar;
 		t_lista_circular* frames_proceso = obtener_lista_circular_del_proceso(pid);
 		//Caso en el que se puede asignar un marco a un proceso de manera libre
-		log_info(logger, "Antes segundo if");
 		if(frames_proceso->tamanio < marcosPorProceso){
-			log_info(logger, "Primer instruccion dsp segundo if");
 			marcoAAsignar = siguienteMarcoLibre();
 			modificarPaginaACargar(unaEntrada, marcoAAsignar);
 
-			log_info(logger, "Antes de insertar circular");
 			insertar_lista_circular(frames_proceso,unaEntrada);
-			log_info(logger, "Despues insertar circular");
 
 			if(unaEntrada->modificado == 1) {
 				leerDeSwap(unaEntrada, unaEntrada->numeroMarco);
 				unaEntrada->modificado = 0;
-				log_info(logger, "Modificar bit de modificado");
+
 			}
 			//Caso en el que ya el proceso tiene maxima cantidad de marcos por proceso y hay que desalojar 1
 		}else{
-			log_info(logger, "ELSEEEEEEEEEE");
 			sustitucion_paginas(unaEntrada,pid);
 			if(unaEntrada->modificado == 1){
 				leerDeSwap(unaEntrada, unaEntrada->numeroMarco);
 				unaEntrada->modificado = 0;
 			}
-			log_info(logger, "Ni idea por que aca");
 		}
 	}
 }
@@ -334,11 +327,10 @@ void leerDeSwap(entradaTablaPaginas* unaEntrada, int numeroDeMarcoNuevo) {
 /**************************************** ALGORITMOS DE SUSTITUCION **********************************************/
 
 void sustitucion_paginas(entradaTablaPaginas* una_entrada, int pid) {
-	log_info(logger, "Antes de obtener lista circular proceso");
 	t_lista_circular* frames_proceso = obtener_lista_circular_del_proceso(pid);
 
 	if (strcmp("CLOCK", algoritmoDeReemplazo)==0) {
-		log_info(logger, "CLOCK");
+		//log_info(logger, "CLOCK");
 		algoritmo_clock(frames_proceso, una_entrada);
 		return;
 	}
