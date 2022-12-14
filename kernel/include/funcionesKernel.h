@@ -39,7 +39,7 @@ typedef struct {
 	t_queue* cola_procesos;
 	t_queue* cola_UTs;
 	sem_t semaforo;
-
+	pthread_mutex_t mutexDisp;
 } t_elem_disp;
 
 extern int socketServidorKernel;

@@ -368,6 +368,9 @@ void inicializar_lista_dispositivos() {
 			sem_init(&semaforo,0,0);
 			elemento_nuevo->semaforo = semaforo;
 
+			pthread_mutex_t mutex;
+			pthread_mutex_init(&mutex,NULL);
+			elemento_nuevo->mutexDisp = mutex;
 
 			list_add(listaDeColasDispositivos,elemento_nuevo);
 		}

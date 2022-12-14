@@ -437,10 +437,12 @@ void asignar_memoria() {
 					//log_info(loggerAux, list_get());
 				}
 
+
 		log_info(loggerAux,"llego antes del push a cola de ready");
-			//pthread_mutex_lock(&primerPushColaReady);
 		
 
+
+		pthread_mutex_lock(&primerPushColaReady);
 		if (!strcmp(algoritmoPlanificacion, "FIFO")) {
 			queue_push(colaReadyFIFO,proceso);
 
@@ -459,7 +461,7 @@ void asignar_memoria() {
 					log_info(logger, "%d", pcbAux->idProceso);
 				}
 			} else {
-				if(!strcmp(algoritmoPlanificacion, "Feedback")) {// ver si esta asi en los config
+				if(!strcmp(algoritmoPlanificacion, "FEEDBACK")) {// ver si esta asi en los config
 					queue_push(colaReadyRR,proceso);
 
 					log_info(logger, "Cola Ready <Feedback>: [<LISTA DE PIDS RR>]");
@@ -477,7 +479,7 @@ void asignar_memoria() {
 				}
 			}
 		}
-		//free(pcbAux);
+		pthread_mutex_unlock(&primerPushColaReady);
 		log_info(logger,"PID: <%d> - Estado Anterior: <NEW> - Estado Actual: <READY>", proceso->idProceso);
 		sem_post(&pcbEnReady);
 		log_info(loggerAux,"[asignar_memoria]: desde asignar_memoria despertamos a readyAExe");
@@ -510,7 +512,7 @@ void readyAExe() {
 		//free(procesoAEjecutar);
 		log_info(logger, "[readyAExe]: enviamos el proceso a cpu");
 
-		if(!strcmp(algoritmoPlanificacion,"RR") || (!strcmp(algoritmoPlanificacion,"Feedback") && procesoAEjecutar->algoritmoActual == RR)){
+		if(!strcmp(algoritmoPlanificacion,"RR") || (!strcmp(algoritmoPlanificacion,"FEEDBACK") && procesoAEjecutar->algoritmoActual == RR)){
 			pthread_create(&hiloQuantumRR, NULL,(void*) controlar_quantum,NULL);
 			pthread_detach(hiloQuantumRR);
 		}
@@ -533,7 +535,7 @@ t_pcb * procesoPlanificado;  // = malloc(sizeof(t_pcb));
 			log_info(loggerAux,"Entra al if por rr");
 			procesoPlanificado = obtenerSiguienteRR();
 		} else {
-			if(!strcmp(algoritmoPlanificacion, "Feedback")){
+			if(!strcmp(algoritmoPlanificacion, "FEEDBACK")){
 				if(queue_size(colaReadyRR)>0){
 					procesoPlanificado = obtenerSiguienteRR();
 					procesoPlanificado->algoritmoActual = RR;
@@ -585,7 +587,7 @@ while (1) {
 	case CPU_PCB_A_KERNEL_POR_IO:
 		t_pcb * proceso = recibir_pcb(conexionCpuDispatch);
 
-		if(!strcmp(algoritmoPlanificacion, "RR") || (!strcmp(algoritmoPlanificacion, "Feedback") && proceso->algoritmoActual == RR)){
+		if(!strcmp(algoritmoPlanificacion, "RR") || (!strcmp(algoritmoPlanificacion, "FEEDBACK") && proceso->algoritmoActual == RR)){
 			pthread_cancel(hiloQuantumRR);
 			}
 
@@ -602,18 +604,30 @@ while (1) {
 
 		t_elem_disp * elementoLista = list_find(listaDeColasDispositivos, comparar_nombre_dispositivo);
 
-		queue_push(elementoLista->cola_procesos,proceso);
+		pthread_mutex_t mutexColaIOGenericoProcesos;
 
+		pthread_mutex_init(&mutexColaIOGenericoProcesos,NULL);
+
+	//	pthread_mutex_lock(&mutexColaIOGenericoProcesos);
+		queue_push(elementoLista->cola_procesos,proceso);
+	//	pthread_mutex_unlock(&mutexColaIOGenericoProcesos);
 
 		cod_op = recibir_operacion(conexionCpuDispatch);
 		int unidadesTrabajo = 0;
 
 		if(cod_op == CPU_A_KERNEL_UNIDADES_DE_TRABAJO_IO){
 			unidadesTrabajo = recibir_entero(conexionCpuDispatch);
+			log_info(logger,"recibe %d unidades de trabajo", unidadesTrabajo);
 		}
 
 
+		pthread_mutex_lock(&elementoLista->mutexDisp);
 		queue_push(elementoLista->cola_UTs,&unidadesTrabajo);
+		int * numeritoUT = queue_pop(elementoLista->cola_UTs);
+		log_info(logger,"las unidades de laburo son: %d", *numeritoUT);
+		queue_push(elementoLista->cola_UTs,numeritoUT);
+		pthread_mutex_unlock(&elementoLista->mutexDisp);
+
 
 		log_info(logger, "PID: <%d> - Bloqueado por: <%s>" , proceso->idProceso, elementoLista->dispositivo);
 
@@ -631,7 +645,7 @@ while (1) {
 		aMandarTeclado->pcb = recibir_pcb(conexionCpuDispatch);
 
 
-		if(!strcmp(algoritmoPlanificacion, "RR") || (!strcmp(algoritmoPlanificacion, "Feedback") && aMandarTeclado->pcb->algoritmoActual == RR)){
+		if(!strcmp(algoritmoPlanificacion, "RR") || (!strcmp(algoritmoPlanificacion, "FEEDBACK") && aMandarTeclado->pcb->algoritmoActual == RR)){
 
 			pthread_cancel(hiloQuantumRR);
 		}
@@ -662,10 +676,11 @@ while (1) {
 
 		t_info_pantalla * aMandarPantalla = malloc(sizeof(t_info_pantalla));
 
+
 	//	pthread_mutex_lock(&mutexPantalla);
 		aMandarPantalla->pcb = recibir_pcb(conexionCpuDispatch);
 
-		if(!strcmp(algoritmoPlanificacion, "RR") || (!strcmp(algoritmoPlanificacion,"Feedback") && aMandarPantalla->pcb->algoritmoActual == RR)){
+		if(!strcmp(algoritmoPlanificacion, "RR") || (!strcmp(algoritmoPlanificacion,"FEEDBACK") && aMandarPantalla->pcb->algoritmoActual == RR)){
 						pthread_cancel(hiloQuantumRR);
 					}
 
@@ -693,16 +708,21 @@ while (1) {
 	case CPU_A_KERNEL_PCB_POR_DESALOJO:
 		t_pcb* pcb = recibir_pcb(conexionCpuDispatch);
 
+		pthread_mutex_t mutexDesalojo;
+		pthread_mutex_init(&mutexDesalojo,NULL);
+
+		pthread_mutex_lock(&mutexDesalojo);
 
 		if (!strcmp(algoritmoPlanificacion, "RR")) {
 			queue_push(colaReadyRR,pcb);
 		} else {
-			if (!strcmp(algoritmoPlanificacion, "Feedback")) {
+			if (!strcmp(algoritmoPlanificacion, "FEEDBACK")) {
 				queue_push(colaReadyFIFO,pcb);
 			} else {
 					log_info(loggerAux, "Algoritmo invalido");
 			}
 		}
+		pthread_mutex_unlock(&mutexDesalojo);
 
 		log_info(logger,"PID: <%d> - Desalojado por fin de Quantum", pcb->idProceso);
 
@@ -749,7 +769,7 @@ while (1) {
 
 		t_pcb* pcbATerminar = recibir_pcb(conexionCpuDispatch);
 
-		if(!strcmp(algoritmoPlanificacion, "RR") || (!strcmp(algoritmoPlanificacion, "Feedback") && pcbATerminar->algoritmoActual == RR)){
+		if(!strcmp(algoritmoPlanificacion, "RR") || (!strcmp(algoritmoPlanificacion, "FEEDBACK") && pcbATerminar->algoritmoActual == RR)){
 			pthread_cancel(hiloQuantumRR);
 		}
 
@@ -830,19 +850,25 @@ void atender_IO_teclado(t_info_teclado * info){
 				break;
 		}
 
+		pthread_mutex_t mutex;
+		pthread_mutex_init(&mutex,NULL);
+
+
+		pthread_mutex_lock(&mutex);
 		if (!strcmp(algoritmoPlanificacion, "FIFO")) {
 			queue_push(colaReadyFIFO,unPcb);
 		} else {
 			if (!strcmp(algoritmoPlanificacion, "RR")) {
 				queue_push(colaReadyRR,unPcb);
 			} else {
-				if(!strcmp(algoritmoPlanificacion, "Feedback")) {// ver si esta asi en los config
+				if(!strcmp(algoritmoPlanificacion, "FEEDBACK")) {// ver si esta asi en los config
 					queue_push(colaReadyRR,unPcb);
 				}else{
 					log_info(loggerAux, "Algoritmo invalido");
 				}
 			}
 		}
+		pthread_mutex_unlock(&mutex);
 
 		log_info(logger,"PID: <%d> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>", unPcb->idProceso);
 
@@ -860,19 +886,27 @@ void atender_IO_pantalla(t_info_pantalla * info) {
 
 	recibir_mensaje(unPcb->socket);
 
+	pthread_mutex_t mutex;
+	pthread_mutex_init(&mutex,NULL);
+
+	pthread_mutex_lock(&mutex);
+
 	if (!strcmp(algoritmoPlanificacion, "FIFO")) {
 		queue_push(colaReadyFIFO,unPcb);
 	} else {
 		if (!strcmp(algoritmoPlanificacion, "RR")) {
 		queue_push(colaReadyRR,unPcb);
 		} else {
-			if(!strcmp(algoritmoPlanificacion, "Feedback")) {// ver si esta asi en los config
+			if(!strcmp(algoritmoPlanificacion, "FEEDBACK")) {// ver si esta asi en los config
 				queue_push(colaReadyRR,unPcb);
 			}else{
 				log_info(loggerAux, "Algoritmo invalido");
 			}
 		}
 	}
+
+	pthread_mutex_unlock(&mutex);
+
 
 	log_info(logger,"PID: <%d> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>", unPcb->idProceso);
 
@@ -910,18 +944,32 @@ void atender_IO_generico(t_elem_disp* elemento){
 		sem_wait(&elemento->semaforo);
 		log_info(logger," [atender_IO_generico del dispositivo <%s>] : se desperto ", elemento->dispositivo);
 
+		log_info(logger," [atender_IO_generico del dispositivo <%s>] : tamanio de cola de unidades de trabajo antes de hacer pop: %d ", elemento->dispositivo, queue_size(elemento->cola_UTs));
+
+
+
+
+		pthread_mutex_lock(&elemento->mutexDisp);
+	//	sleep(2);
 		int * unidades_trabajo = queue_pop(elemento->cola_UTs);
+		pthread_mutex_unlock(&elemento->mutexDisp);
+
 		int tiempo_dispositivo = elemento->tiempo;
 		log_info(logger," [atender_IO_generico del dispositivo <%s>] : el tiempo de dispositivo es %d y las unidades de trabajo obtenidas de la cola son %d ", elemento->dispositivo, tiempo_dispositivo,*unidades_trabajo);
+		t_pcb * proceso = queue_pop(elemento->cola_procesos);
+
+		log_info(logger,"[atender_IO_generico del dispositivo <%s>] tamanio de lista despues de tomar proceso <%d>", elemento->dispositivo, queue_size(elemento->cola_procesos));
+		log_info(logger," [atender_IO_generico del dispositivo <%s>] : obtuvimos el siguiente PCB: %d  ", elemento->dispositivo, proceso->idProceso);
+
 		log_info(logger," [atender_IO_generico del dispositivo <%s>] : simulando tiempo de bloqueo  ", elemento->dispositivo);
 
 		usleep(tiempo_dispositivo * 1000 * (*unidades_trabajo));
 
 
 
-		t_pcb * proceso = queue_pop(elemento->cola_procesos);
-
-		log_info(logger," [atender_IO_generico del dispositivo <%s>] : obtuvimos el siguiente PCB  ", elemento->dispositivo);
+		log_info(logger," [atender_IO_generico del dispositivo <%s>] : fin del tiempo de bloqueo para el pid <%d>", elemento->dispositivo,proceso->idProceso);
+		log_info(logger," [atender_IO_generico del dispositivo <%s>] : cantidad de procesos en espera <%d>", elemento->dispositivo,queue_size(elemento->cola_procesos));
+		log_info(logger," [atender_IO_generico del dispositivo <%s>] : cantidad de udts en espera <%d>", elemento->dispositivo,queue_size(elemento->cola_UTs));
 
 		//controlar_pcb(proceso);
 
@@ -931,7 +979,7 @@ void atender_IO_generico(t_elem_disp* elemento){
 			if (!strcmp(algoritmoPlanificacion, "RR")) {
 				queue_push(colaReadyRR,proceso);
 			} else {
-				if(!strcmp(algoritmoPlanificacion, "Feedback")) {// ver si esta asi en los config
+				if(!strcmp(algoritmoPlanificacion, "FEEDBACK")) {// ver si esta asi en los config
 					queue_push(colaReadyRR,proceso);
 				}else{
 					log_info(loggerAux, "Algoritmo invalido");
@@ -990,7 +1038,7 @@ void atender_page_fault(t_info_pf* infoPF){
 		if (!strcmp(algoritmoPlanificacion, "RR")) {
 			queue_push(colaReadyRR,pcb);
 		} else {
-			if(!strcmp(algoritmoPlanificacion, "Feedback")) {// ver si esta asi en los config
+			if(!strcmp(algoritmoPlanificacion, "FEEDBACK")) {// ver si esta asi en los config
 				queue_push(colaReadyRR,pcb);
 			}else{
 				log_info(loggerAux, "Algoritmo invalido");
