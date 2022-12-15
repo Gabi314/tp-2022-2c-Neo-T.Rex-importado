@@ -67,7 +67,6 @@ void ejecucion(void* aa){
 	}
 }
 
-
 //	unPcb = malloc(sizeof(t_pcb));
 //
 //	unPcb->idProceso = 0; //PARA HACER PRUEBAS SIN KERNEL

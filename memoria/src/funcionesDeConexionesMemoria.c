@@ -37,6 +37,8 @@ int conexionConCpu(void* void_args) {
 				numeroTablaDePaginas = list_get(listaConTablaDePaginaYPagina, 0);
 				numeroDeLaPagina = list_get(listaConTablaDePaginaYPagina, 1);
 
+				log_info(loggerAux, "Me llego de cpu el nro tp <%d> y nro pag <%d>", numeroTablaDePaginas, numeroDeLaPagina);
+
 				numeroDeMarco =  marcoSegunIndice(numeroTablaDePaginas, numeroDeLaPagina);
 
 				if(numeroDeMarco == -1) {

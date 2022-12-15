@@ -424,12 +424,12 @@ int chequearMarcoEnTLB(int nroDePagina, int nroDeSegmento,int pid){
 int accederAMemoria(int marco,int numeroDeSegmento,t_pcb* pcb){
 
 	log_info(logger,"La pagina no se encuentra en tlb, se debera acceder a memoria(tabla de paginas)");
-	log_info(logger,"hasta aca llego en acceder a memoria");
+
 	enviarNroTablaDePaginas(pcb->tablaSegmentos,numeroDeSegmento,socket_memoria,numeroDePagina);//Envio nroTP y nroDePag(los obtengo con nro de segmento de la tabla de segmentos)
 
 	int seAccedeAMemoria = 1;
 
-	//while (seAccedeAMemoria == 1) {
+	while (seAccedeAMemoria == 1) {
 		int cod_op = recibir_operacion(socket_memoria);
 
 		switch (cod_op){
@@ -458,7 +458,7 @@ int accederAMemoria(int marco,int numeroDeSegmento,t_pcb* pcb){
 				seAccedeAMemoria = 0;//salga del while
 				break;
 		}
-	//}
+	}
 
 	return marco;
 }

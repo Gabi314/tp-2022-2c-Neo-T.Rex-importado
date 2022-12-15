@@ -229,7 +229,7 @@ void agregarSegmentosAlPaquete(entradaTablaSegmento* unSegmento){
 
 void enviarNroTablaDePaginas(t_list* tablaDeSegmentos,int numeroDeSegmento, int socket_memoria, int numeroDePagina) {
 	entradaTablaSegmento* unaEntradaTablaSegmento = malloc(sizeof(entradaTablaSegmento));
-	log_info(logger,"hasta aca llego");
+
 	unaEntradaTablaSegmento = list_get(tablaDeSegmentos,numeroDeSegmento);
 
 
