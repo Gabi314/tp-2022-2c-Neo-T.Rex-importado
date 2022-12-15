@@ -143,6 +143,7 @@ extern pthread_mutex_t obtenerProceso;
 extern pthread_mutex_t primerPushColaReady;
 extern pthread_mutex_t mutexPantalla;
 extern pthread_mutex_t mutexTeclado;
+extern pthread_mutex_t mutexConexionMemoria;
 
 void obtenerTamanioIdentificadores(instruccion*);
 void obtenerCantidadDeSegmentos(entradaTablaSegmento*);

@@ -55,9 +55,14 @@ void conexionConKernelDispatch(){//un hilo
 
 void handshakeMemoria(){
 	pthread_mutex_t mutexPrimerHandshake;
+	pthread_mutex_init(&mutexPrimerHandshake,NULL);
+
 	pthread_mutex_t mutexPrimerHandshake2;
 	// Creamos una conexión hacia el servidor
+
+
 	pthread_mutex_lock(&mutexPrimerHandshake);
+	log_info(logger,"entra al mutex");
     socket_memoria = crear_conexion(ipMemoria, puertoMemoria);
 	pthread_mutex_unlock(&mutexPrimerHandshake);
 	log_info(logger,"Hola memoria, soy cpu");
@@ -242,7 +247,9 @@ void enviarNroTablaDePaginas(t_list* tablaDeSegmentos,int numeroDeSegmento, int 
 	agregar_a_paquete_unInt(paquete, &unaEntradaTablaSegmento->numeroTablaPaginas, sizeof(int));
 	agregar_a_paquete_unInt(paquete, &numeroDePagina, sizeof(int));
 
+	pthread_mutex_lock(&mutexSocketMemoria);
 	enviar_paquete(paquete, socket_memoria);
+	pthread_mutex_unlock(&mutexSocketMemoria);
 	eliminar_paquete(paquete);
 }
 
@@ -266,13 +273,17 @@ void enviarDireccionFisica(int marco, int desplazamientoPagina,int leer,int valo
 	}
 
 	log_info(logger,"Le envio a memoria direccion fisica: Marco:%d y Offset: %d",marco,desplazamientoPagina);
+	pthread_mutex_lock(&mutexSocketMemoria);
 	enviar_paquete(paquete,socket_memoria);
+	pthread_mutex_unlock(&mutexSocketMemoria);
 	eliminar_paquete(paquete);
 }
 
 void enviarValorAEscribir(uint32_t valorAEscribir){
 	log_info(logger,"Le envio a memoria el valor a escribir %u",valorAEscribir);
+	pthread_mutex_lock(&mutexSocketMemoria);
 	enviar_entero(valorAEscribir, socket_memoria, CPU_A_MEMORIA_VALOR_A_ESCRIBIR);
+	pthread_mutex_unlock(&mutexSocketMemoria);
 }
 
 

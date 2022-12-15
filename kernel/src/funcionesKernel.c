@@ -65,6 +65,7 @@ pthread_mutex_t obtenerProceso;
 pthread_mutex_t primerPushColaReady;
 pthread_mutex_t mutexPantalla;
 pthread_mutex_t mutexTeclado;
+pthread_mutex_t mutexConexionMemoria;
 
 
 int tamanioTotalIdentificadores;
@@ -415,6 +416,8 @@ void asignar_memoria() {
 		int tamanioTablaSegmentos = list_size(proceso->tablaSegmentos);
 		agregar_a_paquete_unInt(paqueteLocal, &tamanioTablaSegmentos, sizeof(int));
 		log_info(loggerAux,"llego antes de enviar el paquete");
+
+		pthread_mutex_lock(&mutexConexionMemoria);
 		enviar_paquete(paqueteLocal,socketMemoria);
 
 		int cod_op = recibir_operacion(socketMemoria);
@@ -427,6 +430,7 @@ void asignar_memoria() {
 		else {
 			log_info(loggerAux,"operacion de memoria invalida");
 		}
+		pthread_mutex_unlock(&mutexConexionMemoria);
 
 		log_info(loggerAux,"llego antes del for");
 		for(int i=0;i<list_size(proceso->tablaSegmentos);i++ ){
@@ -442,7 +446,7 @@ void asignar_memoria() {
 		
 
 
-		pthread_mutex_lock(&primerPushColaReady);
+		pthread_mutex_unlock(&primerPushColaReady);
 		if (!strcmp(algoritmoPlanificacion, "FIFO")) {
 			queue_push(colaReadyFIFO,proceso);
 
@@ -482,6 +486,8 @@ void asignar_memoria() {
 		pthread_mutex_unlock(&primerPushColaReady);
 		log_info(logger,"PID: <%d> - Estado Anterior: <NEW> - Estado Actual: <READY>", proceso->idProceso);
 		sem_post(&pcbEnReady);
+
+		log_info(logger,"valor de pcbEnReady %d", *&pcbEnReady);
 		log_info(loggerAux,"[asignar_memoria]: desde asignar_memoria despertamos a readyAExe");
 	}
 }
@@ -788,10 +794,11 @@ while (1) {
 
 void terminarEjecucion(t_pcb * procesoAFinalizar) {
 	procesoAFinalizar->estado = TERMINATED; // es local no hace falta mutex
+	pthread_mutex_lock(&mutexConexionMemoria);
 	enviar_mensaje("Liberar estructuras",socketMemoria,KERNEL_A_MEMORIA_MENSAJE_LIBERAR_POR_TERMINADO);//Enviamos mensaje a memoria para que libere estructuras
 
 	enviar_entero(procesoAFinalizar->idProceso, socketMemoria, KERNEL_A_MEMORIA_PID_PARA_FINALIZAR);
-
+	pthread_mutex_unlock(&mutexConexionMemoria);
 	log_info(loggerAux, "[terminarEjecucion]: Se envia un mensaje a memoria para que libere estructuras");
 
 	enviar_mensaje("Finalizar consola", procesoAFinalizar->socket,KERNEL_MENSAJE_FINALIZAR_CONSOLA);
@@ -1021,6 +1028,7 @@ void atender_page_fault(t_info_pf* infoPF){
 	int numeroDePagina = list_get(listaTPyNroPag,0);
 	agregar_a_paquete_unInt(paquete, &numeroTablaPagina, sizeof(int));
 	agregar_a_paquete_unInt(paquete, &numeroDePagina, sizeof(int));
+	pthread_mutex_lock(&mutexConexionMemoria);
 	enviar_paquete(paquete,socketMemoria);
 	eliminar_paquete(paquete);
 
@@ -1046,7 +1054,7 @@ void atender_page_fault(t_info_pf* infoPF){
 			}
 		}
 	}
-
+	pthread_mutex_unlock(&mutexConexionMemoria);
 	log_info(logger,"PID: <%d> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>", pcb->idProceso);
 
 	sem_post(&pcbEnReady);

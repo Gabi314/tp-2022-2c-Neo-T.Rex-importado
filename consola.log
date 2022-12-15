@@ -1935,3 +1935,212 @@
 [INFO] 00:56:11:763 CONSOLA/(28304:28304): [recibir_entero]: se recibio el numero 3
 [INFO] 00:56:12:513 CONSOLA/(28304:28304): Se imprime el valor 3 por pantalla a pedido del kernel
 [INFO] 00:56:23:537 CONSOLA/(28304:28304): Me llego el mensaje Finalizar consola
+[INFO] 15:14:50:127 CONSOLA/(29761:29761): Config creado
+[INFO] 15:14:50:161 CONSOLA/(29761:29761): llego hasta recibir lista dispositivos
+[INFO] 15:14:50:168 CONSOLA/(29761:29761): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 15:14:50:168 CONSOLA/(29761:29761): Primer dispositivo DISCO
+[INFO] 15:14:50:168 CONSOLA/(29761:29761): Se leyo el archivo correctamente
+[INFO] 15:14:50:170 CONSOLA/(29761:29761): Me llego el mensaje [atender_consola]segmentos e instrucciones recibidos pibe
+[INFO] 15:14:52:293 CONSOLA/(29767:29767): Config creado
+[INFO] 15:14:52:293 CONSOLA/(29767:29767): llego hasta recibir lista dispositivos
+[INFO] 15:14:52:294 CONSOLA/(29767:29767): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 15:14:52:294 CONSOLA/(29767:29767): Primer dispositivo DISCO
+[INFO] 15:14:52:294 CONSOLA/(29767:29767): Se leyo el archivo correctamente
+[INFO] 15:14:52:295 CONSOLA/(29767:29767): Me llego el mensaje [atender_consola]segmentos e instrucciones recibidos pibe
+[INFO] 15:14:55:779 CONSOLA/(29761:29761): [recibir_entero]: se recibio el numero 237
+[INFO] 15:14:56:279 CONSOLA/(29761:29761): Se imprime el valor 237 por pantalla a pedido del kernel
+[INFO] 15:14:56:316 CONSOLA/(29761:29761): Me llego el mensaje Finalizar consola
+[INFO] 18:01:05:077 CONSOLA/(32188:32188): Config creado
+[INFO] 18:01:05:160 CONSOLA/(32188:32188): llego hasta recibir lista dispositivos
+[INFO] 18:01:05:233 CONSOLA/(32188:32188): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 18:01:05:233 CONSOLA/(32188:32188): Primer dispositivo DISCO
+[INFO] 18:01:05:233 CONSOLA/(32188:32188): Se leyo el archivo correctamente
+[INFO] 18:01:05:259 CONSOLA/(32188:32188): Me llego el mensaje [atender_consola]segmentos e instrucciones recibidos pibe
+[INFO] 18:01:06:370 CONSOLA/(32190:32190): Config creado
+[INFO] 18:01:06:370 CONSOLA/(32190:32190): llego hasta recibir lista dispositivos
+[INFO] 18:01:06:376 CONSOLA/(32190:32190): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 18:01:06:376 CONSOLA/(32190:32190): Primer dispositivo DISCO
+[INFO] 18:01:06:376 CONSOLA/(32190:32190): Se leyo el archivo correctamente
+[INFO] 18:01:06:385 CONSOLA/(32190:32190): Me llego el mensaje [atender_consola]segmentos e instrucciones recibidos pibe
+[INFO] 18:26:07:233 CONSOLA/(32649:32649): Config creado
+[INFO] 18:26:07:271 CONSOLA/(32649:32649): llego hasta recibir lista dispositivos
+[INFO] 18:26:07:277 CONSOLA/(32649:32649): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 18:26:07:277 CONSOLA/(32649:32649): Primer dispositivo DISCO
+[INFO] 18:26:07:277 CONSOLA/(32649:32649): Se leyo el archivo correctamente
+[INFO] 18:26:07:279 CONSOLA/(32649:32649): Me llego el mensaje [atender_consola]segmentos e instrucciones recibidos pibe
+[INFO] 18:26:09:594 CONSOLA/(32651:32651): Config creado
+[INFO] 18:26:09:594 CONSOLA/(32651:32651): llego hasta recibir lista dispositivos
+[INFO] 18:26:09:600 CONSOLA/(32651:32651): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 18:26:09:600 CONSOLA/(32651:32651): Primer dispositivo DISCO
+[INFO] 18:26:09:600 CONSOLA/(32651:32651): Se leyo el archivo correctamente
+[INFO] 18:26:09:603 CONSOLA/(32651:32651): Me llego el mensaje [atender_consola]segmentos e instrucciones recibidos pibe
+[INFO] 18:33:08:564 CONSOLA/(33059:33059): Config creado
+[INFO] 18:33:08:581 CONSOLA/(33059:33059): llego hasta recibir lista dispositivos
+[INFO] 18:33:08:587 CONSOLA/(33059:33059): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 18:33:08:587 CONSOLA/(33059:33059): Primer dispositivo DISCO
+[INFO] 18:33:08:587 CONSOLA/(33059:33059): Se leyo el archivo correctamente
+[INFO] 18:33:08:589 CONSOLA/(33059:33059): Me llego el mensaje [atender_consola]segmentos e instrucciones recibidos pibe
+[INFO] 18:33:10:381 CONSOLA/(33062:33062): Config creado
+[INFO] 18:33:10:381 CONSOLA/(33062:33062): llego hasta recibir lista dispositivos
+[INFO] 18:33:10:388 CONSOLA/(33062:33062): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 18:33:10:388 CONSOLA/(33062:33062): Primer dispositivo DISCO
+[INFO] 18:33:10:388 CONSOLA/(33062:33062): Se leyo el archivo correctamente
+[INFO] 18:33:10:393 CONSOLA/(33062:33062): Me llego el mensaje [atender_consola]segmentos e instrucciones recibidos pibe
+[INFO] 18:41:27:929 CONSOLA/(33295:33295): Config creado
+[ERROR] 18:41:27:930 CONSOLA/(33295:33295): Error al conectar al servidor
+[INFO] 18:41:27:930 CONSOLA/(33295:33295): llego hasta recibir lista dispositivos
+[INFO] 18:41:27:930 CONSOLA/(33295:33295): codigo de operacion incorrecto
+[INFO] 18:41:27:930 CONSOLA/(33295:33295): Se leyo el archivo correctamente
+[INFO] 18:43:19:222 CONSOLA/(33773:33773): Config creado
+[INFO] 18:43:19:222 CONSOLA/(33773:33773): llego hasta recibir lista dispositivos
+[INFO] 18:43:19:228 CONSOLA/(33773:33773): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 18:43:19:228 CONSOLA/(33773:33773): Primer dispositivo DISCO
+[INFO] 18:43:19:228 CONSOLA/(33773:33773): Se leyo el archivo correctamente
+[INFO] 18:43:19:231 CONSOLA/(33773:33773): Me llego el mensaje [atender_consola]segmentos e instrucciones recibidos pibe
+[INFO] 18:43:21:169 CONSOLA/(33779:33779): Config creado
+[INFO] 18:43:21:169 CONSOLA/(33779:33779): llego hasta recibir lista dispositivos
+[INFO] 18:43:21:172 CONSOLA/(33779:33779): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 18:43:21:172 CONSOLA/(33779:33779): Primer dispositivo DISCO
+[INFO] 18:43:21:172 CONSOLA/(33779:33779): Se leyo el archivo correctamente
+[INFO] 18:43:21:174 CONSOLA/(33779:33779): Me llego el mensaje [atender_consola]segmentos e instrucciones recibidos pibe
+[INFO] 18:43:23:355 CONSOLA/(33773:33773): [recibir_entero]: se recibio el numero 237
+[INFO] 18:43:23:855 CONSOLA/(33773:33773): Se imprime el valor 237 por pantalla a pedido del kernel
+[INFO] 18:43:23:862 CONSOLA/(33773:33773): Me llego el mensaje Finalizar consola
+[INFO] 19:12:34:522 CONSOLA/(34329:34329): Config creado
+[INFO] 19:12:34:548 CONSOLA/(34329:34329): llego hasta recibir lista dispositivos
+[INFO] 19:12:34:557 CONSOLA/(34329:34329): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 19:12:34:557 CONSOLA/(34329:34329): Primer dispositivo DISCO
+[INFO] 19:12:34:557 CONSOLA/(34329:34329): Se leyo el archivo correctamente
+[INFO] 19:12:34:561 CONSOLA/(34329:34329): Me llego el mensaje [atender_consola]segmentos e instrucciones recibidos pibe
+[INFO] 19:12:36:385 CONSOLA/(34331:34331): Config creado
+[INFO] 19:12:36:385 CONSOLA/(34331:34331): llego hasta recibir lista dispositivos
+[INFO] 19:12:36:391 CONSOLA/(34331:34331): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 19:12:36:391 CONSOLA/(34331:34331): Primer dispositivo DISCO
+[INFO] 19:12:36:391 CONSOLA/(34331:34331): Se leyo el archivo correctamente
+[INFO] 19:12:36:393 CONSOLA/(34331:34331): Me llego el mensaje [atender_consola]segmentos e instrucciones recibidos pibe
+[INFO] 19:27:51:515 CONSOLA/(34662:34662): Config creado
+[ERROR] 19:27:51:515 CONSOLA/(34662:34662): Error al conectar al servidor
+[INFO] 19:27:51:515 CONSOLA/(34662:34662): llego hasta recibir lista dispositivos
+[INFO] 19:27:51:515 CONSOLA/(34662:34662): codigo de operacion incorrecto
+[INFO] 19:27:51:515 CONSOLA/(34662:34662): Se leyo el archivo correctamente
+[INFO] 19:29:07:584 CONSOLA/(34983:34983): Config creado
+[INFO] 19:29:07:585 CONSOLA/(34983:34983): llego hasta recibir lista dispositivos
+[INFO] 19:29:07:591 CONSOLA/(34983:34983): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 19:29:07:591 CONSOLA/(34983:34983): Primer dispositivo DISCO
+[INFO] 19:29:07:591 CONSOLA/(34983:34983): Se leyo el archivo correctamente
+[INFO] 19:29:07:596 CONSOLA/(34983:34983): Me llego el mensaje [atender_consola]segmentos e instrucciones recibidos pibe
+[INFO] 19:29:09:366 CONSOLA/(34989:34989): Config creado
+[INFO] 19:29:09:366 CONSOLA/(34989:34989): llego hasta recibir lista dispositivos
+[INFO] 19:29:09:369 CONSOLA/(34989:34989): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 19:29:09:369 CONSOLA/(34989:34989): Primer dispositivo DISCO
+[INFO] 19:29:09:369 CONSOLA/(34989:34989): Se leyo el archivo correctamente
+[INFO] 19:29:09:376 CONSOLA/(34989:34989): Me llego el mensaje [atender_consola]segmentos e instrucciones recibidos pibe
+[INFO] 19:29:12:136 CONSOLA/(34983:34983): [recibir_entero]: se recibio el numero 237
+[INFO] 19:29:12:636 CONSOLA/(34983:34983): Se imprime el valor 237 por pantalla a pedido del kernel
+[INFO] 19:29:12:641 CONSOLA/(34983:34983): Me llego el mensaje Finalizar consola
+[INFO] 20:14:38:295 CONSOLA/(35436:35436): Config creado
+[INFO] 20:14:38:320 CONSOLA/(35436:35436): llego hasta recibir lista dispositivos
+[INFO] 20:14:38:331 CONSOLA/(35436:35436): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 20:14:38:331 CONSOLA/(35436:35436): Primer dispositivo DISCO
+[INFO] 20:14:38:331 CONSOLA/(35436:35436): Se leyo el archivo correctamente
+[INFO] 20:14:38:334 CONSOLA/(35436:35436): Me llego el mensaje [atender_consola]segmentos e instrucciones recibidos pibe
+[INFO] 20:14:39:990 CONSOLA/(35442:35442): Config creado
+[INFO] 20:14:39:991 CONSOLA/(35442:35442): llego hasta recibir lista dispositivos
+[INFO] 20:14:39:993 CONSOLA/(35442:35442): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 20:14:39:993 CONSOLA/(35442:35442): Primer dispositivo DISCO
+[INFO] 20:14:39:993 CONSOLA/(35442:35442): Se leyo el archivo correctamente
+[INFO] 20:14:39:996 CONSOLA/(35442:35442): Me llego el mensaje [atender_consola]segmentos e instrucciones recibidos pibe
+[INFO] 20:14:41:704 CONSOLA/(35436:35436): [recibir_entero]: se recibio el numero 237
+[INFO] 20:14:42:204 CONSOLA/(35436:35436): Se imprime el valor 237 por pantalla a pedido del kernel
+[INFO] 20:14:42:252 CONSOLA/(35436:35436): Me llego el mensaje Finalizar consola
+[INFO] 20:16:35:992 CONSOLA/(35706:35706): Config creado
+[INFO] 20:16:35:993 CONSOLA/(35706:35706): llego hasta recibir lista dispositivos
+[INFO] 20:16:35:998 CONSOLA/(35706:35706): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 20:16:35:998 CONSOLA/(35706:35706): Primer dispositivo DISCO
+[INFO] 20:16:35:998 CONSOLA/(35706:35706): Se leyo el archivo correctamente
+[INFO] 20:16:36:000 CONSOLA/(35706:35706): Me llego el mensaje [atender_consola]segmentos e instrucciones recibidos pibe
+[INFO] 20:16:37:811 CONSOLA/(35708:35708): Config creado
+[INFO] 20:16:37:811 CONSOLA/(35708:35708): llego hasta recibir lista dispositivos
+[INFO] 20:16:37:818 CONSOLA/(35708:35708): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 20:16:37:818 CONSOLA/(35708:35708): Primer dispositivo DISCO
+[INFO] 20:16:37:818 CONSOLA/(35708:35708): Se leyo el archivo correctamente
+[INFO] 20:16:37:820 CONSOLA/(35708:35708): Me llego el mensaje [atender_consola]segmentos e instrucciones recibidos pibe
+[INFO] 20:17:44:909 CONSOLA/(35891:35891): Config creado
+[ERROR] 20:17:44:909 CONSOLA/(35891:35891): Error al conectar al servidor
+[INFO] 20:17:44:909 CONSOLA/(35891:35891): llego hasta recibir lista dispositivos
+[INFO] 20:17:44:909 CONSOLA/(35891:35891): codigo de operacion incorrecto
+[INFO] 20:17:44:909 CONSOLA/(35891:35891): Se leyo el archivo correctamente
+[INFO] 20:18:56:192 CONSOLA/(36068:36068): Config creado
+[INFO] 20:18:56:192 CONSOLA/(36068:36068): llego hasta recibir lista dispositivos
+[INFO] 20:18:56:196 CONSOLA/(36068:36068): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 20:18:56:196 CONSOLA/(36068:36068): Primer dispositivo DISCO
+[INFO] 20:18:56:196 CONSOLA/(36068:36068): Se leyo el archivo correctamente
+[INFO] 20:18:56:197 CONSOLA/(36068:36068): Me llego el mensaje [atender_consola]segmentos e instrucciones recibidos pibe
+[INFO] 20:19:02:107 CONSOLA/(36072:36072): Config creado
+[INFO] 20:19:02:107 CONSOLA/(36072:36072): llego hasta recibir lista dispositivos
+[INFO] 20:19:02:111 CONSOLA/(36072:36072): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 20:19:02:111 CONSOLA/(36072:36072): Primer dispositivo DISCO
+[INFO] 20:19:02:111 CONSOLA/(36072:36072): Se leyo el archivo correctamente
+[INFO] 20:19:02:113 CONSOLA/(36072:36072): Me llego el mensaje [atender_consola]segmentos e instrucciones recibidos pibe
+[INFO] 20:31:45:643 CONSOLA/(39592:39592): Config creado
+[INFO] 20:31:45:698 CONSOLA/(39592:39592): llego hasta recibir lista dispositivos
+[INFO] 20:31:45:704 CONSOLA/(39592:39592): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 20:31:45:704 CONSOLA/(39592:39592): Primer dispositivo DISCO
+[INFO] 20:31:45:704 CONSOLA/(39592:39592): Se leyo el archivo correctamente
+[INFO] 20:31:45:706 CONSOLA/(39592:39592): Me llego el mensaje [atender_consola]segmentos e instrucciones recibidos pibe
+[INFO] 20:31:47:598 CONSOLA/(39598:39598): Config creado
+[INFO] 20:31:47:598 CONSOLA/(39598:39598): llego hasta recibir lista dispositivos
+[INFO] 20:31:47:604 CONSOLA/(39598:39598): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 20:31:47:604 CONSOLA/(39598:39598): Primer dispositivo DISCO
+[INFO] 20:31:47:604 CONSOLA/(39598:39598): Se leyo el archivo correctamente
+[INFO] 20:31:47:607 CONSOLA/(39598:39598): Me llego el mensaje [atender_consola]segmentos e instrucciones recibidos pibe
+[INFO] 20:47:30:546 CONSOLA/(39592:39592): [recibir_entero]: se recibio el numero 237
+[INFO] 20:47:31:050 CONSOLA/(39592:39592): Se imprime el valor 237 por pantalla a pedido del kernel
+[INFO] 20:47:31:063 CONSOLA/(39592:39592): Me llego el mensaje Finalizar consola
+[INFO] 20:52:53:460 CONSOLA/(40714:40714): Config creado
+[INFO] 20:52:53:480 CONSOLA/(40714:40714): llego hasta recibir lista dispositivos
+[INFO] 20:52:53:494 CONSOLA/(40714:40714): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 20:52:53:494 CONSOLA/(40714:40714): Primer dispositivo DISCO
+[INFO] 20:52:53:494 CONSOLA/(40714:40714): Se leyo el archivo correctamente
+[INFO] 20:52:53:502 CONSOLA/(40714:40714): Me llego el mensaje [atender_consola]segmentos e instrucciones recibidos pibe
+[INFO] 20:52:55:240 CONSOLA/(40720:40720): Config creado
+[INFO] 20:52:55:240 CONSOLA/(40720:40720): llego hasta recibir lista dispositivos
+[INFO] 20:52:55:243 CONSOLA/(40720:40720): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 20:52:55:243 CONSOLA/(40720:40720): Primer dispositivo DISCO
+[INFO] 20:52:55:243 CONSOLA/(40720:40720): Se leyo el archivo correctamente
+[INFO] 20:52:55:246 CONSOLA/(40720:40720): Me llego el mensaje [atender_consola]segmentos e instrucciones recibidos pibe
+[INFO] 20:57:16:186 CONSOLA/(40714:40714): [recibir_entero]: se recibio el numero 237
+[INFO] 20:57:16:686 CONSOLA/(40714:40714): Se imprime el valor 237 por pantalla a pedido del kernel
+[INFO] 20:57:16:693 CONSOLA/(40714:40714): Me llego el mensaje Finalizar consola
+[INFO] 20:58:46:348 CONSOLA/(41397:41397): Config creado
+[INFO] 20:58:46:348 CONSOLA/(41397:41397): llego hasta recibir lista dispositivos
+[INFO] 20:58:46:355 CONSOLA/(41397:41397): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 20:58:46:355 CONSOLA/(41397:41397): Primer dispositivo DISCO
+[INFO] 20:58:46:355 CONSOLA/(41397:41397): Se leyo el archivo correctamente
+[INFO] 20:58:46:358 CONSOLA/(41397:41397): Me llego el mensaje [atender_consola]segmentos e instrucciones recibidos pibe
+[INFO] 20:58:47:987 CONSOLA/(41403:41403): Config creado
+[INFO] 20:58:47:987 CONSOLA/(41403:41403): llego hasta recibir lista dispositivos
+[INFO] 20:58:47:990 CONSOLA/(41403:41403): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 20:58:47:990 CONSOLA/(41403:41403): Primer dispositivo DISCO
+[INFO] 20:58:47:990 CONSOLA/(41403:41403): Se leyo el archivo correctamente
+[INFO] 20:58:47:992 CONSOLA/(41403:41403): Me llego el mensaje [atender_consola]segmentos e instrucciones recibidos pibe
+[INFO] 21:00:59:595 CONSOLA/(41397:41397): [recibir_entero]: se recibio el numero 237
+[INFO] 21:01:00:095 CONSOLA/(41397:41397): Se imprime el valor 237 por pantalla a pedido del kernel
+[INFO] 21:01:00:134 CONSOLA/(41397:41397): Me llego el mensaje Finalizar consola
+[INFO] 21:02:26:090 CONSOLA/(41797:41797): Config creado
+[INFO] 21:02:26:090 CONSOLA/(41797:41797): llego hasta recibir lista dispositivos
+[INFO] 21:02:26:094 CONSOLA/(41797:41797): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 21:02:26:094 CONSOLA/(41797:41797): Primer dispositivo DISCO
+[INFO] 21:02:26:094 CONSOLA/(41797:41797): Se leyo el archivo correctamente
+[INFO] 21:02:26:096 CONSOLA/(41797:41797): Me llego el mensaje [atender_consola]segmentos e instrucciones recibidos pibe
+[INFO] 21:02:32:256 CONSOLA/(41803:41803): Config creado
+[INFO] 21:02:32:256 CONSOLA/(41803:41803): llego hasta recibir lista dispositivos
+[INFO] 21:02:32:261 CONSOLA/(41803:41803): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 21:02:32:261 CONSOLA/(41803:41803): Primer dispositivo DISCO
+[INFO] 21:02:32:261 CONSOLA/(41803:41803): Se leyo el archivo correctamente
+[INFO] 21:02:32:265 CONSOLA/(41803:41803): Me llego el mensaje [atender_consola]segmentos e instrucciones recibidos pibe
+[INFO] 21:16:56:246 CONSOLA/(41797:41797): [recibir_entero]: se recibio el numero 912
+[INFO] 21:16:56:746 CONSOLA/(41797:41797): Se imprime el valor 912 por pantalla a pedido del kernel
+[INFO] 21:16:56:824 CONSOLA/(41797:41797): Me llego el mensaje Finalizar consola
+[INFO] 21:16:57:442 CONSOLA/(41803:41803): [recibir_entero]: se recibio el numero 28
+[INFO] 21:16:57:942 CONSOLA/(41803:41803): Se imprime el valor 28 por pantalla a pedido del kernel

@@ -16,7 +16,8 @@ char* pathSwap;
 int tamanioSwap;
 char* ipMemoria;
 char* puertoMemoria;
-
+pthread_mutex_t conexionKernel;
+pthread_mutex_t conexionCpu;
 
 void* memoria;
 
@@ -78,7 +79,7 @@ void inicializarEstructuras(int pid) {
 		contNroTablaDePaginas++;
 		log_info(logger, "PID: <%d> - Segmento: <%d> - TAMAÑO: <%d> paginas", pid, i, entradasPorTabla);
 	}
-	contNroTablaDePaginas++;
+	//contNroTablaDePaginas++;
 }
 
 void cargarEntradasATabla(tablaDePaginas* unaTablaDePaginas, int numeroDeSegmento) {
@@ -214,6 +215,7 @@ void escribirElPedido(uint32_t datoAEscribir, int marco, int desplazamiento, int
 
 	log_info(logger, "PID: <%d> - Acción: <ESCRIBIR> - Dirección física: <%d>", pidDeOperacion, posicion);
 	actualizarBitUsoEntrada(marco, pidDeOperacion);
+	log_info(logger,"paso e primero");
 	actualizarBitModificadoEntrada(marco,pidDeOperacion);
 }
 
@@ -233,9 +235,9 @@ void actualizarBitUsoEntrada(int nroDeMarco, int pidDeOperacion) {
 	t_lista_circular* frames_proceso;
 
 	frames_proceso = obtener_lista_circular_del_proceso(pidDeOperacion);
-
+	log_info(logger,"post lista circular del proceso");
 	t_frame_lista_circular* elementoAOperar = obtener_elemento_lista_circular_por_marco(frames_proceso,nroDeMarco);
-
+	log_info(logger,"post lista circular por marco");
 	if(elementoAOperar->info->uso != 1){
 		elementoAOperar->info->uso =  1;
 	}
@@ -574,6 +576,8 @@ t_frame_lista_circular* obtener_elemento_lista_circular_por_marco(t_lista_circul
 			frame_elemento_aux = frame_elemento_aux->sgte;
 		}
 	}
+
+
 	return frame_elemento_aux;
 }
 

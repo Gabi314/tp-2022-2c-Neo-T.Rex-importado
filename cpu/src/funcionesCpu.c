@@ -27,7 +27,7 @@ bool hayInterrupcion = false;
 
 pthread_t hiloInterrupciones;
 pthread_mutex_t mutexInterrupcion;
-
+pthread_mutex_t mutexSocketMemoria;
 sem_t pcbRecibido;
 
 
@@ -56,6 +56,7 @@ void inicializarConfiguraciones(char* unaConfig){
 	sem_init(&pcbRecibido,0,0);
 	pthread_mutex_init(&mutexEjecutar, NULL);
 	pthread_mutex_init(&mutexInterrupcion, NULL);
+	pthread_mutex_init(&mutexSocketMemoria,NULL);
 }
 
 
@@ -430,13 +431,14 @@ int accederAMemoria(int marco,int numeroDeSegmento,t_pcb* pcb){
 	int seAccedeAMemoria = 1;
 
 	while (seAccedeAMemoria == 1) {
+		pthread_mutex_lock(&mutexSocketMemoria);
 		int cod_op = recibir_operacion(socket_memoria);
 
 		switch (cod_op){
 			case MEMORIA_A_CPU_NUMERO_MARCO://UNICO ACCESO
 
 				marco = recibir_entero(socket_memoria);//finaliza 1er acceso
-
+				pthread_mutex_unlock(&mutexSocketMemoria);
 				log_info(logger,"Me llego el marco que es %d",marco);
 
 				if (cantidadEntradasTlb > 0) {
@@ -450,10 +452,13 @@ int accederAMemoria(int marco,int numeroDeSegmento,t_pcb* pcb){
 				seAccedeAMemoria = 0;//salga del while
 				break;
 			case MEMORIA_A_CPU_PAGE_FAULT:
+
 				recibir_mensaje(socket_memoria);
+				pthread_mutex_unlock(&mutexSocketMemoria);
 				seAccedeAMemoria = 0;//salga del while
 				break;
 			default:
+				pthread_mutex_unlock(&mutexSocketMemoria);
 				log_warning(logger,"Operacion desconocida. No quieras meter la pata");
 				seAccedeAMemoria = 0;//salga del while
 				break;

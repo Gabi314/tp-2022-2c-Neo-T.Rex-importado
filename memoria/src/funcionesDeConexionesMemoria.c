@@ -5,6 +5,7 @@ int numeroDeMarco;
 int desplazamiento;
 int pidActual;
 
+
 int conexionConCpu(void* void_args) {
 	static pthread_mutex_t mutexMemoriaData;
 	// int server_fd = iniciar_servidor(IP_MEMORIA,puertoMemoria,"Cpu"); // tendria que estar comentado porque viene despues de coenxion con kernel
@@ -27,6 +28,7 @@ int conexionConCpu(void* void_args) {
 
 	while(1) {
 //		pthread_mutex_lock(&mutexMemoriaData);
+		pthread_mutex_lock(&conexionCpu);
 		int cod_op = recibir_operacion(clienteCpu);
 
 		switch (cod_op) {
@@ -41,7 +43,9 @@ int conexionConCpu(void* void_args) {
 
 				numeroDeMarco =  marcoSegunIndice(numeroTablaDePaginas, numeroDeLaPagina);
 
+
 				if(numeroDeMarco == -1) {
+					log_info(logger,"envio mensaje de page fault a cpu");
 					enviar_mensaje("La pagina no esta en memoria", clienteCpu, MEMORIA_A_CPU_PAGE_FAULT);
 				} else {
 					log_info(logger, "PID: <%d> - Página: <%d> - Marco: <%d>", pidActual, numeroDeLaPagina, numeroDeMarco);
@@ -96,6 +100,7 @@ int conexionConCpu(void* void_args) {
 
 				break;
 		}
+		pthread_mutex_unlock(&conexionCpu);
 		//pthread_mutex_unlock(&mutexMemoriaData);
 	}
 	return EXIT_SUCCESS;
@@ -195,6 +200,7 @@ void enviarTamanioDePaginaYCantidadDeEntradas(int socket_cliente) {
 int marcoSegunIndice(int numeroTablaDePaginas, int numeroDePagina) {
 	tablaDePaginas* unaTablaDePaginas; //= malloc(sizeof(tablaDePaginas));
 	entradaTablaPaginas* unaEntradaTablaDePaginas; //= malloc(sizeof(entradaTablaPaginas));
+
 
 	chequeoDeIndice(numeroDePagina);
 	if(flagDeEntradasPorTabla == 1) {

@@ -97,6 +97,9 @@ extern char* puertoMemoria;
 
 extern int pidActual;
 
+extern pthread_mutex_t conexionKernel;
+extern pthread_mutex_t conexionCpu;
+
 //Variables de conexiones
 extern int clienteCpu;
 

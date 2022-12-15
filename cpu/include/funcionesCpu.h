@@ -55,6 +55,7 @@ extern int cantidadEntradasTlb;
 
 extern pthread_mutex_t mutexEjecutar;
 extern pthread_mutex_t mutexInterrupcion;
+extern pthread_mutex_t mutexSocketMemoria;
 
 typedef struct
 {

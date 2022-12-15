@@ -39,6 +39,8 @@ void funcionMain(int argc, char *argv[]) {
 	listaTablaDePaginas = list_create();
 	lista_frames_procesos = list_create();
 
+	pthread_mutex_init(&conexionCpu,NULL);
+	pthread_mutex_init(&conexionKernel,NULL);
 	inicializarMemoria();
 	inicializarMarcos();
 

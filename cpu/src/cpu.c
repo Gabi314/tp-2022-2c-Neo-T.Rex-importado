@@ -8,12 +8,14 @@ int main(int argc, char *argv[]) {
 	logger = log_create("cpu-auxiliar.log", "CPU-AUX", 1, LOG_LEVEL_INFO);
 	loggerObligatorio = log_create("cpu.log","CPU",1,LOG_LEVEL_INFO);
 
+
 	//Chequeo cantidad de archivos recibidos en el main
 	chequeoCantidadArchivos(argc);
 
 	inicializarConfiguraciones(argv[1]);
 
 	inicializarTLB();
+
 
 	handshakeMemoria();
 
@@ -22,8 +24,10 @@ int main(int argc, char *argv[]) {
 	clienteKernel = esperar_cliente(server_dispatch,"Kernel");
 
 	int server_interrupt = iniciar_servidor(IP_CPU, puertoDeEscuchaInterrupt,"Kernel");
-	clienteKernelInterrupt = esperar_cliente(server_interrupt, "Kernel por interrupt");
 
+	log_info(logger,"antes de llegar a interrupr");
+	clienteKernelInterrupt = esperar_cliente(server_interrupt, "Kernel por interrupt");
+	log_info(logger,"despues de llegar a interrupr");
 	checkInterrupt();
 
 

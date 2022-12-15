@@ -427,6 +427,7 @@ void inicializar_semaforos(){
 	pthread_mutex_init(&primerPushColaReady,NULL);
 	pthread_mutex_init(&mutexPantalla,NULL);
 	pthread_mutex_init(&mutexTeclado,NULL);
+	pthread_mutex_init(&mutexConexionMemoria,NULL);
 }
 
 
