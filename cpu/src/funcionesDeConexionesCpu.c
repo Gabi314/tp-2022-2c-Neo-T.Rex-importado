@@ -255,6 +255,7 @@ void enviarDireccionFisica(int marco, int desplazamientoPagina,int leer,int valo
 		paquete = crear_paquete(CPU_A_MEMORIA_LEER);
 		agregar_a_paquete_unInt(paquete,&marco,sizeof(marco));
 		agregar_a_paquete_unInt(paquete,&desplazamientoPagina,sizeof(desplazamientoPagina));
+		agregar_a_paquete_unInt(paquete,&pcb->idProceso, sizeof(int));
 	}else{
 		paquete = crear_paquete(CPU_A_MEMORIA_VALOR_A_ESCRIBIR);
 		agregar_a_paquete_unInt(paquete,&marco,sizeof(marco));

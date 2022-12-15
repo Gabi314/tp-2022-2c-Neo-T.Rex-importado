@@ -124,7 +124,8 @@ void enviarTamanioDePaginaYCantidadDeEntradas(int);
 void escribirElPedido(uint32_t,int, int,int);
 t_frame_lista_circular* obtener_elemento_lista_circular_por_marco(t_lista_circular*, uint32_t);
 void actualizarBitModificadoEntrada(int,int);
-uint32_t leerElPedido(int, int);
+void actualizarBitUsoEntrada(int,int);
+uint32_t leerElPedido(int, int,int);
 uint32_t leerEnSwap(int,int);
 
 void crearSwap();

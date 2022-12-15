@@ -52,11 +52,13 @@ int conexionConCpu(void* void_args) {
 
 				numeroDeMarco = (int) list_get(listaQueContieneDireccionFisca, 0); // por ahora piso la variable de arriba despues ver como manejar el tema de marco que envio y marco que recibo
 				desplazamiento = (int) list_get(listaQueContieneDireccionFisca, 1);
+				int pidMovIn = (int) list_get(listaQueContieneDireccionFisca, 2);
+
 
 				log_info(loggerAux, "Me llego el marco %d con desplazamiento %d", numeroDeMarco, desplazamiento);
 				log_info(loggerAux, "-------------------MOV_IN-------------------");
 
-				uint32_t numeroALeer = leerElPedido(numeroDeMarco, desplazamiento);
+				uint32_t numeroALeer = leerElPedido(numeroDeMarco, desplazamiento,pidMovIn);
 				log_info(loggerAux, "Envio a cpu el valor leido: %u", numeroALeer);
 
 				enviar_entero(numeroALeer, clienteCpu, MEMORIA_A_CPU_NUMERO_LEIDO);
@@ -71,12 +73,12 @@ int conexionConCpu(void* void_args) {
 				desplazamiento = (int) list_get(listaQueContieneDireccionFisca, 1);
 
 				uint32_t valorAEscribir = (uint32_t) list_get(listaQueContieneDireccionFisca, 2);
-				int pidDeOperacion = (int) list_get(listaQueContieneDireccionFisca, 3);
+				int pidMovOut = (int) list_get(listaQueContieneDireccionFisca, 3);
 
 				log_info(loggerAux, "-------------------MOV_OUT-------------------");
-				log_info(loggerAux, "Me llego el valor a escribir: %u del proceso %d",valorAEscribir,pidDeOperacion);
+				log_info(loggerAux, "Me llego el valor a escribir: %u del proceso %d",valorAEscribir,pidMovOut);
 
-				escribirElPedido((uint32_t) valorAEscribir, numeroDeMarco, desplazamiento, pidDeOperacion);
+				escribirElPedido((uint32_t) valorAEscribir, numeroDeMarco, desplazamiento, pidMovOut);
 
 				log_info(loggerAux,"-------------------MOV_OUT-------------------\n");
 
@@ -218,7 +220,9 @@ int server_escuchar(t_log* logger, char* server_nombre, char* cliente_nombre, in
 	static pthread_mutex_t mutexPrimerHandshake;
 	// Se conecta un cliente
 	log_info(logger, "Esperando a un cliente (Kernel o CPU)");
+	pthread_mutex_lock(&mutexPrimerHandshake);
     int cliente_socket = esperar_cliente(server_socket, cliente_nombre);
+    pthread_mutex_unlock(&mutexPrimerHandshake);
     //int cliente_socket = esperar_cliente(logger, server_name, server_socket);
 
     if (cliente_socket != -1) {
@@ -233,14 +237,14 @@ int server_escuchar(t_log* logger, char* server_nombre, char* cliente_nombre, in
         	pthread_create(&hilo_general, NULL, (void*) conexionConKernel, (void*) args);
 
         } else if (!strcmp(cliente_nombre, "CPU")) {
-        	pthread_mutex_lock(&mutexPrimerHandshake);
+
         	int cod_op = recibir_operacion(cliente_socket);
 
         	if(cod_op == MENSAJE_CPU_MEMORIA){//mensaje de pedido tam pag y cant entradas
         		recibir_mensaje(cliente_socket);//recibe el pedido de tam_pag y cant_entradas
         		enviarTamanioDePaginaYCantidadDeEntradas(cliente_socket);
         	}
-        	pthread_mutex_unlock(&mutexPrimerHandshake);
+
 			pthread_create(&hilo_general, NULL, (void*) conexionConCpu, (void*) args);
 		}
         pthread_detach(hilo_general);

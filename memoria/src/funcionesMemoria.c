@@ -213,15 +213,13 @@ void escribirElPedido(uint32_t datoAEscribir, int marco, int desplazamiento, int
 	memcpy((memoria+posicion), &datoAEscribir, sizeof(uint32_t));
 
 	log_info(logger, "PID: <%d> - Acción: <ESCRIBIR> - Dirección física: <%d>", pidDeOperacion, posicion);
-
+	actualizarBitUsoEntrada(marco, pidDeOperacion);
 	actualizarBitModificadoEntrada(marco,pidDeOperacion);
-
 }
 
 //ESTA DEBERIA RECORRER LA LISTACIRCULAR Y DEVOLVER LA ENTRADA CARGADA CON ESE MARCO
 void actualizarBitModificadoEntrada(int nroDeMarco, int pidDeOperacion) {
 	t_lista_circular* frames_proceso;
-	entradaTablaPaginas* entradaAEscribir;
 
 	frames_proceso = obtener_lista_circular_del_proceso(pidDeOperacion);
 
@@ -231,12 +229,26 @@ void actualizarBitModificadoEntrada(int nroDeMarco, int pidDeOperacion) {
 
 }
 
-uint32_t leerElPedido(int marco, int desplazamiento) {
+void actualizarBitUsoEntrada(int nroDeMarco, int pidDeOperacion) {
+	t_lista_circular* frames_proceso;
+
+	frames_proceso = obtener_lista_circular_del_proceso(pidDeOperacion);
+
+	t_frame_lista_circular* elementoAOperar = obtener_elemento_lista_circular_por_marco(frames_proceso,nroDeMarco);
+
+	if(elementoAOperar->info->uso != 1){
+		elementoAOperar->info->uso =  1;
+	}
+}
+
+uint32_t leerElPedido(int marco, int desplazamiento,int pidOperacion) {
 	usleep(retardoMemoria*1000);
 	uint32_t datoALeer;
 	int posicion = marco * tamanioDePagina + desplazamiento;
 	memcpy(&datoALeer,memoria+posicion, sizeof(uint32_t));
 	log_info(logger, "PID: <%d> - Acción: <LEER> - Dirección física: <%d>", pidActual, posicion);
+
+	actualizarBitUsoEntrada(marco, pidOperacion);
 	//if(datoALeer != 0) {
 		return datoALeer;
 	//}
@@ -453,6 +465,9 @@ void algoritmo_clock_modificado(t_lista_circular* frames_proceso, entradaTablaPa
 		}
 	}
 	//return frame_puntero->info->numeroDeEntrada;
+	log_info(logger,"REEMPLAZO - PID: <%d> - Marco: <%d> - Page Out: <%d>|<%d> - Page In: <%d>|<%d>",
+				pidActual,frame_puntero->info->numeroMarco,entrada_tabla_paginas_victima->numeroDeSegmento,entrada_tabla_paginas_victima->numeroDeEntrada,
+				entrada_tabla_paginas->numeroDeSegmento,entrada_tabla_paginas->numeroDeEntrada);
 }
 
 /**************************************** FUNCIONES AUXILIARES ALGORITMOS **********************************************/
