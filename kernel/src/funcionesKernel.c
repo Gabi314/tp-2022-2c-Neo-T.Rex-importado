@@ -570,7 +570,7 @@ t_pcb* obtenerSiguienteRR() {
 	t_pcb* procesoPlanificado;   //= malloc(sizeof(t_pcb));
 	procesoPlanificado = queue_pop(colaReadyRR);
 
-	log_info(loggerAux, "[obtenerSiguienteFIFO]: PROCESOS EN READY RR: %d \n", queue_size(colaReadyRR));
+	log_info(loggerAux, "[obtenerSiguienteRR]: PROCESOS EN READY RR: %d \n", queue_size(colaReadyRR));
 
 	return procesoPlanificado;
 }
@@ -622,10 +622,7 @@ while (1) {
 
 
 		pthread_mutex_lock(&elementoLista->mutexDisp);
-		queue_push(elementoLista->cola_UTs,&unidadesTrabajo);
-		int * numeritoUT = queue_pop(elementoLista->cola_UTs);
-		log_info(logger,"las unidades de laburo son: %d", *numeritoUT);
-		queue_push(elementoLista->cola_UTs,numeritoUT);
+		queue_push(elementoLista->cola_UTs,unidadesTrabajo);
 		pthread_mutex_unlock(&elementoLista->mutexDisp);
 
 
@@ -930,7 +927,11 @@ int buscar_valor_registro(t_pcb* pcb, int registro) {
 
 void controlar_quantum(){
 
+	log_info(logger,"se despierta controlar_quantum!");
+
 	usleep(quantum_rr * 1000);
+
+	log_info(logger,"finaliza quantum");
 
 	enviar_mensaje("Cpu desalojá tu proceso por fin de quantum", conexionCpuInterrupt ,DESALOJAR_PROCESO_POR_FIN_DE_QUANTUM); // ES EL SOCKET
 
@@ -951,11 +952,11 @@ void atender_IO_generico(t_elem_disp* elemento){
 
 		pthread_mutex_lock(&elemento->mutexDisp);
 	//	sleep(2);
-		int * unidades_trabajo = queue_pop(elemento->cola_UTs);
+		int  unidades_trabajo = (int) queue_pop(elemento->cola_UTs);
 		pthread_mutex_unlock(&elemento->mutexDisp);
 
 		int tiempo_dispositivo = elemento->tiempo;
-		log_info(logger," [atender_IO_generico del dispositivo <%s>] : el tiempo de dispositivo es %d y las unidades de trabajo obtenidas de la cola son %d ", elemento->dispositivo, tiempo_dispositivo,*unidades_trabajo);
+		log_info(logger," [atender_IO_generico del dispositivo <%s>] : el tiempo de dispositivo es %d y las unidades de trabajo obtenidas de la cola son %d ", elemento->dispositivo, tiempo_dispositivo,unidades_trabajo);
 		t_pcb * proceso = queue_pop(elemento->cola_procesos);
 
 		log_info(logger,"[atender_IO_generico del dispositivo <%s>] tamanio de lista despues de tomar proceso <%d>", elemento->dispositivo, queue_size(elemento->cola_procesos));
@@ -963,7 +964,7 @@ void atender_IO_generico(t_elem_disp* elemento){
 
 		log_info(logger," [atender_IO_generico del dispositivo <%s>] : simulando tiempo de bloqueo  ", elemento->dispositivo);
 
-		usleep(tiempo_dispositivo * 1000 * (*unidades_trabajo));
+		usleep(tiempo_dispositivo * 1000 * unidades_trabajo);
 
 
 

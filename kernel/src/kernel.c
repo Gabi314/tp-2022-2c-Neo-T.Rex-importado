@@ -40,9 +40,10 @@ int main(int argc, char *argv[]) {
 	socketMemoria = crear_conexion(ipMemoria, puertoMemoria);
 	conexionCpuDispatch = crear_conexion(ipCpu, puertoCpuDispatch);
 
+	conexionCpuInterrupt = crear_conexion(ipCpu, puertoCpuInterrupt);
 	enviar_mensaje(dispositivosIOAplanado, conexionCpuDispatch,
 						KERNEL_MENSAJE_DISPOSITIVOS_IO);
-	conexionCpuInterrupt = crear_conexion(ipCpu, puertoCpuInterrupt);
+
 	// Inicializaciones de estructuras de datos
 
 	log_info(logger,"configuraciones inicializadas");

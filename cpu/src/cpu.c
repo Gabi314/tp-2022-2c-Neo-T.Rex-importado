@@ -21,7 +21,11 @@ int main(int argc, char *argv[]) {
 	log_info(logger,"Cpu lista para recibir a kernel");
 	clienteKernel = esperar_cliente(server_dispatch,"Kernel");
 
+	int server_interrupt = iniciar_servidor(IP_CPU, puertoDeEscuchaInterrupt,"Kernel");
+	clienteKernelInterrupt = esperar_cliente(server_interrupt, "Kernel por interrupt");
+
 	checkInterrupt();
+
 
 	pthread_t hiloRecibirPcb;
 

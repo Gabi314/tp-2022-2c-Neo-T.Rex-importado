@@ -24,6 +24,7 @@ char** listaDispositivos;
 void conexionConKernelDispatch(){//un hilo
 	//static pthread_mutex_t mutexMensajes;// usar
 	//int salirDelWhile = 0;
+
 	listaDispositivos = recibirListaDispositivos(clienteKernel);//Primer handshake
 	while (1) {
 		//log_info(logger,"Esperando PCB");

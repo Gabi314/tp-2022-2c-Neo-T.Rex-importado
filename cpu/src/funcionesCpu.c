@@ -330,9 +330,7 @@ void checkInterrupt(){
 }
 
 void escucharInterrupciones(){
-	int server_interrupt = iniciar_servidor(IP_CPU, puertoDeEscuchaInterrupt,"Kernel");
-	clienteKernelInterrupt = esperar_cliente(server_interrupt, "Kernel por interrupt");
-	log_info(logger, "Cpu escuchando interrupciones");
+	log_info(logger, "se despierta escucharInterrupciones");
 		while (1) {
 			int cod_op = recibir_operacion(clienteKernelInterrupt);
 			log_info(logger, "Entro");
