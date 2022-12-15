@@ -99,6 +99,7 @@ extern int pidActual;
 
 extern pthread_mutex_t conexionKernel;
 extern pthread_mutex_t conexionCpu;
+extern pthread_mutex_t listaMarcos;
 
 //Variables de conexiones
 extern int clienteCpu;

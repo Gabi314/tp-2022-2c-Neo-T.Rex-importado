@@ -2144,3 +2144,428 @@
 [INFO] 21:16:56:824 CONSOLA/(41797:41797): Me llego el mensaje Finalizar consola
 [INFO] 21:16:57:442 CONSOLA/(41803:41803): [recibir_entero]: se recibio el numero 28
 [INFO] 21:16:57:942 CONSOLA/(41803:41803): Se imprime el valor 28 por pantalla a pedido del kernel
+[INFO] 21:20:57:475 CONSOLA/(42230:42230): Config creado
+[INFO] 21:20:57:476 CONSOLA/(42230:42230): llego hasta recibir lista dispositivos
+[INFO] 21:20:57:490 CONSOLA/(42230:42230): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 21:20:57:490 CONSOLA/(42230:42230): Primer dispositivo DISCO
+[INFO] 21:20:57:490 CONSOLA/(42230:42230): Se leyo el archivo correctamente
+[INFO] 21:20:57:493 CONSOLA/(42230:42230): Me llego el mensaje [atender_consola]segmentos e instrucciones recibidos pibe
+[INFO] 21:20:59:383 CONSOLA/(42236:42236): Config creado
+[INFO] 21:20:59:383 CONSOLA/(42236:42236): llego hasta recibir lista dispositivos
+[INFO] 21:20:59:385 CONSOLA/(42236:42236): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 21:20:59:385 CONSOLA/(42236:42236): Primer dispositivo DISCO
+[INFO] 21:20:59:386 CONSOLA/(42236:42236): Se leyo el archivo correctamente
+[INFO] 21:20:59:392 CONSOLA/(42236:42236): Me llego el mensaje [atender_consola]segmentos e instrucciones recibidos pibe
+[INFO] 21:38:44:686 CONSOLA/(42655:42655): Config creado
+[INFO] 21:38:44:686 CONSOLA/(42655:42655): llego hasta recibir lista dispositivos
+[INFO] 21:38:44:690 CONSOLA/(42655:42655): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 21:38:44:690 CONSOLA/(42655:42655): Primer dispositivo DISCO
+[INFO] 21:38:44:690 CONSOLA/(42655:42655): Se leyo el archivo correctamente
+[INFO] 21:38:44:692 CONSOLA/(42655:42655): Me llego el mensaje [atender_consola]segmentos e instrucciones recibidos pibe
+[INFO] 21:38:47:879 CONSOLA/(42661:42661): Config creado
+[INFO] 21:38:47:879 CONSOLA/(42661:42661): llego hasta recibir lista dispositivos
+[INFO] 21:38:47:884 CONSOLA/(42661:42661): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 21:38:47:884 CONSOLA/(42661:42661): Primer dispositivo DISCO
+[INFO] 21:38:47:884 CONSOLA/(42661:42661): Se leyo el archivo correctamente
+[INFO] 21:38:47:886 CONSOLA/(42661:42661): Me llego el mensaje [atender_consola]segmentos e instrucciones recibidos pibe
+[INFO] 21:47:56:465 CONSOLA/(44326:44326): Config creado
+[INFO] 21:47:56:465 CONSOLA/(44326:44326): llego hasta recibir lista dispositivos
+[INFO] 21:47:56:469 CONSOLA/(44326:44326): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 21:47:56:470 CONSOLA/(44326:44326): Primer dispositivo DISCO
+[INFO] 21:47:56:470 CONSOLA/(44326:44326): Se leyo el archivo correctamente
+[INFO] 21:47:56:471 CONSOLA/(44326:44326): Me llego el mensaje [atender_consola]segmentos e instrucciones recibidos pibe
+[INFO] 21:47:58:221 CONSOLA/(44332:44332): Config creado
+[INFO] 21:47:58:221 CONSOLA/(44332:44332): llego hasta recibir lista dispositivos
+[INFO] 21:47:58:224 CONSOLA/(44332:44332): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 21:47:58:224 CONSOLA/(44332:44332): Primer dispositivo DISCO
+[INFO] 21:47:58:224 CONSOLA/(44332:44332): Se leyo el archivo correctamente
+[INFO] 21:47:58:230 CONSOLA/(44332:44332): Me llego el mensaje [atender_consola]segmentos e instrucciones recibidos pibe
+[INFO] 21:48:19:233 CONSOLA/(44326:44326): [recibir_entero]: se recibio el numero 237
+[INFO] 21:48:19:733 CONSOLA/(44326:44326): Se imprime el valor 237 por pantalla a pedido del kernel
+[INFO] 21:48:19:767 CONSOLA/(44326:44326): Me llego el mensaje Finalizar consola
+[INFO] 22:10:08:207 CONSOLA/(46710:46710): Config creado
+[INFO] 22:10:08:207 CONSOLA/(46710:46710): llego hasta recibir lista dispositivos
+[INFO] 22:10:08:214 CONSOLA/(46710:46710): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 22:10:08:214 CONSOLA/(46710:46710): Primer dispositivo DISCO
+[INFO] 22:10:08:214 CONSOLA/(46710:46710): Se leyo el archivo correctamente
+[INFO] 22:10:08:217 CONSOLA/(46710:46710): Me llego el mensaje [atender_consola]segmentos e instrucciones recibidos pibe
+[INFO] 22:10:09:489 CONSOLA/(46714:46714): Config creado
+[INFO] 22:10:09:489 CONSOLA/(46714:46714): llego hasta recibir lista dispositivos
+[INFO] 22:10:09:499 CONSOLA/(46714:46714): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 22:10:09:499 CONSOLA/(46714:46714): Primer dispositivo DISCO
+[INFO] 22:10:09:499 CONSOLA/(46714:46714): Se leyo el archivo correctamente
+[INFO] 22:10:09:502 CONSOLA/(46714:46714): Me llego el mensaje [atender_consola]segmentos e instrucciones recibidos pibe
+[INFO] 22:15:07:069 CONSOLA/(46893:46893): Config creado
+[ERROR] 22:15:07:070 CONSOLA/(46893:46893): Error al conectar al servidor
+[INFO] 22:15:07:070 CONSOLA/(46893:46893): llego hasta recibir lista dispositivos
+[INFO] 22:15:07:070 CONSOLA/(46893:46893): codigo de operacion incorrecto
+[INFO] 22:15:07:070 CONSOLA/(46893:46893): Se leyo el archivo correctamente
+[INFO] 22:17:04:649 CONSOLA/(47511:47511): Config creado
+[INFO] 22:17:04:649 CONSOLA/(47511:47511): llego hasta recibir lista dispositivos
+[INFO] 22:17:04:656 CONSOLA/(47511:47511): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 22:17:04:656 CONSOLA/(47511:47511): Primer dispositivo DISCO
+[INFO] 22:17:04:656 CONSOLA/(47511:47511): Se leyo el archivo correctamente
+[INFO] 22:17:04:657 CONSOLA/(47511:47511): Me llego el mensaje [atender_consola]segmentos e instrucciones recibidos pibe
+[INFO] 22:17:06:439 CONSOLA/(47515:47515): Config creado
+[INFO] 22:17:06:439 CONSOLA/(47515:47515): llego hasta recibir lista dispositivos
+[INFO] 22:17:06:448 CONSOLA/(47515:47515): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 22:17:06:448 CONSOLA/(47515:47515): Primer dispositivo DISCO
+[INFO] 22:17:06:448 CONSOLA/(47515:47515): Se leyo el archivo correctamente
+[INFO] 22:17:06:452 CONSOLA/(47515:47515): Me llego el mensaje [atender_consola]segmentos e instrucciones recibidos pibe
+[INFO] 22:20:36:931 CONSOLA/(48156:48156): Config creado
+[INFO] 22:20:36:931 CONSOLA/(48156:48156): llego hasta recibir lista dispositivos
+[INFO] 22:20:36:937 CONSOLA/(48156:48156): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 22:20:36:937 CONSOLA/(48156:48156): Primer dispositivo DISCO
+[INFO] 22:20:36:937 CONSOLA/(48156:48156): Se leyo el archivo correctamente
+[INFO] 22:20:36:940 CONSOLA/(48156:48156): Me llego el mensaje [atender_consola]segmentos e instrucciones recibidos pibe
+[INFO] 22:20:39:323 CONSOLA/(48162:48162): Config creado
+[INFO] 22:20:39:323 CONSOLA/(48162:48162): llego hasta recibir lista dispositivos
+[INFO] 22:20:39:334 CONSOLA/(48162:48162): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 22:20:39:334 CONSOLA/(48162:48162): Primer dispositivo DISCO
+[INFO] 22:20:39:334 CONSOLA/(48162:48162): Se leyo el archivo correctamente
+[INFO] 22:20:39:337 CONSOLA/(48162:48162): Me llego el mensaje [atender_consola]segmentos e instrucciones recibidos pibe
+[INFO] 22:20:57:536 CONSOLA/(48156:48156): [recibir_entero]: se recibio el numero 237
+[INFO] 22:20:58:036 CONSOLA/(48156:48156): Se imprime el valor 237 por pantalla a pedido del kernel
+[INFO] 22:20:58:080 CONSOLA/(48156:48156): Me llego el mensaje Finalizar consola
+[INFO] 22:56:05:279 CONSOLA/(49223:49223): Config creado
+[INFO] 22:56:05:279 CONSOLA/(49223:49223): llego hasta recibir lista dispositivos
+[INFO] 22:56:05:319 CONSOLA/(49223:49223): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 22:56:05:319 CONSOLA/(49223:49223): Primer dispositivo DISCO
+[INFO] 22:56:05:319 CONSOLA/(49223:49223): Se leyo el archivo correctamente
+[INFO] 22:56:05:321 CONSOLA/(49223:49223): Me llego el mensaje [atender_consola]segmentos e instrucciones recibidos pibe
+[INFO] 22:56:06:899 CONSOLA/(49229:49229): Config creado
+[INFO] 22:56:06:899 CONSOLA/(49229:49229): llego hasta recibir lista dispositivos
+[INFO] 22:56:06:905 CONSOLA/(49229:49229): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 22:56:06:905 CONSOLA/(49229:49229): Primer dispositivo DISCO
+[INFO] 22:56:06:905 CONSOLA/(49229:49229): Se leyo el archivo correctamente
+[INFO] 22:56:06:908 CONSOLA/(49229:49229): Me llego el mensaje [atender_consola]segmentos e instrucciones recibidos pibe
+[INFO] 22:56:10:769 CONSOLA/(49223:49223): [recibir_entero]: se recibio el numero 912
+[INFO] 22:56:11:269 CONSOLA/(49223:49223): Se imprime el valor 912 por pantalla a pedido del kernel
+[INFO] 22:56:12:074 CONSOLA/(49223:49223): Me llego el mensaje Finalizar consola
+[INFO] 22:56:13:832 CONSOLA/(49229:49229): [recibir_entero]: se recibio el numero 28
+[INFO] 22:56:14:333 CONSOLA/(49229:49229): Se imprime el valor 28 por pantalla a pedido del kernel
+[INFO] 22:56:15:672 CONSOLA/(49229:49229): [recibir_entero]: se recibio el numero 37
+[INFO] 22:56:16:172 CONSOLA/(49229:49229): Se imprime el valor 37 por pantalla a pedido del kernel
+[INFO] 22:56:16:177 CONSOLA/(49229:49229): Me llego el mensaje Finalizar consola
+[INFO] 23:04:07:949 CONSOLA/(49415:49415): Config creado
+[INFO] 23:04:07:949 CONSOLA/(49415:49415): llego hasta recibir lista dispositivos
+[INFO] 23:04:07:952 CONSOLA/(49415:49415): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 23:04:07:952 CONSOLA/(49415:49415): Primer dispositivo DISCO
+[INFO] 23:04:07:952 CONSOLA/(49415:49415): Se leyo el archivo correctamente
+[INFO] 23:04:07:956 CONSOLA/(49415:49415): Me llego el mensaje [atender_consola]segmentos e instrucciones recibidos pibe
+[INFO] 23:04:09:629 CONSOLA/(49421:49421): Config creado
+[INFO] 23:04:09:629 CONSOLA/(49421:49421): llego hasta recibir lista dispositivos
+[INFO] 23:04:09:632 CONSOLA/(49421:49421): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 23:04:09:632 CONSOLA/(49421:49421): Primer dispositivo DISCO
+[INFO] 23:04:09:632 CONSOLA/(49421:49421): Se leyo el archivo correctamente
+[INFO] 23:04:09:635 CONSOLA/(49421:49421): Me llego el mensaje [atender_consola]segmentos e instrucciones recibidos pibe
+[INFO] 23:04:11:342 CONSOLA/(49425:49425): Config creado
+[INFO] 23:04:11:343 CONSOLA/(49425:49425): llego hasta recibir lista dispositivos
+[INFO] 23:04:11:346 CONSOLA/(49425:49425): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 23:04:11:346 CONSOLA/(49425:49425): Primer dispositivo DISCO
+[INFO] 23:04:11:346 CONSOLA/(49425:49425): Se leyo el archivo correctamente
+[INFO] 23:04:11:350 CONSOLA/(49425:49425): Me llego el mensaje [atender_consola]segmentos e instrucciones recibidos pibe
+[INFO] 23:04:13:362 CONSOLA/(49429:49429): Config creado
+[INFO] 23:04:13:362 CONSOLA/(49429:49429): llego hasta recibir lista dispositivos
+[INFO] 23:04:13:375 CONSOLA/(49429:49429): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 23:04:13:375 CONSOLA/(49429:49429): Primer dispositivo DISCO
+[INFO] 23:04:13:375 CONSOLA/(49429:49429): Se leyo el archivo correctamente
+[INFO] 23:04:13:380 CONSOLA/(49415:49415): [recibir_entero]: se recibio el numero 912
+[INFO] 23:04:13:382 CONSOLA/(49429:49429): Me llego el mensaje [atender_consola]segmentos e instrucciones recibidos pibe
+[INFO] 23:04:13:880 CONSOLA/(49415:49415): Se imprime el valor 912 por pantalla a pedido del kernel
+[INFO] 23:04:14:974 CONSOLA/(49415:49415): Me llego el mensaje Finalizar consola
+[INFO] 23:04:14:986 CONSOLA/(49433:49433): Config creado
+[INFO] 23:04:14:986 CONSOLA/(49433:49433): llego hasta recibir lista dispositivos
+[INFO] 23:04:14:990 CONSOLA/(49433:49433): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 23:04:14:991 CONSOLA/(49433:49433): Primer dispositivo DISCO
+[INFO] 23:04:14:991 CONSOLA/(49433:49433): Se leyo el archivo correctamente
+[INFO] 23:04:14:996 CONSOLA/(49433:49433): Me llego el mensaje [atender_consola]segmentos e instrucciones recibidos pibe
+[INFO] 23:04:16:181 CONSOLA/(49433:49433): [recibir_entero]: se recibio el numero 1
+[INFO] 23:04:16:555 CONSOLA/(49438:49438): Config creado
+[INFO] 23:04:16:555 CONSOLA/(49438:49438): llego hasta recibir lista dispositivos
+[INFO] 23:04:16:559 CONSOLA/(49438:49438): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 23:04:16:559 CONSOLA/(49438:49438): Primer dispositivo DISCO
+[INFO] 23:04:16:560 CONSOLA/(49438:49438): Se leyo el archivo correctamente
+[INFO] 23:04:16:565 CONSOLA/(49438:49438): Me llego el mensaje [atender_consola]segmentos e instrucciones recibidos pibe
+[INFO] 23:04:16:681 CONSOLA/(49433:49433): Se imprime el valor 1 por pantalla a pedido del kernel
+[INFO] 23:04:18:276 CONSOLA/(49433:49433): [recibir_entero]: se recibio el numero 1
+[INFO] 23:04:18:776 CONSOLA/(49433:49433): Se imprime el valor 1 por pantalla a pedido del kernel
+[INFO] 23:04:19:476 CONSOLA/(49433:49433): [recibir_entero]: se recibio el numero 2
+[INFO] 23:04:19:976 CONSOLA/(49433:49433): Se imprime el valor 2 por pantalla a pedido del kernel
+[INFO] 23:04:20:916 CONSOLA/(49433:49433): [recibir_entero]: se recibio el numero 3
+[INFO] 23:04:21:311 CONSOLA/(49425:49425): [recibir_entero]: se recibio el numero 2280
+[INFO] 23:04:21:385 CONSOLA/(49421:49421): [recibir_entero]: se recibio el numero 28
+[INFO] 23:04:21:416 CONSOLA/(49433:49433): Se imprime el valor 3 por pantalla a pedido del kernel
+[INFO] 23:04:21:458 CONSOLA/(49429:49429): [recibir_entero]: se recibio el numero 2280
+[INFO] 23:04:21:811 CONSOLA/(49425:49425): Se imprime el valor 2280 por pantalla a pedido del kernel
+[INFO] 23:04:21:886 CONSOLA/(49421:49421): Se imprime el valor 28 por pantalla a pedido del kernel
+[INFO] 23:04:21:958 CONSOLA/(49429:49429): Se imprime el valor 2280 por pantalla a pedido del kernel
+[INFO] 23:04:22:034 CONSOLA/(49433:49433): [recibir_entero]: se recibio el numero 5
+[INFO] 23:04:22:534 CONSOLA/(49433:49433): Se imprime el valor 5 por pantalla a pedido del kernel
+[INFO] 23:04:22:653 CONSOLA/(49425:49425): Me llego el mensaje Finalizar consola
+[INFO] 23:04:27:871 CONSOLA/(49433:49433): [recibir_entero]: se recibio el numero 8
+[INFO] 23:04:27:973 CONSOLA/(49438:49438): [recibir_entero]: se recibio el numero 1
+[INFO] 23:04:28:371 CONSOLA/(49433:49433): Se imprime el valor 8 por pantalla a pedido del kernel
+[INFO] 23:04:28:473 CONSOLA/(49438:49438): Se imprime el valor 1 por pantalla a pedido del kernel
+[INFO] 23:04:31:410 CONSOLA/(49421:49421): [recibir_entero]: se recibio el numero 37
+[INFO] 23:04:31:910 CONSOLA/(49421:49421): Se imprime el valor 37 por pantalla a pedido del kernel
+[INFO] 23:04:32:029 CONSOLA/(49433:49433): [recibir_entero]: se recibio el numero 13
+[INFO] 23:04:32:099 CONSOLA/(49438:49438): [recibir_entero]: se recibio el numero 2
+[INFO] 23:04:32:174 CONSOLA/(49421:49421): Me llego el mensaje Finalizar consola
+[INFO] 23:04:32:529 CONSOLA/(49433:49433): Se imprime el valor 13 por pantalla a pedido del kernel
+[INFO] 23:04:32:599 CONSOLA/(49438:49438): Se imprime el valor 2 por pantalla a pedido del kernel
+[INFO] 23:04:33:131 CONSOLA/(49433:49433): [recibir_entero]: se recibio el numero 21
+[INFO] 23:04:33:631 CONSOLA/(49433:49433): Se imprime el valor 21 por pantalla a pedido del kernel
+[INFO] 23:04:34:212 CONSOLA/(49433:49433): [recibir_entero]: se recibio el numero 34
+[INFO] 23:04:34:284 CONSOLA/(49429:49429): [recibir_entero]: se recibio el numero 9804
+[INFO] 23:04:34:712 CONSOLA/(49433:49433): Se imprime el valor 34 por pantalla a pedido del kernel
+[INFO] 23:04:34:785 CONSOLA/(49429:49429): Se imprime el valor 9804 por pantalla a pedido del kernel
+[INFO] 23:04:34:905 CONSOLA/(49438:49438): [recibir_entero]: se recibio el numero 4
+[INFO] 23:04:35:405 CONSOLA/(49438:49438): Se imprime el valor 4 por pantalla a pedido del kernel
+[INFO] 23:04:35:523 CONSOLA/(49433:49433): [recibir_entero]: se recibio el numero 55
+[INFO] 23:04:36:024 CONSOLA/(49433:49433): Se imprime el valor 55 por pantalla a pedido del kernel
+[INFO] 23:04:36:809 CONSOLA/(49438:49438): [recibir_entero]: se recibio el numero 8
+[INFO] 23:04:37:309 CONSOLA/(49438:49438): Se imprime el valor 8 por pantalla a pedido del kernel
+[INFO] 23:04:37:429 CONSOLA/(49433:49433): [recibir_entero]: se recibio el numero 89
+[INFO] 23:04:37:728 CONSOLA/(49429:49429): [recibir_entero]: se recibio el numero 15276
+[INFO] 23:04:37:930 CONSOLA/(49433:49433): Se imprime el valor 89 por pantalla a pedido del kernel
+[INFO] 23:04:38:228 CONSOLA/(49429:49429): Se imprime el valor 15276 por pantalla a pedido del kernel
+[INFO] 23:04:38:344 CONSOLA/(49438:49438): [recibir_entero]: se recibio el numero 16
+[INFO] 23:04:38:845 CONSOLA/(49438:49438): Se imprime el valor 16 por pantalla a pedido del kernel
+[INFO] 23:04:38:963 CONSOLA/(49429:49429): Me llego el mensaje Finalizar consola
+[INFO] 23:04:38:966 CONSOLA/(49433:49433): [recibir_entero]: se recibio el numero 144
+[INFO] 23:04:39:466 CONSOLA/(49433:49433): Se imprime el valor 144 por pantalla a pedido del kernel
+[INFO] 23:04:39:584 CONSOLA/(49438:49438): [recibir_entero]: se recibio el numero 32
+[INFO] 23:04:40:085 CONSOLA/(49438:49438): Se imprime el valor 32 por pantalla a pedido del kernel
+[INFO] 23:04:40:160 CONSOLA/(49433:49433): [recibir_entero]: se recibio el numero 233
+[INFO] 23:04:40:660 CONSOLA/(49433:49433): Se imprime el valor 233 por pantalla a pedido del kernel
+[INFO] 23:04:40:776 CONSOLA/(49438:49438): [recibir_entero]: se recibio el numero 64
+[INFO] 23:04:41:276 CONSOLA/(49438:49438): Se imprime el valor 64 por pantalla a pedido del kernel
+[INFO] 23:04:41:352 CONSOLA/(49433:49433): [recibir_entero]: se recibio el numero 377
+[INFO] 23:04:41:853 CONSOLA/(49433:49433): Se imprime el valor 377 por pantalla a pedido del kernel
+[INFO] 23:04:41:968 CONSOLA/(49438:49438): [recibir_entero]: se recibio el numero 128
+[INFO] 23:04:42:469 CONSOLA/(49438:49438): Se imprime el valor 128 por pantalla a pedido del kernel
+[INFO] 23:04:42:544 CONSOLA/(49433:49433): [recibir_entero]: se recibio el numero 610
+[INFO] 23:04:43:044 CONSOLA/(49433:49433): Se imprime el valor 610 por pantalla a pedido del kernel
+[INFO] 23:04:43:164 CONSOLA/(49438:49438): [recibir_entero]: se recibio el numero 256
+[INFO] 23:04:43:665 CONSOLA/(49438:49438): Se imprime el valor 256 por pantalla a pedido del kernel
+[INFO] 23:04:43:740 CONSOLA/(49433:49433): [recibir_entero]: se recibio el numero 987
+[INFO] 23:04:44:241 CONSOLA/(49433:49433): Se imprime el valor 987 por pantalla a pedido del kernel
+[INFO] 23:04:44:360 CONSOLA/(49438:49438): [recibir_entero]: se recibio el numero 512
+[INFO] 23:04:44:861 CONSOLA/(49438:49438): Se imprime el valor 512 por pantalla a pedido del kernel
+[INFO] 23:04:44:937 CONSOLA/(49433:49433): [recibir_entero]: se recibio el numero 1597
+[INFO] 23:04:45:437 CONSOLA/(49433:49433): Se imprime el valor 1597 por pantalla a pedido del kernel
+[INFO] 23:04:45:556 CONSOLA/(49438:49438): [recibir_entero]: se recibio el numero 1024
+[INFO] 23:04:46:056 CONSOLA/(49438:49438): Se imprime el valor 1024 por pantalla a pedido del kernel
+[INFO] 23:04:46:138 CONSOLA/(49433:49433): [recibir_entero]: se recibio el numero 2584
+[INFO] 23:04:46:638 CONSOLA/(49433:49433): Se imprime el valor 2584 por pantalla a pedido del kernel
+[INFO] 23:04:46:756 CONSOLA/(49438:49438): [recibir_entero]: se recibio el numero 2048
+[INFO] 23:04:47:257 CONSOLA/(49438:49438): Se imprime el valor 2048 por pantalla a pedido del kernel
+[INFO] 23:04:47:396 CONSOLA/(49433:49433): [recibir_entero]: se recibio el numero 4181
+[INFO] 23:04:47:896 CONSOLA/(49433:49433): Se imprime el valor 4181 por pantalla a pedido del kernel
+[INFO] 23:04:48:015 CONSOLA/(49438:49438): [recibir_entero]: se recibio el numero 4096
+[INFO] 23:04:48:515 CONSOLA/(49438:49438): Se imprime el valor 4096 por pantalla a pedido del kernel
+[INFO] 23:04:48:592 CONSOLA/(49433:49433): [recibir_entero]: se recibio el numero 6765
+[INFO] 23:04:49:092 CONSOLA/(49433:49433): Se imprime el valor 6765 por pantalla a pedido del kernel
+[INFO] 23:04:49:208 CONSOLA/(49438:49438): [recibir_entero]: se recibio el numero 8192
+[INFO] 23:04:49:709 CONSOLA/(49438:49438): Se imprime el valor 8192 por pantalla a pedido del kernel
+[INFO] 23:04:49:785 CONSOLA/(49433:49433): [recibir_entero]: se recibio el numero 10946
+[INFO] 23:04:50:285 CONSOLA/(49433:49433): Se imprime el valor 10946 por pantalla a pedido del kernel
+[INFO] 23:04:50:405 CONSOLA/(49438:49438): [recibir_entero]: se recibio el numero 16384
+[INFO] 23:04:50:906 CONSOLA/(49438:49438): Se imprime el valor 16384 por pantalla a pedido del kernel
+[INFO] 23:04:50:981 CONSOLA/(49433:49433): [recibir_entero]: se recibio el numero 17711
+[INFO] 23:04:51:481 CONSOLA/(49433:49433): Se imprime el valor 17711 por pantalla a pedido del kernel
+[INFO] 23:04:51:599 CONSOLA/(49438:49438): [recibir_entero]: se recibio el numero 32768
+[INFO] 23:04:52:101 CONSOLA/(49438:49438): Se imprime el valor 32768 por pantalla a pedido del kernel
+[INFO] 23:04:52:175 CONSOLA/(49433:49433): [recibir_entero]: se recibio el numero 28657
+[INFO] 23:04:52:676 CONSOLA/(49433:49433): Se imprime el valor 28657 por pantalla a pedido del kernel
+[INFO] 23:04:52:792 CONSOLA/(49438:49438): [recibir_entero]: se recibio el numero 65536
+[INFO] 23:04:53:292 CONSOLA/(49438:49438): Se imprime el valor 65536 por pantalla a pedido del kernel
+[INFO] 23:04:53:367 CONSOLA/(49433:49433): [recibir_entero]: se recibio el numero 46368
+[INFO] 23:04:53:868 CONSOLA/(49433:49433): Se imprime el valor 46368 por pantalla a pedido del kernel
+[INFO] 23:04:53:987 CONSOLA/(49438:49438): [recibir_entero]: se recibio el numero 131072
+[INFO] 23:04:54:487 CONSOLA/(49438:49438): Se imprime el valor 131072 por pantalla a pedido del kernel
+[INFO] 23:04:54:579 CONSOLA/(49433:49433): [recibir_entero]: se recibio el numero 75025
+[INFO] 23:04:55:080 CONSOLA/(49433:49433): Se imprime el valor 75025 por pantalla a pedido del kernel
+[INFO] 23:04:55:205 CONSOLA/(49438:49438): [recibir_entero]: se recibio el numero 262144
+[INFO] 23:04:55:705 CONSOLA/(49438:49438): Se imprime el valor 262144 por pantalla a pedido del kernel
+[INFO] 23:04:55:786 CONSOLA/(49433:49433): [recibir_entero]: se recibio el numero 121393
+[INFO] 23:04:56:286 CONSOLA/(49433:49433): Se imprime el valor 121393 por pantalla a pedido del kernel
+[INFO] 23:04:56:404 CONSOLA/(49438:49438): [recibir_entero]: se recibio el numero 524288
+[INFO] 23:04:56:904 CONSOLA/(49438:49438): Se imprime el valor 524288 por pantalla a pedido del kernel
+[INFO] 23:04:56:981 CONSOLA/(49433:49433): [recibir_entero]: se recibio el numero 196418
+[INFO] 23:04:57:481 CONSOLA/(49433:49433): Se imprime el valor 196418 por pantalla a pedido del kernel
+[INFO] 23:14:26:836 CONSOLA/(49697:49697): Config creado
+[INFO] 23:14:26:836 CONSOLA/(49697:49697): llego hasta recibir lista dispositivos
+[INFO] 23:14:26:851 CONSOLA/(49697:49697): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 23:14:26:851 CONSOLA/(49697:49697): Primer dispositivo DISCO
+[INFO] 23:14:26:851 CONSOLA/(49697:49697): Se leyo el archivo correctamente
+[INFO] 23:14:26:852 CONSOLA/(49697:49697): Me llego el mensaje [atender_consola]segmentos e instrucciones recibidos pibe
+[INFO] 23:14:28:551 CONSOLA/(49703:49703): Config creado
+[INFO] 23:14:28:551 CONSOLA/(49703:49703): llego hasta recibir lista dispositivos
+[INFO] 23:14:28:554 CONSOLA/(49703:49703): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 23:14:28:554 CONSOLA/(49703:49703): Primer dispositivo DISCO
+[INFO] 23:14:28:554 CONSOLA/(49703:49703): Se leyo el archivo correctamente
+[INFO] 23:14:28:556 CONSOLA/(49703:49703): Me llego el mensaje [atender_consola]segmentos e instrucciones recibidos pibe
+[INFO] 23:14:30:171 CONSOLA/(49707:49707): Config creado
+[INFO] 23:14:30:171 CONSOLA/(49707:49707): llego hasta recibir lista dispositivos
+[INFO] 23:14:30:174 CONSOLA/(49707:49707): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 23:14:30:174 CONSOLA/(49707:49707): Primer dispositivo DISCO
+[INFO] 23:14:30:174 CONSOLA/(49707:49707): Se leyo el archivo correctamente
+[INFO] 23:14:30:179 CONSOLA/(49707:49707): Me llego el mensaje [atender_consola]segmentos e instrucciones recibidos pibe
+[INFO] 23:14:32:004 CONSOLA/(49710:49710): Config creado
+[INFO] 23:14:32:004 CONSOLA/(49710:49710): llego hasta recibir lista dispositivos
+[INFO] 23:14:32:007 CONSOLA/(49710:49710): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 23:14:32:007 CONSOLA/(49710:49710): Primer dispositivo DISCO
+[INFO] 23:14:32:007 CONSOLA/(49710:49710): Se leyo el archivo correctamente
+[INFO] 23:14:32:017 CONSOLA/(49710:49710): Me llego el mensaje [atender_consola]segmentos e instrucciones recibidos pibe
+[INFO] 23:14:32:292 CONSOLA/(49697:49697): [recibir_entero]: se recibio el numero 912
+[INFO] 23:14:32:792 CONSOLA/(49697:49697): Se imprime el valor 912 por pantalla a pedido del kernel
+[INFO] 23:14:33:610 CONSOLA/(49714:49714): Config creado
+[INFO] 23:14:33:610 CONSOLA/(49714:49714): llego hasta recibir lista dispositivos
+[INFO] 23:14:33:613 CONSOLA/(49714:49714): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 23:14:33:614 CONSOLA/(49714:49714): Primer dispositivo DISCO
+[INFO] 23:14:33:614 CONSOLA/(49714:49714): Se leyo el archivo correctamente
+[INFO] 23:14:33:620 CONSOLA/(49714:49714): Me llego el mensaje [atender_consola]segmentos e instrucciones recibidos pibe
+[INFO] 23:14:33:819 CONSOLA/(49697:49697): Me llego el mensaje Finalizar consola
+[INFO] 23:14:35:084 CONSOLA/(49714:49714): [recibir_entero]: se recibio el numero 1
+[INFO] 23:14:35:454 CONSOLA/(49720:49720): Config creado
+[INFO] 23:14:35:454 CONSOLA/(49720:49720): llego hasta recibir lista dispositivos
+[INFO] 23:14:35:460 CONSOLA/(49720:49720): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 23:14:35:460 CONSOLA/(49720:49720): Primer dispositivo DISCO
+[INFO] 23:14:35:460 CONSOLA/(49720:49720): Se leyo el archivo correctamente
+[INFO] 23:14:35:468 CONSOLA/(49720:49720): Me llego el mensaje [atender_consola]segmentos e instrucciones recibidos pibe
+[INFO] 23:14:35:585 CONSOLA/(49714:49714): Se imprime el valor 1 por pantalla a pedido del kernel
+[INFO] 23:14:37:175 CONSOLA/(49714:49714): [recibir_entero]: se recibio el numero 1
+[INFO] 23:14:37:675 CONSOLA/(49714:49714): Se imprime el valor 1 por pantalla a pedido del kernel
+[INFO] 23:14:38:363 CONSOLA/(49714:49714): [recibir_entero]: se recibio el numero 2
+[INFO] 23:14:38:863 CONSOLA/(49714:49714): Se imprime el valor 2 por pantalla a pedido del kernel
+[INFO] 23:14:39:803 CONSOLA/(49714:49714): [recibir_entero]: se recibio el numero 3
+[INFO] 23:14:40:199 CONSOLA/(49707:49707): [recibir_entero]: se recibio el numero 2280
+[INFO] 23:14:40:271 CONSOLA/(49703:49703): [recibir_entero]: se recibio el numero 28
+[INFO] 23:14:40:303 CONSOLA/(49714:49714): Se imprime el valor 3 por pantalla a pedido del kernel
+[INFO] 23:14:40:345 CONSOLA/(49710:49710): [recibir_entero]: se recibio el numero 2280
+[INFO] 23:14:40:699 CONSOLA/(49707:49707): Se imprime el valor 2280 por pantalla a pedido del kernel
+[INFO] 23:14:40:771 CONSOLA/(49703:49703): Se imprime el valor 28 por pantalla a pedido del kernel
+[INFO] 23:14:40:845 CONSOLA/(49710:49710): Se imprime el valor 2280 por pantalla a pedido del kernel
+[INFO] 23:14:40:920 CONSOLA/(49714:49714): [recibir_entero]: se recibio el numero 5
+[INFO] 23:14:41:420 CONSOLA/(49714:49714): Se imprime el valor 5 por pantalla a pedido del kernel
+[INFO] 23:14:41:538 CONSOLA/(49707:49707): Me llego el mensaje Finalizar consola
+[INFO] 23:14:46:755 CONSOLA/(49714:49714): [recibir_entero]: se recibio el numero 8
+[INFO] 23:14:46:852 CONSOLA/(49720:49720): [recibir_entero]: se recibio el numero 1
+[INFO] 23:14:47:256 CONSOLA/(49714:49714): Se imprime el valor 8 por pantalla a pedido del kernel
+[INFO] 23:14:47:353 CONSOLA/(49720:49720): Se imprime el valor 1 por pantalla a pedido del kernel
+[INFO] 23:14:50:284 CONSOLA/(49703:49703): [recibir_entero]: se recibio el numero 37
+[INFO] 23:14:50:784 CONSOLA/(49703:49703): Se imprime el valor 37 por pantalla a pedido del kernel
+[INFO] 23:14:50:904 CONSOLA/(49714:49714): [recibir_entero]: se recibio el numero 13
+[INFO] 23:14:50:976 CONSOLA/(49720:49720): [recibir_entero]: se recibio el numero 2
+[INFO] 23:14:51:048 CONSOLA/(49703:49703): Me llego el mensaje Finalizar consola
+[INFO] 23:14:51:404 CONSOLA/(49714:49714): Se imprime el valor 13 por pantalla a pedido del kernel
+[INFO] 23:14:51:476 CONSOLA/(49720:49720): Se imprime el valor 2 por pantalla a pedido del kernel
+[INFO] 23:14:52:018 CONSOLA/(49714:49714): [recibir_entero]: se recibio el numero 21
+[INFO] 23:14:52:518 CONSOLA/(49714:49714): Se imprime el valor 21 por pantalla a pedido del kernel
+[INFO] 23:14:53:100 CONSOLA/(49714:49714): [recibir_entero]: se recibio el numero 34
+[INFO] 23:14:53:175 CONSOLA/(49710:49710): [recibir_entero]: se recibio el numero 9804
+[INFO] 23:14:53:600 CONSOLA/(49714:49714): Se imprime el valor 34 por pantalla a pedido del kernel
+[INFO] 23:14:53:675 CONSOLA/(49710:49710): Se imprime el valor 9804 por pantalla a pedido del kernel
+[INFO] 23:14:53:796 CONSOLA/(49720:49720): [recibir_entero]: se recibio el numero 4
+[INFO] 23:14:54:296 CONSOLA/(49720:49720): Se imprime el valor 4 por pantalla a pedido del kernel
+[INFO] 23:14:54:415 CONSOLA/(49714:49714): [recibir_entero]: se recibio el numero 55
+[INFO] 23:14:54:915 CONSOLA/(49714:49714): Se imprime el valor 55 por pantalla a pedido del kernel
+[INFO] 23:14:55:700 CONSOLA/(49720:49720): [recibir_entero]: se recibio el numero 8
+[INFO] 23:14:56:201 CONSOLA/(49720:49720): Se imprime el valor 8 por pantalla a pedido del kernel
+[INFO] 23:14:56:321 CONSOLA/(49714:49714): [recibir_entero]: se recibio el numero 89
+[INFO] 23:14:56:623 CONSOLA/(49710:49710): [recibir_entero]: se recibio el numero 15276
+[INFO] 23:14:56:821 CONSOLA/(49714:49714): Se imprime el valor 89 por pantalla a pedido del kernel
+[INFO] 23:14:57:123 CONSOLA/(49710:49710): Se imprime el valor 15276 por pantalla a pedido del kernel
+[INFO] 23:14:57:245 CONSOLA/(49720:49720): [recibir_entero]: se recibio el numero 16
+[INFO] 23:14:57:745 CONSOLA/(49720:49720): Se imprime el valor 16 por pantalla a pedido del kernel
+[INFO] 23:14:57:862 CONSOLA/(49710:49710): Me llego el mensaje Finalizar consola
+[INFO] 23:14:57:865 CONSOLA/(49714:49714): [recibir_entero]: se recibio el numero 144
+[INFO] 23:14:58:366 CONSOLA/(49714:49714): Se imprime el valor 144 por pantalla a pedido del kernel
+[INFO] 23:14:58:485 CONSOLA/(49720:49720): [recibir_entero]: se recibio el numero 32
+[INFO] 23:14:58:986 CONSOLA/(49720:49720): Se imprime el valor 32 por pantalla a pedido del kernel
+[INFO] 23:14:59:059 CONSOLA/(49714:49714): [recibir_entero]: se recibio el numero 233
+[INFO] 23:14:59:560 CONSOLA/(49714:49714): Se imprime el valor 233 por pantalla a pedido del kernel
+[INFO] 23:14:59:676 CONSOLA/(49720:49720): [recibir_entero]: se recibio el numero 64
+[INFO] 23:15:00:176 CONSOLA/(49720:49720): Se imprime el valor 64 por pantalla a pedido del kernel
+[INFO] 23:15:00:252 CONSOLA/(49714:49714): [recibir_entero]: se recibio el numero 377
+[INFO] 23:15:00:752 CONSOLA/(49714:49714): Se imprime el valor 377 por pantalla a pedido del kernel
+[INFO] 23:15:00:868 CONSOLA/(49720:49720): [recibir_entero]: se recibio el numero 128
+[INFO] 23:15:01:368 CONSOLA/(49720:49720): Se imprime el valor 128 por pantalla a pedido del kernel
+[INFO] 23:15:01:445 CONSOLA/(49714:49714): [recibir_entero]: se recibio el numero 610
+[INFO] 23:15:01:945 CONSOLA/(49714:49714): Se imprime el valor 610 por pantalla a pedido del kernel
+[INFO] 23:15:02:060 CONSOLA/(49720:49720): [recibir_entero]: se recibio el numero 256
+[INFO] 23:15:02:560 CONSOLA/(49720:49720): Se imprime el valor 256 por pantalla a pedido del kernel
+[INFO] 23:15:02:638 CONSOLA/(49714:49714): [recibir_entero]: se recibio el numero 987
+[INFO] 23:15:03:138 CONSOLA/(49714:49714): Se imprime el valor 987 por pantalla a pedido del kernel
+[INFO] 23:15:03:251 CONSOLA/(49720:49720): [recibir_entero]: se recibio el numero 512
+[INFO] 23:15:03:752 CONSOLA/(49720:49720): Se imprime el valor 512 por pantalla a pedido del kernel
+[INFO] 23:15:03:830 CONSOLA/(49714:49714): [recibir_entero]: se recibio el numero 1597
+[INFO] 23:15:04:331 CONSOLA/(49714:49714): Se imprime el valor 1597 por pantalla a pedido del kernel
+[INFO] 23:15:04:449 CONSOLA/(49720:49720): [recibir_entero]: se recibio el numero 1024
+[INFO] 23:15:04:950 CONSOLA/(49720:49720): Se imprime el valor 1024 por pantalla a pedido del kernel
+[INFO] 23:15:05:025 CONSOLA/(49714:49714): [recibir_entero]: se recibio el numero 2584
+[INFO] 23:15:05:525 CONSOLA/(49714:49714): Se imprime el valor 2584 por pantalla a pedido del kernel
+[INFO] 23:15:05:648 CONSOLA/(49720:49720): [recibir_entero]: se recibio el numero 2048
+[INFO] 23:15:06:148 CONSOLA/(49720:49720): Se imprime el valor 2048 por pantalla a pedido del kernel
+[INFO] 23:15:06:283 CONSOLA/(49714:49714): [recibir_entero]: se recibio el numero 4181
+[INFO] 23:15:06:784 CONSOLA/(49714:49714): Se imprime el valor 4181 por pantalla a pedido del kernel
+[INFO] 23:15:06:900 CONSOLA/(49720:49720): [recibir_entero]: se recibio el numero 4096
+[INFO] 23:15:07:400 CONSOLA/(49720:49720): Se imprime el valor 4096 por pantalla a pedido del kernel
+[INFO] 23:15:07:477 CONSOLA/(49714:49714): [recibir_entero]: se recibio el numero 6765
+[INFO] 23:15:07:978 CONSOLA/(49714:49714): Se imprime el valor 6765 por pantalla a pedido del kernel
+[INFO] 23:15:08:097 CONSOLA/(49720:49720): [recibir_entero]: se recibio el numero 8192
+[INFO] 23:15:08:597 CONSOLA/(49720:49720): Se imprime el valor 8192 por pantalla a pedido del kernel
+[INFO] 23:15:08:672 CONSOLA/(49714:49714): [recibir_entero]: se recibio el numero 10946
+[INFO] 23:15:09:173 CONSOLA/(49714:49714): Se imprime el valor 10946 por pantalla a pedido del kernel
+[INFO] 23:15:09:293 CONSOLA/(49720:49720): [recibir_entero]: se recibio el numero 16384
+[INFO] 23:15:09:794 CONSOLA/(49720:49720): Se imprime el valor 16384 por pantalla a pedido del kernel
+[INFO] 23:15:09:869 CONSOLA/(49714:49714): [recibir_entero]: se recibio el numero 17711
+[INFO] 23:15:10:369 CONSOLA/(49714:49714): Se imprime el valor 17711 por pantalla a pedido del kernel
+[INFO] 23:15:10:485 CONSOLA/(49720:49720): [recibir_entero]: se recibio el numero 32768
+[INFO] 23:15:10:985 CONSOLA/(49720:49720): Se imprime el valor 32768 por pantalla a pedido del kernel
+[INFO] 23:15:11:061 CONSOLA/(49714:49714): [recibir_entero]: se recibio el numero 28657
+[INFO] 23:15:11:562 CONSOLA/(49714:49714): Se imprime el valor 28657 por pantalla a pedido del kernel
+[INFO] 23:15:11:680 CONSOLA/(49720:49720): [recibir_entero]: se recibio el numero 65536
+[INFO] 23:15:12:180 CONSOLA/(49720:49720): Se imprime el valor 65536 por pantalla a pedido del kernel
+[INFO] 23:15:12:257 CONSOLA/(49714:49714): [recibir_entero]: se recibio el numero 46368
+[INFO] 23:15:12:757 CONSOLA/(49714:49714): Se imprime el valor 46368 por pantalla a pedido del kernel
+[INFO] 23:15:12:880 CONSOLA/(49720:49720): [recibir_entero]: se recibio el numero 131072
+[INFO] 23:15:13:381 CONSOLA/(49720:49720): Se imprime el valor 131072 por pantalla a pedido del kernel
+[INFO] 23:15:13:455 CONSOLA/(49714:49714): [recibir_entero]: se recibio el numero 75025
+[INFO] 23:15:13:956 CONSOLA/(49714:49714): Se imprime el valor 75025 por pantalla a pedido del kernel
+[INFO] 23:15:14:072 CONSOLA/(49720:49720): [recibir_entero]: se recibio el numero 262144
+[INFO] 23:15:14:573 CONSOLA/(49720:49720): Se imprime el valor 262144 por pantalla a pedido del kernel
+[INFO] 23:15:14:649 CONSOLA/(49714:49714): [recibir_entero]: se recibio el numero 121393
+[INFO] 23:15:15:149 CONSOLA/(49714:49714): Se imprime el valor 121393 por pantalla a pedido del kernel
+[INFO] 23:15:15:264 CONSOLA/(49720:49720): [recibir_entero]: se recibio el numero 524288
+[INFO] 23:15:15:764 CONSOLA/(49720:49720): Se imprime el valor 524288 por pantalla a pedido del kernel
+[INFO] 23:15:15:841 CONSOLA/(49714:49714): [recibir_entero]: se recibio el numero 196418
+[INFO] 23:15:16:341 CONSOLA/(49714:49714): Se imprime el valor 196418 por pantalla a pedido del kernel
+[INFO] 23:15:16:460 CONSOLA/(49720:49720): [recibir_entero]: se recibio el numero 1048576
+[INFO] 23:15:16:961 CONSOLA/(49720:49720): Se imprime el valor 1048576 por pantalla a pedido del kernel
+[INFO] 23:15:17:037 CONSOLA/(49714:49714): [recibir_entero]: se recibio el numero 317811
+[INFO] 23:15:17:537 CONSOLA/(49714:49714): Se imprime el valor 317811 por pantalla a pedido del kernel
+[INFO] 23:15:17:659 CONSOLA/(49720:49720): [recibir_entero]: se recibio el numero 2097152
+[INFO] 23:15:18:159 CONSOLA/(49720:49720): Se imprime el valor 2097152 por pantalla a pedido del kernel
+[INFO] 23:15:18:233 CONSOLA/(49714:49714): [recibir_entero]: se recibio el numero 514229
+[INFO] 23:15:18:733 CONSOLA/(49714:49714): Se imprime el valor 514229 por pantalla a pedido del kernel
+[INFO] 23:15:18:853 CONSOLA/(49720:49720): [recibir_entero]: se recibio el numero 4194304
+[INFO] 23:15:19:353 CONSOLA/(49720:49720): Se imprime el valor 4194304 por pantalla a pedido del kernel
+[INFO] 23:15:19:429 CONSOLA/(49714:49714): [recibir_entero]: se recibio el numero 832040
+[INFO] 23:15:19:930 CONSOLA/(49714:49714): Se imprime el valor 832040 por pantalla a pedido del kernel
+[INFO] 23:15:20:050 CONSOLA/(49720:49720): [recibir_entero]: se recibio el numero 8388608
+[INFO] 23:15:20:550 CONSOLA/(49720:49720): Se imprime el valor 8388608 por pantalla a pedido del kernel
+[INFO] 23:15:20:624 CONSOLA/(49714:49714): [recibir_entero]: se recibio el numero 1346269
+[INFO] 23:15:21:124 CONSOLA/(49714:49714): Se imprime el valor 1346269 por pantalla a pedido del kernel
+[INFO] 23:15:21:238 CONSOLA/(49714:49714): Me llego el mensaje Finalizar consola
+[INFO] 23:15:21:243 CONSOLA/(49720:49720): [recibir_entero]: se recibio el numero 16777216
+[INFO] 23:15:21:743 CONSOLA/(49720:49720): Se imprime el valor 16777216 por pantalla a pedido del kernel
+[INFO] 23:15:22:330 CONSOLA/(49720:49720): [recibir_entero]: se recibio el numero 33554432
+[INFO] 23:15:22:830 CONSOLA/(49720:49720): Se imprime el valor 33554432 por pantalla a pedido del kernel
+[INFO] 23:15:23:412 CONSOLA/(49720:49720): [recibir_entero]: se recibio el numero 67108864
+[INFO] 23:15:23:912 CONSOLA/(49720:49720): Se imprime el valor 67108864 por pantalla a pedido del kernel
+[INFO] 23:15:24:491 CONSOLA/(49720:49720): [recibir_entero]: se recibio el numero 134217728
+[INFO] 23:15:24:992 CONSOLA/(49720:49720): Se imprime el valor 134217728 por pantalla a pedido del kernel
+[INFO] 23:15:24:997 CONSOLA/(49720:49720): Me llego el mensaje Finalizar consola

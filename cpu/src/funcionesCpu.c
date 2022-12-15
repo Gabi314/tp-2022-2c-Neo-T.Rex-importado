@@ -28,6 +28,7 @@ bool hayInterrupcion = false;
 pthread_t hiloInterrupciones;
 pthread_mutex_t mutexInterrupcion;
 pthread_mutex_t mutexSocketMemoria;
+pthread_mutex_t mutexTlb;
 sem_t pcbRecibido;
 
 
@@ -57,6 +58,7 @@ void inicializarConfiguraciones(char* unaConfig){
 	pthread_mutex_init(&mutexEjecutar, NULL);
 	pthread_mutex_init(&mutexInterrupcion, NULL);
 	pthread_mutex_init(&mutexSocketMemoria,NULL);
+	pthread_mutex_init(&mutexTlb,NULL);
 }
 
 
@@ -396,7 +398,9 @@ int chequearMarcoEnTLB(int nroDePagina, int nroDeSegmento,int pid){
 		return marco;
 	}
 	for(int i=0;i < list_size(tlb);i++){
+		pthread_mutex_lock(&mutexTlb);
 		unaEntradaTLB = list_get(tlb,i);
+		pthread_mutex_unlock(&mutexTlb);
 
 		if (unaEntradaTLB->nroDePagina == nroDePagina
 				&& unaEntradaTLB->nroDeSegmento == nroDeSegmento

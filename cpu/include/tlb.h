@@ -2,7 +2,7 @@
 
 void agregarEntradaATLB(int,int,int,int);
 
-void reemplazarPagina(int,int,int,int);
+void reemplazarPagina(int,int,int,int,int);
 
 void algoritmosDeReemplazoTLB(int,int,int,int);
 

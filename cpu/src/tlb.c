@@ -1,7 +1,7 @@
 #include "tlb.h"
 t_list* tlb;
 //int tamanioEntradaTlb = 0;
-int i = 0;
+int contadorDeEntradasTlb = 0;
 
 void agregarEntradaATLB(int marco, int pagina, int pid, int numeroDeSegmento){
 
@@ -18,8 +18,8 @@ void agregarEntradaATLB(int marco, int pagina, int pid, int numeroDeSegmento){
 	log_info(logger, "<PID: %d> Se agrega la pagina %d perteneciente al segmento %d con marco %d a tlb",
 			pid, pagina, numeroDeSegmento, marco);
 
-	list_add_in_index(tlb,i,unaEntrada);
-	i++;
+	list_add_in_index(tlb,contadorDeEntradasTlb,unaEntrada);
+	contadorDeEntradasTlb++;
 
 //	int i=0;
 //
@@ -54,7 +54,7 @@ void algoritmosDeReemplazoTLB(int pagina,int marco,int pid, int numeroDeSegmento
 			}
 		}
 
-		reemplazarPagina(pagina,marco,indiceConInstanteGuardadoMayor,numeroDeSegmento);
+		reemplazarPagina(pagina,marco,indiceConInstanteGuardadoMayor,numeroDeSegmento,pid);
 
 	}else if (! strcmp(algoritmoReemplazoTlb,"LRU")){
 		entradaTLB* unaEntradaTLB = malloc(sizeof(entradaTLB)); //repito logica por la ultimaReferencia
@@ -73,11 +73,11 @@ void algoritmosDeReemplazoTLB(int pagina,int marco,int pid, int numeroDeSegmento
 			}
 		}
 
-		reemplazarPagina(pagina,marco,indiceConUltimaReferenciaMayor,numeroDeSegmento);
+		reemplazarPagina(pagina,marco,indiceConUltimaReferenciaMayor,numeroDeSegmento,pid);
 	}
 }
 
-void reemplazarPagina(int pagina,int marco ,int indice, int numeroDeSegmento){//Repito logica con agregarEntradaTLB
+void reemplazarPagina(int pagina,int marco ,int indice, int numeroDeSegmento, int pid){//Repito logica con agregarEntradaTLB
 	entradaTLB* unaEntradaTLB = malloc(sizeof(entradaTLB));
 	unaEntradaTLB = list_get(tlb,indice);
 
@@ -88,6 +88,7 @@ void reemplazarPagina(int pagina,int marco ,int indice, int numeroDeSegmento){//
 	unaEntradaTLB->nroDeSegmento = numeroDeSegmento;
 	unaEntradaTLB->instanteGuardada = time(NULL);
 	unaEntradaTLB->ultimaReferencia = time(NULL);
+	unaEntradaTLB->nroDeProceso = pid;
 
 	list_replace(tlb,indice,unaEntradaTLB);
 
@@ -107,6 +108,7 @@ void limpiarEntradasTLB(int pid){
 		unaEntradaTLB = list_get(tlb,i);
 		if(unaEntradaTLB->nroDeProceso == pid){
 			list_remove(tlb,i);
+			contadorDeEntradasTlb--;
 		}
 	}
 }

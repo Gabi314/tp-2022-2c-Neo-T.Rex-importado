@@ -18,6 +18,7 @@ char* ipMemoria;
 char* puertoMemoria;
 pthread_mutex_t conexionKernel;
 pthread_mutex_t conexionCpu;
+pthread_mutex_t listaMarcos;
 
 void* memoria;
 
@@ -55,6 +56,8 @@ void crearConfiguraciones(char* unaConfig) {
 	retardoSwap = config_get_int_value(config, "RETARDO_SWAP");
 	pathSwap = config_get_string_value(config, "PATH_SWAP");
 	tamanioSwap = config_get_int_value(config, "TAMANIO_SWAP");
+
+	pthread_mutex_init(&listaMarcos,NULL);
 }
 
 void inicializarMemoria() {
@@ -117,14 +120,17 @@ void sacarMarcoAPagina(entradaTablaPaginas* unaEntrada) {
 marco* siguienteMarcoLibre() {
 	marco* unMarco = malloc(sizeof(marco));
 
+//	pthread_mutex_lock(&listaMarcos);
 	for(int i=0; i < list_size(listaDeMarcos); i++) {
 
 		unMarco = list_get(listaDeMarcos, i);
+
 
 		if(unMarco->marcoLibre == 0) {
 			return unMarco;
 		}
 	}
+//	pthread_mutex_unlock(&listaMarcos);
 }
 
 void modificarPaginaACargar(entradaTablaPaginas* unaEntrada, marco* marcoAASignar) {
@@ -137,13 +143,14 @@ void modificarPaginaACargar(entradaTablaPaginas* unaEntrada, marco* marcoAASigna
 
 marco* buscarMarco(int nroDeMarco) {
 	marco* unMarco; //= malloc(sizeof(marco));
-
+//	pthread_mutex_lock(&listaMarcos);
 	for(int i=0; i < list_size(listaDeMarcos); i++) {
 		unMarco = list_get(listaDeMarcos, i);
 		if(unMarco->numeroDeMarco == nroDeMarco) {
 			return unMarco;
 		}
 	}
+//	pthread_mutex_unlock(&listaMarcos);
 	//free(unMarco);
 }
 
@@ -187,6 +194,10 @@ void cargarPagina(entradaTablaPaginas* unaEntrada,int pid) {
 		//Caso en el que se puede asignar un marco a un proceso de manera libre
 		if(frames_proceso->tamanio < marcosPorProceso){
 			marcoAAsignar = siguienteMarcoLibre();
+
+			if(marcoAAsignar == 4) {
+				log_info(logger, "se esta cargando el marco 4 en el pid <%d>", pid);
+			}
 			modificarPaginaACargar(unaEntrada, marcoAAsignar);
 
 			insertar_lista_circular(frames_proceso,unaEntrada);
@@ -573,6 +584,7 @@ t_frame_lista_circular* obtener_elemento_lista_circular_por_marco(t_lista_circul
 		if (frame_elemento_aux->info->numeroMarco == numero_marco) {
 			actualizacion_ok = 1;
 		} else {
+			log_info(logger,"estoy dentro de else, buscando marco <%u> y tengo el marco <%d>",numero_marco,frame_elemento_aux->info->numeroMarco );
 			frame_elemento_aux = frame_elemento_aux->sgte;
 		}
 	}
