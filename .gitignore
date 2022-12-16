@@ -1,0 +1,38 @@
+# Generated files
+bin/
+obj/
+*/*.log
+
+# Eclipse files
+consola/RemoteSystemsTempFiles/
+consola/.settings/
+consola/.cproject
+consola/.project
+
+kernel/RemoteSystemsTempFiles/
+kernel/.settings/
+kernel/.cproject
+kernel/.project
+
+cpu/RemoteSystemsTempFiles/
+cpu/.settings/
+cpu/.cproject
+cpu/.project
+
+memoria/RemoteSystemsTempFiles/
+memoria/.settings/
+memoria/.cproject
+memoria/.project
+
+shared/RemoteSystemsTempFiles/
+shared/.settings/
+shared/.cproject
+shared/.project
+
+# CLion files
+.idea/
+
+# Visual Studio Code files
+.vscode/
+������������
+/.metadata/
