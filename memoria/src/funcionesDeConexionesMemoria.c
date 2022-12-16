@@ -17,7 +17,6 @@ int conexionConCpu(void* void_args) {
 
 	log_info(loggerAux, "Memoria lista para recibir a Cpu");
 
-	t_list* listaQueContieneNroTabla1erNivelYentrada = list_create();
 	t_list* listaConTablaDePaginaYPagina = list_create();
 	int numeroTablaDePaginas;
 	int numeroDeLaPagina;
@@ -28,9 +27,9 @@ int conexionConCpu(void* void_args) {
 
 	while(1) {
 //		pthread_mutex_lock(&mutexMemoriaData);
-		pthread_mutex_lock(&conexionCpu);
-		int cod_op = recibir_operacion(clienteCpu);
 
+		int cod_op = recibir_operacion(clienteCpu);
+		pthread_mutex_lock(&conexionCpu);
 		switch (cod_op) {
 
 			case PRIMER_ACCESO://ES OBTENER MARCO
@@ -228,9 +227,9 @@ int server_escuchar(t_log* logger, char* server_nombre, char* cliente_nombre, in
 	static pthread_mutex_t mutexPrimerHandshake;
 	// Se conecta un cliente
 	log_info(logger, "Esperando a un cliente (Kernel o CPU)");
-	pthread_mutex_lock(&mutexPrimerHandshake);
+	//pthread_mutex_lock(&mutexPrimerHandshake);
     int cliente_socket = esperar_cliente(server_socket, cliente_nombre);
-    pthread_mutex_unlock(&mutexPrimerHandshake);
+    //pthread_mutex_unlock(&mutexPrimerHandshake);
     //int cliente_socket = esperar_cliente(logger, server_name, server_socket);
 
     if (cliente_socket != -1) {

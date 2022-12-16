@@ -90,8 +90,8 @@ extern int desplazamiento;
 extern int posicionActualDeSwap;
 
 extern int contNroTablaDePaginas;
-extern int clienteCpu;
-extern int clienteKernel;
+//extern int clienteCpu;
+//extern int clienteKernel;
 extern char* ipMemoria;
 extern char* puertoMemoria;
 
@@ -102,7 +102,7 @@ extern pthread_mutex_t conexionCpu;
 extern pthread_mutex_t listaMarcos;
 
 //Variables de conexiones
-extern int clienteCpu;
+
 
 /* *** FUNCIONES *** */
 void funcionMain(int, char**);
