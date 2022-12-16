@@ -159,7 +159,7 @@ void ejecutar(instruccion* unaInstruccion,t_pcb* pcb){
 	uint32_t registro;
 	uint32_t segundoRegistro;
 
-	if(!hayInterrupcion){
+	if(!hayInterrupcion) {
 		switch(decode(unaInstruccion)){
 			case SET:
 				log_info(loggerObligatorio,"“PID: <%d> - Ejecutando: <%s> - <%s> - <%d>",
@@ -172,6 +172,9 @@ void ejecutar(instruccion* unaInstruccion,t_pcb* pcb){
 				//En set el segundo registro es el valor a asignar
 				log_info(logger,"----------------FINALIZA SET----------------\n");
 				pcb->programCounter += 1;
+				pthread_mutex_lock(&mutexEjecutar);
+				ejecutando = true;
+				pthread_mutex_unlock(&mutexEjecutar);
 				break;
 			case ADD:
 				log_info(loggerObligatorio,"“PID: <%d> - Ejecutando: <%s> - <%s> - <%s>",
@@ -186,6 +189,9 @@ void ejecutar(instruccion* unaInstruccion,t_pcb* pcb){
 				modificarRegistro(registro,primerParametro,pcb);
 				log_info(logger,"----------------FINALIZA ADD----------------\n");
 				pcb->programCounter += 1;
+				pthread_mutex_lock(&mutexEjecutar);
+				ejecutando = true;
+				pthread_mutex_unlock(&mutexEjecutar);
 				break;
 			case MOV_IN:
 				log_info(logger,"----------------EXECUTE MOV_IN----------------");
@@ -220,6 +226,9 @@ void ejecutar(instruccion* unaInstruccion,t_pcb* pcb){
 						modificarRegistro(valorAAlmacenar,primerParametro,pcb);
 						log_info(logger,"----------------FINALIZA MOV_IN----------------\n");
 					}
+					pthread_mutex_lock(&mutexEjecutar);
+					ejecutando = true;
+					pthread_mutex_unlock(&mutexEjecutar);
 					 // y se almacena en el registro(primer parametro)
 				}else{
 					log_info(logger,"Error: Segmentation Fault (segmento nro: %d)",numeroDeSegmento);//Enviar este mensaje a kernel y devolver pcb
@@ -261,6 +270,9 @@ void ejecutar(instruccion* unaInstruccion,t_pcb* pcb){
 					if(cod_op == MENSAJE_CPU_MEMORIA){// Recibe que se escribio correctamente el valor en memoria
 						recibir_mensaje(socket_memoria);
 						log_info(logger,"----------------FINALIZA MOV_OUT----------------\n");
+						pthread_mutex_lock(&mutexEjecutar);
+						ejecutando = true;
+						pthread_mutex_unlock(&mutexEjecutar);
 					}
 				}else{
 					log_info(logger,"Error: Segmentation Fault (segmento nro: %d)",numeroDeSegmento);//Enviar este mensaje a kernel y devolver pcb
@@ -300,7 +312,9 @@ void ejecutar(instruccion* unaInstruccion,t_pcb* pcb){
 						enviar_entero(segundoParametro, clienteKernel, CPU_A_KERNEL_MOSTRAR_REGISTRO_POR_PANTALLA);
 					}
 				}
+				pthread_mutex_lock(&mutexEjecutar);
 				ejecutando = false;
+				pthread_mutex_unlock(&mutexEjecutar);
 				log_info(logger,"----------------FINALIZA I/O----------------\n");
 
 				break;
@@ -326,13 +340,14 @@ void ejecutar(instruccion* unaInstruccion,t_pcb* pcb){
 
 void conexion_kernel_interrupt() {
 	log_info(logger, "Servidor interrupt: %d", server_interrupt);
-	clienteKernelInterrupt = esperar_cliente(server_interrupt, "Kernel por interrupt");
+	clienteKernelInterrupt = esperar_cliente(server_interrupt, "Kernel [INTERRUPT]");
 	log_info(logger, "Cliente kernel interrupt: %d", clienteKernelInterrupt);
 
 	while(clienteKernelInterrupt != -1) {
 		int cod_op = recibir_operacion(clienteKernelInterrupt);
-		log_info(logger, "Entro");
+
 		if (cod_op == DESALOJAR_PROCESO_POR_FIN_DE_QUANTUM) {
+			log_info(logger, "Desalojo del proceso por fin de quantum");
 			pthread_mutex_lock(&mutexInterrupcion);
 			recibir_mensaje(clienteKernelInterrupt);
 			hayInterrupcion = true;

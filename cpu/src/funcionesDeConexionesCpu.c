@@ -26,9 +26,10 @@ void conexion_kernel_dispatch(){//un hilo
 	//int salirDelWhile = 0;
 
 	log_info(logger, "Servidor dispatch: %d", server_dispatch);
-	clienteKernel = esperar_cliente(server_dispatch, "Kernel");
+	clienteKernel = esperar_cliente(server_dispatch, "Kernel [DISPATCH]");
 	log_info(logger, "Cliente kernel dispatch: %d", clienteKernel);
 
+	instruccion* unaInstruccion = malloc(sizeof(instruccion));
 	listaDispositivos = recibirListaDispositivos(clienteKernel); //Primer handshake
 
 	while(clienteKernel != -1) {
@@ -44,6 +45,12 @@ void conexion_kernel_dispatch(){//un hilo
 			ejecutando = true;
 			pthread_mutex_unlock(&mutexEjecutar);
 			sem_post(&pcbRecibido);
+
+			while(ejecutando && !hayInterrupcion) {
+				unaInstruccion = buscarInstruccionAEjecutar(pcb);
+				log_info(logger,"Instruccion a ejecutar %s",unaInstruccion->identificador);
+				ejecutar(unaInstruccion, pcb);
+			}
 
 			//return EXIT_SUCCESS;
 		} else if(cod_op == -1) {

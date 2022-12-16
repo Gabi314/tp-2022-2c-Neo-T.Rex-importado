@@ -26,10 +26,12 @@ int main(int argc, char *argv[]) {
 	server_interrupt = iniciar_servidor(IP_CPU, puertoDeEscuchaInterrupt,"Kernel");
 	log_info(logger,"Servidor CPU-INTERRUPT:[%d] iniciado", server_interrupt);
 
+	/*
 	pthread_t hiloEjecutar;
 	//ejecutando = true;// ver donde poner mejor esto
 	pthread_create(&hiloEjecutar, NULL, (void*) ejecucion, NULL);
 	pthread_detach(hiloEjecutar);
+	*/
 
 	crear_hilos_servidor_cpu();
 
@@ -41,21 +43,23 @@ int main(int argc, char *argv[]) {
 }
 
 void ejecucion(void* aa){
-	sem_wait(&pcbRecibido);
+
 	instruccion* unaInstruccion = malloc(sizeof(instruccion));
 
 	while (1) {
 
 		//pthread_mutex_lock(&mutexEjecutar);
-		if(ejecutando){
+		sem_wait(&pcbRecibido);
+		//if(ejecutando){
 			//pthread_mutex_unlock(&mutexEjecutar);
 			unaInstruccion = buscarInstruccionAEjecutar(pcb);
 			log_info(logger,"Instruccion a ejecutar %s",unaInstruccion->identificador);
 			ejecutar(unaInstruccion, pcb);
-//			if(ejecutando){
-//				unaInstruccion = buscarInstruccionAEjecutar(unPcb);
-//			}
-		}//else {
+			if(ejecutando){
+				sem_post(&pcbRecibido);
+				//unaInstruccion = buscarInstruccionAEjecutar(unPcb);
+			}
+		//}else {
 			//pthread_mutex_unlock(&mutexEjecutar);
 		//}
 
