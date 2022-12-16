@@ -33,7 +33,7 @@ void conexion_kernel_dispatch(){//un hilo
 	listaDispositivos = recibirListaDispositivos(clienteKernel); //Primer handshake
 
 	while(clienteKernel != -1) {
-		//log_info(logger,"Esperando PCB");
+		log_info(logger,"Esperando PCB");
 		int cod_op = recibir_operacion(clienteKernel);
 
 		if(cod_op == KERNEL_PCB_A_CPU) {
@@ -46,7 +46,7 @@ void conexion_kernel_dispatch(){//un hilo
 			pthread_mutex_unlock(&mutexEjecutar);
 			sem_post(&pcbRecibido);
 
-			while(ejecutando && !hayInterrupcion) {
+			while(ejecutando ) { //&& !hayInterrupcion
 				unaInstruccion = buscarInstruccionAEjecutar(pcb);
 				log_info(logger,"Instruccion a ejecutar %s",unaInstruccion->identificador);
 				ejecutar(unaInstruccion, pcb);

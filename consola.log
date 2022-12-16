@@ -2569,3 +2569,162 @@
 [INFO] 23:15:24:491 CONSOLA/(49720:49720): [recibir_entero]: se recibio el numero 134217728
 [INFO] 23:15:24:992 CONSOLA/(49720:49720): Se imprime el valor 134217728 por pantalla a pedido del kernel
 [INFO] 23:15:24:997 CONSOLA/(49720:49720): Me llego el mensaje Finalizar consola
+[INFO] 04:42:22:875 CONSOLA/(50319:50319): Config creado
+[INFO] 04:42:22:875 CONSOLA/(50319:50319): llego hasta recibir lista dispositivos
+[INFO] 04:42:22:885 CONSOLA/(50319:50319): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 04:42:22:885 CONSOLA/(50319:50319): Primer dispositivo DISCO
+[INFO] 04:42:22:885 CONSOLA/(50319:50319): Se leyo el archivo correctamente
+[INFO] 04:42:22:887 CONSOLA/(50319:50319): Me llego el mensaje [atender_consola]segmentos e instrucciones recibidos pibe
+[INFO] 04:42:22:930 CONSOLA/(50319:50319): Me llego el mensaje kernel solicita que se ingrese un valor por teclado
+[INFO] 04:42:22:930 CONSOLA/(50319:50319): Ingrese un valor: 
+[INFO] 04:42:24:813 CONSOLA/(50323:50323): Config creado
+[INFO] 04:42:24:813 CONSOLA/(50323:50323): llego hasta recibir lista dispositivos
+[INFO] 04:42:24:819 CONSOLA/(50323:50323): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 04:42:24:819 CONSOLA/(50323:50323): Primer dispositivo DISCO
+[INFO] 04:42:24:819 CONSOLA/(50323:50323): Se leyo el archivo correctamente
+[INFO] 04:42:24:821 CONSOLA/(50323:50323): Me llego el mensaje [atender_consola]segmentos e instrucciones recibidos pibe
+[INFO] 04:42:24:862 CONSOLA/(50323:50323): Me llego el mensaje kernel solicita que se ingrese un valor por teclado
+[INFO] 04:42:24:862 CONSOLA/(50323:50323): Ingrese un valor: 
+[INFO] 04:42:29:337 CONSOLA/(50319:50319): Se ingreso el valor 2 correctamente
+[INFO] 04:42:32:558 CONSOLA/(50323:50323): Se ingreso el valor 3 correctamente
+[INFO] 04:44:04:400 CONSOLA/(50319:50319): [recibir_entero]: se recibio el numero 28
+[INFO] 04:44:05:150 CONSOLA/(50319:50319): Se imprime el valor 28 por pantalla a pedido del kernel
+[INFO] 04:44:05:151 CONSOLA/(50319:50319): Me llego el mensaje Finalizar consola
+[INFO] 04:44:12:402 CONSOLA/(50323:50323): [recibir_entero]: se recibio el numero 28
+[INFO] 04:44:13:152 CONSOLA/(50323:50323): Se imprime el valor 28 por pantalla a pedido del kernel
+[INFO] 04:44:13:153 CONSOLA/(50323:50323): Me llego el mensaje Finalizar consola
+[INFO] 04:45:02:872 CONSOLA/(50516:50516): Config creado
+[INFO] 04:45:02:872 CONSOLA/(50516:50516): llego hasta recibir lista dispositivos
+[INFO] 04:45:02:878 CONSOLA/(50516:50516): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 04:45:02:878 CONSOLA/(50516:50516): Primer dispositivo DISCO
+[INFO] 04:45:02:878 CONSOLA/(50516:50516): Se leyo el archivo correctamente
+[INFO] 04:45:02:880 CONSOLA/(50516:50516): Me llego el mensaje [atender_consola]segmentos e instrucciones recibidos pibe
+[INFO] 04:45:02:922 CONSOLA/(50516:50516): Me llego el mensaje kernel solicita que se ingrese un valor por teclado
+[INFO] 04:45:02:922 CONSOLA/(50516:50516): Ingrese un valor: 
+[INFO] 04:45:05:129 CONSOLA/(50520:50520): Config creado
+[INFO] 04:45:05:129 CONSOLA/(50520:50520): llego hasta recibir lista dispositivos
+[INFO] 04:45:05:138 CONSOLA/(50520:50520): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 04:45:05:138 CONSOLA/(50520:50520): Primer dispositivo DISCO
+[INFO] 04:45:05:138 CONSOLA/(50520:50520): Se leyo el archivo correctamente
+[INFO] 04:45:05:139 CONSOLA/(50520:50520): Me llego el mensaje [atender_consola]segmentos e instrucciones recibidos pibe
+[INFO] 04:45:05:182 CONSOLA/(50520:50520): Me llego el mensaje kernel solicita que se ingrese un valor por teclado
+[INFO] 04:45:05:182 CONSOLA/(50520:50520): Ingrese un valor: 
+[INFO] 04:45:07:303 CONSOLA/(50524:50524): Config creado
+[INFO] 04:45:07:303 CONSOLA/(50524:50524): llego hasta recibir lista dispositivos
+[INFO] 04:45:07:310 CONSOLA/(50524:50524): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 04:45:07:310 CONSOLA/(50524:50524): Primer dispositivo DISCO
+[INFO] 04:45:07:310 CONSOLA/(50524:50524): Se leyo el archivo correctamente
+[INFO] 04:45:07:337 CONSOLA/(50524:50524): Me llego el mensaje [atender_consola]segmentos e instrucciones recibidos pibe
+[INFO] 04:45:09:283 CONSOLA/(50526:50526): Config creado
+[INFO] 04:45:09:283 CONSOLA/(50526:50526): llego hasta recibir lista dispositivos
+[INFO] 04:45:09:291 CONSOLA/(50526:50526): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 04:45:09:291 CONSOLA/(50526:50526): Primer dispositivo DISCO
+[INFO] 04:45:09:291 CONSOLA/(50526:50526): Se leyo el archivo correctamente
+[INFO] 04:45:09:298 CONSOLA/(50526:50526): Me llego el mensaje [atender_consola]segmentos e instrucciones recibidos pibe
+[INFO] 04:45:13:151 CONSOLA/(50516:50516): Se ingreso el valor 2 correctamente
+[INFO] 04:45:15:244 CONSOLA/(50520:50520): Se ingreso el valor 3 correctamente
+[INFO] 04:46:48:212 CONSOLA/(50516:50516): [recibir_entero]: se recibio el numero 28
+[INFO] 04:46:48:963 CONSOLA/(50516:50516): Se imprime el valor 28 por pantalla a pedido del kernel
+[INFO] 04:46:48:964 CONSOLA/(50516:50516): Me llego el mensaje Finalizar consola
+[INFO] 04:46:49:009 CONSOLA/(50524:50524): Me llego el mensaje kernel solicita que se ingrese un valor por teclado
+[INFO] 04:46:49:009 CONSOLA/(50524:50524): Ingrese un valor: 
+[INFO] 04:46:56:214 CONSOLA/(50520:50520): [recibir_entero]: se recibio el numero 28
+[INFO] 04:46:56:965 CONSOLA/(50520:50520): Se imprime el valor 28 por pantalla a pedido del kernel
+[INFO] 04:46:56:966 CONSOLA/(50520:50520): Me llego el mensaje Finalizar consola
+[INFO] 04:46:57:013 CONSOLA/(50526:50526): Me llego el mensaje kernel solicita que se ingrese un valor por teclado
+[INFO] 04:46:57:013 CONSOLA/(50526:50526): Ingrese un valor: 
+[INFO] 04:48:01:084 CONSOLA/(50524:50524): Se ingreso el valor 4 correctamente
+[INFO] 04:48:03:554 CONSOLA/(50526:50526): Se ingreso el valor 5 correctamente
+[INFO] 05:01:38:445 CONSOLA/(50836:50836): Config creado
+[ERROR] 05:01:38:465 CONSOLA/(50836:50836): Error al conectar al servidor
+[INFO] 05:01:38:465 CONSOLA/(50836:50836): llego hasta recibir lista dispositivos
+[INFO] 05:01:38:465 CONSOLA/(50836:50836): codigo de operacion incorrecto
+[INFO] 05:01:38:465 CONSOLA/(50836:50836): Se leyo el archivo correctamente
+[INFO] 05:03:15:304 CONSOLA/(51297:51297): Config creado
+[INFO] 05:03:15:337 CONSOLA/(51297:51297): llego hasta recibir lista dispositivos
+[INFO] 05:03:15:346 CONSOLA/(51297:51297): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 05:03:15:346 CONSOLA/(51297:51297): Primer dispositivo DISCO
+[INFO] 05:03:15:346 CONSOLA/(51297:51297): Se leyo el archivo correctamente
+[INFO] 05:03:15:347 CONSOLA/(51297:51297): Me llego el mensaje [atender_consola]segmentos e instrucciones recibidos pibe
+[INFO] 05:03:15:390 CONSOLA/(51297:51297): Me llego el mensaje kernel solicita que se ingrese un valor por teclado
+[INFO] 05:03:15:390 CONSOLA/(51297:51297): Ingrese un valor: 
+[INFO] 05:03:17:259 CONSOLA/(51301:51301): Config creado
+[INFO] 05:03:17:259 CONSOLA/(51301:51301): llego hasta recibir lista dispositivos
+[INFO] 05:03:17:266 CONSOLA/(51301:51301): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 05:03:17:266 CONSOLA/(51301:51301): Primer dispositivo DISCO
+[INFO] 05:03:17:266 CONSOLA/(51301:51301): Se leyo el archivo correctamente
+[INFO] 05:03:17:282 CONSOLA/(51301:51301): Me llego el mensaje [atender_consola]segmentos e instrucciones recibidos pibe
+[INFO] 05:03:17:326 CONSOLA/(51301:51301): Me llego el mensaje kernel solicita que se ingrese un valor por teclado
+[INFO] 05:03:17:326 CONSOLA/(51301:51301): Ingrese un valor: 
+[INFO] 05:03:19:399 CONSOLA/(51305:51305): Config creado
+[INFO] 05:03:19:400 CONSOLA/(51305:51305): llego hasta recibir lista dispositivos
+[INFO] 05:03:19:407 CONSOLA/(51305:51305): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 05:03:19:407 CONSOLA/(51305:51305): Primer dispositivo DISCO
+[INFO] 05:03:19:407 CONSOLA/(51305:51305): Se leyo el archivo correctamente
+[INFO] 05:03:19:412 CONSOLA/(51305:51305): Me llego el mensaje [atender_consola]segmentos e instrucciones recibidos pibe
+[INFO] 05:03:21:364 CONSOLA/(51307:51307): Config creado
+[INFO] 05:03:21:364 CONSOLA/(51307:51307): llego hasta recibir lista dispositivos
+[INFO] 05:03:21:371 CONSOLA/(51307:51307): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 05:03:21:371 CONSOLA/(51307:51307): Primer dispositivo DISCO
+[INFO] 05:03:21:371 CONSOLA/(51307:51307): Se leyo el archivo correctamente
+[INFO] 05:03:21:373 CONSOLA/(51307:51307): Me llego el mensaje [atender_consola]segmentos e instrucciones recibidos pibe
+[INFO] 05:03:28:280 CONSOLA/(51297:51297): Se ingreso el valor 1 correctamente
+[INFO] 05:03:30:731 CONSOLA/(51301:51301): Se ingreso el valor 2 correctamente
+[INFO] 05:05:03:341 CONSOLA/(51297:51297): [recibir_entero]: se recibio el numero 28
+[INFO] 05:05:04:122 CONSOLA/(51297:51297): Se imprime el valor 28 por pantalla a pedido del kernel
+[INFO] 05:05:04:123 CONSOLA/(51297:51297): Me llego el mensaje Finalizar consola
+[INFO] 05:05:04:168 CONSOLA/(51305:51305): Me llego el mensaje kernel solicita que se ingrese un valor por teclado
+[INFO] 05:05:04:168 CONSOLA/(51305:51305): Ingrese un valor: 
+[INFO] 05:05:11:344 CONSOLA/(51301:51301): [recibir_entero]: se recibio el numero 28
+[INFO] 05:05:12:095 CONSOLA/(51301:51301): Se imprime el valor 28 por pantalla a pedido del kernel
+[INFO] 05:05:12:096 CONSOLA/(51301:51301): Me llego el mensaje Finalizar consola
+[INFO] 05:05:12:143 CONSOLA/(51307:51307): Me llego el mensaje kernel solicita que se ingrese un valor por teclado
+[INFO] 05:05:12:143 CONSOLA/(51307:51307): Ingrese un valor: 
+[INFO] 05:05:18:018 CONSOLA/(51305:51305): Se ingreso el valor 3 correctamente
+[INFO] 05:05:20:188 CONSOLA/(51307:51307): Se ingreso el valor 4 correctamente
+[INFO] 05:05:49:090 CONSOLA/(51305:51305): Me llego el mensaje Finalizar consola
+[INFO] 05:06:14:113 CONSOLA/(51307:51307): Me llego el mensaje Finalizar consola
+[INFO] 05:11:09:417 CONSOLA/(51508:51508): Config creado
+[INFO] 05:11:09:418 CONSOLA/(51508:51508): llego hasta recibir lista dispositivos
+[INFO] 05:11:09:422 CONSOLA/(51508:51508): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 05:11:09:422 CONSOLA/(51508:51508): Primer dispositivo DISCO
+[INFO] 05:11:09:422 CONSOLA/(51508:51508): Se leyo el archivo correctamente
+[INFO] 05:11:09:423 CONSOLA/(51508:51508): Me llego el mensaje [atender_consola]segmentos e instrucciones recibidos pibe
+[INFO] 05:11:09:466 CONSOLA/(51508:51508): Me llego el mensaje kernel solicita que se ingrese un valor por teclado
+[INFO] 05:11:09:466 CONSOLA/(51508:51508): Ingrese un valor: 
+[INFO] 05:11:11:266 CONSOLA/(51512:51512): Config creado
+[INFO] 05:11:11:266 CONSOLA/(51512:51512): llego hasta recibir lista dispositivos
+[INFO] 05:11:11:272 CONSOLA/(51512:51512): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 05:11:11:272 CONSOLA/(51512:51512): Primer dispositivo DISCO
+[INFO] 05:11:11:272 CONSOLA/(51512:51512): Se leyo el archivo correctamente
+[INFO] 05:11:11:275 CONSOLA/(51512:51512): Me llego el mensaje [atender_consola]segmentos e instrucciones recibidos pibe
+[INFO] 05:11:11:318 CONSOLA/(51512:51512): Me llego el mensaje kernel solicita que se ingrese un valor por teclado
+[INFO] 05:11:11:318 CONSOLA/(51512:51512): Ingrese un valor: 
+[INFO] 05:11:13:620 CONSOLA/(51516:51516): Config creado
+[INFO] 05:11:13:620 CONSOLA/(51516:51516): llego hasta recibir lista dispositivos
+[INFO] 05:11:13:626 CONSOLA/(51516:51516): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 05:11:13:626 CONSOLA/(51516:51516): Primer dispositivo DISCO
+[INFO] 05:11:13:626 CONSOLA/(51516:51516): Se leyo el archivo correctamente
+[INFO] 05:11:13:628 CONSOLA/(51516:51516): Me llego el mensaje [atender_consola]segmentos e instrucciones recibidos pibe
+[INFO] 05:11:15:453 CONSOLA/(51518:51518): Config creado
+[INFO] 05:11:15:453 CONSOLA/(51518:51518): llego hasta recibir lista dispositivos
+[INFO] 05:11:15:462 CONSOLA/(51518:51518): Me llego el mensaje DISCO-IMPRESORA
+[INFO] 05:11:15:462 CONSOLA/(51518:51518): Primer dispositivo DISCO
+[INFO] 05:11:15:462 CONSOLA/(51518:51518): Se leyo el archivo correctamente
+[INFO] 05:11:15:463 CONSOLA/(51518:51518): Me llego el mensaje [atender_consola]segmentos e instrucciones recibidos pibe
+[INFO] 05:11:26:892 CONSOLA/(51508:51508): Se ingreso el valor 1 correctamente
+[INFO] 05:11:29:019 CONSOLA/(51512:51512): Se ingreso el valor 2 correctamente
+[INFO] 05:13:01:955 CONSOLA/(51508:51508): [recibir_entero]: se recibio el numero 28
+[INFO] 05:13:02:706 CONSOLA/(51508:51508): Se imprime el valor 28 por pantalla a pedido del kernel
+[INFO] 05:13:02:707 CONSOLA/(51508:51508): Me llego el mensaje Finalizar consola
+[INFO] 05:13:02:754 CONSOLA/(51516:51516): Me llego el mensaje kernel solicita que se ingrese un valor por teclado
+[INFO] 05:13:02:754 CONSOLA/(51516:51516): Ingrese un valor: 
+[INFO] 05:13:09:955 CONSOLA/(51512:51512): [recibir_entero]: se recibio el numero 28
+[INFO] 05:13:10:705 CONSOLA/(51512:51512): Se imprime el valor 28 por pantalla a pedido del kernel
+[INFO] 05:13:10:706 CONSOLA/(51512:51512): Me llego el mensaje Finalizar consola
+[INFO] 05:13:10:752 CONSOLA/(51518:51518): Me llego el mensaje kernel solicita que se ingrese un valor por teclado
+[INFO] 05:13:10:752 CONSOLA/(51518:51518): Ingrese un valor: 
+[INFO] 05:13:26:145 CONSOLA/(51516:51516): Se ingreso el valor 3 correctamente
+[INFO] 05:13:27:963 CONSOLA/(51518:51518): Se ingreso el valor 4 correctamente
+[INFO] 05:14:21:242 CONSOLA/(51516:51516): Me llego el mensaje Finalizar consola
+[INFO] 05:14:22:245 CONSOLA/(51518:51518): Me llego el mensaje Finalizar consola
