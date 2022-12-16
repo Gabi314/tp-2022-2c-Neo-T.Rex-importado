@@ -18,13 +18,16 @@ int main(int argc, char *argv[]) {
 
 	inicializarTLB();
 
-	handshakeMemoria();
+
 
 	server_dispatch = iniciar_servidor(IP_CPU, puertoDeEscuchaDispatch, "Kernel");
 	log_info(logger,"Servidor CPU-DISPATCH:[%d] iniciado", server_dispatch);
 
 	server_interrupt = iniciar_servidor(IP_CPU, puertoDeEscuchaInterrupt,"Kernel");
 	log_info(logger,"Servidor CPU-INTERRUPT:[%d] iniciado", server_interrupt);
+
+	handshakeMemoria();
+
 
 	/*
 	pthread_t hiloEjecutar;

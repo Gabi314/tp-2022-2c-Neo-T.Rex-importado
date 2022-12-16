@@ -1,5 +1,7 @@
 #include "funcionesMemoria.h"
 
+int memoria_fd_cpu;
+int memoria_fd_kernel;
 int memoria_fd;
 t_list* listaDeMarcos;
 t_list* listaTablaDePaginas;
@@ -12,16 +14,17 @@ int main(int argc, char *argv[]) {
 	//OBLIGATORIO
 
 	memoria_fd = iniciar_servidor(IP_MEMORIA, puertoMemoria, "MEMORIA");
+
 	while(1){
-		// Escucho a cliente CPU
-		server_escuchar(loggerAux, "MEMORIA", "CPU", memoria_fd);
-		// Escucho a cliente Kernel
-		server_escuchar(loggerAux, "MEMORIA", "KERNEL", memoria_fd);
+	// Escucho a cliente CPU
+	server_escuchar(loggerAux, "MEMORIA", "CPU", memoria_fd);
+	// Escucho a cliente Kernel
+	server_escuchar(loggerAux, "MEMORIA", "KERNEL", memoria_fd);
 	}
 
-//PROBAR ENTRADAS CON BIT DE MODIFICADO VARIADO
-
-	//conexionConCpu();
+//	sem_t memoriaSinFinalizar;
+//	sem_init(&memoriaSinFinalizar,0,0);
+//	sem_wait(&memoriaSinFinalizar);
 }
 
 void funcionMain(int argc, char *argv[]) {

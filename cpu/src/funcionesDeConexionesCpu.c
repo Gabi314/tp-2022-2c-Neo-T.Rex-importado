@@ -68,15 +68,13 @@ void handshakeMemoria(){
 	pthread_mutex_t mutexPrimerHandshake;
 	pthread_mutex_init(&mutexPrimerHandshake,NULL);
 
-	pthread_mutex_t mutexPrimerHandshake2;
 	// Creamos una conexión hacia el servidor
 
 
-	pthread_mutex_lock(&mutexPrimerHandshake);
+	//pthread_mutex_lock(&mutexPrimerHandshake);
 	log_info(logger,"entra al mutex");
     socket_memoria = crear_conexion(ipMemoria, puertoMemoria);
-	pthread_mutex_unlock(&mutexPrimerHandshake);
-	log_info(logger,"Hola memoria, soy cpu");
+	//pthread_mutex_unlock(&mutexPrimerHandshake);
 
 	enviar_mensaje("Dame el tamanio de pag y entradas por tabla",socket_memoria,MENSAJE_CPU_MEMORIA);
 
