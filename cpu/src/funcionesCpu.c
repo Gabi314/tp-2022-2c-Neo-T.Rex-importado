@@ -324,34 +324,29 @@ void ejecutar(instruccion* unaInstruccion,t_pcb* pcb){
 	}
 }
 
-void checkInterrupt(){
+void conexion_kernel_interrupt() {
+	log_info(logger, "Servidor interrupt: %d", server_interrupt);
+	clienteKernelInterrupt = esperar_cliente(server_interrupt, "Kernel por interrupt");
+	log_info(logger, "Cliente kernel interrupt: %d", clienteKernelInterrupt);
 
-	pthread_create(&hiloInterrupciones, NULL, (void*) escucharInterrupciones,
-			NULL);
-
-	pthread_detach(hiloInterrupciones);
-}
-
-void escucharInterrupciones(){
-	log_info(logger, "se despierta escucharInterrupciones");
-		while (1) {
-			int cod_op = recibir_operacion(clienteKernelInterrupt);
-			log_info(logger, "Entro");
-			if (cod_op == DESALOJAR_PROCESO_POR_FIN_DE_QUANTUM) {
-				pthread_mutex_lock(&mutexInterrupcion);
-				recibir_mensaje(clienteKernelInterrupt);
-				hayInterrupcion = true;
-				pthread_mutex_unlock(&mutexInterrupcion);
-				//return EXIT_SUCCESS;
-			} else if (cod_op == -1) {
-				log_info(logger, "Se desconecto el kernel. Terminando conexion");
-				sem_t spreenMiCasita;
-				sem_init(&spreenMiCasita,0,0);
-				sem_wait(&spreenMiCasita);
-				//return EXIT_SUCCESS;
-			}
+	while(clienteKernelInterrupt != -1) {
+		int cod_op = recibir_operacion(clienteKernelInterrupt);
+		log_info(logger, "Entro");
+		if (cod_op == DESALOJAR_PROCESO_POR_FIN_DE_QUANTUM) {
+			pthread_mutex_lock(&mutexInterrupcion);
+			recibir_mensaje(clienteKernelInterrupt);
+			hayInterrupcion = true;
+			pthread_mutex_unlock(&mutexInterrupcion);
+			//return EXIT_SUCCESS;
+		} else if (cod_op == -1) {
+			log_info(logger, "Se desconecto el kernel. Terminando conexion");
+			sem_t spreenMiCasita;
+			sem_init(&spreenMiCasita,0,0);
+			sem_wait(&spreenMiCasita);
+			//return EXIT_SUCCESS;
 		}
-		//return EXIT_SUCCESS;
+	}
+	//return EXIT_SUCCESS;
 }
 
 bool calculoDireccionLogicaExitoso(int direccionLogica,t_list* listaTablaSegmentos){

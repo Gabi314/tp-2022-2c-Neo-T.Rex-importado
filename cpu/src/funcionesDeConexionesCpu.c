@@ -21,17 +21,21 @@ char** listaDispositivos;
 
 //-----------------------FUNCIONES
 
-void conexionConKernelDispatch(){//un hilo
+void conexion_kernel_dispatch(){//un hilo
 	//static pthread_mutex_t mutexMensajes;// usar
 	//int salirDelWhile = 0;
 
-	listaDispositivos = recibirListaDispositivos(clienteKernel);//Primer handshake
-	while (1) {
+	log_info(logger, "Servidor dispatch: %d", server_dispatch);
+	clienteKernel = esperar_cliente(server_dispatch, "Kernel");
+	log_info(logger, "Cliente kernel dispatch: %d", clienteKernel);
+
+	listaDispositivos = recibirListaDispositivos(clienteKernel); //Primer handshake
+
+	while(clienteKernel != -1) {
 		//log_info(logger,"Esperando PCB");
 		int cod_op = recibir_operacion(clienteKernel);
 
-		if(cod_op == KERNEL_PCB_A_CPU){
-
+		if(cod_op == KERNEL_PCB_A_CPU) {
 			recibir_pcb(clienteKernel);
 			pthread_mutex_lock(&mutexInterrupcion);
 			hayInterrupcion = false;
@@ -42,7 +46,7 @@ void conexionConKernelDispatch(){//un hilo
 			sem_post(&pcbRecibido);
 
 			//return EXIT_SUCCESS;
-		}else if(cod_op == -1){
+		} else if(cod_op == -1) {
 			log_info(logger, "Se desconecto el kernel. Terminando conexion");
 			sem_t finalizarKernel;
 			sem_init(&finalizarKernel,0,0);
@@ -50,7 +54,7 @@ void conexionConKernelDispatch(){//un hilo
 			//return EXIT_FAILURE;
 		}
 	}
-	//return EXIT_SUCCESS;
+//return EXIT_SUCCESS;
 }
 
 void handshakeMemoria(){
