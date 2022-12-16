@@ -468,12 +468,12 @@ void asignar_memoria() {
 				if(!strcmp(algoritmoPlanificacion, "FEEDBACK")) {// ver si esta asi en los config
 					queue_push(colaReadyRR,proceso);
 
-					log_info(logger, "Cola Ready <Feedback>: [<LISTA DE PIDS RR>]");
+					log_info(logger, "Cola Ready <RR>: [<LISTA DE PIDS RR>]");
 					for(int i=0; i<queue_size(colaReadyRR); i++){
 						pcbAux = list_get(colaReadyRR->elements,i);
 						log_info(logger, "%d", pcbAux->idProceso);
 					}
-					log_info(logger,"[<LISTA DE PIDS FIFO>]");
+					log_info(logger,"Cola Ready <FIFO>: [<LISTA DE PIDS>]");
 					for(int i=0; i<queue_size(colaReadyFIFO); i++){
 						pcbAux = list_get(colaReadyFIFO->elements,i);
 						log_info(logger, "%d", pcbAux->idProceso);
@@ -536,10 +536,22 @@ t_pcb * procesoPlanificado;  // = malloc(sizeof(t_pcb));
 	if (!strcmp(algoritmoPlanificacion,"FIFO")) {
 		log_info(loggerAux,"Entra al if por fifo");
 		procesoPlanificado = obtenerSiguienteFIFO(); //REVISAR TEMA DE MALLOCS QUE EN SIGUIENTE RR ESTA COMENTADO
+
+		log_info(logger,"Cola Ready <FIFO>: [<LISTA DE PIDS>]");
+											for(int i=0; i<queue_size(colaReadyFIFO); i++){
+												procesoPlanificado = list_get(colaReadyFIFO->elements,i);
+												log_info(logger, "%d", procesoPlanificado->idProceso);
+											}
 	} else {
 		if (!strcmp(algoritmoPlanificacion, "RR")) {
 			log_info(loggerAux,"Entra al if por rr");
 			procesoPlanificado = obtenerSiguienteRR();
+
+			log_info(logger, "Cola Ready <RR>: [<LISTA DE PIDS>]");
+							for(int i=0; i<queue_size(colaReadyRR); i++){
+								procesoPlanificado = list_get(colaReadyRR->elements,i);
+								log_info(logger, "%d", procesoPlanificado->idProceso);
+							}
 		} else {
 			if(!strcmp(algoritmoPlanificacion, "FEEDBACK")){
 				if(queue_size(colaReadyRR)>0){
@@ -549,6 +561,19 @@ t_pcb * procesoPlanificado;  // = malloc(sizeof(t_pcb));
 					procesoPlanificado = obtenerSiguienteFIFO();
 					procesoPlanificado->algoritmoActual = FIFO;
 				}
+
+				log_info(logger, "Cola Ready <RR>: [<LISTA DE PIDS>]");
+								for(int i=0; i<queue_size(colaReadyRR); i++){
+									procesoPlanificado = list_get(colaReadyRR->elements,i);
+									log_info(logger, "%d", procesoPlanificado->idProceso);
+								}
+
+				log_info(logger,"Cola Ready <FIFO>: [<LISTA DE PIDS>]");
+								for(int i=0; i<queue_size(colaReadyFIFO); i++){
+									procesoPlanificado = list_get(colaReadyFIFO->elements,i);
+									log_info(logger, "%d", procesoPlanificado->idProceso);
+								}
+
 			}else{
 
 				log_info(loggerAux, "[obtenerSiguienteDeReady]: algoritmo invalido");
@@ -718,9 +743,27 @@ while (1) {
 
 		if (!strcmp(algoritmoPlanificacion, "RR")) {
 			queue_push(colaReadyRR,pcb);
+
+			log_info(logger, "Cola Ready <RR>: [<LISTA DE PIDS>]");
+							for(int i=0; i<queue_size(colaReadyRR); i++){
+								pcb = list_get(colaReadyRR->elements,i);
+								log_info(logger, "%d", pcb->idProceso);
+							}
 		} else {
 			if (!strcmp(algoritmoPlanificacion, "FEEDBACK")) {
 				queue_push(colaReadyFIFO,pcb);
+
+				log_info(logger, "Cola Ready <RR>: [<LISTA DE PIDS>]");
+								for(int i=0; i<queue_size(colaReadyRR); i++){
+									pcb = list_get(colaReadyRR->elements,i);
+									log_info(logger, "%d", pcb->idProceso);
+								}
+
+				log_info(logger,"Cola Ready <FIFO>: [<LISTA DE PIDS>]");
+									for(int i=0; i<queue_size(colaReadyFIFO); i++){
+										pcb = list_get(colaReadyFIFO->elements,i);
+										log_info(logger, "%d", pcb->idProceso);
+									}
 			} else {
 					log_info(loggerAux, "Algoritmo invalido");
 			}
@@ -861,12 +904,36 @@ void atender_IO_teclado(t_info_teclado * info){
 		pthread_mutex_lock(&mutex);
 		if (!strcmp(algoritmoPlanificacion, "FIFO")) {
 			queue_push(colaReadyFIFO,unPcb);
+			log_info(logger,"Cola Ready <FIFO>: [<LISTA DE PIDS>]");
+								for(int i=0; i<queue_size(colaReadyFIFO); i++){
+									unPcb = list_get(colaReadyFIFO->elements,i);
+									log_info(logger, "%d", unPcb->idProceso);
+								}
 		} else {
 			if (!strcmp(algoritmoPlanificacion, "RR")) {
 				queue_push(colaReadyRR,unPcb);
+
+				log_info(logger, "Cola Ready <RR>: [<LISTA DE PIDS>]");
+								for(int i=0; i<queue_size(colaReadyRR); i++){
+									unPcb = list_get(colaReadyRR->elements,i);
+									log_info(logger, "%d", unPcb->idProceso);
+								}
 			} else {
 				if(!strcmp(algoritmoPlanificacion, "FEEDBACK")) {// ver si esta asi en los config
 					queue_push(colaReadyRR,unPcb);
+
+					log_info(logger, "Cola Ready <RR>: [<LISTA DE PIDS>]");
+									for(int i=0; i<queue_size(colaReadyRR); i++){
+										unPcb = list_get(colaReadyRR->elements,i);
+										log_info(logger, "%d", unPcb->idProceso);
+									}
+
+					log_info(logger,"Cola Ready <FIFO>: [<LISTA DE PIDS>]");
+										for(int i=0; i<queue_size(colaReadyFIFO); i++){
+											unPcb = list_get(colaReadyFIFO->elements,i);
+											log_info(logger, "%d", unPcb->idProceso);
+										}
+
 				}else{
 					log_info(loggerAux, "Algoritmo invalido");
 				}
@@ -897,12 +964,37 @@ void atender_IO_pantalla(t_info_pantalla * info) {
 
 	if (!strcmp(algoritmoPlanificacion, "FIFO")) {
 		queue_push(colaReadyFIFO,unPcb);
+		log_info(logger,"Cola Ready <FIFO>: [<LISTA DE PIDS>]");
+							for(int i=0; i<queue_size(colaReadyFIFO); i++){
+								unPcb = list_get(colaReadyFIFO->elements,i);
+								log_info(logger, "%d", unPcb->idProceso);
+							}
+
 	} else {
 		if (!strcmp(algoritmoPlanificacion, "RR")) {
 		queue_push(colaReadyRR,unPcb);
+
+		log_info(logger, "Cola Ready <RR>: [<LISTA DE PIDS>]");
+						for(int i=0; i<queue_size(colaReadyRR); i++){
+							unPcb = list_get(colaReadyRR->elements,i);
+							log_info(logger, "%d", unPcb->idProceso);
+						}
+
 		} else {
 			if(!strcmp(algoritmoPlanificacion, "FEEDBACK")) {// ver si esta asi en los config
 				queue_push(colaReadyRR,unPcb);
+
+				log_info(logger, "Cola Ready <RR>: [<LISTA DE PIDS>]");
+								for(int i=0; i<queue_size(colaReadyRR); i++){
+									unPcb = list_get(colaReadyRR->elements,i);
+									log_info(logger, "%d", unPcb->idProceso);
+								}
+
+				log_info(logger,"Cola Ready <FIFO>: [<LISTA DE PIDS>]");
+									for(int i=0; i<queue_size(colaReadyFIFO); i++){
+										unPcb = list_get(colaReadyFIFO->elements,i);
+										log_info(logger, "%d", unPcb->idProceso);
+									}
 			}else{
 				log_info(loggerAux, "Algoritmo invalido");
 			}
@@ -983,12 +1075,41 @@ void atender_IO_generico(t_elem_disp* elemento){
 
 		if (!strcmp(algoritmoPlanificacion, "FIFO")) {
 			queue_push(colaReadyFIFO,proceso);
+
+			log_info(logger,"Cola Ready <FIFO>: [<LISTA DE PIDS>]");
+								for(int i=0; i<queue_size(colaReadyFIFO); i++){
+									proceso = list_get(colaReadyFIFO->elements,i);
+									log_info(logger, "%d", proceso->idProceso);
+								}
 		} else {
 			if (!strcmp(algoritmoPlanificacion, "RR")) {
 				queue_push(colaReadyRR,proceso);
+
+				log_info(logger, "Cola Ready <RR>: [<LISTA DE PIDS>]");
+								for(int i=0; i<queue_size(colaReadyRR); i++){
+									proceso = list_get(colaReadyRR->elements,i);
+									log_info(logger, "%d", proceso->idProceso);
+								}
+
 			} else {
 				if(!strcmp(algoritmoPlanificacion, "FEEDBACK")) {// ver si esta asi en los config
 					queue_push(colaReadyRR,proceso);
+
+					log_info(logger, "Cola Ready <RR>: [<LISTA DE PIDS>]");
+									for(int i=0; i<queue_size(colaReadyRR); i++){
+										proceso = list_get(colaReadyRR->elements,i);
+										log_info(logger, "%d", proceso->idProceso);
+									}
+
+
+
+					log_info(logger,"Cola Ready <FIFO>: [<LISTA DE PIDS>]");
+										for(int i=0; i<queue_size(colaReadyFIFO); i++){
+											proceso = list_get(colaReadyFIFO->elements,i);
+											log_info(logger, "%d", proceso->idProceso);
+										}
+
+
 				}else{
 					log_info(loggerAux, "Algoritmo invalido");
 				}
@@ -1043,12 +1164,39 @@ void atender_page_fault(t_info_pf* infoPF){
 
 	if (!strcmp(algoritmoPlanificacion, "FIFO")) {
 		queue_push(colaReadyFIFO,pcb);
+
+		log_info(logger,"Cola Ready <FIFO>: [<LISTA DE PIDS>]");
+							for(int i=0; i<queue_size(colaReadyFIFO); i++){
+								pcb = list_get(colaReadyFIFO->elements,i);
+								log_info(logger, "%d", pcb->idProceso);
+							}
 	} else {
 		if (!strcmp(algoritmoPlanificacion, "RR")) {
 			queue_push(colaReadyRR,pcb);
+
+			log_info(logger, "Cola Ready <RR>: [<LISTA DE PIDS>]");
+							for(int i=0; i<queue_size(colaReadyRR); i++){
+								pcb = list_get(colaReadyRR->elements,i);
+								log_info(logger, "%d", pcb->idProceso);
+							}
+
+
 		} else {
 			if(!strcmp(algoritmoPlanificacion, "FEEDBACK")) {// ver si esta asi en los config
 				queue_push(colaReadyRR,pcb);
+
+				log_info(logger, "Cola Ready <RR>: [<LISTA DE PIDS>]");
+								for(int i=0; i<queue_size(colaReadyRR); i++){
+									pcb = list_get(colaReadyRR->elements,i);
+									log_info(logger, "%d", pcb->idProceso);
+								}
+
+
+				log_info(logger,"Cola Ready <FIFO>: [<LISTA DE PIDS>]");
+									for(int i=0; i<queue_size(colaReadyFIFO); i++){
+										pcb = list_get(colaReadyFIFO->elements,i);
+										log_info(logger, "%d", pcb->idProceso);
+									}
 			}else{
 				log_info(loggerAux, "Algoritmo invalido");
 			}
