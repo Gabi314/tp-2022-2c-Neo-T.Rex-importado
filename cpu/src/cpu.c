@@ -1,13 +1,15 @@
 #include "funcionesCpu.h"
 
 bool ejecutando;
+pthread_t hilo_dispatch, hilo_interrupt;
 pthread_mutex_t mutexEjecutar;
+int server_dispatch;
+int server_interrupt;
 
 int main(int argc, char *argv[]) {
 
 	logger = log_create("cpu-auxiliar.log", "CPU-AUX", 1, LOG_LEVEL_INFO);
 	loggerObligatorio = log_create("cpu.log","CPU",1,LOG_LEVEL_INFO);
-
 
 	//Chequeo cantidad de archivos recibidos en el main
 	chequeoCantidadArchivos(argc);
@@ -16,31 +18,20 @@ int main(int argc, char *argv[]) {
 
 	inicializarTLB();
 
-
 	handshakeMemoria();
 
-	int server_dispatch = iniciar_servidor(IP_CPU,puertoDeEscuchaDispatch,"Kernel");
-	log_info(logger,"Cpu lista para recibir a kernel");
-	clienteKernel = esperar_cliente(server_dispatch,"Kernel");
+	server_dispatch = iniciar_servidor(IP_CPU, puertoDeEscuchaDispatch, "Kernel");
+	log_info(logger,"Servidor CPU-DISPATCH:[%d] iniciado", server_dispatch);
 
-	int server_interrupt = iniciar_servidor(IP_CPU, puertoDeEscuchaInterrupt,"Kernel");
-
-	log_info(logger,"antes de llegar a interrupr");
-	clienteKernelInterrupt = esperar_cliente(server_interrupt, "Kernel por interrupt");
-	log_info(logger,"despues de llegar a interrupr");
-	checkInterrupt();
-
-
-	pthread_t hiloRecibirPcb;
-
-	pthread_create(&hiloRecibirPcb, NULL, (void*) conexionConKernelDispatch, NULL);
-	pthread_detach(hiloRecibirPcb);
+	server_interrupt = iniciar_servidor(IP_CPU, puertoDeEscuchaInterrupt,"Kernel");
+	log_info(logger,"Servidor CPU-INTERRUPT:[%d] iniciado", server_interrupt);
 
 	pthread_t hiloEjecutar;
 	//ejecutando = true;// ver donde poner mejor esto
-
 	pthread_create(&hiloEjecutar, NULL, (void*) ejecucion, NULL);
 	pthread_detach(hiloEjecutar);
+
+	crear_hilos_servidor_cpu();
 
 	sem_t cpuSinFinalizar;
 	sem_init(&cpuSinFinalizar,0,0);
@@ -69,6 +60,14 @@ void ejecucion(void* aa){
 		//}
 
 	}
+}
+
+void crear_hilos_servidor_cpu() {
+	pthread_create(&hilo_dispatch, NULL, (void*) conexion_kernel_dispatch, NULL);
+	pthread_detach(hilo_dispatch);
+
+	pthread_create(&hilo_interrupt, NULL, (void*) conexion_kernel_interrupt, NULL);
+	pthread_detach(hilo_interrupt);
 }
 
 //	unPcb = malloc(sizeof(t_pcb));

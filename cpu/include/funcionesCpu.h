@@ -29,6 +29,8 @@ extern t_paquete* paquete;
 extern t_list* tlb;
 
 //--------------  Cpu como servidor de Kernel ---------
+extern int server_dispatch;
+extern int server_interrupt;
 extern int clienteKernel;
 extern int clienteKernelInterrupt;
 extern int server_fd;
@@ -123,8 +125,6 @@ bool calculoDireccionLogicaExitoso(int,t_list*);
 int accederAMemoria(int,int,t_pcb*);
 
 bool haySegFault(int, int,t_list *);
-void checkInterrupt();
-void escucharInterrupciones();
 
 void reiniciarTLB();
 void ejecucion(void*);
@@ -135,7 +135,9 @@ void bloqueoPorPageFault(t_pcb*);
 void iterator(instruccion*);
 
 //----------------------------FUNCIONES DE CONEXIONES
-void conexionConKernelDispatch();
+void crear_hilos_servidor_cpu();
+void conexion_kernel_dispatch();
+void conexion_kernel_interrupt();
 void handshakeMemoria();
 void enviar_pcb(t_pcb*,int,int);
 
