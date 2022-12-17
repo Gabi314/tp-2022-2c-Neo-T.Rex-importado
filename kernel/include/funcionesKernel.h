@@ -32,7 +32,6 @@ typedef struct {
 	t_list * listaTpYNroPAgina;
 } t_info_pf;
 
-
 typedef struct {
 	char* dispositivo;
 	int tiempo;
@@ -40,6 +39,7 @@ typedef struct {
 	t_queue* cola_UTs;
 	sem_t semaforo;
 	pthread_mutex_t mutexDisp;
+	pthread_mutex_t mutex_cola_procesos;
 } t_elem_disp;
 
 extern int socketServidorKernel;
@@ -144,6 +144,8 @@ extern pthread_mutex_t primerPushColaReady;
 extern pthread_mutex_t mutexPantalla;
 extern pthread_mutex_t mutexTeclado;
 extern pthread_mutex_t mutexConexionMemoria;
+extern pthread_mutex_t mutex_cola_ready_FIFO;
+extern pthread_mutex_t mutex_cola_ready_RR;
 
 void obtenerTamanioIdentificadores(instruccion*);
 void obtenerCantidadDeSegmentos(entradaTablaSegmento*);

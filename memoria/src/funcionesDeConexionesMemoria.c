@@ -5,7 +5,6 @@ int numeroDeMarco;
 int desplazamiento;
 int pidActual;
 
-
 int conexionConCpu(void* void_args) {
 	static pthread_mutex_t mutexMemoriaData;
 	// int server_fd = iniciar_servidor(IP_MEMORIA,puertoMemoria,"Cpu"); // tendria que estar comentado porque viene despues de coenxion con kernel
@@ -149,8 +148,12 @@ int conexionConKernel(void* void_args) {
 					tablaDePaginas* unaTablaDePaginas; //= malloc(sizeof(tablaDePaginas));
 					entradaTablaPaginas* unaEntrada; // = malloc(sizeof(entradaTablaPaginas));
 
+					pthread_mutex_lock(&mutex_lista_tablas_paginas);
 					unaTablaDePaginas = list_get(listaTablaDePaginas, numeroTablaDePaginas);
+					pthread_mutex_unlock(&mutex_lista_tablas_paginas);
+					pthread_mutex_lock(&mutex_lista_entradas_tabla_paginas);
 					unaEntrada = list_get(unaTablaDePaginas->entradas, numeroPagina);
+					pthread_mutex_unlock(&mutex_lista_entradas_tabla_paginas);
 
 					cargarPagina(unaEntrada,unaTablaDePaginas->pid);
 
@@ -205,8 +208,12 @@ int marcoSegunIndice(int numeroTablaDePaginas, int numeroDePagina) {
 	chequeoDeIndice(numeroDePagina);
 	if(flagDeEntradasPorTabla == 1) {
 
+		pthread_mutex_lock(&mutex_lista_tablas_paginas);
 		unaTablaDePaginas = list_get(listaTablaDePaginas, numeroTablaDePaginas);
+		pthread_mutex_unlock(&mutex_lista_tablas_paginas);
+		pthread_mutex_lock(&mutex_lista_entradas_tabla_paginas);
 		unaEntradaTablaDePaginas = list_get(unaTablaDePaginas->entradas, numeroDePagina);
+		pthread_mutex_unlock(&mutex_lista_entradas_tabla_paginas);
 
 		flagDeEntradasPorTabla = 0;
 

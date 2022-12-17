@@ -66,13 +66,13 @@ pthread_mutex_t primerPushColaReady;
 pthread_mutex_t mutexPantalla;
 pthread_mutex_t mutexTeclado;
 pthread_mutex_t mutexConexionMemoria;
-
+pthread_mutex_t mutex_cola_ready_FIFO;
+pthread_mutex_t mutex_cola_ready_RR;
 
 int tamanioTotalIdentificadores;
 int contadorInstrucciones;
 int contadorSegmentos;
 int desplazamiento;
-
 
 t_paquete* paquete;
 
@@ -434,56 +434,43 @@ void asignar_memoria() {
 
 		log_info(loggerAux,"llego antes del for");
 		for(int i=0;i<list_size(proceso->tablaSegmentos);i++ ){
-					entradaTablaSegmento * entrada = malloc(sizeof(entradaTablaSegmento));
-					entrada = list_get(proceso->tablaSegmentos,i); //ver que devuelve
-					entrada->numeroTablaPaginas = numTablaPag+i;
-					list_replace(proceso->tablaSegmentos,i,entrada);
-					//log_info(loggerAux, list_get());
-				}
+			entradaTablaSegmento * entrada = malloc(sizeof(entradaTablaSegmento));
+			entrada = list_get(proceso->tablaSegmentos,i); //ver que devuelve
+			entrada->numeroTablaPaginas = numTablaPag+i;
+			list_replace(proceso->tablaSegmentos,i,entrada);
+			//log_info(loggerAux, list_get());
+		}
 
 
 		log_info(loggerAux,"llego antes del push a cola de ready");
 		
-
-
-		pthread_mutex_unlock(&primerPushColaReady);
 		if (!strcmp(algoritmoPlanificacion, "FIFO")) {
+			pthread_mutex_lock(&mutex_cola_ready_FIFO);
 			queue_push(colaReadyFIFO,proceso);
+			pthread_mutex_unlock(&mutex_cola_ready_FIFO);
 
-			log_info(logger, "Cola Ready <FIFO>: [<LISTA DE PIDS>]");
-			for(int i=0; i<queue_size(colaReadyFIFO); i++){
-				pcbAux = list_get(colaReadyFIFO->elements,i);
-				log_info(logger, "%d", pcbAux->idProceso);
-			}
+			loguear_pids_FIFO();
 		} else {
 			if (!strcmp(algoritmoPlanificacion, "RR")) {
+				pthread_mutex_lock(&mutex_cola_ready_RR);
 				queue_push(colaReadyRR,proceso);
+				pthread_mutex_unlock(&mutex_cola_ready_RR);
 
-				log_info(logger, "Cola Ready <RR>: [<LISTA DE PIDS>]");
-				for(int i=0; i<queue_size(colaReadyRR); i++){
-					pcbAux = list_get(colaReadyRR->elements,i);
-					log_info(logger, "%d", pcbAux->idProceso);
-				}
+				loguear_pids_RR();
 			} else {
 				if(!strcmp(algoritmoPlanificacion, "FEEDBACK")) {// ver si esta asi en los config
+					pthread_mutex_lock(&mutex_cola_ready_RR);
 					queue_push(colaReadyRR,proceso);
+					pthread_mutex_unlock(&mutex_cola_ready_RR);
 
-					log_info(logger, "Cola Ready <RR>: [<LISTA DE PIDS RR>]");
-					for(int i=0; i<queue_size(colaReadyRR); i++){
-						pcbAux = list_get(colaReadyRR->elements,i);
-						log_info(logger, "%d", pcbAux->idProceso);
-					}
-					log_info(logger,"Cola Ready <FIFO>: [<LISTA DE PIDS>]");
-					for(int i=0; i<queue_size(colaReadyFIFO); i++){
-						pcbAux = list_get(colaReadyFIFO->elements,i);
-						log_info(logger, "%d", pcbAux->idProceso);
-					}
+					loguear_pids_RR();
+					loguear_pids_FIFO();
 				}else{
 					log_info(logger, "Algoritmo invalido");
 				}
 			}
 		}
-		pthread_mutex_unlock(&primerPushColaReady);
+
 		log_info(logger,"PID: <%d> - Estado Anterior: <NEW> - Estado Actual: <READY>", proceso->idProceso);
 		sem_post(&pcbEnReady);
 
@@ -536,25 +523,22 @@ t_pcb * procesoPlanificado;  // = malloc(sizeof(t_pcb));
 	if (!strcmp(algoritmoPlanificacion,"FIFO")) {
 		log_info(loggerAux,"Entra al if por fifo");
 		procesoPlanificado = obtenerSiguienteFIFO(); //REVISAR TEMA DE MALLOCS QUE EN SIGUIENTE RR ESTA COMENTADO
-
-		log_info(logger,"Cola Ready <FIFO>: [<LISTA DE PIDS>]");
-											for(int i=0; i<queue_size(colaReadyFIFO); i++){
-												procesoPlanificado = list_get(colaReadyFIFO->elements,i);
-												log_info(logger, "%d", procesoPlanificado->idProceso);
-											}
+		// Logs
+		loguear_pids_FIFO();
 	} else {
 		if (!strcmp(algoritmoPlanificacion, "RR")) {
 			log_info(loggerAux,"Entra al if por rr");
 			procesoPlanificado = obtenerSiguienteRR();
-
-			log_info(logger, "Cola Ready <RR>: [<LISTA DE PIDS>]");
-							for(int i=0; i<queue_size(colaReadyRR); i++){
-								procesoPlanificado = list_get(colaReadyRR->elements,i);
-								log_info(logger, "%d", procesoPlanificado->idProceso);
-							}
+			// Logs
+			loguear_pids_RR();
 		} else {
 			if(!strcmp(algoritmoPlanificacion, "FEEDBACK")){
-				if(queue_size(colaReadyRR)>0){
+
+				pthread_mutex_lock(&mutex_cola_ready_RR);
+				int tamanio_cola_ready_FEEDBACK_RR = queue_size(colaReadyRR);
+				pthread_mutex_unlock(&mutex_cola_ready_RR);
+
+				if(tamanio_cola_ready_FEEDBACK_RR > 0){
 					procesoPlanificado = obtenerSiguienteRR();
 					procesoPlanificado->algoritmoActual = RR;
 				}else{
@@ -562,17 +546,9 @@ t_pcb * procesoPlanificado;  // = malloc(sizeof(t_pcb));
 					procesoPlanificado->algoritmoActual = FIFO;
 				}
 
-				log_info(logger, "Cola Ready <RR>: [<LISTA DE PIDS>]");
-								for(int i=0; i<queue_size(colaReadyRR); i++){
-									procesoPlanificado = list_get(colaReadyRR->elements,i);
-									log_info(logger, "%d", procesoPlanificado->idProceso);
-								}
-
-				log_info(logger,"Cola Ready <FIFO>: [<LISTA DE PIDS>]");
-								for(int i=0; i<queue_size(colaReadyFIFO); i++){
-									procesoPlanificado = list_get(colaReadyFIFO->elements,i);
-									log_info(logger, "%d", procesoPlanificado->idProceso);
-								}
+				// Logs
+				loguear_pids_RR();
+				loguear_pids_FIFO();
 
 			}else{
 
@@ -586,22 +562,24 @@ t_pcb * procesoPlanificado;  // = malloc(sizeof(t_pcb));
 
 t_pcb* obtenerSiguienteFIFO() {
 
-	t_pcb* procesoPlanificado = malloc(sizeof(t_pcb));
+	t_pcb* procesoPlanificado;
+	pthread_mutex_lock(&mutex_cola_ready_FIFO);
 	procesoPlanificado = queue_pop(colaReadyFIFO);
 
 	log_info(loggerAux, "[obtenerSiguienteFIFO]: PROCESOS EN READY FIFO: %d \n", queue_size(colaReadyFIFO));
+	pthread_mutex_unlock(&mutex_cola_ready_FIFO);
 
 	return procesoPlanificado;
 }
 
 t_pcb* obtenerSiguienteRR() {
 
-
-
 	t_pcb* procesoPlanificado;   //= malloc(sizeof(t_pcb));
+	pthread_mutex_lock(&mutex_cola_ready_RR);
 	procesoPlanificado = queue_pop(colaReadyRR);
 
 	log_info(loggerAux, "[obtenerSiguienteRR]: PROCESOS EN READY RR: %d \n", queue_size(colaReadyRR));
+	pthread_mutex_unlock(&mutex_cola_ready_RR);
 
 	return procesoPlanificado;
 }
@@ -620,7 +598,7 @@ while (1) {
 
 		if(!strcmp(algoritmoPlanificacion, "RR") || (!strcmp(algoritmoPlanificacion, "FEEDBACK") && proceso->algoritmoActual == RR)){
 			pthread_cancel(hiloQuantumRR);
-			}
+		}
 
 		char* dispositivo;
 
@@ -635,13 +613,9 @@ while (1) {
 
 		t_elem_disp * elementoLista = list_find(listaDeColasDispositivos, comparar_nombre_dispositivo);
 
-		pthread_mutex_t mutexColaIOGenericoProcesos;
-
-		pthread_mutex_init(&mutexColaIOGenericoProcesos,NULL);
-
-	//	pthread_mutex_lock(&mutexColaIOGenericoProcesos);
+		pthread_mutex_lock(&elementoLista->mutex_cola_procesos);
 		queue_push(elementoLista->cola_procesos,proceso);
-	//	pthread_mutex_unlock(&mutexColaIOGenericoProcesos);
+		pthread_mutex_unlock(&elementoLista->mutex_cola_procesos);
 
 		cod_op = recibir_operacion(conexionCpuDispatch);
 		int unidadesTrabajo = 0;
@@ -650,7 +624,6 @@ while (1) {
 			unidadesTrabajo = recibir_entero(conexionCpuDispatch);
 			log_info(logger,"recibe %d unidades de trabajo", unidadesTrabajo);
 		}
-
 
 		pthread_mutex_lock(&elementoLista->mutexDisp);
 		queue_push(elementoLista->cola_UTs,unidadesTrabajo);
@@ -736,42 +709,32 @@ while (1) {
 	case CPU_A_KERNEL_PCB_POR_DESALOJO:
 		t_pcb* pcb = recibir_pcb(conexionCpuDispatch);
 
-		pthread_mutex_t mutexDesalojo;
-		pthread_mutex_init(&mutexDesalojo,NULL);
+		//pthread_mutex_t mutexDesalojo;
+		//pthread_mutex_init(&mutexDesalojo,NULL);
 
-		pthread_mutex_lock(&mutexDesalojo);
+		//pthread_mutex_lock(&mutexDesalojo);
 
 		if (!strcmp(algoritmoPlanificacion, "RR")) {
+			pthread_mutex_lock(&mutex_cola_ready_RR);
 			queue_push(colaReadyRR,pcb);
+			pthread_mutex_unlock(&mutex_cola_ready_RR);
 
-			log_info(logger, "Cola Ready <RR>: [<LISTA DE PIDS>]");
-							for(int i=0; i<queue_size(colaReadyRR); i++){
-								pcb = list_get(colaReadyRR->elements,i);
-								log_info(logger, "%d", pcb->idProceso);
-							}
+			loguear_pids_RR();
 		} else {
 			if (!strcmp(algoritmoPlanificacion, "FEEDBACK")) {
+				pthread_mutex_lock(&mutex_cola_ready_FIFO);
 				queue_push(colaReadyFIFO,pcb);
+				pthread_mutex_unlock(&mutex_cola_ready_FIFO);
 
-				log_info(logger, "Cola Ready <RR>: [<LISTA DE PIDS>]");
-								for(int i=0; i<queue_size(colaReadyRR); i++){
-									pcb = list_get(colaReadyRR->elements,i);
-									log_info(logger, "%d", pcb->idProceso);
-								}
-
-				log_info(logger,"Cola Ready <FIFO>: [<LISTA DE PIDS>]");
-									for(int i=0; i<queue_size(colaReadyFIFO); i++){
-										pcb = list_get(colaReadyFIFO->elements,i);
-										log_info(logger, "%d", pcb->idProceso);
-									}
+				loguear_pids_RR();
+				loguear_pids_FIFO();
 			} else {
-					log_info(loggerAux, "Algoritmo invalido");
+				log_info(loggerAux, "Algoritmo invalido");
 			}
 		}
-		pthread_mutex_unlock(&mutexDesalojo);
+		//pthread_mutex_unlock(&mutexDesalojo);
 
 		log_info(logger,"PID: <%d> - Desalojado por fin de Quantum", pcb->idProceso);
-
 		log_info(logger,"PID: <%d> - Estado Anterior: <EXE> - Estado Actual: <READY>", pcb->idProceso);
 
 		sem_post(&pcbEnReady);
@@ -897,49 +860,38 @@ void atender_IO_teclado(t_info_teclado * info){
 				break;
 		}
 
-		pthread_mutex_t mutex;
-		pthread_mutex_init(&mutex,NULL);
+		//pthread_mutex_t mutex;
+		//pthread_mutex_init(&mutex,NULL);
+		//pthread_mutex_lock(&mutex);
 
-
-		pthread_mutex_lock(&mutex);
 		if (!strcmp(algoritmoPlanificacion, "FIFO")) {
+			pthread_mutex_lock(&mutex_cola_ready_FIFO);
 			queue_push(colaReadyFIFO,unPcb);
-			log_info(logger,"Cola Ready <FIFO>: [<LISTA DE PIDS>]");
-								for(int i=0; i<queue_size(colaReadyFIFO); i++){
-									unPcb = list_get(colaReadyFIFO->elements,i);
-									log_info(logger, "%d", unPcb->idProceso);
-								}
+			pthread_mutex_unlock(&mutex_cola_ready_FIFO);
+
+			loguear_pids_FIFO();
 		} else {
 			if (!strcmp(algoritmoPlanificacion, "RR")) {
+				pthread_mutex_lock(&mutex_cola_ready_RR);
 				queue_push(colaReadyRR,unPcb);
+				pthread_mutex_unlock(&mutex_cola_ready_RR);
 
-				log_info(logger, "Cola Ready <RR>: [<LISTA DE PIDS>]");
-								for(int i=0; i<queue_size(colaReadyRR); i++){
-									unPcb = list_get(colaReadyRR->elements,i);
-									log_info(logger, "%d", unPcb->idProceso);
-								}
+				loguear_pids_RR();
 			} else {
 				if(!strcmp(algoritmoPlanificacion, "FEEDBACK")) {// ver si esta asi en los config
+					pthread_mutex_lock(&mutex_cola_ready_RR);
 					queue_push(colaReadyRR,unPcb);
+					pthread_mutex_unlock(&mutex_cola_ready_RR);
 
-					log_info(logger, "Cola Ready <RR>: [<LISTA DE PIDS>]");
-									for(int i=0; i<queue_size(colaReadyRR); i++){
-										unPcb = list_get(colaReadyRR->elements,i);
-										log_info(logger, "%d", unPcb->idProceso);
-									}
-
-					log_info(logger,"Cola Ready <FIFO>: [<LISTA DE PIDS>]");
-										for(int i=0; i<queue_size(colaReadyFIFO); i++){
-											unPcb = list_get(colaReadyFIFO->elements,i);
-											log_info(logger, "%d", unPcb->idProceso);
-										}
+					loguear_pids_RR();
+					loguear_pids_FIFO();
 
 				}else{
 					log_info(loggerAux, "Algoritmo invalido");
 				}
 			}
 		}
-		pthread_mutex_unlock(&mutex);
+		//pthread_mutex_unlock(&mutex);
 
 		log_info(logger,"PID: <%d> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>", unPcb->idProceso);
 
@@ -957,51 +909,39 @@ void atender_IO_pantalla(t_info_pantalla * info) {
 
 	recibir_mensaje(unPcb->socket);
 
-	pthread_mutex_t mutex;
-	pthread_mutex_init(&mutex,NULL);
-
-	pthread_mutex_lock(&mutex);
+	//pthread_mutex_t mutex;
+	//pthread_mutex_init(&mutex,NULL);
+	//pthread_mutex_lock(&mutex);
 
 	if (!strcmp(algoritmoPlanificacion, "FIFO")) {
+		pthread_mutex_lock(&mutex_cola_ready_FIFO);
 		queue_push(colaReadyFIFO,unPcb);
-		log_info(logger,"Cola Ready <FIFO>: [<LISTA DE PIDS>]");
-							for(int i=0; i<queue_size(colaReadyFIFO); i++){
-								unPcb = list_get(colaReadyFIFO->elements,i);
-								log_info(logger, "%d", unPcb->idProceso);
-							}
+		pthread_mutex_unlock(&mutex_cola_ready_FIFO);
 
+		loguear_pids_FIFO();
 	} else {
 		if (!strcmp(algoritmoPlanificacion, "RR")) {
-		queue_push(colaReadyRR,unPcb);
+			pthread_mutex_lock(&mutex_cola_ready_RR);
+			queue_push(colaReadyRR,unPcb);
+			pthread_mutex_unlock(&mutex_cola_ready_RR);
 
-		log_info(logger, "Cola Ready <RR>: [<LISTA DE PIDS>]");
-						for(int i=0; i<queue_size(colaReadyRR); i++){
-							unPcb = list_get(colaReadyRR->elements,i);
-							log_info(logger, "%d", unPcb->idProceso);
-						}
+			loguear_pids_RR();
 
 		} else {
 			if(!strcmp(algoritmoPlanificacion, "FEEDBACK")) {// ver si esta asi en los config
+				pthread_mutex_lock(&mutex_cola_ready_RR);
 				queue_push(colaReadyRR,unPcb);
+				pthread_mutex_unlock(&mutex_cola_ready_RR);
 
-				log_info(logger, "Cola Ready <RR>: [<LISTA DE PIDS>]");
-								for(int i=0; i<queue_size(colaReadyRR); i++){
-									unPcb = list_get(colaReadyRR->elements,i);
-									log_info(logger, "%d", unPcb->idProceso);
-								}
-
-				log_info(logger,"Cola Ready <FIFO>: [<LISTA DE PIDS>]");
-									for(int i=0; i<queue_size(colaReadyFIFO); i++){
-										unPcb = list_get(colaReadyFIFO->elements,i);
-										log_info(logger, "%d", unPcb->idProceso);
-									}
+				loguear_pids_RR();
+				loguear_pids_FIFO();
 			}else{
 				log_info(loggerAux, "Algoritmo invalido");
 			}
 		}
 	}
 
-	pthread_mutex_unlock(&mutex);
+	//pthread_mutex_unlock(&mutex);
 
 
 	log_info(logger,"PID: <%d> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>", unPcb->idProceso);
@@ -1042,12 +982,9 @@ void atender_IO_generico(t_elem_disp* elemento){
 	while(1) {
 		//sem_wait(&pruebaIOGen);
 		sem_wait(&elemento->semaforo);
+
 		log_info(logger," [atender_IO_generico del dispositivo <%s>] : se desperto ", elemento->dispositivo);
-
 		log_info(logger," [atender_IO_generico del dispositivo <%s>] : tamanio de cola de unidades de trabajo antes de hacer pop: %d ", elemento->dispositivo, queue_size(elemento->cola_UTs));
-
-
-
 
 		pthread_mutex_lock(&elemento->mutexDisp);
 	//	sleep(2);
@@ -1056,16 +993,16 @@ void atender_IO_generico(t_elem_disp* elemento){
 
 		int tiempo_dispositivo = elemento->tiempo;
 		log_info(logger," [atender_IO_generico del dispositivo <%s>] : el tiempo de dispositivo es %d y las unidades de trabajo obtenidas de la cola son %d ", elemento->dispositivo, tiempo_dispositivo,unidades_trabajo);
+
+		pthread_mutex_lock(&elemento->mutex_cola_procesos);
 		t_pcb * proceso = queue_pop(elemento->cola_procesos);
+		pthread_mutex_unlock(&elemento->mutex_cola_procesos);
 
-		log_info(logger,"[atender_IO_generico del dispositivo <%s>] tamanio de lista despues de tomar proceso <%d>", elemento->dispositivo, queue_size(elemento->cola_procesos));
+		log_info(logger," [atender_IO_generico del dispositivo <%s>] : tamanio de lista despues de tomar proceso <%d>", elemento->dispositivo, queue_size(elemento->cola_procesos));
 		log_info(logger," [atender_IO_generico del dispositivo <%s>] : obtuvimos el siguiente PCB: %d  ", elemento->dispositivo, proceso->idProceso);
-
 		log_info(logger," [atender_IO_generico del dispositivo <%s>] : simulando tiempo de bloqueo  ", elemento->dispositivo);
 
 		usleep(tiempo_dispositivo * 1000 * unidades_trabajo);
-
-
 
 		log_info(logger," [atender_IO_generico del dispositivo <%s>] : fin del tiempo de bloqueo para el pid <%d>", elemento->dispositivo,proceso->idProceso);
 		log_info(logger," [atender_IO_generico del dispositivo <%s>] : cantidad de procesos en espera <%d>", elemento->dispositivo,queue_size(elemento->cola_procesos));
@@ -1074,42 +1011,27 @@ void atender_IO_generico(t_elem_disp* elemento){
 		//controlar_pcb(proceso);
 
 		if (!strcmp(algoritmoPlanificacion, "FIFO")) {
+			pthread_mutex_lock(&mutex_cola_ready_FIFO);
 			queue_push(colaReadyFIFO,proceso);
+			pthread_mutex_unlock(&mutex_cola_ready_FIFO);
 
-			log_info(logger,"Cola Ready <FIFO>: [<LISTA DE PIDS>]");
-								for(int i=0; i<queue_size(colaReadyFIFO); i++){
-									proceso = list_get(colaReadyFIFO->elements,i);
-									log_info(logger, "%d", proceso->idProceso);
-								}
+			loguear_pids_FIFO();
 		} else {
 			if (!strcmp(algoritmoPlanificacion, "RR")) {
+				pthread_mutex_lock(&mutex_cola_ready_RR);
 				queue_push(colaReadyRR,proceso);
+				pthread_mutex_unlock(&mutex_cola_ready_RR);
 
-				log_info(logger, "Cola Ready <RR>: [<LISTA DE PIDS>]");
-								for(int i=0; i<queue_size(colaReadyRR); i++){
-									proceso = list_get(colaReadyRR->elements,i);
-									log_info(logger, "%d", proceso->idProceso);
-								}
+				loguear_pids_RR();
 
 			} else {
 				if(!strcmp(algoritmoPlanificacion, "FEEDBACK")) {// ver si esta asi en los config
+					pthread_mutex_lock(&mutex_cola_ready_RR);
 					queue_push(colaReadyRR,proceso);
+					pthread_mutex_unlock(&mutex_cola_ready_RR);
 
-					log_info(logger, "Cola Ready <RR>: [<LISTA DE PIDS>]");
-									for(int i=0; i<queue_size(colaReadyRR); i++){
-										proceso = list_get(colaReadyRR->elements,i);
-										log_info(logger, "%d", proceso->idProceso);
-									}
-
-
-
-					log_info(logger,"Cola Ready <FIFO>: [<LISTA DE PIDS>]");
-										for(int i=0; i<queue_size(colaReadyFIFO); i++){
-											proceso = list_get(colaReadyFIFO->elements,i);
-											log_info(logger, "%d", proceso->idProceso);
-										}
-
-
+					loguear_pids_RR();
+					loguear_pids_FIFO();
 				}else{
 					log_info(loggerAux, "Algoritmo invalido");
 				}
@@ -1162,47 +1084,37 @@ void atender_page_fault(t_info_pf* infoPF){
 
 	recibir_mensaje(socketMemoria);
 
-	if (!strcmp(algoritmoPlanificacion, "FIFO")) {
-		queue_push(colaReadyFIFO,pcb);
+	// Antes estaba abajo
+	pthread_mutex_unlock(&mutexConexionMemoria);
 
-		log_info(logger,"Cola Ready <FIFO>: [<LISTA DE PIDS>]");
-							for(int i=0; i<queue_size(colaReadyFIFO); i++){
-								pcb = list_get(colaReadyFIFO->elements,i);
-								log_info(logger, "%d", pcb->idProceso);
-							}
+	if (!strcmp(algoritmoPlanificacion, "FIFO")) {
+		pthread_mutex_lock(&mutex_cola_ready_FIFO);
+		queue_push(colaReadyFIFO,pcb);
+		pthread_mutex_unlock(&mutex_cola_ready_FIFO);
+
+		loguear_pids_FIFO();
 	} else {
 		if (!strcmp(algoritmoPlanificacion, "RR")) {
+			pthread_mutex_lock(&mutex_cola_ready_RR);
 			queue_push(colaReadyRR,pcb);
+			pthread_mutex_unlock(&mutex_cola_ready_RR);
 
-			log_info(logger, "Cola Ready <RR>: [<LISTA DE PIDS>]");
-							for(int i=0; i<queue_size(colaReadyRR); i++){
-								pcb = list_get(colaReadyRR->elements,i);
-								log_info(logger, "%d", pcb->idProceso);
-							}
-
-
+			loguear_pids_RR();
 		} else {
 			if(!strcmp(algoritmoPlanificacion, "FEEDBACK")) {// ver si esta asi en los config
+				pthread_mutex_lock(&mutex_cola_ready_RR);
 				queue_push(colaReadyRR,pcb);
+				pthread_mutex_unlock(&mutex_cola_ready_RR);
 
-				log_info(logger, "Cola Ready <RR>: [<LISTA DE PIDS>]");
-								for(int i=0; i<queue_size(colaReadyRR); i++){
-									pcb = list_get(colaReadyRR->elements,i);
-									log_info(logger, "%d", pcb->idProceso);
-								}
-
-
-				log_info(logger,"Cola Ready <FIFO>: [<LISTA DE PIDS>]");
-									for(int i=0; i<queue_size(colaReadyFIFO); i++){
-										pcb = list_get(colaReadyFIFO->elements,i);
-										log_info(logger, "%d", pcb->idProceso);
-									}
+				loguear_pids_RR();
+				loguear_pids_FIFO();
 			}else{
 				log_info(loggerAux, "Algoritmo invalido");
 			}
 		}
 	}
-	pthread_mutex_unlock(&mutexConexionMemoria);
+
+	//pthread_mutex_unlock(&mutexConexionMemoria);
 	log_info(logger,"PID: <%d> - Estado Anterior: <BLOCKED> - Estado Actual: <READY>", pcb->idProceso);
 
 	sem_post(&pcbEnReady);
@@ -1275,6 +1187,40 @@ t_pcb* recibir_pcb(int socket_cliente)//ponerla en shared
 	//log_info(loggerAux,"Estado: %d",pcb->estado);
 	free(buffer);
 	return pcb;
+}
+
+void loguear_pids_FIFO() {
+	t_pcb* procesoPlanificado;
+
+	log_info(logger,"Cola Ready <FIFO>: [<LISTA DE PIDS>]");
+
+	pthread_mutex_lock(&mutex_cola_ready_FIFO);
+	int tamanio_cola_ready_FIFO = queue_size(colaReadyFIFO);
+	pthread_mutex_unlock(&mutex_cola_ready_FIFO);
+
+	for(int i=0; i<tamanio_cola_ready_FIFO; i++){
+		pthread_mutex_lock(&mutex_cola_ready_FIFO);
+		procesoPlanificado = list_get(colaReadyFIFO->elements,i);
+		pthread_mutex_unlock(&mutex_cola_ready_FIFO);
+		log_info(logger, "%d", procesoPlanificado->idProceso);
+	}
+}
+
+void loguear_pids_RR() {
+	t_pcb* procesoPlanificado;
+
+	log_info(logger, "Cola Ready <RR>: [<LISTA DE PIDS>]");
+
+	pthread_mutex_lock(&mutex_cola_ready_RR);
+	int tamanio_cola_ready_RR = queue_size(colaReadyRR);
+	pthread_mutex_unlock(&mutex_cola_ready_RR);
+
+	for(int i=0; i<tamanio_cola_ready_RR; i++){
+		pthread_mutex_lock(&mutex_cola_ready_RR);
+		procesoPlanificado = list_get(colaReadyRR->elements,i);
+		pthread_mutex_unlock(&mutex_cola_ready_RR);
+		log_info(logger, "%d", procesoPlanificado->idProceso);
+	}
 }
 
 

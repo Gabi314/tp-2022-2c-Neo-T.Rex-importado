@@ -178,8 +178,6 @@ void inicializar_listas_y_colas() {
 	colaNew = queue_create();
 	colaReadyFIFO = queue_create();
 	colaReadyRR = queue_create();
-
-
 }
 
 
@@ -370,8 +368,11 @@ void inicializar_lista_dispositivos() {
 			elemento_nuevo->semaforo = semaforo;
 
 			pthread_mutex_t mutex;
+			pthread_mutex_t mutex_cola_procesos;
 			pthread_mutex_init(&mutex,NULL);
+			pthread_mutex_init(&mutex_cola_procesos,NULL);
 			elemento_nuevo->mutexDisp = mutex;
+			elemento_nuevo->mutex_cola_procesos = mutex_cola_procesos;
 
 			list_add(listaDeColasDispositivos,elemento_nuevo);
 		}
@@ -428,6 +429,9 @@ void inicializar_semaforos(){
 	pthread_mutex_init(&mutexPantalla,NULL);
 	pthread_mutex_init(&mutexTeclado,NULL);
 	pthread_mutex_init(&mutexConexionMemoria,NULL);
+
+	pthread_mutex_init(&mutex_cola_ready_FIFO, NULL);
+	pthread_mutex_init(&mutex_cola_ready_RR, NULL);
 }
 
 

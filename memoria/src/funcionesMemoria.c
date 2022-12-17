@@ -19,6 +19,8 @@ char* puertoMemoria;
 pthread_mutex_t conexionKernel;
 pthread_mutex_t conexionCpu;
 pthread_mutex_t listaMarcos;
+pthread_mutex_t mutex_lista_tablas_paginas;
+pthread_mutex_t mutex_lista_entradas_tabla_paginas;
 
 void* memoria;
 
@@ -78,7 +80,9 @@ void inicializarEstructuras(int pid) {
 		cargarEntradasATabla(unaTablaDePaginas, i);
 
 		//DEJO ESTA LISTA PARA "INICIALIZAR PROCESO", PORQUE DESPUES HAY QUE VER DONDE SE AGREGO ESTA TABLA DE PAGINAS Y MANDARLA A CPU
+		pthread_mutex_lock(&mutex_lista_tablas_paginas);
 		list_add(listaTablaDePaginas, unaTablaDePaginas);
+		pthread_mutex_unlock(&mutex_lista_tablas_paginas);
 		contNroTablaDePaginas++;
 		log_info(logger, "PID: <%d> - Segmento: <%d> - TAMAÑO: <%d> paginas", pid, i, entradasPorTabla);
 	}
@@ -97,7 +101,9 @@ void cargarEntradasATabla(tablaDePaginas* unaTablaDePaginas, int numeroDeSegment
 		unaEntradaDeTabla->posicionEnSwap = -1;
 		unaEntradaDeTabla->numeroDeSegmento = numeroDeSegmento;
 
+		pthread_mutex_lock(&mutex_lista_entradas_tabla_paginas);
 		list_add(unaTablaDePaginas->entradas, unaEntradaDeTabla);
+		pthread_mutex_unlock(&mutex_lista_entradas_tabla_paginas);
 	}
 
 }
@@ -180,7 +186,9 @@ void liberarEspacioEnMemoria(tablaDePaginas* unaTablaDePaginas) {
 void finalizacionDeProceso(int pid) {
 	tablaDePaginas* unaTablaDePaginas = malloc(sizeof(tablaDePaginas));
 	for(int i = 0; i < list_size(listaTablaDePaginas); i++) {
-	unaTablaDePaginas = list_get(listaTablaDePaginas, i);
+		pthread_mutex_lock(&mutex_lista_tablas_paginas);
+		unaTablaDePaginas = list_get(listaTablaDePaginas, i);
+		pthread_mutex_unlock(&mutex_lista_tablas_paginas);
 		if(unaTablaDePaginas->pid == pid) {
 			liberarEspacioEnMemoria(unaTablaDePaginas);
 		}

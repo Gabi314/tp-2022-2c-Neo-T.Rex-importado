@@ -41,6 +41,8 @@ void funcionMain(int argc, char *argv[]) {
 
 	pthread_mutex_init(&conexionCpu,NULL);
 	pthread_mutex_init(&conexionKernel,NULL);
+	pthread_mutex_init(&mutex_lista_tablas_paginas,NULL);
+	pthread_mutex_init(&mutex_lista_entradas_tabla_paginas,NULL);
 	inicializarMemoria();
 	inicializarMarcos();
 
