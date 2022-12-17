@@ -8,7 +8,7 @@
 #include <unistd.h> //Para el truncate
 #include <inttypes.h>
 
-#define IP_MEMORIA "127.0.0.1"
+#define IP_MEMORIA "192.168.0.100"
 
 /* *** STRUCTS *** */
 

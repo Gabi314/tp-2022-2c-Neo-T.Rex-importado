@@ -7,7 +7,7 @@
 #include "tlb.h"
 //--------------PUERTOS
 //Revisar
-#define IP_CPU "127.0.0.1"
+#define IP_CPU "192.168.0.100"
 
 
 //

@@ -6,7 +6,7 @@
 extern t_log* logger;
 extern t_log* loggerAux;
 extern t_list* listaInstrucciones;
-#define IP_KERNEL "127.0.0.1"
+#define IP_KERNEL "192.168.0.100"
 #define PUERTO_KERNEL "8000"
 
 typedef enum
