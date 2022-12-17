@@ -7,9 +7,7 @@ t_list* lista_frames_procesos;
 
 int main(int argc, char *argv[]) {
 
-	//OBLIGATORIO
 	funcionMain(argc, argv);
-	//OBLIGATORIO
 
 	memoria_fd = iniciar_servidor(IP_MEMORIA, puertoMemoria, "MEMORIA");
 	while(1){
@@ -18,17 +16,13 @@ int main(int argc, char *argv[]) {
 		// Escucho a cliente Kernel
 		server_escuchar(loggerAux, "MEMORIA", "KERNEL", memoria_fd);
 	}
-
-//PROBAR ENTRADAS CON BIT DE MODIFICADO VARIADO
-
-	//conexionConCpu();
 }
 
 void funcionMain(int argc, char *argv[]) {
 	// Chequeo de parametros
 	chequeoCantidadArchivos(argc);
 
-	//Logs obligatorios
+	// Logs obligatorios
 	logger = log_create("memoria.log", "MEMORIA", 1, LOG_LEVEL_INFO);
 	// Logs auxiliares
 	loggerAux = log_create("memoriaAux.log", "MEMORIA", 1, LOG_LEVEL_INFO);
@@ -41,13 +35,13 @@ void funcionMain(int argc, char *argv[]) {
 
 	pthread_mutex_init(&conexionCpu,NULL);
 	pthread_mutex_init(&conexionKernel,NULL);
+	pthread_mutex_init(&mutex_marcos_libres,NULL);
 	pthread_mutex_init(&mutex_lista_tablas_paginas,NULL);
 	pthread_mutex_init(&mutex_lista_entradas_tabla_paginas,NULL);
 	inicializarMemoria();
 	inicializarMarcos();
 
 	crearSwap();
-
 
 	log_info(loggerAux, "Fin de main obligatorio");
 }

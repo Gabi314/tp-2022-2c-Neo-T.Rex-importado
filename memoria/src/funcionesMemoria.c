@@ -18,7 +18,7 @@ char* ipMemoria;
 char* puertoMemoria;
 pthread_mutex_t conexionKernel;
 pthread_mutex_t conexionCpu;
-pthread_mutex_t listaMarcos;
+pthread_mutex_t mutex_marcos_libres;
 pthread_mutex_t mutex_lista_tablas_paginas;
 pthread_mutex_t mutex_lista_entradas_tabla_paginas;
 
@@ -48,9 +48,7 @@ void crearConfiguraciones(char* unaConfig) {
 
 	tamanioDeMemoria = config_get_int_value(config, "TAM_MEMORIA");
 	tamanioDePagina = config_get_int_value(config, "TAM_PAGINA");
-	// Agregar "IP_MEMORIA" al archivo de config
 	puertoMemoria = config_get_string_value(config, "PUERTO_ESCUCHA");
-
 	entradasPorTabla = config_get_int_value(config, "ENTRADAS_POR_TABLA");
 	retardoMemoria = config_get_int_value(config, "RETARDO_MEMORIA");
 	algoritmoDeReemplazo = config_get_string_value(config, "ALGORITMO_REEMPLAZO");
@@ -58,15 +56,13 @@ void crearConfiguraciones(char* unaConfig) {
 	retardoSwap = config_get_int_value(config, "RETARDO_SWAP");
 	pathSwap = config_get_string_value(config, "PATH_SWAP");
 	tamanioSwap = config_get_int_value(config, "TAMANIO_SWAP");
-
-	pthread_mutex_init(&listaMarcos,NULL);
 }
 
 void inicializarMemoria() {
 	memoria = malloc(tamanioDeMemoria); // inicializo el espacio de usuario en memoria
 	uint32_t valor = 0;
 	for(int i=0; i< tamanioDeMemoria/sizeof(uint32_t); i++) {
-	memcpy((memoria + sizeof(uint32_t) *i), &valor, sizeof(uint32_t));
+		memcpy((memoria + sizeof(uint32_t) *i), &valor, sizeof(uint32_t));
 	}
 }
 
@@ -79,14 +75,12 @@ void inicializarEstructuras(int pid) {
 		unaTablaDePaginas->numeroDeSegmento = i;
 		cargarEntradasATabla(unaTablaDePaginas, i);
 
-		//DEJO ESTA LISTA PARA "INICIALIZAR PROCESO", PORQUE DESPUES HAY QUE VER DONDE SE AGREGO ESTA TABLA DE PAGINAS Y MANDARLA A CPU
 		pthread_mutex_lock(&mutex_lista_tablas_paginas);
 		list_add(listaTablaDePaginas, unaTablaDePaginas);
 		pthread_mutex_unlock(&mutex_lista_tablas_paginas);
 		contNroTablaDePaginas++;
 		log_info(logger, "PID: <%d> - Segmento: <%d> - TAMAÑO: <%d> paginas", pid, i, entradasPorTabla);
 	}
-	//contNroTablaDePaginas++;
 }
 
 void cargarEntradasATabla(tablaDePaginas* unaTablaDePaginas, int numeroDeSegmento) {
@@ -120,23 +114,20 @@ void inicializarMarcos() {
 void sacarMarcoAPagina(entradaTablaPaginas* unaEntrada) {
 	unaEntrada->presencia = 0;
 	unaEntrada->uso = 0;
-	//unaEntrada->numeroMarco = -1;
 }
 
 marco* siguienteMarcoLibre() {
 	marco* unMarco = malloc(sizeof(marco));
 
-//	pthread_mutex_lock(&listaMarcos);
 	for(int i=0; i < list_size(listaDeMarcos); i++) {
-
+		pthread_mutex_lock(&mutex_marcos_libres);
 		unMarco = list_get(listaDeMarcos, i);
-
+		pthread_mutex_unlock(&mutex_marcos_libres);
 
 		if(unMarco->marcoLibre == 0) {
 			return unMarco;
 		}
 	}
-//	pthread_mutex_unlock(&listaMarcos);
 }
 
 void modificarPaginaACargar(entradaTablaPaginas* unaEntrada, marco* marcoAASignar) {
@@ -148,26 +139,27 @@ void modificarPaginaACargar(entradaTablaPaginas* unaEntrada, marco* marcoAASigna
 }
 
 marco* buscarMarco(int nroDeMarco) {
-	marco* unMarco; //= malloc(sizeof(marco));
-//	pthread_mutex_lock(&listaMarcos);
+	marco* unMarco;
 	for(int i=0; i < list_size(listaDeMarcos); i++) {
+		pthread_mutex_lock(&mutex_marcos_libres);
 		unMarco = list_get(listaDeMarcos, i);
+		pthread_mutex_unlock(&mutex_marcos_libres);
 		if(unMarco->numeroDeMarco == nroDeMarco) {
 			return unMarco;
 		}
 	}
-//	pthread_mutex_unlock(&listaMarcos);
-	//free(unMarco);
 }
 
 void liberarEspacioEnMemoria(tablaDePaginas* unaTablaDePaginas) {
-	entradaTablaPaginas* unaEntrada = malloc(sizeof(entradaTablaPaginas));
-	marco* marcoAsignado = malloc(sizeof(marco));
+	entradaTablaPaginas* unaEntrada;
+	marco* marcoAsignado;
 	t_list* listaDeEntradasAux = list_create();
 	listaDeEntradasAux = unaTablaDePaginas->entradas;
 
 	for(int j = 0; j < entradasPorTabla; j++) {
+		pthread_mutex_lock(&mutex_lista_entradas_tabla_paginas);
 		unaEntrada = list_get(listaDeEntradasAux, j);
+		pthread_mutex_unlock(&mutex_lista_entradas_tabla_paginas);
 		if(unaEntrada->presencia == 1 && unaEntrada->modificado == 0) {
 			sacarMarcoAPagina(unaEntrada);
 			marcoAsignado = buscarMarco(unaEntrada->numeroMarco);
@@ -175,7 +167,6 @@ void liberarEspacioEnMemoria(tablaDePaginas* unaTablaDePaginas) {
 		}
 		if(unaEntrada->presencia == 1 && unaEntrada->modificado == 1) {
 			escribirEnSwap(unaEntrada);
-
 			sacarMarcoAPagina(unaEntrada);
 			marcoAsignado = buscarMarco(unaEntrada->numeroMarco);
 			marcoAsignado->marcoLibre = 0;
@@ -184,7 +175,7 @@ void liberarEspacioEnMemoria(tablaDePaginas* unaTablaDePaginas) {
 }
 
 void finalizacionDeProceso(int pid) {
-	tablaDePaginas* unaTablaDePaginas = malloc(sizeof(tablaDePaginas));
+	tablaDePaginas* unaTablaDePaginas;
 	for(int i = 0; i < list_size(listaTablaDePaginas); i++) {
 		pthread_mutex_lock(&mutex_lista_tablas_paginas);
 		unaTablaDePaginas = list_get(listaTablaDePaginas, i);
@@ -202,20 +193,14 @@ void cargarPagina(entradaTablaPaginas* unaEntrada,int pid) {
 		//Caso en el que se puede asignar un marco a un proceso de manera libre
 		if(frames_proceso->tamanio < marcosPorProceso){
 			marcoAAsignar = siguienteMarcoLibre();
-
-			if(marcoAAsignar == 4) {
-				log_info(logger, "se esta cargando el marco 4 en el pid <%d>", pid);
-			}
 			modificarPaginaACargar(unaEntrada, marcoAAsignar);
-
 			insertar_lista_circular(frames_proceso,unaEntrada);
-
 			if(unaEntrada->modificado == 1) {
 				leerDeSwap(unaEntrada, unaEntrada->numeroMarco);
 				unaEntrada->modificado = 0;
 
 			}
-			//Caso en el que ya el proceso tiene maxima cantidad de marcos por proceso y hay que desalojar 1
+		//Caso en el que ya el proceso tiene maxima cantidad de marcos por proceso y hay que desalojar 1
 		}else{
 			sustitucion_paginas(unaEntrada,pid);
 			if(unaEntrada->modificado == 1){
@@ -225,7 +210,6 @@ void cargarPagina(entradaTablaPaginas* unaEntrada,int pid) {
 		}
 	}
 }
-
 
 void escribirElPedido(uint32_t datoAEscribir, int marco, int desplazamiento, int pidDeOperacion) {
 	usleep(retardoMemoria*1000);
@@ -238,7 +222,6 @@ void escribirElPedido(uint32_t datoAEscribir, int marco, int desplazamiento, int
 	actualizarBitModificadoEntrada(marco,pidDeOperacion);
 }
 
-//ESTA DEBERIA RECORRER LA LISTACIRCULAR Y DEVOLVER LA ENTRADA CARGADA CON ESE MARCO
 void actualizarBitModificadoEntrada(int nroDeMarco, int pidDeOperacion) {
 	t_lista_circular* frames_proceso;
 
@@ -247,16 +230,13 @@ void actualizarBitModificadoEntrada(int nroDeMarco, int pidDeOperacion) {
 	t_frame_lista_circular* elementoAEscribir = obtener_elemento_lista_circular_por_marco(frames_proceso,nroDeMarco);
 
 	elementoAEscribir->info->modificado =  1;
-
 }
 
 void actualizarBitUsoEntrada(int nroDeMarco, int pidDeOperacion) {
 	t_lista_circular* frames_proceso;
 
 	frames_proceso = obtener_lista_circular_del_proceso(pidDeOperacion);
-	log_info(logger,"post lista circular del proceso");
 	t_frame_lista_circular* elementoAOperar = obtener_elemento_lista_circular_por_marco(frames_proceso,nroDeMarco);
-	log_info(logger,"post lista circular por marco");
 	if(elementoAOperar->info->uso != 1){
 		elementoAOperar->info->uso =  1;
 	}
@@ -275,7 +255,6 @@ uint32_t leerElPedido(int marco, int desplazamiento,int pidOperacion) {
 	//}
 }
 void crearSwap() {
-	//char* nombrePathCompleto = nombreArchivoProceso(pid);
 	remove(pathSwap);
 	FILE* archivoSwap = fopen(pathSwap, "w+");
 	truncate(pathSwap, tamanioSwap);
@@ -297,13 +276,11 @@ void* obtenerPaginaDesdeEspacioUsuario(int marco) {
 	memcpy(pagina,(memoria+posicion),tamanioDePagina);
 
 	return pagina;
-
 }
 
 void escribirEnSwap(entradaTablaPaginas* unaEntrada) {
 	int numeroDeMarco = unaEntrada->numeroMarco;
-	//usleep(retardoSwap*1000);
-	usleep(retardoSwap*100);
+	usleep(retardoSwap*1000);
 
 	FILE* archivoSwap = fopen(pathSwap, "r+");
 
@@ -335,8 +312,7 @@ void* obtenerPaginaDesdeSwap(int posicionEnSwap,FILE* archivoSwap) {
 }
 
 void leerDeSwap(entradaTablaPaginas* unaEntrada, int numeroDeMarcoNuevo) {
-	//usleep(retardoSwap*1000);
-	usleep(retardoSwap*100);
+	usleep(retardoSwap*1000);
 
 	void* pagina = malloc(tamanioDePagina);
 
@@ -363,7 +339,6 @@ void sustitucion_paginas(entradaTablaPaginas* una_entrada, int pid) {
 	t_lista_circular* frames_proceso = obtener_lista_circular_del_proceso(pid);
 
 	if (strcmp("CLOCK", algoritmoDeReemplazo)==0) {
-		//log_info(logger, "CLOCK");
 		algoritmo_clock(frames_proceso, una_entrada);
 		return;
 	}
@@ -373,7 +348,7 @@ void sustitucion_paginas(entradaTablaPaginas* una_entrada, int pid) {
 	}
 	log_info(loggerAux, "Algoritmo de reemplazo invalido");
 }
-//uint32_t algoritmo_clock(t_lista_circular* frames_proceso, entradaTablaPaginas* entrada_tabla_paginas) {//CREO QUE NO ES NECESARIO DEVOLVER NADA DE ACA
+
 void algoritmo_clock(t_lista_circular* frames_proceso, entradaTablaPaginas* entrada_tabla_paginas) {
 	// Variables auxiliares
 	t_frame_lista_circular* frame_puntero = malloc(sizeof(t_frame_lista_circular));
@@ -397,7 +372,6 @@ void algoritmo_clock(t_lista_circular* frames_proceso, entradaTablaPaginas* entr
 			frame_puntero->info = entrada_tabla_paginas;
 
 		} else {
-			//entrada_tabla_paginas->uso = 0;
 			frame_puntero->info->uso = 0;
 		}
 		frames_proceso->puntero_algoritmo = frames_proceso->puntero_algoritmo->sgte;
@@ -405,9 +379,8 @@ void algoritmo_clock(t_lista_circular* frames_proceso, entradaTablaPaginas* entr
 	log_info(logger,"REEMPLAZO - PID: <%d> - Marco: <%d> - Page Out: <%d>|<%d> - Page In: <%d>|<%d>",
 			pidActual,frame_puntero->info->numeroMarco,entrada_tabla_paginas_victima->numeroDeSegmento,entrada_tabla_paginas_victima->numeroDeEntrada,
 			entrada_tabla_paginas->numeroDeSegmento,entrada_tabla_paginas->numeroDeEntrada);
-}//reemplazar pidActual
+}
 
-//uint32_t algoritmo_clock_modificado(t_lista_circular* frames_proceso, entradaTablaPaginas* entrada_tabla_paginas) {//CREO QUE NO ES NECESARIO DEVOLVER NADA DE ACA
 void algoritmo_clock_modificado(t_lista_circular* frames_proceso, entradaTablaPaginas* entrada_tabla_paginas) {
 	// Variables auxiliares
 	t_frame_lista_circular* frame_puntero = malloc(sizeof(t_frame_lista_circular));
@@ -478,14 +451,12 @@ void algoritmo_clock_modificado(t_lista_circular* frames_proceso, entradaTablaPa
 					frames_proceso->puntero_algoritmo = frames_proceso->puntero_algoritmo->sgte;
 					break;
 				} else {
-					//CREO QUE ESTO ES CUANDO ESTA TERMINANDO EL ALGORITMO QUE PONE EN 0 LOS USOS
 					frame_puntero->info->uso = 0;
 					frames_proceso->puntero_algoritmo = frames_proceso->puntero_algoritmo->sgte;
 				}
 			}
 		}
 	}
-	//return frame_puntero->info->numeroDeEntrada;
 	log_info(logger,"REEMPLAZO - PID: <%d> - Marco: <%d> - Page Out: <%d>|<%d> - Page In: <%d>|<%d>",
 				pidActual,frame_puntero->info->numeroMarco,entrada_tabla_paginas_victima->numeroDeSegmento,entrada_tabla_paginas_victima->numeroDeEntrada,
 				entrada_tabla_paginas->numeroDeSegmento,entrada_tabla_paginas->numeroDeEntrada);
@@ -508,17 +479,7 @@ void actualizar_registros(entradaTablaPaginas* entrada, entradaTablaPaginas* ent
 	// Limpieza de registro victima
 	entrada_victima->presencia = 0;
 	entrada_victima->uso = 0;
-	// Revisar esto!!!
-	// Lo actualizamos cuando venga la proxima vez que la carguemos
-	/*
-	if (entrada_victima->modificado == 1) {
-		// Actualizar pagina en swap
-		entrada_victima->modificado = 0;
-	}
-	*/
-
-	// Carga de pagina solicitada
-	// Le asigno el frame que fue desocupado y elegido como victima
+	// Actualizacion de la entrada deseada
 	entrada->numeroMarco = entrada_victima->numeroMarco;
 	entrada->uso = 1;
 	entrada->presencia = 1;
@@ -556,7 +517,6 @@ void list_create_circular(int pid) {
     lista->pid = pid;
 
     list_add(lista_frames_procesos,lista);
-    //return lista; ANTES ERA DE TIPO LISTA PERO NO ME DEBERIA DEVOLVER, PORQUE HACE TODO ACA
 }
 
 void insertar_lista_circular_vacia(t_lista_circular* lista, entradaTablaPaginas* entrada) {
@@ -600,39 +560,3 @@ t_frame_lista_circular* obtener_elemento_lista_circular_por_marco(t_lista_circul
 
 	return frame_elemento_aux;
 }
-
-
-//FUNCIONES QUE SAQUE DE:
-//LEER DE SWAP
-
-//	for(int i = 0; i < (tamanioDePagina/sizeof(uint32_t)); i++) {
-//		fseek(archivoSwap, unaEntrada->posicionEnSwap, SEEK_SET);
-//		fseek(archivoSwap, i*4, SEEK_CUR);
-//
-//		fgets(parteDePagina, sizeof(uint32_t)+1, archivoSwap);
-//
-//		uint32_t parteDePaginaEnInt = atoi(parteDePagina);
-//
-//		log_info(loggerAux,"Parte de la pagina a traer de swap: %u",parteDePaginaEnInt);
-//
-//		memcpy((memoria+(tamanioDePagina*numeroDeMarcoNuevo)+i*sizeof(uint32_t)), &parteDePaginaEnInt, sizeof(uint32_t));
-//	}
-
-
-
-//ESCRIBIR EN SWAP
-//memcpy(archivoSwap+unaEntrada->posicionEnSwap,paginaACargar,tamanioDePagina);
-//fseek(archivoSwap, unaEntrada->posicionEnSwap, SEEK_SET);
-
-	//fseek(archivoSwap, i*4, SEEK_CUR);
-	//uint32_t datoAEscribir = leerEnSwap(numeroDeMarco, i*sizeof(uint32_t));
-	//log_info(loggerAux,"Parte de la pagina a escribir en swap: %u",datoAEscribir);
-	//char* datoAEscribirEnChar = string_itoa((uint32_t) datoAEscribir);
-
-//fputs(paginaACargar,archivoSwap);
-//}
-
-
-
-
-

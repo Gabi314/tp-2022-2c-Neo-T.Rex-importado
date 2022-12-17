@@ -7,8 +7,6 @@ int pidActual;
 
 int conexionConCpu(void* void_args) {
 	static pthread_mutex_t mutexMemoriaData;
-	// int server_fd = iniciar_servidor(IP_MEMORIA,puertoMemoria,"Cpu"); // tendria que estar comentado porque viene despues de coenxion con kernel
-	// clienteCpu = esperar_cliente(server_fd,"Cpu");
 
 	t_procesar_conexion_args* args = (t_procesar_conexion_args*) void_args;
 
@@ -26,7 +24,6 @@ int conexionConCpu(void* void_args) {
 	t_list* listaQueContieneDirFisica1YDirFisica2 = list_create();
 
 	while(1) {
-//		pthread_mutex_lock(&mutexMemoriaData);
 		pthread_mutex_lock(&conexionCpu);
 		int cod_op = recibir_operacion(clienteCpu);
 
@@ -100,17 +97,12 @@ int conexionConCpu(void* void_args) {
 				break;
 		}
 		pthread_mutex_unlock(&conexionCpu);
-		//pthread_mutex_unlock(&mutexMemoriaData);
 	}
 	return EXIT_SUCCESS;
 }
 
 int conexionConKernel(void* void_args) {
-	//int pidActual;
-
-	// int socket_kernel = iniciar_servidor(IP_MEMORIA,puertoMemoria,"Kernel");
 	log_info(loggerAux, "Memoria lista para recibir a Kernel");
-	// clienteKernel = esperar_cliente(socket_kernel,"Kernel");
 
 	t_procesar_conexion_args* args = (t_procesar_conexion_args*) void_args;
 
@@ -145,8 +137,8 @@ int conexionConKernel(void* void_args) {
 				numeroPagina = (int) list_get(listaQueContieneNumTablaYPagina, 1);
 
 				if(numeroPagina < entradasPorTabla) {
-					tablaDePaginas* unaTablaDePaginas; //= malloc(sizeof(tablaDePaginas));
-					entradaTablaPaginas* unaEntrada; // = malloc(sizeof(entradaTablaPaginas));
+					tablaDePaginas* unaTablaDePaginas;
+					entradaTablaPaginas* unaEntrada;
 
 					pthread_mutex_lock(&mutex_lista_tablas_paginas);
 					unaTablaDePaginas = list_get(listaTablaDePaginas, numeroTablaDePaginas);
@@ -201,13 +193,12 @@ void enviarTamanioDePaginaYCantidadDeEntradas(int socket_cliente) {
 }
 
 int marcoSegunIndice(int numeroTablaDePaginas, int numeroDePagina) {
-	tablaDePaginas* unaTablaDePaginas; //= malloc(sizeof(tablaDePaginas));
-	entradaTablaPaginas* unaEntradaTablaDePaginas; //= malloc(sizeof(entradaTablaPaginas));
-
+	tablaDePaginas* unaTablaDePaginas;
+	entradaTablaPaginas* unaEntradaTablaDePaginas;
 
 	chequeoDeIndice(numeroDePagina);
-	if(flagDeEntradasPorTabla == 1) {
 
+	if(flagDeEntradasPorTabla == 1) {
 		pthread_mutex_lock(&mutex_lista_tablas_paginas);
 		unaTablaDePaginas = list_get(listaTablaDePaginas, numeroTablaDePaginas);
 		pthread_mutex_unlock(&mutex_lista_tablas_paginas);

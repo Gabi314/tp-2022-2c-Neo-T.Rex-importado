@@ -154,7 +154,8 @@ void agregarSegmentosAlPaquete(entradaTablaSegmento*);
 void enviar_pcb(t_pcb*,int,int);
 void aplanarDispositivosIO(char**);
 
-
+void loguear_pids_FIFO();
+void loguear_pids_RR();
 
 void destruirProceso(t_pcb*);
 

@@ -35,19 +35,7 @@ typedef struct {
 
 /* *** STRUCTS ALGORITMOS SUSTITUCION *** */
 
-/*
-typedef struct {
-	uint32_t numero_frame;
-	uint32_t numero_pagina;
-	uint32_t numero_segmento;
-	uint uso;
-	uint modificado;
-	uint presencia;
-} t_frame;
-*/
-
 typedef struct t_frame_lista_circular {
-	//t_frame* info;
 	entradaTablaPaginas* info;
 	struct t_frame_lista_circular* sgte;
 } t_frame_lista_circular;
@@ -99,7 +87,7 @@ extern int pidActual;
 
 extern pthread_mutex_t conexionKernel;
 extern pthread_mutex_t conexionCpu;
-extern pthread_mutex_t listaMarcos;
+extern pthread_mutex_t mutex_marcos_libres;
 extern pthread_mutex_t mutex_lista_tablas_paginas;
 extern pthread_mutex_t mutex_lista_entradas_tabla_paginas;
 
