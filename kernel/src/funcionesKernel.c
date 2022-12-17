@@ -1202,7 +1202,7 @@ void loguear_pids_FIFO() {
 		pthread_mutex_lock(&mutex_cola_ready_FIFO);
 		procesoPlanificado = list_get(colaReadyFIFO->elements,i);
 		pthread_mutex_unlock(&mutex_cola_ready_FIFO);
-		log_info(logger, "%d", procesoPlanificado->idProceso);
+		log_info(logger, "PID [%d] en Ready", procesoPlanificado->idProceso);
 	}
 }
 
@@ -1219,7 +1219,7 @@ void loguear_pids_RR() {
 		pthread_mutex_lock(&mutex_cola_ready_RR);
 		procesoPlanificado = list_get(colaReadyRR->elements,i);
 		pthread_mutex_unlock(&mutex_cola_ready_RR);
-		log_info(logger, "%d", procesoPlanificado->idProceso);
+		log_info(logger, "PID [%d] en Ready", procesoPlanificado->idProceso);
 	}
 }
 
