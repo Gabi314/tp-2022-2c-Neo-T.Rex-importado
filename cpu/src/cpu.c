@@ -18,8 +18,6 @@ int main(int argc, char *argv[]) {
 
 	inicializarTLB();
 
-	handshakeMemoria();
-
 	server_dispatch = iniciar_servidor(IP_CPU, puertoDeEscuchaDispatch, "Kernel");
 	log_info(logger,"Servidor CPU-DISPATCH:[%d] iniciado", server_dispatch);
 
@@ -34,6 +32,8 @@ int main(int argc, char *argv[]) {
 	*/
 
 	crear_hilos_servidor_cpu();
+
+	handshakeMemoria();
 
 	sem_t cpuSinFinalizar;
 	sem_init(&cpuSinFinalizar,0,0);

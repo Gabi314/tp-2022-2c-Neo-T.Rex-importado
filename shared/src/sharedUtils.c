@@ -97,7 +97,56 @@ void* serializar_paquete(t_paquete* paquete, int bytes) // sirve para cualquier 
 
 	return magic;
 }
+/*
+int iniciar_servidor(char* ip, char* puerto, char* cliente) {
+    int socket_servidor;
+    struct addrinfo hints, *servinfo;
 
+    // Inicializando hints
+    memset(&hints, 0, sizeof(hints));
+    hints.ai_family = AF_UNSPEC;
+    hints.ai_socktype = SOCK_STREAM;
+    hints.ai_flags = AI_PASSIVE;
+
+    // Recibe los addrinfo
+    getaddrinfo(ip, puerto, &hints, &servinfo); // NULL o 0.0.0.0
+
+    bool conecto = false;
+
+    // Itera por cada addrinfo devuelto
+    for (struct addrinfo *p = servinfo; p != NULL; p = p->ai_next) {
+        socket_servidor = socket(p->ai_family, p->ai_socktype, p->ai_protocol) ;
+        if (socket_servidor == -1) // fallo de crear socket
+            continue;
+
+        if (bind(socket_servidor, p->ai_addr, p->ai_addrlen) == -1) {
+            // Si entra aca fallo el bind
+            close(socket_servidor);
+            continue;
+        }
+        // Ni bien conecta uno nos vamos del for
+        conecto = true;
+        break;
+    }
+
+    if(!conecto) {
+        free(servinfo);
+        return 0;
+    }
+
+    listen(socket_servidor, SOMAXCONN); // Escuchando (hasta SOMAXCONN conexiones simultaneas)
+
+    // Aviso al logger
+    log_info(logger, "Escuchando en %s:%s (%s)\n", ip, puerto, cliente);
+
+    freeaddrinfo(servinfo);
+
+    return socket_servidor;
+}
+*/
+
+
+//Original
 int iniciar_servidor(char* ip, char* puerto, char* cliente)
 {
 	int socket_servidor;
@@ -109,23 +158,30 @@ int iniciar_servidor(char* ip, char* puerto, char* cliente)
 	hints.ai_socktype = SOCK_STREAM;
 	hints.ai_flags = AI_PASSIVE;
 
-	getaddrinfo(ip, puerto, &hints, &server_info);
-
+	int resultadoGetAdd = getaddrinfo(NULL, puerto, &hints, &server_info);
+	if(resultadoGetAdd != 0){
+		log_info(logger,"Restulado get add incorrecto: %s",gai_strerror(resultadoGetAdd));
+		}
 	// Creamos el socket de escucha del servidor
 	socket_servidor = socket(server_info->ai_family, server_info->ai_socktype, server_info->ai_protocol);
 
 	// Asociamos el socket a un puerto
-	bind(socket_servidor, server_info->ai_addr, server_info->ai_addrlen);
-
+	int resultadoBin = bind(socket_servidor, server_info->ai_addr, server_info->ai_addrlen);
+	if(resultadoBin == -1){
+		perror("Resultado bin incorrecto");
+	}
 	// Escuchamos las conexiones entrantes
-	listen(socket_servidor, SOMAXCONN);
-
-	freeaddrinfo(server_info);
+	int resultadoListen = listen(socket_servidor, SOMAXCONN);
+	if(resultadoListen == -1){
+			perror("Resultado listen incorrecto");
+		}
+	//freeaddrinfo(server_info);
 
 	log_trace(logger, "Listo para escuchar a %s", cliente);
 
 	return socket_servidor;
 }
+
 
 int esperar_cliente(int socket_servidor, char* cliente) {
 	struct sockaddr_in dir_cliente;
@@ -146,6 +202,8 @@ int crear_conexion(char *ip, char* puerto)
 	struct addrinfo hints;
 	struct addrinfo *server_info;
 
+	struct addrinfo *clientInfo, *p;
+
 	memset(&hints, 0, sizeof(hints));
 	hints.ai_family = AF_UNSPEC;
 	hints.ai_socktype = SOCK_STREAM;
@@ -153,29 +211,49 @@ int crear_conexion(char *ip, char* puerto)
 
 	getaddrinfo(ip, puerto, &hints, &server_info);
 
-	// Crear el socket
-	int socket_cliente = socket(server_info->ai_family,
-								server_info->ai_socktype,
-								server_info->ai_protocol);
+	int socket_cliente;
+
 
 	// Fallo al crear el socket
-//	if (socket_cliente == -1) {
-//		// Pasar logger correspondiente por parametro
-//		//log_error(logger, "Hubo un error al crear el socket del servidor");
-//		return 0;
-//	}
+	if (socket_cliente == -1) {
+		// Pasar logger correspondiente por parametro
+		log_error(logger, "Hubo un error al crear el socket del servidor");
+		return 0;
+	}
 
 	// Conectar el socket...
 	// Error al conectar
-	if(connect(socket_cliente, server_info->ai_addr, server_info->ai_addrlen) == -1) {
-		log_error(logger, "Error al conectar al servidor");
-		freeaddrinfo(server_info);
-		return -1;
+
+	for(p = server_info; p != NULL; p = p->ai_next){
+		// Crear el socket
+		socket_cliente = socket(server_info->ai_family,
+									server_info->ai_socktype,
+									server_info->ai_protocol);
+		if(socket_cliente == -1)
+			continue;
+
+		if(connect(socket_cliente, p->ai_addr, p->ai_addrlen) != -1)
+			break;
+
+		close(socket_cliente);
+
+//	if(connect(socket_cliente, server_info->ai_addr, server_info->ai_addrlen) == -1) {
+//		log_error(logger, "Error al conectar al servidor");
+//		freeaddrinfo(server_info);
+//		return -1;
+//	}
+	}
+	if(socket_cliente != -1 && p != NULL){
+		log_info(logger,"Conexion exitosa!!!!!!!!!!!!!!!!!!!");
+		return socket_cliente;
+	}else{
+		perror("socket cliente fallido");
 	}
 
-	freeaddrinfo(server_info);
+	//freeaddrinfo(server_info);
 
-	return socket_cliente;
+	return -1;
+
 }
 
 
